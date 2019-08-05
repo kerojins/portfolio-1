@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN" "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+<tiles-definitions>
+	<definition name=".main" templateExpression="/WEB-INF/views/layout.jsp">
+		<put-attribute name="header" expression="/WEB-INF/views/header.jsp" />
+		<put-attribute name="content" expression="/WEB-INF/views/main.jsp"/>
+		<put-attribute name="footer" expression="/WEB-INF/views/footer.jsp"/>
+	</definition>
+	<definition name=".items" templateExpression="/WEB-INF/views/layout.jsp">
+		<put-attribute name="header" expression="/WEB-INF/views/header.jsp"/>
+		<put-attribute name="content" expression="/WEB-INF/views/items.jsp"/>
+		<put-attribute name="footer" expression="/WEB-INF/views/footer.jsp"/>
+	</definition>
+	<definition name=".board" extends=".main">
+		<put-attribute name="content" value="/WEB-INF/views/board.jsp"/>
+	</definition>
+	<!--
+	<definition name=".admin.notice" extends=".main">
+		<put-attribute name="content" value="/WEB-INF/views/admin/notice.jsp"/>
+	</definition>
+	<definition name=".admin.memberlist" extends=".main">
+		<put-attribute name="content" value="/WEB-INF/views/admin/memberlist.jsp"/>
+	</definition>
+	<definition name=".member.mypage" extends=".main">
+		<put-attribute name="content" value="/WEB-INF/views/member/mypage.jsp"/>
+	</definition>
+	<definition name=".member.cart" extends=".main">
+		<put-attribute name="content" value="/WEB-INF/views/member/cart.jsp"/>
+	</definition>
+	-->
+	<!-- .member.login.loginform 
+		 .member.login.mypage
+	-->
+	<definition name=".*.*.*" extends=".main">
+		<put-attribute name="content" value="/WEB-INF/views/{1}/{2}/{3}.jsp"/>
+	</definition>
+	<!--  뷰이름이 .member.cart 라면
+		  {1}의 위치에 member
+		  {2}의 위치에 cart가 설정되어서 보여질 뷰페이지는 
+		  /WEB-INF/views/member/cart.jsp 가 됨
+		  
+		  .admin.notice
+		  /WEB-INF/views/admin/notice.jsp
+	 -->
+	<definition name=".*.*" extends=".main">
+		<put-attribute name="content" value="/WEB-INF/views/{1}/{2}.jsp"/>
+	</definition>
+</tiles-definitions>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

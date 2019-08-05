@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd">
+  <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+   		<property name="driverClassName" value="oracle.jdbc.OracleDriver"/>
+   		<property name="url" value="jdbc:oracle:thin:@localhost:1521:xe"/>
+   		<property name="username" value="scott"/>
+   		<property name="password" value="tiger"/>
+   </bean> 
+   <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+   		<property name="dataSource" ref="dataSource"/>
+   		<property name="mapperLocations" value="classpath*:com/jhta/spring15/mybatis/MyBoardMapper.xml"/>
+   </bean>
+   <bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
+   		<constructor-arg index="0" ref="sqlSessionFactory"/>
+   </bean>  	
+   <!--  
+   <bean id="dao" class="com.jhta.spring15.dao.MyBoardDao">
+   		<property name="session" ref="sqlSession"/>
+   </bean>
+   <bean id="serice" class="com.jhta.spring15.service.MyBoardService">
+   		<property name="dao" ref="dao"/>
+   </bean>
+	-->
+	
+	<!-- com.jhta.spring15패키지를 포함한 하위패키지의 @Controller,@Service,@Repository,@Component어노테이션
+	갖는 클래스 객체 생성하기 -->
+	<context:component-scan base-package="com.jhta.spring15">
+	     <!-- 어노테이션 @Controller는 제외하기 -->
+		<context:exclude-filter type="annotation" 
+				expression="org.springframework.stereotype.Controller"/>
+	</context:component-scan>
+</beans>
+
+
+
+
+
+
+
+
+
+
+
+
+
+

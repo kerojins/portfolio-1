@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jhta.spring15.mybatis.MyBoardMapper">
+	<sql id="search">
+		<if test="field!=null and field!=''">
+			where ${field} like '%'||#{keyword}||'%'
+		</if>
+	</sql>
+	<insert id="insert" parameterType="com.jhta.spring15.vo.MyBoardVo">
+		insert into myboard 
+		values(myboard_seq.nextval,#{writer},#{title},#{content},0,sysdate)
+	</insert>
+	<select id="getCount" resultType="int" parameterType="hashmap">
+		select NVL(count(*),0) cnt from myboard
+		<include refid="search"/>
+	</select>
+	<select id="list" parameterType="hashmap" resultType="com.jhta.spring15.vo.MyBoardVo">
+		select * from
+		(
+			select aa.*,rownum rnum from
+			(
+			 select * from myboard  
+			 <include refid="search"/>
+			 order by num desc
+			)aa
+		)  
+		<![CDATA[ where rnum>=#{startRow} and rnum<=#{endRow} ]]>
+	</select>
+	
+	<update id="update" parameterType="com.jhta.spring15.vo.MyBoardVo">
+		update myboard
+		set writer=#{writer},title=#{title},content=#{content},regdate=#{regdate}
+		where num=#{num}
+	</update>
+	<delete id="delete" parameterType="int">
+		delete from myboard where num=#{num}
+	</delete>
+	<select id="getinfo" parameterType="int" resultType="com.jhta.spring15.vo.MyBoardVo">
+		select * from myboard where num=#{num}
+	</select>
+	<update id="addHit" parameterType="int">
+		update myboard set hit=hit+1 where num=#{num}
+	</update>
+	<!-- 이전글 -->
+	<select id="prev" parameterType="int" resultType="com.jhta.spring15.vo.MyBoardVo">
+	 	select * from
+ 		(
+    		select * from myboard 
+    		<![CDATA[ where num<#{num} order by num desc ]]>
+  		) where rownum=1
+	</select>
+	
+	<!-- 다음글 -->
+	<select id="next" parameterType="int" resultType="com.jhta.spring15.vo.MyBoardVo">
+	 	select * from
+ 		(
+    		select * from myboard 
+    		<![CDATA[ where num>#{num} order by num asc ]]>
+  		) where rownum=1
+	</select>
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
