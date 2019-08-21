@@ -132,7 +132,7 @@
 	<div id="books_contents">
 		<%--  메인배너  --%>
 		<section id="main_banner">
-			<div id="carouselExampleIndicators" class="carousel2 slide"
+			<div id="carouselExampleIndicators" class="carousel slide"
 				data-ride="carousel">
 				<ol class="carousel-indicators">
 					<li data-target="#carouselExampleIndicators" data-slide-to="0"
@@ -167,25 +167,60 @@
 		<%-- 새로운 책 --%>
 		<section id="book_contents" class="container">
 			<article id="new_books" class="left">
-				<h2>새로나온 책</h2>
+				<h2>신간 도서</h2>
 				<div class="bxslider">
 					<div>
 						<div class="new_books_img left">
 							<img src="<c:url value='/resources/images/new_books1.jpg'/>">
 						</div>
-						<dl class="new_books_content left">
-							<dt>책 제목</dt>
-							<dd>가격가격</dd>
-							<dd>책내용내용내용책내용내용내용책내용내용내용책내용내용내용책내용내용내용</dd>
-						</dl>
+						<div class="new_books_content left">
+							<p id="new_books_comment">"돌아가는 길은 외로운 여행이 될듯 했다."</p>
+							<dl>
+								<dt>책 제목</dt>
+								<dd>가격가격</dd>
+								<dd>책내용내용내용책내용내용내용책내용내용내용책내용내용내용책내용내용내용</dd>
+							</dl>
+						</div>
 					</div>
-					<div></div>
-					<div></div>
+					<div>
+						<div class="new_books_img left">
+							<img src="<c:url value='/resources/images/new_books1.jpg'/>">
+						</div>
+						<div class="new_books_content left">
+							<p id="new_books_comment">"돌아가는 길은 외로운 여행이 될듯 했다."</p>
+							<dl>
+								<dt>책 제목</dt>
+								<dd>가격가격</dd>
+								<dd>책내용내용내용책내용내용내용책내용내용내용책내용내용내용책내용내용내용</dd>
+							</dl>
+						</div>
+					</div>
+					<div>
+						<div class="new_books_img left">
+							<img src="<c:url value='/resources/images/new_books1.jpg'/>">
+						</div>
+						<div class="new_books_content left">
+							<p id="new_books_comment">"돌아가는 길은 외로운 여행이 될듯 했다."</p>
+							<dl>
+								<dt>책 제목</dt>
+								<dd>가격가격</dd>
+								<dd>책내용내용내용책내용내용내용책내용내용내용책내용내용내용책내용내용내용</dd>
+							</dl>
+						</div>
+					</div>
 				</div>
-
 			</article>
 			<article id="news_event" class="right">
-				<h2>NEWS EVENT</h2>
+				<h2 id="news_event_title">NEWS &amp; EVENT</h2>
+				<ul id="news_event_btn">
+					<li><span>1</span></li>
+					<li><span>2</span></li>
+					<li><span>3</span></li>
+					<li><span>4</span></li>
+				</ul>
+				<p id="news_event_img">
+					<img src="<c:url value='/resources/images/news_event1.jpg'/>">
+				</p>
 			</article>
 		</section>
 	</div>

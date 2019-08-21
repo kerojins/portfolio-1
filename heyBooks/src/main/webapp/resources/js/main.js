@@ -15,6 +15,23 @@ $("document").ready(function() {
 	 $('.bxslider').bxSlider({
 		    mode: 'fade',
 		    pager: false,
-		    slideWidth: 600
+		    speed: 400,
+		    slideWidth: 600,
+		    infiniteLoop: true,
+		    auto: true
 		  });
+	 
+	
+	 
+	 //뉴스이벤트 마우스 오버시 사진변경
+	 
+	 function getContextPath(){ //ContextPath얻어오기
+		 return window.location.pathname.substring(0, window.location.pathname.indexOf("/",2));
+	 }
+	 var ctp = getContextPath(); //틀만 잡음
+	 $('#news_event_btn li').mouseenter(function(){
+		 var nth = $(this).text();
+		 $('#news_event_img').find('img').
+		 attr('src',""+ctp+"/resources/images/news_event"+nth+".jpg");
+	 })
 });
