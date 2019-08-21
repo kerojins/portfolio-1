@@ -1,0 +1,326 @@
+@charset "utf-8";
+
+@import url(http://fonts.googleapis.com/earlyaccess/nanumgothic.css);
+
+/*  공통적용  */
+*, body, a, address, button, div, h1, h2, h3, h4, h5, h6, input, label,
+	li, p, select, td, textarea, th, ul {
+	margin: 0;
+	padding: 0;
+}
+
+form legend {
+	text-indent: -999px;
+	display: none;
+}
+
+a, address, button, div, h1, h2, h3, h4, h5, h6, input, label, li, p,
+	select, td, textarea, th, #search_box input::placeholder {
+	font-family: "Nanum Gothic", sans-serif;
+	letter-spacing: -.03em;
+	-webkit-font-smoothing: antialiased;
+}
+
+a:hover {
+	text-decoration: none;
+}
+
+li {
+	list-style: none;
+}
+
+.left {
+	float: left;
+}
+
+.right {
+	float: right;
+}
+
+.container {
+	width: 1000px;
+}
+
+.container:before {
+	
+}
+
+.wrapping {
+	overflow: hidden;
+}
+/*  header  */
+#header_top {
+	border-bottom: 1px solid #0068bd;
+	padding: 5px 0;
+}
+
+#header_top p {
+	font-size: 13px;
+	color: #bedaf1;
+	padding: 2px;
+}
+
+header h1 {
+	font-family: 'Baloo Tammudu', cursive;
+	color: white;
+	font-size: 26px;
+	letter-spacing: 0.015em;
+	text-shadow: 1px 1px 2px rgba(0, 0, 0, .3);
+}
+
+header a {
+	font-weight: 600;
+}
+
+#header_top, #header_content {
+	background-color: #0e7eda;
+}
+
+#header_content {
+	padding: 20px 0 20px;
+	overflow: hidden;
+}
+
+#header_content_box #header_left {
+	margin-top: 7px;
+}
+
+#header_content #search_box {
+	margin-left: 25px;
+	background-color: white;
+	height: 33px;
+	padding: 1px 0px 0px 15px;
+	border-radius: 0.25em;
+	width: 260px;
+	float: left;
+}
+
+#header_content #search_box input {
+	display: inline-block;
+	height: 30px;
+	border: none;
+	margin-left: 5px;
+	width: 220px;
+	font-size: 14px;
+	font-weight: 700;
+	color: #555;
+}
+
+#header_content #search_box  #book_search_input:focus {
+	outline: none;
+}
+
+#header_content #search_box input::placeholder {
+	font-size: 14px;
+	color: #0e7eda;
+	font-weight: 700;
+}
+
+#header_content #search_box  #book_search_input:focus::placeholder {
+	color: #add1ef;
+}
+
+#header_content #search_box span {
+	position: relative;
+	top: 2px;
+}
+
+#header_content #search_box i {
+	color: #0e7eda;
+	display: inline-block;
+}
+
+#header_content #header_right {
+	margin-top: 4px;
+}
+
+#header_content #header_right span {
+	display: inline-block;
+	margin-left: 10px;
+}
+
+#header_content #header_right a {
+	color: white;
+	text-shadow: 1px 1px 2px rgba(0, 0, 0, .3);
+}
+
+#header_middle {
+	height: 53px;
+	background-color: #fff;
+	position: relative;
+}
+
+#header_middle #header_middle_category {
+	float: left;
+}
+
+#header_middle #header_middle_category button {
+	display: inline-block;
+	padding: 15px 0px;
+	border: none;
+	background-color: #fff;
+	font-size: 16px;
+	font-weight: 600;
+	color: #40474d;
+	float: left;
+	text-align: left;
+	width: 105px;
+}
+
+#header_middle #header_middle_category button:focus {
+	outline: none;
+}
+
+#header_middle #header_middle_category button:after {
+	display: inline-block;
+	content: '';
+	width: 1px;
+	height: 17px;
+	border-right: 1px solid #ddd;
+	position: relative;
+	left: 18px;
+	top: 3px;
+}
+
+#header_middle:after {
+	display: inline-block;
+	content: '';
+	clear: both;
+}
+
+#header_middle #header_middle_category span {
+	display: inline-block;
+	margin-right: 15px;
+	position: relative;
+	top: 1px;
+	float: left;
+}
+
+#header_middle #header_middle_category span i {
+	color: #989898;
+}
+
+#header_middle #header_middle_category ul li, #header_middle #header_middle_right li
+	{
+	float: left;
+	margin-top: 14px;
+	margin-left: 25px;
+}
+
+#header_middle #header_middle_category ul li a, #header_middle #header_middle_right li a
+	{
+	font-size: 16px;
+	color: #40474d;
+}
+
+#header_bottom {
+	display: none;
+	clear: both;
+	position: absolute;
+	top: 52px;
+	padding: 1.5%;
+	padding-top: 1%;
+	width: 970px;
+	border: 2px solid #c4dff1;
+	border-top: none;
+	background-color: #e2f2ff;
+	z-index: 999;
+	width: 970px;
+}
+
+#header_bottom h3 {
+	font-size: 15px;
+	padding: 10px 13px;
+	float: left;
+	background-color: #0e7eda;
+	color: white;
+	font-weight: 600;
+	border-radius: 8px;
+}
+
+#header_bottom .all_view_rink {
+	float: left;
+	margin-left: 16px;
+	margin-top: 15px;
+	font-size: 13px;
+	color: #40474d;
+}
+
+#header_bottom ul {
+	width: 100%;
+	position: relative;
+	top: 6px;
+	clear: both;
+	overflow: hidden;
+	padding: 3%;
+	background-color: white;
+	border-radius: 10px;
+}
+
+#header_bottom li {
+	width: 20%;
+	float: left;
+	margin-top: 5px;
+	margin-bottom: 8px;
+}
+
+#header_bottom li a {
+	color: #40474d;
+	font-size: 13px;
+	padding-left: 7px;
+	font-weight: 500;
+}
+/* MAIN BANNER */
+#main_banner .carousel-item img {
+	width: 1300px !important;
+	margin: 0 auto;
+}
+
+#book_contents {
+	padding: 25px 0;
+	overflow: hidden;
+	height: 2000px;
+}
+
+/* 새로나온 책 */
+#new_books {
+	width: 65%;
+	height: 265px;
+	border: 3px solid #d8e0e6; 
+	position : relative;
+	padding: 15px;
+	position: relative;
+}
+
+#new_books h2 {
+	position: absolute;
+}
+
+#new_books .bx-wrapper {
+	max-width: 100% !important;
+	margin: 0;
+	box-shadow: none;
+	border: none;
+	background: #fff;
+}
+
+#new_books .new_books_img {
+	width: 25%;
+	margin-right: 5%;
+	padding: 10px;
+}
+
+#new_books .new_books_img img {
+	width: 100%;
+}
+
+#new_books .new_books_content {
+	width: 70%;
+}
+
+/* 뉴스,이벤트 */
+#news_event {
+	width: 32%;
+	height: 265px;
+	background-color: lightgreen;
+}
