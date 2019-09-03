@@ -13,6 +13,8 @@
 	crossorigin="anonymous">
 <link rel="stylesheet" type="text/css"
 	href="<c:url value='/resources/css/main.css'/>">
+<link rel="stylesheet" type="text/css"
+	href="<c:url value='/resources/css/sub.css'/>">
 <link
 	href="https://fonts.googleapis.com/css?family=Baloo+Tammudu&display=swap"
 	rel="stylesheet">
@@ -51,7 +53,9 @@
 			<div class="container">
 				<div id="header_content_box" class="wrapping">
 					<div id="header_left" class="left">
-						<h1>HEYBOOKS</h1>
+						<h1>
+							<a href="<c:url value='/'/>"> HEYBOOKS</a>
+						</h1>
 					</div>
 					<div id="search_box">
 						<form id="search_form">
@@ -79,10 +83,10 @@
 							카테고리
 						</button>
 						<ul class="left">
-							<li><a href="#">BEST</a></li>
-							<li><a href="#">신간</a></li>
-							<li><a href="#">국내도서</a></li>
-							<li><a href="#">해외도서</a></li>
+							<li><a href="<c:url value='/monthly_best_seller'/>">BEST</a></li>
+							<li><a href="<c:url value='/new_book'/>">신간</a></li>
+							<li><a href="<c:url value='/domestic_book'/>">국내도서</a></li>
+							<li><a href="<c:url value='/oversea_book'/>">해외도서</a></li>
 							<li><a href="#">EVENT</a></li>
 						</ul>
 					</nav>
@@ -98,30 +102,38 @@
 							<a href="#" class="all_view_rink"><i
 								class="fas fa-angle-right"></i> 전체보기</a>
 							<ul>
-								<li><a href="#">사전</a></li>
-								<li><a href="#">문학</a></li>
-								<li><a href="#">학습</a></li>
-								<li><a href="#">아동(어린이)</a></li>
-								<li><a href="#">예체능</a></li>
+								<li><a href="#">소설</a></li>
+								<li><a href="#">에세이</a></li>
+								<li><a href="#">국내소설</a></li>
+								<li><a href="#">시</a></li>
+								<li><a href="#">어린이</a></li>
+								<li><a href="#">가정생활</a></li>
+								<li><a href="#">정치사회</a></li>
+								<li><a href="#">경제경영</a></li>
+								<li><a href="#">건강</a></li>
+								<li><a href="#">유아</a></li>
 								<li><a href="#">종교</a></li>
-								<li><a href="#">잡지</a></li>
-								<li><a href="#">정치,법률</a></li>
-								<li><a href="#">경제,경영</a></li>
-								<li><a href="#">인문</a></li>
-								<li><a href="#">외국어</a></li>
-								<li><a href="#">공학</a></li>
-								<li><a href="#">자연</a></li>
-								<li><a href="#">수험서</a></li>
+								<li><a href="#">아동만화</a></li>
+								<li><a href="#">역사문화</a></li>
+								<li><a href="#">자기계발</a></li>
+								<li><a href="#">여행</a></li>
+								<li><a href="#">만화</a></li>
 							</ul>
 						</div>
 						<div id="header_bottom_right" class="col-md-6">
-							<h3>해외도서</h3>
+							<h3>외국도서</h3>
 							<a href="#" class="all_view_rink"><i
 								class="fas fa-angle-right"></i> 전체보기</a>
 							<ul>
-								<li><a href="#">일반서적</a></li>
-								<li><a href="#">전문서적</a></li>
-								<li><a href="#">컴퓨터</a></li>
+								<li><a href="#">문학</a></li>
+								<li><a href="#">인문사회</a></li>
+								<li><a href="#">유아/아동/청소년</a></li>
+								<li><a href="#">경제경영</a></li>
+								<li><a href="#">과학/기술</a></li>
+								<li><a href="#">취미/실용/여행</a></li>
+								<li><a href="#">교재</a></li>
+								<li><a href="#">생활/요리/건강</a></li>
+								<li><a href="#">예술/건축</a></li>
 							</ul>
 						</div>
 					</div>
@@ -961,206 +973,206 @@
 									class="set_cate_btn"><button>분야 설정</button></span>
 							</div>
 							<div id="favorite_item_list">
-								<div class="favorite_item_box">
+								<div class="vertical_item_box">
 									<p class="favorite_item_img">
 										<a><img
 											src="<c:url value='resources/images/favorite_item1.jpg' />"></a>
 									</p>
 									<div>
-										<h4 class="favorite_item_title">
+										<h4 class="vertical_item_title">
 											<a href="#">네이비씰 승리의기술</a>
 										</h4>
-										<p class="favorite_item_editor">
+										<p class="vertical_item_editor">
 											<a href="#">조코 윌링크, 레이프바빈</a>
 										</p>
-										<p class="favorite_item_rate">
+										<p class="vertical_item_rate">
 											<span>평점</span><span class="favorite_item_reviewCount">9명</span>
 										</p>
 									</div>
 								</div>
-								<div class="favorite_item_box">
+								<div class="vertical_item_box">
 									<p class="favorite_item_img">
 										<a><img
 											src="<c:url value='resources/images/favorite_item1.jpg' />"></a>
 									</p>
 									<div>
-										<h4 class="favorite_item_title">
+										<h4 class="vertical_item_title">
 											<a href="#">네이비씰 승리의기술</a>
 										</h4>
-										<p class="favorite_item_editor">
+										<p class="vertical_item_editor">
 											<a href="#">조코 윌링크, 레이프바빈</a>
 										</p>
-										<p class="favorite_item_rate">
+										<p class="vertical_item_rate">
 											<span>평점</span><span class="favorite_item_reviewCount">9명</span>
 										</p>
 									</div>
 								</div>
-								<div class="favorite_item_box">
+								<div class="vertical_item_box">
 									<p class="favorite_item_img">
 										<a><img
 											src="<c:url value='resources/images/favorite_item1.jpg' />"></a>
 									</p>
 									<div>
-										<h4 class="favorite_item_title">
+										<h4 class="vertical_item_title">
 											<a href="#">네이비씰 승리의기술</a>
 										</h4>
-										<p class="favorite_item_editor">
+										<p class="vertical_item_editor">
 											<a href="#">조코 윌링크, 레이프바빈</a>
 										</p>
-										<p class="favorite_item_rate">
+										<p class="vertical_item_rate">
 											<span>평점</span><span class="favorite_item_reviewCount">9명</span>
 										</p>
 									</div>
 								</div>
-								<div class="favorite_item_box">
+								<div class="vertical_item_box">
 									<p class="favorite_item_img">
 										<a><img
 											src="<c:url value='resources/images/favorite_item1.jpg' />"></a>
 									</p>
 									<div>
-										<h4 class="favorite_item_title">
+										<h4 class="vertical_item_title">
 											<a href="#">네이비씰 승리의기술</a>
 										</h4>
-										<p class="favorite_item_editor">
+										<p class="vertical_item_editor">
 											<a href="#">조코 윌링크, 레이프바빈</a>
 										</p>
-										<p class="favorite_item_rate">
+										<p class="vertical_item_rate">
 											<span>평점</span><span class="favorite_item_reviewCount">9명</span>
 										</p>
 									</div>
 								</div>
-								<div class="favorite_item_box">
+								<div class="vertical_item_box">
 									<p class="favorite_item_img">
 										<a><img
 											src="<c:url value='resources/images/favorite_item1.jpg' />"></a>
 									</p>
 									<div>
-										<h4 class="favorite_item_title">
+										<h4 class="vertical_item_title">
 											<a href="#">네이비씰 승리의기술</a>
 										</h4>
-										<p class="favorite_item_editor">
+										<p class="vertical_item_editor">
 											<a href="#">조코 윌링크, 레이프바빈</a>
 										</p>
-										<p class="favorite_item_rate">
+										<p class="vertical_item_rate">
 											<span>평점</span><span class="favorite_item_reviewCount">9명</span>
 										</p>
 									</div>
 								</div>
-								<div class="favorite_item_box">
+								<div class="vertical_item_box">
 									<p class="favorite_item_img">
 										<a><img
 											src="<c:url value='resources/images/favorite_item1.jpg' />"></a>
 									</p>
 									<div>
-										<h4 class="favorite_item_title">
+										<h4 class="vertical_item_title">
 											<a href="#">네이비씰 승리의기술</a>
 										</h4>
-										<p class="favorite_item_editor">
+										<p class="vertical_item_editor">
 											<a href="#">조코 윌링크, 레이프바빈</a>
 										</p>
-										<p class="favorite_item_rate">
+										<p class="vertical_item_rate">
 											<span>평점</span><span class="favorite_item_reviewCount">9명</span>
 										</p>
 									</div>
 								</div>
-								<div class="favorite_item_box">
+								<div class="vertical_item_box">
 									<p class="favorite_item_img">
 										<a><img
 											src="<c:url value='resources/images/favorite_item1.jpg' />"></a>
 									</p>
 									<div>
-										<h4 class="favorite_item_title">
+										<h4 class="vertical_item_title">
 											<a href="#">네이비씰 승리의기술</a>
 										</h4>
-										<p class="favorite_item_editor">
+										<p class="vertical_item_editor">
 											<a href="#">조코 윌링크, 레이프바빈</a>
 										</p>
-										<p class="favorite_item_rate">
+										<p class="vertical_item_rate">
 											<span>평점</span><span class="favorite_item_reviewCount">9명</span>
 										</p>
 									</div>
 								</div>
-								<div class="favorite_item_box">
+								<div class="vertical_item_box">
 									<p class="favorite_item_img">
 										<a><img
 											src="<c:url value='resources/images/favorite_item1.jpg' />"></a>
 									</p>
 									<div>
-										<h4 class="favorite_item_title">
+										<h4 class="vertical_item_title">
 											<a href="#">네이비씰 승리의기술</a>
 										</h4>
-										<p class="favorite_item_editor">
+										<p class="vertical_item_editor">
 											<a href="#">조코 윌링크, 레이프바빈</a>
 										</p>
-										<p class="favorite_item_rate">
+										<p class="vertical_item_rate">
 											<span>평점</span><span class="favorite_item_reviewCount">9명</span>
 										</p>
 									</div>
 								</div>
-								<div class="favorite_item_box">
+								<div class="vertical_item_box">
 									<p class="favorite_item_img">
 										<a><img
 											src="<c:url value='resources/images/favorite_item1.jpg' />"></a>
 									</p>
 									<div>
-										<h4 class="favorite_item_title">
+										<h4 class="vertical_item_title">
 											<a href="#">네이비씰 승리의기술</a>
 										</h4>
-										<p class="favorite_item_editor">
+										<p class="vertical_item_editor">
 											<a href="#">조코 윌링크, 레이프바빈</a>
 										</p>
-										<p class="favorite_item_rate">
+										<p class="vertical_item_rate">
 											<span>평점</span><span class="favorite_item_reviewCount">9명</span>
 										</p>
 									</div>
 								</div>
-								<div class="favorite_item_box">
+								<div class="vertical_item_box">
 									<p class="favorite_item_img">
 										<a><img
 											src="<c:url value='resources/images/favorite_item1.jpg' />"></a>
 									</p>
 									<div>
-										<h4 class="favorite_item_title">
+										<h4 class="vertical_item_title">
 											<a href="#">네이비씰 승리의기술</a>
 										</h4>
-										<p class="favorite_item_editor">
+										<p class="vertical_item_editor">
 											<a href="#">조코 윌링크, 레이프바빈</a>
 										</p>
-										<p class="favorite_item_rate">
+										<p class="vertical_item_rate">
 											<span>평점</span><span class="favorite_item_reviewCount">9명</span>
 										</p>
 									</div>
 								</div>
-								<div class="favorite_item_box">
+								<div class="vertical_item_box">
 									<p class="favorite_item_img">
 										<a><img
 											src="<c:url value='resources/images/favorite_item1.jpg' />"></a>
 									</p>
 									<div>
-										<h4 class="favorite_item_title">
+										<h4 class="vertical_item_title">
 											<a href="#">네이비씰 승리의기술</a>
 										</h4>
-										<p class="favorite_item_editor">
+										<p class="vertical_item_editor">
 											<a href="#">조코 윌링크, 레이프바빈</a>
 										</p>
-										<p class="favorite_item_rate">
+										<p class="vertical_item_rate">
 											<span>평점</span><span class="favorite_item_reviewCount">9명</span>
 										</p>
 									</div>
 								</div>
-								<div class="favorite_item_box">
+								<div class="vertical_item_box">
 									<p class="favorite_item_img">
 										<a><img
 											src="<c:url value='resources/images/favorite_item1.jpg' />"></a>
 									</p>
 									<div>
-										<h4 class="favorite_item_title">
+										<h4 class="vertical_item_title">
 											<a href="#">네이비씰 승리의기술</a>
 										</h4>
-										<p class="favorite_item_editor">
+										<p class="vertical_item_editor">
 											<a href="#">조코 윌링크, 레이프바빈</a>
 										</p>
-										<p class="favorite_item_rate">
+										<p class="vertical_item_rate">
 											<span>평점</span><span class="favorite_item_reviewCount">9명</span>
 										</p>
 									</div>
@@ -1219,7 +1231,7 @@
 										<button class="clear_cate left" type="reset">초기화</button>
 										<span class="right">
 											<button class="cate_submit" type="submit">적용</button>
-											<button class="cate_cancle" >취소</button>
+											<button class="cate_cancle">취소</button>
 										</span>
 									</p>
 								</form>
@@ -1242,7 +1254,9 @@
 										2019.11<span>23</span>
 									</p>
 									<div class="left notice_recent_content">
-										<h4><a>헤이북스 5주년 회원 수 3만명 돌파. 성원에 감사드립니다.</a></h4>
+										<h4>
+											<a>헤이북스 5주년 회원 수 3만명 돌파. 성원에 감사드립니다.</a>
+										</h4>
 										<p>헤이북스 5주년 회원 수 3만명 돌파. 성원에 감사드립니다.헤이북스 5주년 회원 수 3만명 돌파.</p>
 									</div>
 								</div>
@@ -1265,7 +1279,8 @@
 										QnA <span>BEST 5</span>
 									</p>
 									<form class="left qna_search_form">
-										<input type="search"><button>검색</button>
+										<input type="search">
+										<button>검색</button>
 									</form>
 								</div>
 								<div class="qna_content_bottom">
@@ -1283,9 +1298,7 @@
 				</div>
 			</div>
 		</section>
-		<footer>
-		
-		</footer>
+		<footer> </footer>
 	</div>
 </body>
 </html>

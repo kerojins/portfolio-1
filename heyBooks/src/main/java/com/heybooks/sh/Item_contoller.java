@@ -15,10 +15,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
  * Handles requests for the application home page.
  */
 @Controller
-public class HomeController {
-	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String home(Locale locale, Model model) {
-		return "home";
+public class Item_contoller {
+	
+
+	@RequestMapping(value = "item_contoller", method = RequestMethod.GET)
+	public String item_contoller() {
+		return "item_contoller";
 	}
 	
 }
