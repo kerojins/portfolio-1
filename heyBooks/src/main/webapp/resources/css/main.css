@@ -23,11 +23,12 @@ a, address, button, div, h1, h2, h3, h4, h5, h6, input, label, li, p,
 	font-family: "Nanum Gothic", sans-serif;
 	letter-spacing: -.03em;
 	-webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
 }
 
 a:hover {
 	text-decoration: none;
-	
 }
 
 li {
@@ -43,7 +44,7 @@ li {
 }
 
 .container {
-	width: 980px;
+	width: 960px;
 }
 
 .container:before {
@@ -53,7 +54,8 @@ li {
 .wrapping {
 	overflow: hidden;
 }
-.overhidden{
+
+.overhidden {
 	overflow: hidden;
 }
 
@@ -68,20 +70,25 @@ li {
 	color: #bedaf1;
 	padding: 2px;
 }
-header h1{height: 50px;}
-header h1 a{
+
+header h1 {
+	height: 50px;
+}
+
+header h1 a {
 	font-family: 'Baloo Tammudu', cursive;
 	color: white;
 	font-size: 26px;
 	letter-spacing: 0.015em;
 	text-shadow: 1px 1px 2px rgba(0, 0, 0, .3);
 	line-height: 50px;
-} 
+}
 
 header a {
 	font-weight: 600;
 }
-header h1 a:hover{
+
+header h1 a:hover {
 	color: white;
 }
 
@@ -239,7 +246,7 @@ header h1 a:hover{
 	border: 2px solid #c4dff1;
 	border-top: none;
 	background-color: #e2f2ff;
-	z-index: 999;
+	z-index: 99999999;
 	width: 970px;
 }
 
@@ -321,6 +328,10 @@ header h1 a:hover{
 	position: absolute;
 }
 
+.new_books_slider .book_item_box_left{width:100%;}
+.new_books_slider .new_books_content{
+	padding-left: 0 !important;
+}
 #new_books .bx-wrapper {
 	max-width: 100% !important;
 	margin: 0;
@@ -340,10 +351,11 @@ header h1 a:hover{
 }
 
 #new_books .new_books_content {
-	width: 70%;
-	margin-top: 15px;
+	width: 70%; 
 }
-
+#new_books .book_editor{
+	margin-left: 7px;
+}
 #new_books #new_books_comment {
 	font-family: 'Nanum Pen Script', cursive;
 	font-size: 26px;
@@ -528,11 +540,42 @@ article .aticle_title_layout span a, article .aticle_title_layout span button
 	font-size: 12px;
 	color: #40474d;
 }
-
+#best_item .best_item_box .best_item_rate{
+	font-size: 12px;
+	color: #40474d;
+}
 #best_item .best_item_box .best_item_rate span {
 	font-size: 12px;
 	color: #40474d;
 }
+
+.star_before {
+	background: url(../images/star_before.svg);
+	display: inline-block;
+	width: 45px;
+	height: 9px;
+	background-size: 100% 100%;
+	position: relative;
+	margin: 0 3px;
+	
+}
+.star_after{
+	overflow: hidden;
+	display: block;
+	height: 9px;
+	float:left;
+}
+.star_after:after{
+	content:'';
+	background: url(../images/star_after.svg);
+	width: 45px;
+	height: 9px;
+	background-size: 100% 100%;
+	display: block;
+}
+
+
+
 
 /* 연령별 구매책 */
 #age_item_box .age_slide_item {
@@ -635,9 +678,11 @@ article .aticle_title_layout span a, article .aticle_title_layout span button
 #favorite_item .set_cate_btn {
 	z-index: 2;
 }
+
 #favorite_item .vertical_item_box {
 	width: 16.6666%;
 }
+
 .vertical_item_box {
 	float: left;
 	padding: 15px 20px;
@@ -649,6 +694,8 @@ article .aticle_title_layout span a, article .aticle_title_layout span button
 
 .vertical_item_box .vertical_item_title {
 	line-height: 17px;
+	margin-bottom: 3px;
+	margin-top: 5px;
 }
 
 .vertical_item_box .vertical_item_title a {
@@ -693,7 +740,7 @@ article .aticle_title_layout span a, article .aticle_title_layout span button
 }
 
 #favorite_item .cate_select_box span {
-	float:left;
+	float: left;
 	width: 70px;
 	height: 30px;
 	padding: 5px 0;
@@ -730,7 +777,7 @@ article .aticle_title_layout span a, article .aticle_title_layout span button
 }
 
 #favorite_item .cate_select_list input[type="checkbox"] {
-	 display: none;
+	display: none;
 }
 
 #favorite_item .cate_select_list input[type="checkbox"]+label.input_label
@@ -772,13 +819,18 @@ article .aticle_title_layout span a, article .aticle_title_layout span button
 	display: inline-block;
 	border: none;
 }
+
 #favorite_item .cate_select_modal .clear_cate {
-	margin-left:7px;
-}
-#favorite_item .cate_select_modal .cate_cancle {
-	margin-right:7px;
+	margin-left: 7px;
 }
 
+#favorite_item .cate_select_modal .cate_cancle {
+	margin-right: 7px;
+}
+
+.vertical_item_rate{
+	font-size: 12px;
+}
 
 
 /* 헤이북스 뉴스 */
@@ -960,19 +1012,16 @@ article .aticle_title_layout span a, article .aticle_title_layout span button
 /* FOOTER */
 footer {
 	height: 300px;
-	padding-top:20px;
+	padding-top: 20px;
 	background: #f2f4f5;
 }
-
+ 
 /* 베스트셀러 애니메이션 키프레임 */
 @keyframes animatezoom { 0% {
 	transform: scale(0);
 }
 100%{
 transform
-
-
-
 
 
 :scale(1)

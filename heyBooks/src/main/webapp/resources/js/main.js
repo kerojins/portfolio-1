@@ -2,9 +2,9 @@ $("document")
 		.ready(
 				function() {
 
-					var cnt1 = 0; // nav카테고리창 변수
-					var cnt2 = 0; // my관심책 분야설정창 변수
-					var cnt3 = 0; // my관심책 분야설정 선택 변수
+					var cnt1 = 0; // 페이지 변수1
+					var cnt2 = 0; // 페이지 변수2
+					var cnt3 = 0; // 페이지 변수3
 					var cateName = '';
 
 					// 카테고리 클릭시 서브메뉴 유무
@@ -138,6 +138,15 @@ $("document")
 
 										}
 									});
+					
+					
+					// 상품 아이템 리스트 -전체 선택
+					if($("#item_all_check").prop("checked")){
+						$('.item_select_option input[type="checkbox"]').prop("checked",true);
+						var label = $('.item_select_option input[type="checkbox"]').next();
+						$(label).html("<i class='fas fa-check'></i>");
+					}  
+					 
 					$("#item_all_check").change(function(){
 						var allcheck = $(this).prop("checked");
 						var label = $('.item_select_option input[type="checkbox"]').next();
@@ -167,18 +176,20 @@ $("document")
 							});
 					//상품 아이템 리스트 - 수량 증감
 					$(".item_quantity_plus").click(function(){
-						var quantity = $("#cntVal").val();
+						var cnt = $(this).parents().prev();
+						var quantity = cnt.val();
 						quantity++;
-						 $("#cntVal").val(quantity);
+						cnt.val(quantity);
 					}); 
 					$(".item_quantity_minus").click(function(){
-						var quantity = $("#cntVal").val();
+						var cnt = $(this).parents().prev();
+						var quantity = cnt.val();
 						if(quantity<=1) {
 							alert("최소수량 입니다.");
 							return;
 						} 
 						quantity--;
-						$("#cntVal").val(quantity);
+						cnt.val(quantity);
 					});
 					 
 					//국내도서 - 탭 오버시 내용 변경
@@ -189,4 +200,62 @@ $("document")
 						$(this).parents(".section").addClass("on");
 					})
 
+					// 새로나온 책 슬라이드
+					$('.category_new_books_slide').bxSlider({
+						minSlides : 3, 
+						speed : 400,
+						pager : false,
+						infiniteLoop : true,
+						auto : true,
+						slideWidth: 490   
+					}); 
+					
+					
+				
+				
+					// 책 상세페이지 펼쳐보기 - 책 소개
+					var book_about_height = $(".item_detail_content .book_about").height();
+					if(book_about_height>232){
+						 $(".item_detail_content .book_about").append("<span class='open_content'>펼쳐보기 <i class='fas fa-chevron-down'></i></span>")
+					}
+					
+					$(".item_detail_content .book_about span.open_content").click(function(){
+						cnt1++;
+						var box = $(this).prev();
+						if(cnt1%2==1){
+							box.css("height","auto");
+						}else{
+							box.css("height","232px");
+						} 
+					});
+					
+					// 책 상세페이지 펼쳐보기 - 목차
+					var book_index_height = $(".item_detail_content .book_index").height();
+					if(book_index_height>232){
+						 $(".item_detail_content .book_index").append("<span class='open_content'>펼쳐보기 <i class='fas fa-chevron-down'></i></span>")
+					}
+					
+					$(".item_detail_content .book_index span.open_content").click(function(){
+						cnt2++;
+						var box = $(this).prev();
+						if(cnt2%2==1){
+							box.css("height","auto");
+						}else{
+							box.css("height","232px");
+						} 
+					});
+					$(".review_reply_btn").click(function(){
+						var reply= $(this).parent().next();
+						var reply_type = reply.attr("data-type");
+						if(reply_type == "hide"){
+							reply.attr("data-type","show");
+							reply.show();
+						}else{
+							reply.attr("data-type","hide");
+							reply.hide();
+						}
+						
+					});
+					
+					
 				});
