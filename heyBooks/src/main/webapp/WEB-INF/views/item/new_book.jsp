@@ -69,7 +69,7 @@
 										type="checkbox" id="item_all_check"><label
 										for="item_all_check" class="input_label"></label>
 									</span> <a href="#" class="btn btn-primary">쇼핑카트 담기</a> <a href="#"
-										class="btn btn-primary">서재 보관</a>
+										class="btn btn-primary">위시리스트</a>
 								</div>
 							</div>
 
@@ -80,11 +80,14 @@
 								<li class="book_item_box">
 									<div class="book_item_box_left">
 										<div class="book_item_imgBox">
-											<p class="book_item_rank">1</p>
 											<a href="#"> <img width="110"
 												src="<c:url value='/resources/images/list_item1.jpg'/>"></a>
 										</div>
 										<div class="book_item_content">
+											<p class="item_tag">
+												<span class="discount_tag">할인도서</span><span
+													class="parcel_tag">무료배송</span>
+											</p>
 											<h3 class="list_book_title"><a>대도시의 사랑법</a></h3>
 											<p class="book_info">
 												평점<span class="star_before"><span class="star_after"></span></span><span class="item_reviewCount">9명</span>
@@ -114,7 +117,7 @@
 										</p>
 										<a href="#" class="buy_btn item_right_btn">바로 구매</a> <a
 											href="#" class="cart_btn item_right_btn">쇼핑카트 담기</a> <a
-											href="#" class="library_btn item_right_btn">서재 보관</a>
+											href="#" class="library_btn item_right_btn">위시리스트</a>
 									</div>
 								</li>
 							</ul>

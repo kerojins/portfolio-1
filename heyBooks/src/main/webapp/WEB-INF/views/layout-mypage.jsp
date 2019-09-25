@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
 <!DOCTYPE html>
 <html>
@@ -21,6 +21,9 @@
 	rel="stylesheet">
 <link rel="stylesheet"
 	href="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.css">
+<link rel="stylesheet"
+	href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
 
 <%-- SCRIPT --%>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
@@ -43,9 +46,23 @@
 <title>Hey Books</title>
 </head>
 <body>
-		<%-- 타일즈 구성 --%>
-		<tiles:insertAttribute name="header"/>
-		<tiles:insertAttribute name="content"/>
-		<tiles:insertAttribute name="footer"/>
+	<%-- 타일즈 구성 --%>
+	<tiles:insertAttribute name="header" />
+	<div class="content_full_wrap sub_wrap">
+		<div class="container overhidden">
+			<nav aria-label="breadcrumb">
+				<ol class="breadcrumb">
+					<li class="breadcrumb-item"><a href="#">홈</a></li>
+					<li class="breadcrumb-item active" aria-current="page">마이페이지</li>
+				</ol>
+			</nav>
+			<c:if test="${aside == null}">
+				<tiles:insertAttribute name="mypage_aside" />
+			</c:if>
+			<tiles:insertAttribute name="content" />
+
+		</div>
+	</div>
+	<tiles:insertAttribute name="footer" />
 </body>
-</html>	
+</html>

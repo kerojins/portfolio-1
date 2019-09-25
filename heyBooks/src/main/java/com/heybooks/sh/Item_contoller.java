@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 public class Item_contoller {
 	
-	@RequestMapping(value = "item_contoller", method = RequestMethod.GET)
+	@RequestMapping(value = "/item_contoller", method = RequestMethod.GET)
 	public String item_contoller() {
 		return "item_contoller";
 	}

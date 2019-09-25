@@ -158,7 +158,7 @@
 				</div>
 			</div>
 			<div class="order_btn">
-				<a class="order_home_btn">쇼핑계속하기</a><a class="order_page_btn">주문하기</a>
+				<a class="order_home_btn" href="/">쇼핑계속하기</a><a class="order_page_btn"  href="<c:url value='/order' />">주문하기</a>
 			</div>
 		</form>
 	</div>

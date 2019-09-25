@@ -44,7 +44,7 @@
 	</section>
 	<section id="book_contents">
 		<%-- 광고배너 --%>
-		<div class="content_full_wrap" style="padding-top:13px">
+		<div class="content_full_wrap" style="padding-top: 13px">
 			<article id="ad_banner" class="container">
 				<p>
 					<img src="<c:url value='/resources/images/ad_banner.jpg'/>">
@@ -52,7 +52,7 @@
 			</article>
 		</div>
 		<%-- 새로운 책 --%>
-		<div class="content_full_wrap"  style="padding-top:13px">
+		<div class="content_full_wrap" style="padding-top: 13px">
 			<div class="container overhidden">
 				<article id="new_books" class="left">
 					<h2>신간 도서</h2>
@@ -63,6 +63,9 @@
 									<img src="<c:url value='/resources/images/new_books1.jpg'/>">
 								</div>
 								<div class="book_item_content new_books_content">
+									<p class="item_tag">
+										<span class="discount_tag">할인도서</span><span class="parcel_tag">무료배송</span>
+									</p>
 									<h3 class="list_book_title">
 										<a href="/sh/book_detail">90년생이 온다</a>
 									</h3>
@@ -89,6 +92,9 @@
 									<img src="<c:url value='/resources/images/new_books1.jpg'/>">
 								</div>
 								<div class="book_item_content new_books_content">
+									<p class="item_tag">
+										<span class="discount_tag">할인도서</span><span class="parcel_tag">무료배송</span>
+									</p>
 									<h3 class="list_book_title">
 										<a href="/sh/book_detail">90년생이 온다</a>
 									</h3>
@@ -115,6 +121,9 @@
 									<img src="<c:url value='/resources/images/new_books1.jpg'/>">
 								</div>
 								<div class="book_item_content new_books_content">
+									<p class="item_tag">
+										<span class="discount_tag">할인도서</span><span class="parcel_tag">무료배송</span>
+									</p>
 									<h3 class="list_book_title">
 										<a href="/sh/book_detail">90년생이 온다</a>
 									</h3>
@@ -138,7 +147,7 @@
 					</div>
 				</article>
 				<article id="news_event" class="right">
-					<h2 id="news_event_title">NEWS &amp; EVENT</h2>
+					<h2 id="news_event_title">이벤트</h2>
 					<ul id="news_event_btn">
 						<li><span>1</span></li>
 						<li><span>2</span></li>

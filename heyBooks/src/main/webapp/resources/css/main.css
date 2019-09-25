@@ -7,7 +7,7 @@
 	;
 /*  공통적용  */
 *, body, a, address, button, div, h1, h2, h3, h4, h5, h6, input, label,
-	li, p, select, td, textarea, th, ul, dd {
+	li, p, select, td, textarea, th, ul, dd , dl{
 	margin: 0;
 	padding: 0;
 	color: #40474d;
@@ -59,6 +59,17 @@ li {
 	overflow: hidden;
 }
 
+
+#book_full_contents .bx-wrapper .bx-controls-direction a{
+	opacity: 0;
+}
+#book_full_contents #new_books:hover .bx-wrapper .bx-controls-direction a{
+	opacity: 0.5;
+}
+
+.sub_right_box #category_new_books .bx-wrapper .bx-controls-direction a{
+	opacity: 0.7;
+}
 /*  header  */
 #header_top {
 	border-bottom: 1px solid #0068bd;
@@ -413,12 +424,12 @@ header h1 a:hover {
 	/* padding-top: 20px; */
 }
 
-article .aticle_title_layout {
+.aticle_title_layout {
 	position: relative;
 	overflow: hidden;
 }
 
-article .aticle_title_layout h2 {
+.aticle_title_layout h2 {
 	float: left;
 	font-size: 20px;
 	font-weight: 600;
@@ -430,7 +441,7 @@ article .aticle_title_layout h2 {
 	color: #40474d;
 }
 
-article .aticle_title_layout:before {
+.aticle_title_layout:before {
 	content: '';
 	display: block;
 	width: 100%;
@@ -442,7 +453,7 @@ article .aticle_title_layout:before {
 	position: absolute;
 }
 
-article .aticle_title_layout span {
+.aticle_title_layout span {
 	z-index: 2;
 	position: relative;
 	float: right;
@@ -453,7 +464,7 @@ article .aticle_title_layout span {
 	width: 90px;
 }
 
-article .aticle_title_layout span a, article .aticle_title_layout span button
+.aticle_title_layout span a, article .aticle_title_layout span button
 	{
 	color: white;
 	padding: 5px 10px;
@@ -840,7 +851,7 @@ article .aticle_title_layout span a, article .aticle_title_layout span button
 	margin-right: 4%;
 	border: 1px solid #dedcdc;
 	padding: 20px 23px;
-	height: 270px;
+	height: 280px;
 }
 
 #notice_box .aticle_title_layout:before {
@@ -941,7 +952,7 @@ article .aticle_title_layout span a, article .aticle_title_layout span button
 	width: 48%;
 	border: 1px solid #dedcdc;
 	padding: 15px;
-	height: 270px;
+	height: 280px;
 	padding-left: 23px;
 	padding-top: 20px;
 }

@@ -256,6 +256,23 @@ $("document")
 						}
 						
 					});
+					//주문 페이지 최근배송지목록 버튼
+					$("#call_list").click(function(){
+						$(".recent_list").show();
+						
+					});
+					
+					 
+					//마이페이지 - 주문 정보 변경
+					
+					$(".change_shipping").click(function(){
+						$(".my_order_shipping").hide();
+						$(".change_order_shipping").show();
+					});
+					$(".change_shipping_ok").click(function(){
+						$(".my_order_shipping").show();
+						$(".change_order_shipping").hide();
+					});
 					
 					
 				});

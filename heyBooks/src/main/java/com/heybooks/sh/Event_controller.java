@@ -14,11 +14,19 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 
 @Controller
-public class HomeController {
-	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String home() {
-		return ".main";
+public class Event_controller {
+	
+	//진행중 이벤트 
+	@RequestMapping(value = "/event_proceed", method = RequestMethod.GET)
+	public String event_proceed() {
+		return ".event_news.event_proceed";
 	}
+	
+	//지난 이벤트 
+		@RequestMapping(value = "/event_ended", method = RequestMethod.GET)
+		public String event_ended() {
+			return ".event_news.event_ended";
+		}
 	
 
 	

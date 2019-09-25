@@ -11,7 +11,7 @@
 					</p>
 					<span>미리보기</span>
 				</div>
-				<div class="item_detail_head_right">
+				<div class="item_detail_head_right"> 
 					<nav aria-label="breadcrumb">
 						<ol class="breadcrumb">
 							<li class="breadcrumb-item"><a href="#">소설</a></li>
@@ -67,7 +67,7 @@
 						</tbody>
 					</table>
 					<div class="button_wrap">
-						<a class="lib_btn"><i class="fas fa-book-open"></i></a><a
+						<a class="lib_btn"><i class="fas fa-heart"></i></a><a
 							class="cart_btn"><i class="fas fa-shopping-cart"></i></a><a
 							class="buy_btn">구매하기</a>
 					</div>

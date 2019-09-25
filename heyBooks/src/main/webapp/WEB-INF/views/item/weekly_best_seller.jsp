@@ -63,16 +63,16 @@
 				<form class="best_seller_date_form">
 					<div class="itemList_top_menu">
 						<div class="best_seller_date">
-							<select class="custom-select">
+							<select class="form-control">
 								<option value="2018">2017년</option>
 								<option value="2017">2018년</option>
 								<option value="2019" selected>2019년</option>
-							</select> <select class="custom-select">
+							</select> <select class="form-control">
 								<option selected>선택</option>
 								<option value="6">6월</option>
 								<option value="7">7월</option>
 								<option value="8" selected>8월</option>
-							</select> <select class="custom-select">
+							</select> <select class="form-control">
 								<option selected>선택</option>
 								<option value="1">1주</option>
 								<option value="2">2주</option>
@@ -85,7 +85,7 @@
 								type="checkbox" id="item_all_check"><label
 								for="item_all_check" class="input_label"></label>
 							</span> <a href="#" class="btn btn-primary">쇼핑카트 담기</a> <a href="#"
-								class="btn btn-primary">서재 보관</a>
+								class="btn btn-primary">위시리스트</a>
 						</div>
 					</div>
 					<div class="itemList_array_menu">
@@ -155,7 +155,7 @@
 									</p>
 									<a href="#" class="buy_btn item_right_btn">바로 구매</a> <a
 										href="#" class="cart_btn item_right_btn">쇼핑카트 담기</a> <a
-										href="#" class="library_btn item_right_btn">서재 보관</a>
+										href="#" class="library_btn item_right_btn">위시리스트</a>
 								</div>
 							</li>
 						</ul>
