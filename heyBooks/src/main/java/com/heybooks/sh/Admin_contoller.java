@@ -15,11 +15,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
  * Handles requests for the application home page.
  */
 @Controller
-public class Item_contoller {
+public class Admin_contoller {
 	
-	@RequestMapping(value = "/item_contoller", method = RequestMethod.GET)
+	@RequestMapping(value = "/admin", method = RequestMethod.GET)
 	public String item_contoller() {
-		return "item_contoller";
+		return ".admin.admin_main";
 	}
 	
 }

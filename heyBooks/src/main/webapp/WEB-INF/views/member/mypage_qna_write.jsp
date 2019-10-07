@@ -28,7 +28,10 @@
 					rows="6"></textarea>
 			</div>
 		</form> 
-		<a class="qna_btn">제출하기</a>
+			<div class="twin_btn qna_btn">
+				<a class="twin_home_btn" href="<c:url value='/mypage_qna'/>">목록보기</a><a
+					class="twin_page_btn">제출하기</a>
+			</div>
 	</div>
 </div>
 

@@ -205,9 +205,9 @@
 					</div>
 				</div>
 			</div>
-			<div class="order_btn">
-				<a class="order_home_btn" href="<c:url value='/cart'/>">카트로 돌아가기</a><a
-					class="order_page_btn">결제하기</a>
+			<div class="twin_btn">
+				<a class="twin_home_btn" href="<c:url value='/cart'/>">카트로 돌아가기</a><a
+					class="twin_page_btn">결제하기</a>
 			</div>
 		</form>
 	</div>

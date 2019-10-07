@@ -25,15 +25,17 @@ a, address, button, div, h1, h2, h3, h4, h5, h6, input, label, li, p,
 	-webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
-}
 
-a:hover {
-	text-decoration: none;
-}
 
+a:hover { 
+	text-decoration: none !important;
+}
+header a:hover { 
+	text-decoration: none !important;
+}
 li {
 	list-style: none;
-}
+} 
 
 .left {
 	float: left;
@@ -376,6 +378,12 @@ header h1 a:hover {
 #new_books .new_books_content dt {
 	margin-bottom: 5px;
 }
+.new_book_bookmark{
+	position:absolute;
+	right:22px;
+	top:0;
+}
+
 
 /* 뉴스,이벤트 */
 #news_event {

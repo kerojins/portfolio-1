@@ -1,0 +1,287 @@
+@charset "utf-8";
+
+@import url(http://fonts.googleapis.com/earlyaccess/nanumgothic.css);
+
+@import
+	url('https://fonts.googleapis.com/css?family=Nanum+Pen+Script&display=swap')
+	;
+
+* {
+	padding: 0;
+	margin: 0;
+}
+.container{
+	width: 70%;
+}
+::-webkit-scrollbar {
+	background: transparent;
+	width: 5px;
+	height: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+	background-color: #888;
+}
+
+::-webkit-scrollbar-thumb:hover {
+	background-color: rgba(0, 0, 0, 0.3);
+}
+
+html, body {
+	width: 100%;
+	height: 100%;
+}
+
+body { 
+	background-color: #fff;
+}
+a, address, button, div, h1, h2, h3, h4, h5, h6, input, label, li, p,
+	select, td, textarea, th, #search_box input::placeholder {
+	font-family: "Nanum Gothic", sans-serif;
+	letter-spacing: -.03em;
+	-webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+legend {
+	display: none;
+}
+
+li {
+	list-style: none;
+}
+/* 헤더시작 */
+#header_top, #header_content {
+	background-color: #0daf91;
+}
+
+#header_content {
+	overflow: hidden;
+}
+
+#header_content_box {
+	overflow: hidden;
+}
+
+#header_content_box #header_left {
+	margin-top: -14px;
+	float: left;
+}
+
+header h1 {
+	marign-top: 10px;
+}
+
+header h1 a {
+	font-family: 'Baloo Tammudu', cursive;
+	color: white;
+	font-size: 26px;
+	letter-spacing: 0.015em;
+	text-shadow: 1px 1px 2px rgba(0, 0, 0, .3);
+}
+
+#header_content #search_box {
+	margin-left: 27%;
+	background-color: white;
+	height: 33px;
+	padding: 1px 0px 0px 15px;
+	width: 300px;
+	float: left;
+	margin-top: 13px;
+}
+
+#header_content #search_box input {
+	display: inline-block;
+	height: 30px;
+	border: none;
+	margin-left: 5px;
+	width: 250px;
+	font-size: 14px;
+	font-weight: 700;
+	color: #555;
+}
+
+#header_content #search_box  #book_search_input:focus {
+	outline: none;
+}
+
+#header_content #search_box input::placeholder {
+	font-size: 14px;
+	color: #0daf91;;
+	font-weight: 700;
+}
+
+#header_content #search_box  #book_search_input:focus::placeholder {
+	color: #add1ef;
+}
+
+#header_content #search_box span {
+	position: relative;
+	top: 2px;
+}
+
+#header_content #search_box i {
+	color: #0daf91;
+	display: inline-block;
+}
+
+#header_content #header_right {
+	margin-top: 19px;
+	float: right;
+}
+
+#header_content #header_right span {
+	display: inline-block;
+	margin-left: 10px;
+}
+
+#header_content #header_right a {
+	color: white;
+	text-shadow: 1px 1px 2px rgba(0, 0, 0, .3);
+}
+
+#header_middle {
+	height: 44px;
+	background-color: #484848;
+	position: relative;
+	border-bottom: 1px solid #e6e8eb;
+}
+
+ 
+#header_middle #header_middle_category button {
+	display: inline-block;
+	padding: 10px 0px;
+	border: none;
+	background-color: transparent;
+	font-size: 15px;
+	font-weight: 600;
+	color: #efefef;
+	float: left;
+	text-align: left;
+	width: 105px;
+}
+
+#header_middle #header_middle_category button:focus {
+	outline: none;
+}
+
+#header_middle:after {
+	display: inline-block;
+	content: '';
+	clear: both;
+}
+#header_middle_category{overflow: hidden;}
+#header_middle #header_middle_category span {
+	display: inline-block;
+	margin-right: 15px;
+	position: relative;
+	top: 1px;
+	float: left;
+}
+
+#header_middle #header_middle_category span i {
+	color: #efefef;
+}
+
+#header_middle #header_middle_category ul.admin_nav li {
+	float: left;
+	margin-top: 10px;
+	margin-right: 40px;
+}
+
+#header_middle #header_middle_right li {
+	float: left;
+	margin-top: 10px;
+	margin-left: 15px;
+} 
+ 
+#header_middle #header_middle_category ul li a, #header_middle #header_middle_right li a
+	{
+	font-size: 15px;
+	color: #efefef; 
+}
+
+#header_middle_box .admin_nav {
+	float: left;
+	margin-left: 26%;
+}
+
+#header_middle_box #header_middle_right {
+	float: right;
+}
+
+/* content 영역*/
+.admin_home_left{
+	width: 82%;
+	float: left;
+	
+}
+.admin_home_left .brief_title{
+	font-size: 14px;
+	font-weight: 600;
+	float:left;
+	padding-left: 8px;
+	color: #555;
+}
+.admin_brief{
+	overflow: hidden;
+	padding: 10px 5px 8px;
+	border: 1px solid #ddd;
+	border-top:none;
+} 
+
+.admin_home_left .admin_brief p{
+	float: left;
+	margin-left: 7px;
+}
+.admin_home_right{
+	width: 17%;
+	float: left;
+	margin-left: 1%;
+} 
+.brief_content{
+	margin-right: 15px;
+	float: left;
+} 
+.brief_subtitle{
+	font-weight: 600;
+	color: #525252;
+	margin-right: 4px;
+}
+.brief_content p i{
+	display: inline-block;
+	padding: 0px 5px;
+	border-radius: 5px; 
+	color: #0daf91;
+	font-weight: 600; 
+	margin-right: 2px;
+}
+.admin_preview{
+	position:relative;
+	border: 1px solid #ddd;
+	border-top: none;
+	overflow: hidden;
+}
+.admin_preview>div{
+	padding: 10px 15px;
+	border-right: 1px solid #ddd;
+}
+.admin_preview>div:last-child{
+	border: none;
+}
+  
+.admin_preview h2{
+	text-align: center;
+	font-size: 18px;
+	font-weight: 600;
+}
+.admin_preview h2 i{
+	display: block;
+	font-size: 30px;
+	margin-bottom: 10px;
+}
+.admin_preview span{
+	position: absolute;
+	right:10px;
+	top:5px;
+}

@@ -143,8 +143,11 @@
 									</p>
 								</div>
 							</div>
-						</div>
+						</div> 
 					</div>
+					<p class="new_book_bookmark">
+						<img src="<c:url value='/resources/images/new_book_mark.png'/>">
+					</p>
 				</article>
 				<article id="news_event" class="right">
 					<h2 id="news_event_title">이벤트</h2>
@@ -911,7 +914,7 @@
 			<div class="container">
 				<article id="favorite_item">
 					<div class="aticle_title_layout">
-						<h2>MY 관심있는 책</h2>
+						<h2>MY 관심있는 분야</h2>
 						<span class="allView_btn"><a href="#">전체보기</a></span> <span
 							class="set_cate_btn"><button>분야 설정</button></span>
 					</div>

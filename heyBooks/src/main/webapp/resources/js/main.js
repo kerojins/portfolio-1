@@ -244,6 +244,7 @@ $("document")
 							box.css("height","232px");
 						} 
 					});
+					// 상세페이지 리뷰 대댓글
 					$(".review_reply_btn").click(function(){
 						var reply= $(this).parent().next();
 						var reply_type = reply.attr("data-type");
@@ -274,5 +275,19 @@ $("document")
 						$(".change_order_shipping").hide();
 					});
 					
-					
+					//마이페이지 - 리뷰관리
+					$(".review_modi_btn").click(function(){
+						$(".review_star_box").empty();
+						$(".review_modify_box").hide();
+						$(".review_list_box_content").show();
+						$(this).parents(".review_list_box_content").hide();
+						$(this).parents(".review_list_box_content").next().show();
+						$(this).parents(".review_list_box").children().find(".review_star_box").append('<div id="reviewStars-input"> <input id="star-4" type="radio" name="reviewStars"> <label title="gorgeous" for="star-4"></label> <input id="star-3"type="radio" name="reviewStars"> <label title="good"for="star-3"></label> <input id="star-2" type="radio"name="reviewStars"> <label title="regular"for="star-2"></label> <input id="star-1" type="radio"name="reviewStars"> <label title="poor" for="star-1"></label><input id="star-0" type="radio" name="reviewStars"> <label title="bad" for="star-0"></label></div>')
+					});      
+					           
+					$(".review_del_btn").click(function(){ 
+						$(".review_star_box").empty();
+						$(this).parents(".review_modify_box").hide();
+						$(this).parents(".review_modify_box").prev().show();
+					});
 				});

@@ -33,7 +33,7 @@ option {
 	padding: 3px 0;
 }
 
-#ui-datepicker-div{
+#ui-datepicker-div {
 	z-index: 999 !important;
 	clip: auto !important;
 }
@@ -1076,9 +1076,7 @@ form.best_seller_date_form button {
 #reviewStars-input input:checked ~ label, #reviewStars-input label,
 	#reviewStars-input label:hover, #reviewStars-input label:hover ~ label
 	{
-	background:
-		url('http://positivecrash.com/wp-content/uploads/ico-s71a7fdede6.png')
-		no-repeat;
+	background: url(../images/review_big_star.png) no-repeat;
 }
 
 #reviewStars-input {
@@ -1292,6 +1290,7 @@ form.best_seller_date_form button {
 	float: left;
 	margin-left: 20px;
 	width: 500px;
+	padding-right:10px;
 }
 
 .review_list_right .review_list_btn {
@@ -1324,6 +1323,7 @@ form.best_seller_date_form button {
 	margin-top: 15px;
 	border-top: 1px solid #ddd;
 	display: none;
+	overflow: hidden;
 }
 
 .review_list_right .add_reply textarea {
@@ -1707,24 +1707,24 @@ td.order_total_price span {
 	font-size: 17px;
 }
 
-.order_btn {
+.twin_btn {
 	width: 410px;
 	margin: 50px auto 40px;
 }
 
-.order_btn .order_home_btn {
+.twin_btn .twin_home_btn {
 	/* background: #eee; */
 	border: 1px solid #0e7eda;
 	color: #0e7eda !important;
 }
 
-.order_btn .order_page_btn {
+.twin_btn .twin_page_btn {
 	background: #0e7eda;
 	color: white !important;
 	margin-left: 10px;
 }
 
-.order_btn a {
+.twin_btn a {
 	text-align: center;
 	display: inline-block;
 	width: 200px;
@@ -2505,7 +2505,8 @@ td.order_total_price span {
 	font-weight: 600;
 	margin-bottom: 8px;
 }
-.mypage_order_detail{
+
+.mypage_order_detail {
 	margin-top: 30px;
 }
 
@@ -2724,11 +2725,13 @@ td.order_total_price span {
 	/* border: 1px solid #ccc; */
 	background: #e1f0fd;
 }
-.order_period:after{
+
+.order_period:after {
 	content: '';
-	display: block; 
+	display: block;
 	clear: both;
 }
+
 .mypage_order .order_table {
 	margin-top: 20px;
 	border-top: 2px solid #087ddc;
@@ -2778,21 +2781,23 @@ td.order_total_price span {
 	height: 25px;
 }
 
-.my_order_shipping,.change_order_shipping{
+.my_order_shipping, .change_order_shipping {
 	margin-top: 50px
 }
-  
+
 .my_order_shipping h4, .change_order_shipping h4 {
 	float: left;
 	margin: 0 !important;
 }
- 
+
 .change_order_shipping {
 	display: none;
 }
-.my_pay_info{   
+
+.my_pay_info {
 	margin-top: 40px;
 }
+
 .recent_shipping {
 	font-size: 12px;
 	padding: 4px 8px;
@@ -3544,7 +3549,6 @@ tb_list2 td.amount li.bld strong {
 	padding-left: 13px;
 }
 
-
 .info_space {
 	display: inline-block;
 	width: 100%;
@@ -3557,7 +3561,7 @@ tb_list2 td.amount li.bld strong {
 	font-size: 14px;
 	color: #a5a5a5 !important;
 }
- 
+
 .info_space .title {
 	display: block;
 	overflow: hidden;
@@ -3748,9 +3752,7 @@ tb_list2 td.amount li.bld strong {
 	width: 100%;
 	height: 39px;
 	margin: -9px 0;
-	background:
-		url(../images/mileage_title.gif)
-		repeat-x;
+	background: url(../images/mileage_title.gif) repeat-x;
 	text-align: center;
 }
 
@@ -3758,60 +3760,227 @@ tb_list2 td.amount li.bld strong {
 	width: 110px;
 	height: 39px;
 	margin: 0 auto;
-	background:
-		url(../images/mileage_title2.gif)
-		no-repeat;
+	background: url(../images/mileage_title2.gif) no-repeat;
 	line-height: 39px;
 	font-family: Tahoma, Geneva, sans-serif;
 	font-size: 16px;
 	font-weight: normal;
 	color: #000
 }
-#_listContentArea{
+
+#_listContentArea {
 	margin-top: 40px;
-}  
-.my_mileage_count{
-    float: left;
-    margin-left: 55px;
-    text-align: center;
-    padding-left: 55px;
-    border-left: 1px solid #ccc;
-}    
-.my_mileage_count_title{
+}
+
+.my_mileage_count {
+	float: left;
+	margin-left: 55px;
+	text-align: center;
+	padding-left: 55px;
+	border-left: 1px solid #ccc;
+}
+
+.my_mileage_count_title {
 	font-weight: 600;
 	font-size: 14px;
-} 
-.my_mileage_count p{ 
+}
+
+.my_mileage_count p {
 	font-size: 29px;
-	color: #0e7eda;  
+	color: #0e7eda;
 	font-weight: 600;
 }
-.my_mileage_count p span{
+
+.my_mileage_count p span {
 	font-size: 13px;
 	margin-left: 3px;
 }
 
 /* 마이페이지 - 1:1문의 */
-.my_qna_table th ,.my_qna_table td{
+.my_qna_table th, .my_qna_table td {
 	font-size: 14px;
-} 
-a.qna_btn {
-    text-align: center;
-    display: block;
-    width: 170px;
-    height: 50px; 
-    margin: 20px auto;
-    line-height: 50px;
-    border-radius: 5px;
-    font-weight: 600;
-    font-size: 16px;
-    background: #0e7eda;
-    color: white !important;
 }
+
+a.qna_btn {
+	text-align: center;
+	display: block;
+	width: 170px;
+	height: 50px;
+	margin: 20px auto;
+	line-height: 50px;
+	border-radius: 5px;
+	font-weight: 600;
+	font-size: 16px;
+	background: #0e7eda;
+	color: white !important;
+}
+
 .my_qna_form {
 	margin-top: 30px;
 }
-.my_qna_form label{ 
+
+.my_qna_form label {
 	font-weight: 600;
 	margin-bottom: 5px;
 }
+
+.qna_detail_box span {
+	width: 10%;
+	float: left;
+	font-size: 23px;
+	font-weight: 600;
+	position: relative;
+	top: -5px;
+}
+
+.qna_detail_box p {
+	width: 90%;
+	float: left;
+	font-size: 14px;
+}
+
+.qna_detail_box {
+	padding: 30px 30px;
+	height: 150px;
+	margin-top: 15px;
+}
+
+.my_qna_table {
+	border-top: 2px solid #087ddc;
+}
+
+.question_box {
+	background-color: #f8f8f8;
+}
+
+.answer_box {
+	background-color: #fcffe2;
+}
+
+.my_qna_table th {
+	background: #f0f8ff;
+	border-bottom: 1px solid #dee2e6 !important;
+}
+
+.qna_btn {
+	width: 310px;
+	margin: 50px auto 40px;
+}
+
+.qna_btn .twin_home_btn { 
+	/* background: #eee; */
+	border: 1px solid #0e7eda;
+	color: #0e7eda !important;
+}
+
+.qna_btn .twin_page_btn {
+	background: #0e7eda;
+	color: white !important;
+	margin-left: 10px;
+}
+
+.qna_btn a {
+	text-align: center;
+	display: inline-block;
+	width: 150px;
+	height: 40px;
+	line-height: 40px;
+	border-radius: 5px;
+	font-weight: 600;
+	font-size: 17px;
+}
+
+/* 리뷰관리 */
+.review_item {
+	font-size: 14px;
+} 
+.review_list_box{
+	overflow: hidden;
+}
+.review_modify_box {
+	display: none;
+}
+
+.modify_review textarea {
+	width: 100%;
+	border: 1px solid #bbb;
+	padding: 8px;
+}
+
+.review_modify_box #reviewStars-input {
+	padding: 0;
+	margin: 5px 0;
+}
+
+.review_modify_box #reviewStars-input label {
+	width: 22px;
+	height: 20px;
+	margin-right: 4px;
+}
+
+.review_modify_box #reviewStars-input input:checked ~ label,
+	.review_modify_box #reviewStars-input label, .review_modify_box #reviewStars-input label:hover,
+	.review_modify_box #reviewStars-input label:hover ~ label {
+	background: url(../images/review_small_star.png) no-repeat;
+}
+
+.review_modify_box #reviewStars-input label:hover, .review_modify_box #reviewStars-input label:hover 
+	~ label {
+	background-position: 0 -20px !important;
+	height: 20px;
+	width: 22px;
+}
+
+.review_modify_box #reviewStars-input input:checked ~ label {
+	background-position: 0 -20px !important;
+	height: 20px;
+	width: 22px;
+}
+
+.review_modify_box #reviewStars-input input {
+	width: 22px;
+	height: 20px;
+	display: none;
+} 
+ 
+.review_modify_box .item_select_option {
+	float: left;
+} 
+.review_modify_box .review_list_btn{
+	float:right;
+	margin-top: 5px; 
+} 
+
+.my_review_box{
+	background: #ebf2f9;
+}
+.my_review_box .star_before{
+	margin-left: 0;
+} 
+.review_form .my_review_box{
+	padding: 20px 0 15px 15px;
+} 
+.book_review_write .big_star_box {
+	width: auto;
+    padding: 0;
+} 
+.big_star_box .star_before, .big_star_box .star_after, .big_star_box .star_after:after{
+	width: 200px;
+	height: 40px;
+}	
+#reviewStars-input .caption span{
+	margin-left: 3px;
+	font-size: 27px; 
+	color:#fa722e; 
+	font-weight: 600; 
+	font-style: italic;
+}
+.my_review_write #reviewStars-input .caption{
+	letter-spacing: 0;
+    font-size: 17px;
+    color: #5f5e5e;
+    font-weight: bold; 
+}
+.my_review_box .review_btn_left{
+	float: left;
+} 

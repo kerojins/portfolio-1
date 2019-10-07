@@ -22,7 +22,7 @@
 					<tbody>
 						<tr> 
 							<td scope="row">1</td>
-							<td><a>Mark</a></td>
+							<td><a href="<c:url value='/mypage_qna_detail'/>">Mark</a></td>
 							<td>2019.05.31</td>
 							<td><span>답변완료</span></td> 
 						</tr> 

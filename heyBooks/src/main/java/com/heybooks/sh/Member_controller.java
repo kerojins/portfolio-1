@@ -94,4 +94,15 @@ public class Member_controller {
 		return ".member.mypage_qna_write";
 	}
 
+	// 마이페이지 - 1:1문의 상세내용
+	@RequestMapping(value = "/mypage_qna_detail", method = RequestMethod.GET)
+	public String mypage_qna_detail() {
+		return ".member.mypage_qna_detail";
+	}
+
+	// 마이페이지 - 리뷰관리
+	@RequestMapping(value = "/mypage_review", method = RequestMethod.GET)
+	public String mypage_review() {
+		return ".member.mypage_review";
+	}
 }

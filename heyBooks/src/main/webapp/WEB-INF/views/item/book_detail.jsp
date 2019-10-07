@@ -11,7 +11,7 @@
 					</p>
 					<span>미리보기</span>
 				</div>
-				<div class="item_detail_head_right"> 
+				<div class="item_detail_head_right">
 					<nav aria-label="breadcrumb">
 						<ol class="breadcrumb">
 							<li class="breadcrumb-item"><a href="#">소설</a></li>
@@ -240,12 +240,105 @@
 										<input type="checkbox" id="check_spoiler"
 											class="item_checking"><label for="check_spoiler"
 											class="input_label"></label><label for="check_spoiler"
-											style="font-size: 15px; margin-right: 5px; margin-top: 2px; color: #595e63;">
+											style="font-size: 14px; margin-right: 5px; margin-top: 2px; color: #595e63;">
 											스포일러가 있습니다. </label>
 										<button type="submit" class="btn review_btn">리뷰 남기기</button>
 									</p>
 								</div>
 							</div>
+
+							<%-- 댓글남긴경우 --%>
+
+							<div class="book_review_write my_review_write">
+								<div class="star_box">
+									<p class="small_caption">이 책의 별점</p>
+									<p class="count_txt">4.8</p>
+									<span class="star_before"><span class="star_after"></span></span>
+								</div>
+								<div id="reviewStars-input">
+									<p class="caption">
+										내가 남긴 별점<span>5.0</span>
+									</p>
+									<input id="star-4" type="radio" name="reviewStars" /> <label
+										title="gorgeous" for="star-4"></label> <input id="star-3"
+										type="radio" name="reviewStars" /> <label title="good"
+										for="star-3"></label> <input id="star-2" type="radio"
+										name="reviewStars" /> <label title="regular" for="star-2"></label>
+
+									<input id="star-1" type="radio" name="reviewStars" /> <label
+										title="poor" for="star-1"></label> <input id="star-0"
+										type="radio" name="reviewStars" /> <label title="bad"
+										for="star-0"></label>
+								</div> 
+							</div>
+							<div class="review_list_box my_review_box">
+								<div class="review_list_box_content">
+									<div class="review_list_left">
+										<p>
+											<span class="review_date">2019.03.05</span>
+										</p>
+									</div>
+									<div class="review_list_right">
+										<p class="review_content">너무 재밌고 몰입하기 좋았어요.너무 재밌고 몰입하기
+											좋았어요너무 재밌고 몰입하기 좋았어요너무 재밌고 몰입하기 좋았어요너무 재밌고 몰입하기 좋았어요</p>
+										<p class="review_list_btn review_btn_left">
+											<span class="review_modi_btn"><a>수정</a></span> <span
+												class="review_del_btn"><a>삭제</a></span>
+										</p>
+										<p class="review_list_btn">
+											<span class="review_reply_btn"><i
+												class="fas fa-comment"></i> 댓글</span><span><i
+												class="fas fa-thumbs-up"></i>1</span>
+										</p>
+										<div class="add_reply" data-type="hide">
+											<ul>
+												<li class="review_content">
+													<p>너무 재밌고너무 재밌고너무 재밌고너무 재밌고너무 재밌고너무 재밌고너무 재밌</p>
+													<p class="add_reply_info">
+														<span>kerori</span><span>2019-02-33 23:11:44</span>
+													</p>
+												</li>
+												<li class="review_content">
+													<p>읽을만 해요!!!</p>
+													<p class="add_reply_info">
+														<span>kerori2</span><span>2019-02-33 23:11:44</span>
+													</p>
+												</li>
+											</ul>
+											<textarea class="review_reply_write"></textarea>
+											<button type="submit" class="btn review_btn">댓글 달기</button>
+										</div>
+									</div>
+								</div>
+								<div class="review_modify_box">
+									<div class="review_list_left">
+										<div class="review_star_box"></div>
+										<p>
+											<span class="review_date">2019.03.05</span>
+										</p>
+									</div>
+									<div class="review_list_right modify_review">
+										<p class="review_content">
+											<textarea rows="5"></textarea>
+										</p>
+										<p class="item_select_option">
+											<input type="checkbox" id="check_spoiler"
+												class="item_checking"><label for="check_spoiler"
+												class="input_label"></label><label for="check_spoiler"
+												style="font-size: 14px; margin-right: 5px; margin-top: 2px; color: #595e63;">
+												스포일러가 있습니다. </label>
+										</p>
+										<p class="review_list_btn ">
+											<span class="review_del_btn"><a>취소</a></span> <span
+												class="review_reply_btn"><a>수정완료</a></span>
+										</p>
+
+									</div>
+								</div>
+							</div>
+
+
+
 							<div class="review_list_top">
 								<p>
 									전체 <span>9개</span>의 댓글이 있습니다.
