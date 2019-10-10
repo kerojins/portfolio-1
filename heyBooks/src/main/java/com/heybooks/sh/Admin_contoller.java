@@ -11,9 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-/**
- * Handles requests for the application home page.
- */
+
 @Controller
 public class Admin_contoller {
 	
@@ -22,4 +20,10 @@ public class Admin_contoller {
 		return ".admin.admin_main";
 	}
 	
+	@RequestMapping(value = "/admin_item_list", method = RequestMethod.GET)
+	public String admin_item_list() {
+		return ".admin.admin_item_list";
+	}
+	
 }
+ 

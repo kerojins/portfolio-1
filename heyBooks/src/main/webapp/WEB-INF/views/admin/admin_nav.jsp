@@ -39,80 +39,18 @@
 					</button>
 					<ul class="admin_nav">
 						<li><a href="/sh/weekly_best_seller">홈</a></li>
-						<li><a href="/sh/new_book">주문</a></li>
+						<li><a href="<c:url value='/admin_item_list'/>">주문</a></li>
 						<li><a href="/sh/domestic_book">상품</a></li>
 						<li><a href="/sh/oversea_book">회원</a></li>
 						<li><a href="/sh/event_proceed">게시판</a></li>
 						<li><a href="/sh/event_proceed">매출</a></li>
 					</ul>
-					<ul id="header_middle_right"> 
+					<ul id="header_middle_right">
 						<li><a href="/sh/order">작가관리</a></li>
 						<li><a href="#">AD</a></li>
 					</ul>
 				</nav>
-
 			</div>
-		</div>
-	</div>
-	<div class="admin_home_content">
-		<div class="container">
-			<div class="admin_home_left">
-				<div class="admin_brief">
-					<div class="today_info brief_content">
-						<span class="brief_title">오늘 <i
-							class="fas fa-chevron-right"></i></span>
-						<p>
-							<span class="brief_subtitle">결제</span><i>3</i>건
-						</p>
-						<p>
-							<span class="brief_subtitle">매출</span><i>3,0000</i>원
-						</p>
-						<p>
-							<span class="brief_subtitle">가입</span><i>0</i>명
-						</p>
-						<p>
-							<span class="brief_subtitle">방문</span><i>20</i>명
-						</p>
-					</div>
-					<div class="total_info brief_content">
-						<span class="brief_title">누적 <i
-							class="fas fa-chevron-right"></i></span>
-						<p>
-							<span class="brief_subtitle">회원</span><i>13</i>명
-						</p>
-						<p>
-							<span class="brief_subtitle">적립금</span><i>4324,343</i>원
-						</p>
-					</div>
-				</div>
-				<div class="admin_preview">
-					<div class="col-md-3">
-						<span><i class="fas fa-plus"></i></span>
-						<h2>
-							<i class="fas fa-truck"></i> 주문처리
-						</h2>
-					</div>
-					<div class="col-md-3">
-						<span><i class="fas fa-plus"></i></span>
-						<h2>
-							<i class="fas fa-book"></i> 상품현황
-						</h2>
-					</div>
-					<div class="col-md-3">
-						<span><i class="fas fa-plus"></i></span>
-						<h2>
-							<i class="far fa-comment-alt"></i> 1:1문의
-						</h2>
-					</div>
-					<div class="col-md-3">
-						<span><i class="fas fa-plus"></i></span>
-						<h2>
-							<i class="far fa-list-alt"></i> 리뷰관리
-						</h2>
-					</div>
-				</div>
-			</div>
-			<div class="admin_home_right"></div>
 		</div>
 	</div>
 </header>

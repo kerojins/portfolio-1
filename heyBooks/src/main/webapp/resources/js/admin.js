@@ -1,74 +1,22 @@
-/*global $, console*/
-/*
-  By Mostafa Omar
-	https://www.facebook.com/MostafaOmarIbrahiem
-*/
-$(function () {
-
-  'use strict';
-
-  (function () {
-
-    var aside = $('.side-nav'),
-
-        showAsideBtn = $('.show-side-btn'),
-
-        contents = $('#contents');
-
-    showAsideBtn.on("click", function () {
-
-      $("#" + $(this).data('show')).toggleClass('show-side-nav');
-
-      contents.toggleClass('margin');
-
+$(document).ready(function() {
+  $('.collapse.in').prev('.panel-heading').addClass('active');
+  $('#accordion, #bs-collapse')
+    .on('show.bs.collapse', function(a) {
+      $(a.target).prev('.panel-heading').addClass('active');
+    })
+    .on('hide.bs.collapse', function(a) {
+      $(a.target).prev('.panel-heading').removeClass('active');
     });
-
-    if ($(window).width() <= 767) {
-
-      aside.addClass('show-side-nav');
-
-    }
-    $(window).on('resize', function () {
-
-      if ($(window).width() > 767) {
-
-        aside.removeClass('show-side-nav');
-
-      }
-
-    });
-
-    // dropdown menu in the side nav
-    var slideNavDropdown = $('.side-nav-dropdown');
-
-    $('.side-nav .categories li').on('click', function () {
-
-      $(this).toggleClass('opend').siblings().removeClass('opend');
-
-      if ($(this).hasClass('opend')) {
-
-        $(this).find('.side-nav-dropdown').slideToggle('fast');
-
-        $(this).siblings().find('.side-nav-dropdown').slideUp('fast');
-
-      } else {
-
-        $(this).find('.side-nav-dropdown').slideUp('fast');
-
-      }
-
-    });
-
-    $('.side-nav .close-aside').on('click', function () {
-
-      $('#' + $(this).data('close')).addClass('show-side-nav');
-
-      contents.removeClass('margin');
-
-    });
-
-  }());
-
- 
-
+  
+  //관리자 메인 - 메모
+  $('.memo_write textarea').click(function(){
+	  $(this).css('height','120px');
+	  $(this).text('');
+	  $('.memo_write i').show();
+  });
+  $('.memo_write i').click(function(){
+	  $(this).prev().css('height','34px');
+	  $(this).prev().text('메모를 남기세요');
+	  $('.memo_write i').hide();
+  });
 });
