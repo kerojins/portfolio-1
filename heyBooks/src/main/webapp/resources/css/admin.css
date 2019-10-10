@@ -6,7 +6,7 @@
 	url('https://fonts.googleapis.com/css?family=Nanum+Pen+Script&display=swap')
 	;
 
-* {
+*{
 	padding: 0;
 	margin: 0;
 }
@@ -612,28 +612,31 @@ a.list-group-item, button.list-group-item {
 
 /* 아이템 리스트 */
 .admin_item_list table {
-	margin: 10px auto;
+	margin: 15px auto 0;
 }
-.admin_item_list table select{
+
+.admin_item_list table select {
 	padding: 4px;
 }
-.admin_item_list table input[type=text]{
+
+.admin_item_list table input[type=text] {
 	padding: 2px;
 }
+
 .admin_item_list .btn {
 	padding: 0;
 }
 
-.admin_item_list{
+.admin_item_list  .search-form-container {
 	background: #f9fbfc;
-	padding: 15px 0 10px 0;
+	padding-bottom: 25px;
+	border-bottom: 2px solid #ddd;
 	
 }
 
 div.search-form-container table.search-form-table {
 	margin: auto;
 }
-
 
 div.search-form-container table.sf-option-table th {
 	height: 30px;
@@ -652,14 +655,20 @@ div.search-form-container table.sf-option-table td {
 	padding-right: 0px;
 	font-size: 12px;
 	color: #555;
+	padding: 5px;
 }
 
 div.search-form-container table.sf-keyword-table {
 	width: 100%;
-	border: 1px solid #3385d4;
+	border: 1px solid #0daf91;
 	border-collapse: collapse;
 	background-color: #fff;
 	table-layout: fixed;
+}
+.admin_item_list_box table th{
+	text-align: center;
+	padding: 9px 0;
+	background: #eee;
 }
 
 div.search-form-container table.sf-keyword-table .sfk-td-txt {
@@ -687,21 +696,13 @@ div.search-form-container table.sf-keyword-table .sfk-td-btn button {
 	width: 45px;
 	height: 30px;
 	border: 0px;
-	background:
-		url('/admin/skin/default/images/common/icon/admin_search_bt.gif')
-		no-repeat center center;
+	background: #0daf91;
 	cursor: pointer;
-}
-
-div.search-form-container table.sf-keyword-table .sfk-td-btn button:hover
-	{
-	background:
-		url('/admin/skin/default/images/common/icon/admin_search_bt2.gif');
 }
 
 div.search-form-container table.sf-keyword-table .sfk-td-btn button span
 	{
-	display: none
+	color: white;
 }
 
 input.social_goods_group_name {
@@ -725,4 +726,45 @@ div.skin-add-form table.sf-option-table  li {
 div.skin-add-form table.sf-option-table  li:first-child {
 	width: 90px;
 	padding-right: 0;
+}
+
+.admin_item_list input[type=button] {
+	font-size: 12px;
+	padding: 2px 3px;
+}
+
+.sf-option-table span {
+	font-weight: 500;
+}
+
+.admin_item_list input[type=checkbox] {
+	position: relative;
+	top: 3px;
+}
+
+.admin_item_list label {
+	margin-right: 5px;
+}
+.admin_item_list_box table{
+	width: 100%;
+	padding-top:5px;
+} 
+.admin_item_list_box table td, .admin_item_list_box table td a{
+	font-size: 13px;
+}
+.admin_item_lis_top {
+	overflow: hidden;
+}
+.admin_item_lis_top p{
+	float:left;
+	margin-bottom: 0;
+}
+.admin_item_lis_top span{
+	font-weight: 600;
+}
+.admin_select_list {
+	float: right;
+}
+.admin_item_lis_top{
+	margin-top: 15px;
 }
