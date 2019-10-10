@@ -729,8 +729,10 @@ div.skin-add-form table.sf-option-table  li:first-child {
 }
 
 .admin_item_list input[type=button] {
-	font-size: 12px;
-	padding: 2px 3px;
+	font-size: 11px;
+    padding: 6px 7px;
+    background: #fff;
+    border: 1px solid #ddd;
 }
 
 .sf-option-table span {
@@ -752,19 +754,27 @@ div.skin-add-form table.sf-option-table  li:first-child {
 .admin_item_list_box table td, .admin_item_list_box table td a{
 	font-size: 13px;
 }
-.admin_item_lis_top {
+.admin_item_list_top {
 	overflow: hidden;
 }
-.admin_item_lis_top p{
+.admin_item_list_top p{
 	float:left;
 	margin-bottom: 0;
 }
-.admin_item_lis_top span{
+.admin_item_list_top span{
 	font-weight: 600;
 }
 .admin_select_list {
 	float: right;
 }
-.admin_item_lis_top{
+.admin_item_list_top{
 	margin-top: 15px;
 }
+
+/* 관리자 회원 관리 */
+.admin_item_list input[type=radio]{
+	position: relative;
+	top:2px;
+}
+
+ input[type=radio]

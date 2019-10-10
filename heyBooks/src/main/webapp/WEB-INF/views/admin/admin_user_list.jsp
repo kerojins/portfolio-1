@@ -15,8 +15,9 @@
 											<tbody>
 												<tr>
 													<td class="sfk-td-txt"><input type="text"
-														name="keyword" value="" title="상품명, 상품코드"
-														placeholder="상품명, 상품코드"></td>
+														name="keyword" value=""
+														title="이름, 아이디, 이메일, 전화번호, 핸드폰(뒷자리4), 주소, 닉네임"
+														placeholder="이름, 아이디, 이메일, 전화번호, 핸드폰(뒷자리4), 주소, 닉네임"></td>
 													<td class="sfk-td-btn"><button type="submit">
 															<span>검색</span>
 														</button></td>
@@ -48,7 +49,7 @@
 							</colgroup>
 							<tbody>
 								<tr>
-									<th>등록일</th>
+									<th>가입일</th>
 									<td colspan="5"><input type="text" name="sdate" value=""
 										class="datepicker line hasDatepicker" maxlength="10" size="10"
 										default_none="" id="datepicker_67009428_0"><img
@@ -73,23 +74,58 @@
 											id="all" class="select_date"></span></td>
 								</tr>
 								<tr>
-									<th>카테고리</th>
-									<td colspan="5"><select class="line" name="category1"
-										size="1" style="width: 100px;"><option value="">=
-												1차 분류 =</option>
-											<option value="0001">카메라</option>
-											<option value="0002">렌즈</option>
-											<option value="0003">플래쉬</option>
-											<option value="0004">메모리</option>
-
-									</select> <select class="line" name="category2" size="1"
-										style="width: 100px;"><option value="">= 2차
-												분류 =</option></select> <select class="line" name="category3" size="1"
-										style="width: 100px;"><option value="">= 3차
-												분류 =</option></select></td>
+									<th>최종 방문일</th>
+									<td colspan="5"><input type="text" name="sdate" value=""
+										class="datepicker line hasDatepicker" maxlength="10" size="10"
+										default_none="" id="datepicker_67009428_0"><img
+										class="ui-datepicker-trigger"
+										src="<c:url value='/resources/images/icon_calendar.gif'/>"
+										alt="..." title="..."> &nbsp;<span class="gray">-</span>&nbsp;
+										<input type="text" name="edate" value=""
+										class="datepicker line hasDatepicker" maxlength="10" size="10"
+										default_none="" id="datepicker_67009428_1"><img
+										class="ui-datepicker-trigger"
+										src="<c:url value='/resources/images/icon_calendar.gif'/>"
+										alt="..." title="..."> &nbsp;&nbsp; <span
+										class="btn small"><input type="button" value="오늘"
+											id="today" class="select_date"></span> <span
+										class="btn small"><input type="button" value="일주일"
+											id="1week" class="select_date"></span> <span
+										class="btn small"><input type="button" value="1개월"
+											id="1month" class="select_date"></span> <span
+										class="btn small"><input type="button" value="3개월"
+											id="3month" class="select_date"></span> <span
+										class="btn small"><input type="button" value="전체"
+											id="all" class="select_date"></span></td>
 								</tr>
 								<tr>
-									<th>브랜드</th>
+									<th>생일</th>
+									<td colspan="5"><input type="text" name="sdate" value=""
+										class="datepicker line hasDatepicker" maxlength="10" size="10"
+										default_none="" id="datepicker_67009428_0"><img
+										class="ui-datepicker-trigger"
+										src="<c:url value='/resources/images/icon_calendar.gif'/>"
+										alt="..." title="..."> &nbsp;<span class="gray">-</span>&nbsp;
+										<input type="text" name="edate" value=""
+										class="datepicker line hasDatepicker" maxlength="10" size="10"
+										default_none="" id="datepicker_67009428_1"><img
+										class="ui-datepicker-trigger"
+										src="<c:url value='/resources/images/icon_calendar.gif'/>"
+										alt="..." title="..."> &nbsp;&nbsp; <span
+										class="btn small"><input type="button" value="오늘"
+											id="today" class="select_date"></span> <span
+										class="btn small"><input type="button" value="일주일"
+											id="1week" class="select_date"></span> <span
+										class="btn small"><input type="button" value="1개월"
+											id="1month" class="select_date"></span> <span
+										class="btn small"><input type="button" value="3개월"
+											id="3month" class="select_date"></span> <span
+										class="btn small"><input type="button" value="전체"
+											id="all" class="select_date"></span></td>
+								</tr>
+
+								<tr>
+									<th>등급</th>
 									<td><select class="line" name="brands1" size="1"
 										style="width: 100px;"><option value="">= 선택
 												=</option>
@@ -100,44 +136,38 @@
 											<option value="0005">짓죠</option>
 											<option value="0006">LG</option>
 											<option value="0007">SK-II</option></select></td>
-									<th>작가</th>
-									<td><select class="line" name="brands1" size="1"
-										style="width: 100px;"><option value="">= 선택
-												=</option>
-											<option value="0001">Rowan</option>
-											<option value="0002">캐논</option>
-											<option value="0003">시그마</option>
-											<option value="0007">SK-II</option></select></td>
+									<th>성별</th>
+									<td><label for="male"><input id="male" 
+											type="radio" name="gender" value="normal"> <span>남자</span></label>
+										<label for="female"><input id="female" type="radio"
+											name="gender" value="runout"> <span>여자</span></label></td>
 								</tr>
 
 								<tr>
-									<th>정상가</th>
+									<th>포인트</th>
 									<td no="0"><input type="text" name="sprice" value=""
-										size="7" class="line onlyfloat" row_group="price"> - <input
+										size="7" class="line onlyfloat" row_group="price"> ~ <input
 										type="text" name="eprice" value="" size="7"
 										class="line onlyfloat" row_group="price"></td>
-									<th>재고수량</th>
+									<th>주문횟수</th>
 									<td no="1"><input type="text" name="sstock" value=""
-										size="7" class="line onlynumber" row_group="stock"> -
+										size="7" class="line onlynumber" row_group="stock"> ~
 										<input type="text" name="estock" value="" size="7"
 										class="line onlynumber" row_group="stock"></td>
 								</tr>
 								<tr>
-
-									<th>상태</th>
-									<td no="0"><label><input type="checkbox"
-											name="goodsStatus[]" value="normal"> <span>정상</span></label>
-										<label><input type="checkbox" name="goodsStatus[]"
-											value="runout"> <span>품절</span></label><label><input
-											type="checkbox" name="goodsStatus[]" value="unsold">
-											<span>판매중지</span></label></td>
-									<th>노출</th>
-									<td><label><input type="checkbox"
-											name="goodsView[]" value="look"> <span>보임</span></label> <label><input
-											type="checkbox" name="goodsView[]" value="notLook"> <span>안보임</span></label>
-									</td>
-
+									<th>방문횟수</th>
+									<td no="0"><input type="text" name="sprice" value=""
+										size="7" class="line onlyfloat" row_group="price"> ~ <input
+										type="text" name="eprice" value="" size="7"
+										class="line onlyfloat" row_group="price"></td>
+									<th>리뷰횟수</th>
+									<td no="1"><input type="text" name="sstock" value=""
+										size="7" class="line onlynumber" row_group="stock"> ~
+										<input type="text" name="estock" value="" size="7"
+										class="line onlynumber" row_group="stock"></td>
 								</tr>
+
 
 							</tbody>
 						</table>
@@ -147,7 +177,7 @@
 		</table>
 	</div>
 	<div class="admin_item_list_box">
-		<div class="admin_item_list_top">
+		<div class="admin_item_lis_top">
 			<p>
 				전체 <span>9</span>개
 			</p>

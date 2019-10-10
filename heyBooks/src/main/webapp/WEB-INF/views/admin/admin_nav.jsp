@@ -41,7 +41,7 @@
 						<li><a href="/sh/weekly_best_seller">홈</a></li>
 						<li><a href="<c:url value='/admin_order_list'/>">주문</a></li>
 						<li><a href="<c:url value='/admin_item_list'/>">상품</a></li>
-						<li><a href="/sh/oversea_book">회원</a></li>
+						<li><a href="<c:url value='/admin_user_list'/>">회원</a></li>
 						<li><a href="/sh/event_proceed">게시판</a></li>
 						<li><a href="/sh/event_proceed">매출</a></li>
 					</ul>
