@@ -11,24 +11,36 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-
 @Controller
 public class Admin_contoller {
-	//包府磊 权
-	@RequestMapping(value = "/admin", method = RequestMethod.GET)
+	// 包府磊 权
+	@RequestMapping(value = "/admin_main", method = RequestMethod.GET)
 	public String item_contoller() {
 		return ".admin.admin_main";
 	}
-	//惑前 包府格废
+
+	// 惑前 - 府胶飘
 	@RequestMapping(value = "/admin_item_list", method = RequestMethod.GET)
 	public String admin_item_list() {
 		return ".admin.admin_item_list";
 	}
-	//雀盔 包府格废
+
+	// 惑前 - 殿废
+	@RequestMapping(value = "/admin_item_add", method = RequestMethod.GET)
+	public String admin_item_add() {
+		return ".admin.admin_item_add";
+	}
+
+	// 雀盔 包府格废
 	@RequestMapping(value = "/admin_user_list", method = RequestMethod.GET)
 	public String admin_user_list() {
 		return ".admin.admin_user_list";
 	}
-	
+
+	// 林巩 - 府胶飘
+	@RequestMapping(value = "/admin_order_list", method = RequestMethod.GET)
+	public String admin_order_list() {
+		return ".admin.admin_order_list";
+	}
+
 }
- 

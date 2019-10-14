@@ -4,8 +4,8 @@
 <div class="container admin_item_list">
 	<div class="search-form-container">
 		<div class=" admin_page_head">
-			<h2>상품리스트</h2>
-			<a class="admin_btn" href="<c:url value='/admin_item_add'/>">상품등록</a>
+			<h2>주문리스트</h2>
+			<a class="admin_btn" href="<c:url value='/admin_item_add'/>">등록</a>
 		</div>
 		<form>
 			<table class="search-form-table">

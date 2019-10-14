@@ -8,7 +8,7 @@
 				<div id="header_content_box" class="wrapping">
 					<div id="header_left" class="left">
 						<h1>
-							<a href="/sh/"> HEYBOOKS</a>
+							<a href="<c:url value='/admin_main'/>"> HEYBOOKS</a>
 						</h1>
 					</div>
 					<div id="search_box">
@@ -38,7 +38,7 @@
 							aria-hidden="true"></i></span> 전체보기
 					</button>
 					<ul class="admin_nav">
-						<li><a href="/sh/weekly_best_seller">홈</a></li>
+						<li><a href="<c:url value='/admin_main'/>">홈</a></li>
 						<li><a href="<c:url value='/admin_order_list'/>">주문</a></li>
 						<li><a href="<c:url value='/admin_item_list'/>">상품</a></li>
 						<li><a href="<c:url value='/admin_user_list'/>">회원</a></li>

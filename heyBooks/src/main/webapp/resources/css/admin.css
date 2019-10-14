@@ -6,7 +6,7 @@
 	url('https://fonts.googleapis.com/css?family=Nanum+Pen+Script&display=swap')
 	;
 
-*{
+* {
 	padding: 0;
 	margin: 0;
 }
@@ -21,12 +21,6 @@ a {
 
 header a {
 	color: #fff !important;
-}
-
-@media ( max-width : 1600px) {
-	.container {
-		width: 100%
-	}
 }
 
 ::-webkit-scrollbar {
@@ -55,7 +49,6 @@ body {
 a, address, button, div, h1, h2, h3, h4, h5, h6, input, label, li, p,
 	select, td, textarea, th, #search_box input::placeholder {
 	font-family: "Nanum Gothic", sans-serif;
-	letter-spacing: -.03em;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 	color: #4c4c4c;
@@ -99,7 +92,7 @@ header h1 a {
 }
 
 #header_content #search_box {
-	margin-left: 27%;
+	margin-left: 30%;
 	background-color: white;
 	height: 33px;
 	padding: 1px 0px 0px 15px;
@@ -224,7 +217,7 @@ header h1 a {
 
 #header_middle_box .admin_nav {
 	float: left;
-	margin-left: 26%;
+	margin-left: 29%;
 }
 
 #header_middle_box #header_middle_right {
@@ -611,6 +604,36 @@ a.list-group-item, button.list-group-item {
 }
 
 /* 아이템 리스트 */
+.admin_btn {
+	margin-top: 12px;
+	padding: 5px;
+	font-size: 13px;
+	color: white !important;
+	font-weight: bold;
+	color: white !important;
+	font-weight: bold;
+	background: #fb9023;
+}
+
+.admin_page_head {
+	overflow: hidden;
+	background: url(../images/tit_bg.gif) repeat-x;
+	padding-bottom: 5px;
+}
+
+.admin_page_head h2 {
+	float: left;
+	margin-left: 45%;
+	font-size: 23px;
+	margin-top: 10px;
+	font-weight: 600;
+}
+
+.admin_page_head a {
+	float: right;
+	margin-right: 10px;
+}
+
 .admin_item_list table {
 	margin: 15px auto 0;
 }
@@ -631,7 +654,6 @@ a.list-group-item, button.list-group-item {
 	background: #f9fbfc;
 	padding-bottom: 25px;
 	border-bottom: 2px solid #ddd;
-	
 }
 
 div.search-form-container table.search-form-table {
@@ -643,7 +665,7 @@ div.search-form-container table.sf-option-table th {
 	text-align: left;
 	vertical-align: middle;
 	padding-right: 0px;
-	font-size: 12px;
+	font-size: 14px;
 	font-weight: bold;
 	color: #333;
 }
@@ -665,7 +687,8 @@ div.search-form-container table.sf-keyword-table {
 	background-color: #fff;
 	table-layout: fixed;
 }
-.admin_item_list_box table th{
+
+.admin_list_box table th {
 	text-align: center;
 	padding: 9px 0;
 	background: #eee;
@@ -729,10 +752,10 @@ div.skin-add-form table.sf-option-table  li:first-child {
 }
 
 .admin_item_list input[type=button] {
-	font-size: 11px;
-    padding: 6px 7px;
-    background: #fff;
-    border: 1px solid #ddd;
+	font-size: 12px;
+	padding: 6px 7px;
+	background: #fff;
+	border: 1px solid #ddd;
 }
 
 .sf-option-table span {
@@ -747,34 +770,309 @@ div.skin-add-form table.sf-option-table  li:first-child {
 .admin_item_list label {
 	margin-right: 5px;
 }
-.admin_item_list_box table{
+
+.admin_list_box table {
 	width: 100%;
-	padding-top:5px;
-} 
-.admin_item_list_box table td, .admin_item_list_box table td a{
+	padding-top: 5px;
+}
+
+.admin_list_box table td, .admin_list_box table td a {
 	font-size: 13px;
 }
-.admin_item_list_top {
+
+.admin_list_top {
 	overflow: hidden;
 }
-.admin_item_list_top p{
-	float:left;
+
+.admin_list_top p {
+	float: left;
 	margin-bottom: 0;
 }
-.admin_item_list_top span{
+
+.admin_list_top span {
 	font-weight: 600;
 }
+
 .admin_select_list {
 	float: right;
 }
-.admin_item_list_top{
+
+.admin_list_top {
 	margin-top: 15px;
 }
-
-/* 관리자 회원 관리 */
-.admin_item_list input[type=radio]{
-	position: relative;
-	top:2px;
+.img_detail_table{
+	border: none !important;
+}
+.img_detail_table th, .img_detail_table td{
+	border: none !important;
+}
+/* 상품 등록 */
+.item_category {
+	margin-top: 30px;
 }
 
- input[type=radio]
+.item_add_head {
+	background: url(../images/bullet_tit_m.gif) no-repeat;
+	padding-left: 25px;
+	background-position: 0px 2px;
+	height: 21px;
+}
+
+.item_add_head:after {
+	display: block;
+	clear: both;
+	content: '';
+}
+
+.item_add_head h3 {
+	font-size: 18px;
+	font-weight: 600;
+	float: left;
+	margin: 0;
+}
+
+.item_add_head a {
+	float: left;
+	margin-left: 10px;
+	padding: 3px 6px;
+	border: 1px solid #ccc;
+	position: relative;
+	font-size: 13px;
+	top: -4px;
+}
+
+.item_add_table {
+	width: 100%;
+	margin-top: 10px
+}
+
+.item_add_table th {
+	text-align: center;
+	background: #eee;
+	border: 1px solid #ddd;
+	border-bottom: none;
+	padding: 7px 0;
+}
+
+.item_add_table td {
+	border: 1px solid #ddd;
+	height: 55px;
+}
+
+.category_select {
+	display: none;
+	z-index: 10002;
+	outline: 0px;
+	position: absolute;
+	height: auto;
+	width: 800px;
+	top: 30%;
+	left: 30%;
+	background: white;
+	border: 1px solid #333;
+}
+
+.category_select_content {
+	padding: 25px;
+}
+
+.category_select_title_box {
+	overflow: hidden;
+	margin-bottom: 20px;
+	background: #555;
+	padding: 8px 15px;
+}
+
+.category_select_title {
+	float: left;
+	font-size: 17px;
+	font-weight: 600;
+	color: #fff;
+}
+
+.category_select_cancel {
+	float: right;
+	font-weight: bold;
+}
+
+.category_select_cancel span {
+	color: #fff;
+}
+
+.category_select_btn {
+	display: block;
+	margin: 20px auto;
+	background: #8a8a8a;
+	color: white !important;
+	padding: 5px 8px;
+	width: 100px;
+	text-align: center;
+	font-weight: 600;
+	margin-top: 25px;
+}
+
+#editor_select {
+	width: 500px;
+	left: 37%;
+}
+
+#publishing_select {
+	width: 500px;
+	left: 37%;
+}
+
+.admin_item_add .col-md-4 {
+	padding: 0;
+}
+
+.item_basic_info {
+	margin-top: 30px;
+}
+
+.item_category:after {
+	display: block;
+	clear: both;
+	content: '';
+}
+
+.admin_item_add table {
+	border-top: 1px solid #aaa;
+	margin-top: 10px;
+}
+
+.admin_item_add table th {
+	text-align: center;
+	font-weight: normal;
+	border-left: 1px solid #dadada;
+	border-bottom: 1px solid #dadada;
+	padding: 8px 0px 8px 0;
+	background-color: #f1f1f1;
+}
+
+.admin_item_add table input[type=text], .admin_item_add table textarea {
+	padding-left: 5px;
+}
+
+.admin_item_add table  td {
+	border-left: 1px solid #dadada;
+	border-bottom: 1px solid #dadada;
+	padding: 9px 0 9px 15px;
+}
+
+.item_basic_info table th {
+	
+}
+
+.index_list li {
+	margin-bottom: 10px;
+}
+
+.admin_item_add {
+	padding-bottom: 40px;
+}
+
+.index_add {
+	padding: 2px 3px;
+}
+
+.item_sale_info {
+	margin-top: 30px;
+}
+
+.item_radio {
+	margin-right: 10px;
+}
+
+.item_radio input[type=radio] {
+	position: relative;
+	top: 2px;
+}
+
+.item_radio {
+	font-weight: 500;
+}
+
+#item_price input, .direct_price {
+	width: 70px;
+}
+
+.item_sale_info tr td:first-child {
+	background: #f1f1f1;
+	text-align: center;
+}
+
+.item_image {
+	margin-top: 30px;
+}
+
+.item_image_table td {
+	text-align: center;
+}
+
+.admin_item_add button {
+	padding: 5px;
+	font-size: 13px;
+	background: #fff;
+	border: 1px solid #ddd;
+}
+.item_image_table button{
+	width: 140px;
+}
+.user_list_box table td {
+	text-align: center;
+}
+
+.memberInfoTable {
+	margin-top: 0 !important;
+}
+
+.memberInfoTable thead th {
+	background: #53565f;
+	font-family: 'Malgun Gothic';
+	font-size: 13px;
+	font-weight: bold;
+	color: #ffffff;
+	line-height: 30px;
+}
+
+.memberInfoTable th {
+	padding: 3px;
+}
+
+.memberInfoWrap {
+	border: 1px solid #d1d4d9;
+	background: #e9edf0;
+	position: relative;
+}
+
+.user_list_table {
+	width: 300px;
+}
+
+.member_info_layer {
+	position: absolute;
+	display: none;
+	right: 14.5%;
+}
+
+.layer_close {
+	position: absolute;
+	top: 3px;
+	right: 10px;
+	font-size: 17px;
+	color: #fff;
+}
+
+.admin_item_list input[type=radio] {
+	position: relative;
+	top: 2px;
+}
+
+@media ( max-width : 1600px) {
+	.container {
+		width: 100%
+	}
+	.member_info_layer {
+		right: 6%;
+	}
+}
