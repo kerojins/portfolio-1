@@ -116,12 +116,12 @@
 								<li><input type="text" name="" class="cal-len line"
 									style="width: 85%" value="" title="" placeholder="10."></li>
 							</ul>
-							<button class="index_add">목차추가</button>
+							<span class="index_add">목차추가</span>
 
 						</td>
 					</tr>
 				</tbody>
-			</table>
+			</table> 
 		</div>
 		<div class="item_sale_info">
 			<div class="item_add_head">

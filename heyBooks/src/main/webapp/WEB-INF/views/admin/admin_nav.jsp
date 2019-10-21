@@ -42,11 +42,11 @@
 						<li><a href="<c:url value='/admin_order_list'/>">주문</a></li>
 						<li><a href="<c:url value='/admin_item_list'/>">상품</a></li>
 						<li><a href="<c:url value='/admin_user_list'/>">회원</a></li>
-						<li><a href="/sh/event_proceed">게시판</a></li>
+						<li><a href="<c:url value='/admin_board'/>">게시판</a></li>
 						<li><a href="/sh/event_proceed">매출</a></li>
 					</ul>
 					<ul id="header_middle_right">
-						<li><a href="/sh/order">작가관리</a></li>
+						<li><a href="<c:url value='/admin_editor_list'/>">작가관리</a></li>
 						<li><a href="#">AD</a></li>
 					</ul>
 				</nav>

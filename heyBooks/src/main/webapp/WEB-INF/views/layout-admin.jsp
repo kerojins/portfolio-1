@@ -18,8 +18,10 @@
 	href="https://fonts.googleapis.com/css?family=Baloo+Tammudu&display=swap"
 	rel="stylesheet">
 <link rel="stylesheet" href="<c:url value='/resources/css/admin.css'/>">
+<link rel="stylesheet" href="<c:url value='/resources/css/summernote.css'/>">
+ <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote.css" rel="stylesheet">
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
-      rel="stylesheet">
+      rel="stylesheet"> 
 
 <%-- SCRIPT --%>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
@@ -36,6 +38,8 @@
 <script src="https://kit.fontawesome.com/38c8c99cb0.js"></script>
 <script type="text/javascript"
 	src="<c:url value='/resources/js/admin.js'/>"></script>
+	<script type="text/javascript"
+	src="<c:url value='/resources/js/summernote.js'/>"></script>
 <title>Hey Books</title>
 </head>
 <body>

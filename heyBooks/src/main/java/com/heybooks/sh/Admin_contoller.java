@@ -1,5 +1,6 @@
 package com.heybooks.sh;
 
+import java.io.Console;
 import java.text.DateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -41,6 +42,31 @@ public class Admin_contoller {
 	@RequestMapping(value = "/admin_order_list", method = RequestMethod.GET)
 	public String admin_order_list() {
 		return ".admin.admin_order_list";
+	}
+
+	// 게시판 - 목록별 리스트
+	@RequestMapping(value = "/admin_board", method = RequestMethod.GET)
+	public String admin_board() {
+		return ".admin.admin_board";
+	}
+
+	// 게시판 - 목록 상세 리스트
+	@RequestMapping(value = "/admin_board_list", method = RequestMethod.GET)
+	public String admin_board_list(String board, Model model) {
+		model.addAttribute("board", board);
+		return ".admin.admin_board_list";
+	}
+
+	// 작가등록 - 리스트
+	@RequestMapping(value = "/admin_editor_list", method = RequestMethod.GET)
+	public String admin_editor_list() {
+		return ".admin.admin_editor_list";
+	} 
+
+	// 작가등록 - 리스트
+	@RequestMapping(value = "/admin_editor_add", method = RequestMethod.GET)
+	public String admin_editor_add() {
+		return ".admin.admin_editor_add";
 	}
 
 }

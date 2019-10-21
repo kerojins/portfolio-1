@@ -166,7 +166,7 @@
 					</select> 
 				</div>
 			</div>
-			<table class="list-table-style" cellspacing="0">
+			<table class="list-table-style item_list_table" cellspacing="0">
 				<!-- 테이블 헤더 : 시작 -->
 				<colgroup>
 					<col width="30">

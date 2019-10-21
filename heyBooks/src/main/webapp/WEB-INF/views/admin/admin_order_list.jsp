@@ -154,142 +154,226 @@
 		</form>
 	</div>
 	<div class="admin_list_box">
-			<div class="admin_list_top">
-				<p>
-					전체 <span>9</span>개
-				</p>
-				<div class="admin_select_list">
-					<select>
-						<option>최신순</option>
-						<option>재고순</option>
-						<option>판매명순</option>
-					</select> 
-				</div>
+		<div class="admin_list_top">
+			<p>
+				전체 <span>9</span>개
+			</p>
+			<div class="admin_select_list">
+				<select>
+					<option>최신순</option>
+					<option>재고순</option>
+					<option>판매명순</option>
+				</select>
 			</div>
-			<table class="list-table-style" cellspacing="0">
-				<!-- 테이블 헤더 : 시작 -->
-				<colgroup>
-					<col width="30">
-					<!--체크값-->
-					<col width="40">
-					<!--번호-->
-					<col width="60">
-					<!--상품이미지-->
-					<col>
-					<!--상품명-->
+		</div>
+		<table class="list-table-style order_list_table" cellspacing="0">
+			<!-- 테이블 헤더 : 시작 -->
+			<colgroup>
+				<col width="35">
+				<col width="35">
+				<col width="80">
+				<col width="80">
+				<col width="270">
+				<col width="30">
+				<col width="80">
+				<col width="80">
+				<col width="80">
+				<col width="60">
+				<col width="40">
+			</colgroup>
+			<thead class="lth">
+				<tr>
+					<th>선택</th>
+					<th>번호</th>
+					<th>주문일시</th>
+					<th>주문번호</th>
+					<th>주문상품</th>
+					<th>수(종)</th>
+					<th>받는분/주문자</th>
+					<th>결제수단/일시</th>
+					<th>결제금액</th>
+					<th>주문상태</th>
+					<th>상세</th>
+				</tr>
+			</thead>
+			<!-- 테이블 헤더 : 끝 -->
+			<!-- 리스트 : 시작 -->
+			<tbody class="ltb order-ajax-list">
+				<tr class="list-row">
+					<td align="center"><input type="checkbox" class="chk"
+						name="goods_seq[]" value="61" data-provider_seq="1"></td>
+					<td align="center" class="page_no">12</td>
+					<td align="center">2019-09-11 23:04:09</td>
+					<td align="center">23432432</td>
+					<td align="left" style="padding-left: 10px;">
+						<div class="fx11 gray"></div>
+						<div>
+							<a href="../goods/regist?no=61" target="_blank">미니어처 별</a>
+							<div></div>
+							<div style="padding-top: 3px;"></div>
+						</div>
+					</td>
 
-					<col width="85">
-					<!--정가-->
-					<col width="85">
-					<!--판매가-->
-					<col width="120">
-					<!--재고가용-->
-
-
-					<col width="50">
-					<!--구매/pv-->
-
-					<col width="180">
-					<!--등록일-->
-					<col width="90">
-					<!--상태-->
-					<col width="60">
-					<!--노출-->
-					<col width="70">
-					<!--통계-->
-
-					<col width="60">
-					<!--관리-->
-				</colgroup>
-				<thead class="lth">
-					<tr>
-						<th><input type="checkbox" id="chkAll"></th>
-						<th>번호</th>
-						<th colspan="2"><span class="btnSort hand"
-							orderby="goods_name" title="[상품명]으로 정렬">상품명</span></th>
-						<th><span class="btnSort hand" orderby="consumer_price"
-							title="[정가]로 정렬">정가</span></th>
-						<th><span class="btnSort hand" orderby="price"
-							title="[판매가]로 정렬">판매가</span></th>
-						<th><span class="btnSort hand" orderby="tot_stock"
-							title="[재고] 정렬">재고</span> <span
-							class="helpicon2 detailDescriptionLayerBtn" title="[안내] 재고/가용 표기"></span>
-						</th>
-
-						<th>구매/<span class="btnSort hand" orderby="page_view"
-							title="[페이지뷰]로 정렬">PV</span></th>
-
-						<th><span class="btnSort hand" orderby="goods_seq"
-							title="[등록일순] 정렬">등록일</span> /<span class="btnSort hand"
-							orderby="update_date" title="[수정일순] 정렬">수정일</span></th>
-						<th>상태</th>
-						<th>노출</th>
-						<th>통계</th>
-						<th>관리</th>
-					</tr>
-				</thead>
-
-				<tbody class="ltb">
-					<tr class="list-row" style="height: 70px;">
-						<td align="center"><input type="checkbox" class="chk"
-							name="goods_seq[]" value="61" data-provider_seq="1"></td>
-						<td align="center" class="page_no">12</td>
-						<td align="right"><a href="/goods/view?no=62" target="_blank"><img
-								src="/data/goods/1/2019/10/62_tmp_ad31bac084941e657c4c024f76dee8249552thumbView.jpg?dummy=1570712076"
-								width="50"></a></td>
-						<td align="left" style="padding-left: 10px;">
-							<div class="fx11 gray"></div>
-							<div>
-								<a href="../goods/regist?no=61" target="_blank">미니어처 별</a>
-								<div></div>
-								<div style="padding-top: 3px;"></div>
-							</div>
-						</td>
-						<td align="right">0&nbsp;</td>
-						<td align="right">
-							<div>0&nbsp;</div>
-						</td>
-						<td align="center">3</td>
+					<td align="right">
+						<div>33</div>
+					</td>
+					<td align="center">test</td>
 
 
-						<td align="center">
-							<div>
-								<a href="/admin/order/catalog?goods_seq=61">조회</a>
-							</div>
-							<div>1</div>
-						</td>
-						<td align="center">2019-09-11 23:04:09<br>2019-09-11
-							23:04:09
-						</td>
-						<td align="center">
-							<div>
-								<b>정상</b>
-								<div></div>
-							</div>
-						</td>
-						<td align="center"><span class="display-goods-view-61 "><span
-								style="color: red">미노출</span></span></td>
-						<td align="center">
-							<div>
-								<img src="<c:url value='/resources/images/btn_stats.gif'/>"
-									style="cursor: pointer;" onclick="openAdvancedStatistic('61');">
-							</div>
+					<td align="center">신용카드<br>2019-09-11 23:04:09
+					</td>
 
-						</td>
-						<td align="center">
-							<div>
-								<span class="btn small valign-middle"><input
-									type="button" class="manager_copy_btn" value="복사"
-									goods_seq="61"></span>
-							</div>
-							<div style="margin-top: 2px;">
-								<span class="btn small valign-middle"><input
-									type="button" name="manager_modify_btn" value="상세"
-									goods_seq="61" onclick="goodsView('61');"></span>
-							</div>
-						</td>
-					</tr>
-				</tbody>
-			</table>
+					<td align="center">23,000원</td>
+					<td align="center">결제완료</td>
+					<td class="center"><span class="order_btn small valign-middle"><input
+							type="button" name="manager_modify_btn" value="상세"
+							></span></td>
+				</tr>  
+
+
+				<tr class="list-row">
+
+				</tr>
+			</tbody>
+			<!-- 리스트 : 끝 -->
+		</table>
 	</div>
+	<div
+		class="order_detail_box ui-dialog ui-widget ui-widget-content ui-corner-all ui-draggable"
+		tabindex="-1" role="dialog"
+		aria-labelledby="ui-dialog-title-orderAdminSettle" style="">
+		<div
+			class="ui-dialog-titlebar ui-widget-header ui-helper-clearfix">
+			<span class="ui-dialog-title" id="ui-dialog-title-orderAdminSettle">개인
+				결제 보기</span><a href="#" class="ui-dialog-titlebar-close"
+				role="button"><span class="ui-icon ui-icon-closethick">x</span></a>
+		</div>
+		<div id="orderAdminSettle"
+			class=" ui-dialog-content ui-widget-content"
+			style="display: block; width: auto; min-height: 0px; height: 608px;"
+			scrolltop="0" scrollleft="0">
+
+			<form name="orderFrm" id="orderFrm" method="post"
+				action="/order/calculate" target="actionFrame">
+				<input type="hidden" name="mode" value="cart"> <input
+					type="hidden" name="adminOrder" value="admin"> <input
+					type="hidden" name="adminOrderType" value="person"> <input
+					type="hidden" name="member_seq" id="member_seq" value="4">
+				<input type="hidden" name="person_seq" id="person_seq" value="3">
+				<div class="admin_cart" style="margin-top: 10px;">
+					<table class="order_table">
+						<tbody>
+							<tr>
+								<th width="45%">상품정보</th>
+								<th width="16%">판매가</th>
+								<th width="10%">수량</th>
+								<th width="14%">예상적립금</th>
+								<th width="15%">합계</th>
+							</tr>
+							<tr>
+								<td class="order_item_info">
+									<p class="order_item_img">
+										<a href="#"><img width="80"
+											src="/sh/resources/images/list_item1.jpg"></a>
+									</p>
+									<div class="order_item_title">
+										<p class="order_item_title_txt">
+											<a href="#">대도시의 사랑법</a>
+										</p>
+										<p>
+											<span class="order_item_editor">민지형</span><span
+												class="order_item_publising">민음사</span>
+										</p>
+									</div>
+
+								</td>
+								<td class="order_item_price">
+									<p class="order_item_price_txt">13,320원</p>
+									<p class="order_item_discount">
+										(<span>10%</span><i class="fas fa-long-arrow-alt-down"
+											aria-hidden="true"></i>)
+									</p>
+
+								</td>
+								<td class="order_item_count">
+									<p>1개</p>
+								</td>
+								<td class="order_item_mileage">
+									<p>700원</p>
+								</td>
+								<td class="order_item_allPrice">
+									<p class="order_item_allPrice_txt">43,300원</p>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+
+				<!-- 결제정보입력/결제하기 -->
+				<div class="order_settle clearbox">
+					<div class="benefit fx12 left">
+						<div class="pd10">
+							<dl class="clearbox">
+								<dt>구매적립 혜택</dt>
+								<dd>
+									구매확정 시 : 마일리지 <span id="total_reserve" class="bold">0</span>KRW
+								</dd>
+							</dl>
+							<dl class="clearbox" >
+								<dt>결제수단</dt>
+								<dd>무통장</dd>
+							</dl>
+							<dl class="clearbox">
+								<dt>에누리</dt>
+								<dd>0KRW</dd>
+							</dl>
+						</div>
+					</div>
+					<div class="settle bgcolor">
+						<dl class="clearbox">
+							<dt class="total" style="padding: 10px 0px; border: 0px;">결제금액</dt>
+							<dd class="total price" style="padding: 10px 0px; border: 0px;">
+								<span class="settle_price tahoma" id="total_settle_price">0</span>KRW
+							</dd>
+							<span
+								class="price_cell settle_price_compare fx20 bold tahoma total_result_price"></span>
+						</dl>
+
+					</div>
+				</div>
+				<!-- //결제금액 -->
+
+
+				<!-- 주문자/배송지 정보 -->
+				<div class="order_settle clearbox">
+					<div class="benefit ">
+						<h4>배송지</h4>
+
+						<ul class="list_inner fx12">
+							<li>배송지 정보는 개인 결제 시 구매자께서 직접 입력하시게 됩니다.</li>
+						</ul>
+					</div>
+					<div class="settle bgcolor fx12">
+						<h4>주문자</h4>
+						<ul class="list_inner">
+							<!-- 회원일 경우 :: START -->
+							<li class="order_member">
+								<ul>
+									<li>테스트999</li>
+									<li>010-123-4567 / --</li>
+									<li>ssss@daum.net</li>
+								</ul>
+							</li>
+							<!-- 회원일 경우 :: END -->
+						</ul>
+					</div>
+					<!-- //주문자 정보 -->
+				</div>
+				<input type="hidden" name="default_reserve_limit"
+					id="default_reserve_limit" value="3"><input type="hidden"
+					name="total_real_sale_price" id="total_real_sale_price" value="0">
+			</form>
+		</div>
+	</div>
+
 </div>

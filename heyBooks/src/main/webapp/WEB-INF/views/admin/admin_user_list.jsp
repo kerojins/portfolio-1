@@ -241,7 +241,7 @@
 			<!-- 테이블 헤더 : 끝 -->
 
 			<tbody id="user-tr-list" class="ltb otb">
-				<tr class="list-row" nth-row="1">
+				<tr class="list-row">
 					<td class="ctd"><input type="checkbox" name="member_chk[]"
 						value="7" cellphone="" email="" grade="1" grade_name="일반"
 						class="member_chk"></td>
@@ -266,7 +266,30 @@
 							type="button" name="manager_modify_btn" value="상세"
 							onclick="open_crm_summary(this);"></span></td>
 				</tr>
-				<tr class="list-row" nth-row="2">
+				<tr class="list-row">
+					<td class="ctd"><input type="checkbox" name="member_chk[]"
+						value="7" cellphone="" email="" grade="2" grade_name="일반"
+						class="member_chk"></td>
+					<td class="ctd">1</td>
+					<td class="ltd">일반</td>
+					<td class="ltd hand" style="font-weight: bold;"
+						onclick="open_crm_summary(this,'7','','right');"><span
+						class="blue">test01</span></td>
+					<td class="ltd">(test)</td>
+					<td class="ltd">없음</td>
+					<td class="ltd">없음</td>
+					<td class="ltd">2019-08-21 10:44:21<br>2019-08-21
+						10:46:10
+					</td>
+					<td class="ltd"><span class="blue hand"
+						onclick="point_pop('7');">0</span></td>
+					<td class="ltd"><span class="blue hand"
+						onclick="cash_pop('7');">0</span></td>
+					<td class="ctd"><span class="btn small valign-middle"><input
+							type="button" name="manager_modify_btn" value="상세"
+							onclick="open_crm_summary(this);"></span></td>
+				</tr>
+				<tr class="list-row">
 					<td class="ctd"><input type="checkbox" name="member_chk[]"
 						value="7" cellphone="" email="" grade="2" grade_name="일반"
 						class="member_chk"></td>

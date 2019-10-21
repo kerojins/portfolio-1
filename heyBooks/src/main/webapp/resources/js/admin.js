@@ -42,25 +42,44 @@ $(document)
 						$('#publishing_select').show();
 					});
 
-					// 관리자 상품등록 - 목차 추가
-					var index_cnt = 11;
-					$('.index_add')
-							.click(
-									function() {
-										$(this)
-												.prev()
-												.append(
-														'<li><input type="text" name="" class="cal-len line" style="width: 85%" value="" title="" placeholder="'
-																+ index_cnt
-							 									+ '."></li>');
-										index_cnt++;
+					// 관리자 상품등록 - 목차 추가 
+				
+					$('.index_add').click(function() {
+						var index_cnt = $(this).prev().find("li").length;
+										$(this).prev().append('<li><input type="text" name="" class="cal-len line" style="width: 85%" value="" title="" placeholder="'
+																+ ++index_cnt
+																+ '."></li>');
 									});
-					
+ 
 					$('.layer_close').click(function() {
 						$('#member_info_layers').hide();
 					});
+					$('.ui-dialog-titlebar-close').click(function() {
+						$('.order_detail_box').hide();
+					});
+					$('.order_btn').click(function() {
+						$('.order_detail_box').show();
+					});
+					$('.board_list .close_btn').click(function() {
+						$('.board_list_view').hide();
+					});
+					$('.boad_modify_btn').click(function() {
+						$('#boardview').hide();
+						$("#writeform").show();
+					});
 
-				}); 
+					// summernote 활용
+
+					$('#summernote').summernote({
+
+						height : 300, // set editor height
+						minHeight : null, // set minimum height of editor
+						maxHeight : null, // set maximum height of editor
+						focus : true
+
+					});
+
+				});
 // 관리자 회원 상세보기창
 function open_crm_summary(ent) {
 	var nth_tr;
@@ -69,15 +88,15 @@ function open_crm_summary(ent) {
 	var table = document.getElementById("user_list_table");
 	var tr = ent.parentElement.parentElement.parentElement;
 	var trList = document.getElementById("user-tr-list").children;
-	for(i=0; i<trList.length; i++){
-		if(trList[i]==tr){
+	for (i = 0; i < trList.length; i++) {
+		if (trList[i] == tr) {
 			nth_tr = i + 1;
 			break;
-		}  
-	}  
-	   
-	var layer_top = 550 + (nth_tr * 37);
-	m_layer.style.display= "block";
-	m_layer.style.top= ""+layer_top+"px";
-	   
+		}
+	}
+
+	var layer_top = 543 + (nth_tr * 53);
+	m_layer.style.display = "block";
+	m_layer.style.top = "" + layer_top + "px";
+
 }
