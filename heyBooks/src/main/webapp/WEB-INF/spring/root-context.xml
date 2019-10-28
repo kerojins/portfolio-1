@@ -19,13 +19,13 @@
 		<property value="net.sf.log4jdbc.sql.jdbcapi.DriverSpy"
 			name="driverClassName" />
 		<property
-			value="jdbc:log4jdbc:oracle:thin:@localhost:1521/XE" name="url" />
+			value="jdbc:log4jdbc:oracle:thin:@localhost:1521/orcl" name="url" />
 		<property value="heybooks" name="username" />
 		<property value="115236" name="password" />
 	</bean>
 
 	<!-- 마이바티스 연동 -->
-	<bean id="sqlSessionFactory"
+	<!-- <bean id="sqlSessionFactory"
 		class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="dataSource"></property>
 		<property name="configLocation"
@@ -38,7 +38,7 @@
 		destroy-method="clearCache">
 		<constructor-arg name="sqlSessionFactory"
 			ref="sqlSessionFactory"></constructor-arg>
-	</bean>
+	</bean> -->
 
 
 </beans>
