@@ -20,8 +20,8 @@
 			name="driverClassName" />
 		<property
 			value="jdbc:log4jdbc:oracle:thin:@localhost:1521/XE" name="url" />
-		<property value="kuzuro" name="username" />
-		<property value="1111" name="password" />
+		<property value="heybooks" name="username" />
+		<property value="115236" name="password" />
 	</bean>
 
 	<!-- 마이바티스 연동 -->
