@@ -1,4 +1,4 @@
-package com.heybooks.sh;
+package com.heybooks.sh.controller;
 
 import java.text.DateFormat;
 import java.util.Date;
@@ -14,19 +14,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 
 @Controller
-public class Event_controller {
-	
-	//진행중 이벤트 
-	@RequestMapping(value = "/event_proceed", method = RequestMethod.GET)
-	public String event_proceed() {
-		return ".event_news.event_proceed";
+public class HomeController {
+	@RequestMapping(value = "/", method = RequestMethod.GET)
+	public String home() {
+		return ".main";
 	}
-	
-	//지난 이벤트 
-		@RequestMapping(value = "/event_ended", method = RequestMethod.GET)
-		public String event_ended() {
-			return ".event_news.event_ended";
-		}
 	
 
 	

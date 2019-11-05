@@ -1,4 +1,4 @@
-package com.heybooks.sh;
+package com.heybooks.sh.controller;
 
 import java.io.Console;
 import java.text.DateFormat;
