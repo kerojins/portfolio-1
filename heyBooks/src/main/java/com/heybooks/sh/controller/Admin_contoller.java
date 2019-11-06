@@ -19,6 +19,18 @@ public class Admin_contoller {
 	public String item_contoller() {
 		return ".admin.admin_main";
 	}
+	
+	// 관리자 - 로그인
+	@RequestMapping(value = "/admin_login", method = RequestMethod.GET)
+	public String admin_login() {
+		return ".admin.admin_login";
+	}
+	
+/*	@RequestMapping(value = "/admin_login", method = RequestMethod.POST)
+	public String admin_login(Model model) {
+		return ".admin.admin_login";
+	}*/
+	
 
 	// 상품 - 리스트
 	@RequestMapping(value = "/admin_item_list", method = RequestMethod.GET)
@@ -57,16 +69,17 @@ public class Admin_contoller {
 		return ".admin.admin_board_list";
 	}
 
-	// 작가등록 - 리스트
+	// 작가 - 리스트
 	@RequestMapping(value = "/admin_editor_list", method = RequestMethod.GET)
 	public String admin_editor_list() {
 		return ".admin.admin_editor_list";
-	} 
+	}
 
-	// 작가등록 - 리스트
+	// 작가 - 등록
 	@RequestMapping(value = "/admin_editor_add", method = RequestMethod.GET)
 	public String admin_editor_add() {
 		return ".admin.admin_editor_add";
 	}
+
 
 }

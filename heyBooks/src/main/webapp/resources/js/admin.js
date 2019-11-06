@@ -78,7 +78,7 @@ $(document)
 						focus : true
 
 					});
-
+	
 				});
 // 관리자 회원 상세보기창
 function open_crm_summary(ent) {

@@ -23,7 +23,7 @@
 					</div>
 					<div id="header_right" class="right">
 						<span><a href="/sh/join">회원가입</a></span> <span><a
-							href="/sh/mypage">마이페이지</a></span><span><a href="/sh/login">로그인</a></span>
+							href="/sh/mypage">마이페이지</a></span><span><a href="<c:url value='/admin_login'/>">로그인</a></span>
 					</div>
 				</div>
 			</div>

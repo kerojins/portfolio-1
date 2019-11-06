@@ -21,7 +21,7 @@
 	<!-- 마이바티스 연동 -->
 	 <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
    		<property name="dataSource" ref="dataSource"/>
-   		<property name="mapperLocations" value="classpath*:com/jhta/spring15/mybatis/MyBoardMapper.xml"/>
+   		<property name="mapperLocations" value="classpath*:com/heybooks/sh/mybatis/MyBoardMapper.xml"/>
    </bean>
    <bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
    		<constructor-arg index="0" ref="sqlSessionFactory"/>

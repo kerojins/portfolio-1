@@ -20,10 +20,7 @@ DROP TABLE Customers CASCADE CONSTRAINTS;
 DROP TABLE Product_supplement CASCADE CONSTRAINTS;
 DROP TABLE Products CASCADE CONSTRAINTS;
 DROP TABLE Editor CASCADE CONSTRAINTS;
-DROP TABLE Produc_small_type CASCADE CONSTRAINTS;
-DROP TABLE Product_medium_type CASCADE CONSTRAINTS;
-DROP TABLE Product_large_type CASCADE CONSTRAINTS;
-DROP TABLE Product_nation CASCADE CONSTRAINTS;
+DROP TABLE Produc_category CASCADE CONSTRAINTS;
 
 
 
@@ -197,7 +194,7 @@ CREATE TABLE Order_items
 CREATE TABLE Products
 (
 	product_num number NOT NULL,
-	product_type_num number NOT NULL,
+	product_type_num varchar2(20) NOT NULL,
 	editor_num number,
 	product_editor varchar2(50) NOT NULL,
 	product_publish varchar2(50) NOT NULL,
@@ -217,36 +214,6 @@ CREATE TABLE Products
 );
 
 
-CREATE TABLE Product_large_type
-(
-	product_large_type_num number(4,0) NOT NULL,
-	-- 1번 국내
-	-- 2번 국외
-	product_nation_num number(2,0) NOT NULL,
-	product_large_type_name varchar2(20) NOT NULL UNIQUE,
-	PRIMARY KEY (product_large_type_num)
-);
-
-
-CREATE TABLE Product_medium_type
-(
-	product_medium_type number(2,0) NOT NULL,
-	product_large_type_num number(4,0) NOT NULL,
-	product_medium_type_name varchar2(25) NOT NULL UNIQUE,
-	PRIMARY KEY (product_medium_type)
-);
-
-
-CREATE TABLE Product_nation
-(
-	-- 1번 국내
-	-- 2번 국외
-	product_nation_num number(2,0) NOT NULL,
-	product_nation_name varchar2(10) NOT NULL UNIQUE,
-	PRIMARY KEY (product_nation_num)
-);
-
-
 CREATE TABLE Product_supplement
 (
 	supplement_num number NOT NULL,
@@ -257,12 +224,14 @@ CREATE TABLE Product_supplement
 );
 
 
-CREATE TABLE Produc_small_type
+CREATE TABLE Produc_category
 (
-	product_small_type_num number NOT NULL,
-	product_medium_type number(2,0) NOT NULL,
-	product_small_type_name varchar2(25) NOT NULL UNIQUE,
-	PRIMARY KEY (product_small_type_num)
+	cate_num varchar2(20) NOT NULL,
+	cate_name varchar2(30) NOT NULL,
+	cate_ref1 varchar2(20),
+	cate_ref2 varchar2(20),
+	cate_ref3 varchar2(20),
+	PRIMARY KEY (cate_num)
 );
 
 
@@ -468,27 +437,9 @@ ALTER TABLE Wishlist
 ;
 
 
-ALTER TABLE Product_medium_type
-	ADD FOREIGN KEY (product_large_type_num)
-	REFERENCES Product_large_type (product_large_type_num)
-;
-
-
-ALTER TABLE Produc_small_type
-	ADD FOREIGN KEY (product_medium_type)
-	REFERENCES Product_medium_type (product_medium_type)
-;
-
-
-ALTER TABLE Product_large_type
-	ADD FOREIGN KEY (product_nation_num)
-	REFERENCES Product_nation (product_nation_num)
-;
-
-
 ALTER TABLE Products
 	ADD FOREIGN KEY (product_type_num)
-	REFERENCES Produc_small_type (product_small_type_num)
+	REFERENCES Produc_category (cate_num)
 ;
 
 
@@ -501,10 +452,6 @@ COMMENT ON COLUMN Orders.order_status IS '1. 결제 대기
 4. 배송중
 5. 배송 완료';
 COMMENT ON COLUMN Orders.payment_methods IS '신용카드 / 무통장 입금';
-COMMENT ON COLUMN Product_large_type.product_nation_num IS '1번 국내
-2번 국외';
-COMMENT ON COLUMN Product_nation.product_nation_num IS '1번 국내
-2번 국외';
 
 
 
