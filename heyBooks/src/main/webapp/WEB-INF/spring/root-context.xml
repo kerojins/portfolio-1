@@ -7,25 +7,26 @@
 
 	<!-- Root Context: defines shared resources visible to all other web components -->
 
-	<!-- 오라클 접속 -->
-	<bean
-		class="org.springframework.jdbc.datasource.DriverManagerDataSource"
-		id="dataSource">
-		<property value="oracle.jdbc.driver.OracleDriver"
-			name="driverClassName" />
-		<property value="jdbc:oracle:thin:@localhost:1521:XE"
-			name="url" />
-		<property value="heybooks" name="username" />
-		<property value="115236" name="password" />
-	</bean>
+	<!-- 오라클 접속 --> 
+	  <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+   		<property name="driverClassName" value="oracle.jdbc.OracleDriver"/>
+   		<property name="url" value="jdbc:oracle:thin:@localhost:1521:xe"/>
+   		<property name="username" value="heybooks"/>
+   		<property name="password" value="115236"/>
+   </bean> 
+	
+
 	<!-- 마이바티스 연동 -->
-	 <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
-   		<property name="dataSource" ref="dataSource"/>
-   		<property name="mapperLocations" value="classpath*:com/heybooks/sh/mybatis/MyBoardMapper.xml"/>
-   </bean>
-   <bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
-   		<constructor-arg index="0" ref="sqlSessionFactory"/>
-   </bean>  	
+	<bean id="sqlSessionFactory"
+		class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="mapperLocations"
+			value="classpath*:com/heybooks/sh/mybatis/mapper.xml" />
+	</bean>
+	<bean id="sqlSession"
+		class="org.mybatis.spring.SqlSessionTemplate">
+		<constructor-arg index="0" ref="sqlSessionFactory" />
+	</bean> 
 
 	<context:component-scan
 		base-package="com.heybooks.sh">
