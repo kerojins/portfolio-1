@@ -13,7 +13,7 @@ public class Admin_Login_Dao {
 	@Autowired
 	private SqlSession sqlSession;
 	private static final String NAMESPACE ="com.heybooks.sh.mybatis.mapper";
-	public Admin_Login_Vo getinfo(HashMap<String,String> map) {
-		return sqlSession.selectOne(NAMESPACE + ".admin_info", map);
+	public String getinfo(String admin_id) {
+		return sqlSession.selectOne(NAMESPACE + ".admin_info",admin_id);
 	}
 }

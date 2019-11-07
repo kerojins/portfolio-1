@@ -6,6 +6,9 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +23,8 @@ import com.heybooks.sh.vo.Admin_Login_Vo;
 
 @Controller
 public class Admin_contoller {
+	private static final Logger logger = LoggerFactory.getLogger(Member_controller.class);
+	
 	@Autowired private Admin_Login_Service service;
 	// 관리자 홈
 	@RequestMapping(value = "/admin_main", method = RequestMethod.GET)
@@ -30,18 +35,22 @@ public class Admin_contoller {
 	// 관리자 - 로그인
 	@RequestMapping(value = "/admin_login", method = RequestMethod.GET)
 	public String admin_login() {
+		logger.info("get admin-login");
 		return ".admin.admin_login";
 	}
 	
 	@RequestMapping(value = "/admin_login", method = RequestMethod.POST)
-	public String admin_login(String admin_id, String admin_password, Model model) {
-		HashMap<String,String> map = new HashMap<String,String>();
-		map.put("admin_id",admin_id);
-		map.put("admin_password",admin_password);
-		Admin_Login_Vo vo = service.getinfo(map);
-		model.addAttribute("vo",vo);
-		System.out.println(vo.toString());
-		return ".admin.admin_login";
+	public String admin_login(String admin_id, String admin_password, Model model, HttpServletRequest request) {
+		logger.info("post admin-login");
+		String password = service.getinfo(admin_id);
+		if(password.equals(admin_password)) {
+			HttpSession session = request.getSession();
+			session.setAttribute("admin_id", admin_id);
+			return "redirect:/admin_main";
+		}else {
+			model.addAttribute("msg","정보가 올바르지 않습니다.");
+			return ".admin.admin_login";
+		}
 	} 
 	
 

@@ -14,7 +14,7 @@ public class Admin_Login_Service {
 	public void setDao(Admin_Login_Dao dao) {
 		this.dao = dao;
 	}
-	public Admin_Login_Vo getinfo(HashMap<String, String> map) {
-		return dao.getinfo(map);
+	public String getinfo(String admin_id) {
+		return dao.getinfo(admin_id);
 	}
 }

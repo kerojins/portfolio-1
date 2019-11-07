@@ -9,7 +9,7 @@
 					placeholder="password" name="admin_password" />
 				<input type="submit" value="LOGIN">
 				<p class="message"> 
-					${vo.admin_password}
+					${msg}
 				</p>
 			</form> 
 		</div>
