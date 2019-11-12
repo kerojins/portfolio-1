@@ -4,7 +4,7 @@
 <div class="container admin_item_list">
 	<div class="login-page">
 		<div class="form">
-			<form method="post" action="<c:url value='/admin_login'/>" class="login-form">
+			<form method="post" action="<c:url value='/admin'/>" class="login-form">
 				<input type="text" name="admin_id" placeholder="username" /> <input type="text"
 					placeholder="password" name="admin_password" />
 				<input type="submit" value="LOGIN">

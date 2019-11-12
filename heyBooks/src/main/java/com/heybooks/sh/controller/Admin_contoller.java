@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -24,22 +25,24 @@ import com.heybooks.sh.vo.Admin_Login_Vo;
 @Controller
 public class Admin_contoller {
 	private static final Logger logger = LoggerFactory.getLogger(Member_controller.class);
-	
-	@Autowired private Admin_Login_Service service;
+	@Resource private Admin_Login_Service service;
+	 
 	// 관리자 홈
 	@RequestMapping(value = "/admin_main", method = RequestMethod.GET)
-	public String item_contoller() {
+	public String item_contoller(HttpServletRequest request) {
+		String admin_id = (String)request.getSession(); //세션얻어오기
+		System.out.println(admin_id);
 		return ".admin.admin_main";
 	}
 	
 	// 관리자 - 로그인
-	@RequestMapping(value = "/admin_login", method = RequestMethod.GET)
+	@RequestMapping(value = "/admin", method = RequestMethod.GET)
 	public String admin_login() {
 		logger.info("get admin-login");
 		return ".admin.admin_login";
 	}
-	
-	@RequestMapping(value = "/admin_login", method = RequestMethod.POST)
+	 
+	@RequestMapping(value = "/admin", method = RequestMethod.POST)
 	public String admin_login(String admin_id, String admin_password, Model model, HttpServletRequest request) {
 		logger.info("post admin-login");
 		String password = service.getinfo(admin_id);
