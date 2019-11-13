@@ -22,8 +22,15 @@
 						</form>
 					</div>
 					<div id="header_right" class="right">
-						<span><a href="/sh/join">회원가입</a></span> <span><a
-							href="/sh/mypage">마이페이지</a></span><span><a href="<c:url value='/admin_login'/>">로그인</a></span>
+						<c:choose>
+							<c:when test="${empty sessionScope.admin_id }">
+								<span><a href="<c:url value='/admin'/>">로그인</a></span>
+							</c:when>
+							<c:otherwise>
+								<span><a href="<c:url value='/admin_logout'/>">로그아웃</a></span>
+							</c:otherwise>
+						</c:choose>
+
 					</div>
 				</div>
 			</div>

@@ -3,10 +3,10 @@ package com.heybooks.sh.vo;
 import java.sql.Date;
 
 public class Admin_Login_Vo {
-	private int admin_num;
-	private String admin_id;
-	private String admin_password;
-	private Date regdate;
+	private int admin_num; //관리자 번호
+	private String admin_id; //관리자 아이디
+	private String admin_password; //관리자 비밀번호
+	private Date regdate; //관리자 가입일
 	public Admin_Login_Vo() {}
 	public Admin_Login_Vo(int admin_num, String admin_id, String admin_password, Date regdate) {
 		super();

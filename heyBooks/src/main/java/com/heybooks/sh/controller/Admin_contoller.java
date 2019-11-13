@@ -25,37 +25,49 @@ import com.heybooks.sh.vo.Admin_Login_Vo;
 @Controller
 public class Admin_contoller {
 	private static final Logger logger = LoggerFactory.getLogger(Member_controller.class);
-	@Resource private Admin_Login_Service service;
-	 
+	@Resource
+	private Admin_Login_Service service;
+
 	// 관리자 홈
 	@RequestMapping(value = "/admin_main", method = RequestMethod.GET)
 	public String item_contoller(HttpServletRequest request) {
-		String admin_id = (String)request.getSession(); //세션얻어오기
-		System.out.println(admin_id);
+		HttpSession session = request.getSession(); // 세션얻어오기
+		if ((session.getAttribute("admin_id") == null)) {
+			return "redirect:/admin";
+		}
 		return ".admin.admin_main";
 	}
-	
-	// 관리자 - 로그인
+
+	// 관리자 - 로그인/로그아웃
 	@RequestMapping(value = "/admin", method = RequestMethod.GET)
 	public String admin_login() {
 		logger.info("get admin-login");
 		return ".admin.admin_login";
 	}
-	 
 	@RequestMapping(value = "/admin", method = RequestMethod.POST)
-	public String admin_login(String admin_id, String admin_password, Model model, HttpServletRequest request) {
+	public String admin_login(String admin_id, String admin_password, Model model, HttpServletRequest request)
+			throws Exception {
 		logger.info("post admin-login");
-		String password = service.getinfo(admin_id);
-		if(password.equals(admin_password)) {
-			HttpSession session = request.getSession();
-			session.setAttribute("admin_id", admin_id);
-			return "redirect:/admin_main";
+		if(service.getinfo(admin_id) != null) {
+			if (service.getinfo(admin_id).equals(admin_password)) {
+				HttpSession session = request.getSession();
+				session.setAttribute("admin_id", admin_id);
+				return "redirect:/admin_main";
+			} else {
+				model.addAttribute("msg", "아이디나 비밀번호가 올바르지 않습니다.");
+				return ".admin.admin_login";
+			}
 		}else {
-			model.addAttribute("msg","정보가 올바르지 않습니다.");
+			model.addAttribute("msg", "아이디나 비밀번호가 올바르지 않습니다.");
 			return ".admin.admin_login";
 		}
-	} 
-	
+	}
+	@RequestMapping(value = "/admin_logout", method = RequestMethod.GET)
+	public String admin_logout(HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		session.invalidate();
+		return "redirect:/admin";
+	}
 
 	// 상품 - 리스트
 	@RequestMapping(value = "/admin_item_list", method = RequestMethod.GET)
@@ -105,6 +117,5 @@ public class Admin_contoller {
 	public String admin_editor_add() {
 		return ".admin.admin_editor_add";
 	}
-
 
 }
