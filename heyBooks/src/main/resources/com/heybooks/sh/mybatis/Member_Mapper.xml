@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.heybooks.sh.mybatis.Member_Mapper">
+	<!-- 1. 회원 가입 -->
+	<insert id="join" parameterType="com.heybooks.sh.vo.member.Member_Vo">
+		insert into members values(seq_member_num.nextval, #{members_id},#{members_password},#{members_name},#{members_years},#{members_phone_number},#{members_email},#{members_gender},#{members_post},#{members_address},#{members_detail_address},#{members_extra_address},#{members_add_number},#{members_job},#{members_favorite},sysdate)
+	</insert> 
+	<!-- 아이디 중복 검사 -->
+	<select id="searchId" parameterType="String" resultType="String">
+		select * from members where members_id = #{members_id}
+	</select>
+	<!-- 2. 로그인 -->
+	<select id="login" parameterType="com.heybooks.sh.vo.member.Member_Vo" resultType="com.heybooks.sh.vo.member.Member_Vo">
+		select * from members where members_id = #{members_id}
+	</select>
+	<!-- 3. 회원 정보 수정 -->
+	<select id="getInfo" parameterType="int" resultType="com.heybooks.sh.vo.member.Member_Vo">
+		select * from members where members_num = #{members_num}
+	</select>
+</mapper>  
+
+
+ 
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

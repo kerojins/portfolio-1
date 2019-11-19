@@ -8,7 +8,7 @@
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
 	<!-- Enables the Spring MVC @Controller programming model -->
-	<annotation-driven />
+	<annotation-driven /> 
 
 	<!-- Handles HTTP GET requests for /resources/** by efficiently serving 
 		up static resources in the ${webappRoot}/resources directory -->
@@ -45,6 +45,20 @@
 		<beans:property name="order" value="1" />
 	</beans:bean>
 	
+	<!-- 인터셉터 객체 생성 -->
+	<beans:bean id="MemberLoginInterceptor" class="com.heybooks.sh.interceptor.member.MemberLoginInterceptor" >
+	</beans:bean>
+	<!-- 인터셉터 설정 -->
+	<interceptors>
+		<interceptor>
+			<mapping path ="/mypage"/>
+			<mapping path ="/order"/>
+			<beans:ref bean="MemberLoginInterceptor"/>
+		</interceptor>
+	</interceptors>
+	
+	
+
 	
 	<context:component-scan base-package="com.heybooks.sh.controller" />
 

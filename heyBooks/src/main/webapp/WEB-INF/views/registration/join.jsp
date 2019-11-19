@@ -3,57 +3,61 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <div id="join">
 	<div class="container">
-		<form id="join_form">
+		<form id="join_form" name="join_form"
+			action="<c:url value='/member_join'/>" method="post">
 			<h2>회원가입</h2>
 			<div class="join_table_wrap">
 				<h3>필수 정보 입력</h3>
 				<table class="join_essential_info">
 					<tr>
 						<th>아이디</th>
-						<td colspan="3"><input type="text" class="join_classic_input"
-							name="member_id"></td>
+						<td colspan="3">
+							<input type="text" class="join_classic_input" onkeyup="join1();"
+							name="members_id"><input type="button" id="id_check"value="중복검사"><span id="search_msg" class="join_msg"  title="">영문,숫자를 사용한 4~10글자를 입력하세요</span>
+						</td> 
+
 					</tr>
 					<tr>
 						<th>비밀번호</th>
 						<td colspan="3"><input type="password"
-							class="join_classic_input" name="member_password"></td>
+							class="join_classic_input" onfocus="join2();" onkeyup="join3();" name="members_password"><span class="join_msg" title=""></span>
+							</td>
 					</tr>
-					<tr>
+					<tr> 
 						<th>비밀번호확인</th>
 						<td colspan="3"><input type="password"
-							class="join_classic_input" name="member_password_ok"></td>
+							class="join_classic_input" onkeyup="join4();" name="members_password_ok"><span class="join_msg" title=""></span></td>
 					</tr>
 					<tr>
-						<th>이름</th>
+						<th>이름</th> 
 						<td class="half_td"><input type="text"
-							class="join_classic_input" name="member_name"></td>
+							class="join_classic_input" onkeyup="join5();" name="members_name"><span class="join_msg" title=""></span></td>
 						<th>생년월일</th>
 						<td><input type="text" class="join_years_td"
-							name="member_years"> - <input type="text"
-							class="join_gender_td" width="16" name="member_years">
-							*******</td>
-					</tr>
+							name="members_years" onkeyup="join6();"> - <input type="text"
+							class="join_gender_td" width="16" name="members_years" onkeyup="join7();">
+							******* <span id="years_span" class="join_msg" title=""></span></td>
+					</tr> 
 					<tr>
 						<th>휴대폰 번호</th>
-						<td colspan="3"><select name="member_phone_number"><option
-									value="010">010</option>
+						<td colspan="3"><select name="members_phone_number"><option
+									value="010">010</option> 
 								<option value="011">011</option>
 								<option value="016">016</option></select> - <input type="text"
-							class="phone_input" name="member_phone_number"> - <input
-							type="text" class="phone_input" name="member_phone_number"></td>
-					</tr>
-					<tr>
+							class="phone_input" name="members_phone_number" onkeyup="join8();" maxlength="4"> - <input
+							type="text" class="phone_input" name="members_phone_number" onkeyup="join9();" maxlength="4"><span id="phone_span"class="join_msg" title=""></span></td>
+					</tr>  
+					<tr>    
 						<th>이메일</th>
 						<td colspan="3"><input type="text" class="join_classic_input"
-							name="member_email"> @ <input type="text"
-							class="join_email_input" name="member_email"> <select
-							name="member_email">
+							name="members_email"> @ <input type="text"
+							class="join_email_input" name="members_email"> <select>
 								<option>직접입력</option>
 								<option value="naver.com">naver.com</option>
 								<option value="hanmail.net">hanmail.net</option>
 								<option value="yahoo.com">yahoo.com</option>
 								<option value="gmail.com">gmail.com</option>
-						</select></td>
+						</select><span class="join_msg" title=""></span></td>
 					</tr>
 				</table>
 			</div>
@@ -62,29 +66,30 @@
 				<table class="join_essential_info">
 					<tr class="address_row">
 						<th>주소(배송지)</th>
-						<td colspan="3"><input type="text" id="sample6_postcode"
-							placeholder="우편번호"> <input type="button"
-							onclick="sample6_execDaumPostcode()" value="우편번호 찾기"><br>
-							<input type="text" name="member_address" id="sample6_address"
-							placeholder="주소"><br> <input type="text"
-							name="member_detail_address" id="sample6_detailAddress"
-							placeholder="상세주소"> <input type="text"
-							name="member_extra_address" id="sample6_extraAddress"
-							placeholder="참고항목"></td>
+						<td colspan="3"><input type="text" name="members_post"
+							id="sample6_postcode" placeholder="우편번호"> <input
+							type="button" onclick="sample6_execDaumPostcode()"
+							value="우편번호 찾기"><br> <input type="text"
+							name="members_address" id="sample6_address" placeholder="주소"><br>
+							<input type="text" name="members_detail_address"
+							id="sample6_detailAddress" placeholder="상세주소"> <input
+							type="text" name="members_extra_address"
+							id="sample6_extraAddress" placeholder="참고항목"></td>
 					</tr>
 					<tr>
 						<th>추가 연락처</th>
-						<td colspan="3"><select name="member_add_number">
+						<td colspan="3"><select name="members_add_number">
 								<option>선택</option>
 								<option value="010">010</option>
 								<option value="011">011</option>
 								<option value="016">016</option>
-						</select> - <input type="text" class="phone_input" name="member_add_number">
-							- <input type="text" class="phone_input" name="member_add_number"></td>
+						</select> - <input type="text" class="phone_input"
+							name="members_add_number"> - <input type="text"
+							class="phone_input" name="members_add_number"></td>
 					</tr>
 					<tr>
 						<th>직업</th>
-						<td colspan="3"><select name="member_job">
+						<td colspan="3"><select name="members_job">
 								<option>선택</option>
 								<option value="학생">학생</option>
 								<option value="회사원">회사원</option>
@@ -98,29 +103,29 @@
 						<th>관심분야(최대5개)</th>
 						<td colspan="3">
 							<p class="item_select_option join_favorite">
-								<span><input type="checkbox" name="" id="cate_1"
-									name="member_favorite" value="소설" class="item_checking"><label
+								<span><input type="checkbox" id="cate_1"
+									name="members_favorite" value="소설" class="item_checking"><label
 									for="cate_1" class="input_label"></label><label for="cate_1">소설</label>
 								</span> <span><input type="checkbox" id="cate_2"
-									name="member_favorite" value="시/에세이" class="item_checking"><label
+									name="members_favorite" value="시/에세이" class="item_checking"><label
 									for="cate_2" class="input_label"></label><label for="cate_2">시/에세이</label>
 								</span> <span><input type="checkbox" id="cate_3"
-									name="member_favorite" value="경제/경영" class="item_checking"><label
+									name="members_favorite" value="경제/경영" class="item_checking"><label
 									for="cate_3" class="input_label"></label><label for="cate_3">경제/경영</label>
 								</span> <span><input type="checkbox" id="cate_4"
-									name="member_favorite" value="자기계발" class="item_checking"><label
+									name="members_favorite" value="자기계발" class="item_checking"><label
 									for="cate_4" class="input_label"></label><label for="cate_4">자기계발</label>
 								</span> <span><input type="checkbox" id="cate_5"
-									name="member_favorite" value="인문" class="item_checking"><label
+									name="members_favorite" value="인문" class="item_checking"><label
 									for="cate_5" class="input_label"></label><label for="cate_5">인문</label>
 								</span> <span><input type="checkbox" id="cate_6"
-									name="member_favorite" value="정치/사회" class="item_checking"><label
+									name="members_favorite" value="정치/사회" class="item_checking"><label
 									for="cate_6" class="input_label"></label><label for="cate_6">정치/사회</label>
 								</span> <span><input type="checkbox" id="cate_7"
-									name="member_favorite" value="예술/대중문화" class="item_checking"><label
+									name="members_favorite" value="예술/대중문화" class="item_checking"><label
 									for="cate_7" class="input_label"></label><label for="cate_7">예술/대중문화</label>
 								</span> <span><input type="checkbox" id="cate_8"
-									name="member_favorite" value="어린이" class="item_checking"><label
+									name="members_favorite" value="어린이" class="item_checking"><label
 									for="cate_8" class="input_label"></label><label for="cate_8">어린이</label>
 								</span>
 							</p>
@@ -138,6 +143,29 @@
 <script
 	src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>
+	$(document).ready(function() {
+		$("#id_check").click(function() {
+			var id = $("input[name='members_id']").val();
+			$.getJSON("<c:url value='/jackson/id_check'/>", {
+				id : id
+			}, function(data) {
+				if (data == false) {
+					var obj = document.join_form;
+					obj.members_id.nextSibling.nextSibling.style.color = 'red';
+					obj.members_id.nextSibling.nextSibling.setAttribute("title",
+							"false");
+					
+					$("#search_msg").html("사용 중인 아이디 입니다.");
+				} else {
+					$("#search_msg").html("사용 가능한 아이디 입니다.");
+				}
+			});
+		});
+
+	});
+
+	
+ 
 	function sample6_execDaumPostcode() {
 		new daum.Postcode(
 				{

@@ -40,7 +40,7 @@ CREATE TABLE Admins
 CREATE TABLE Cart_item
 (
 	cart_item_num number NOT NULL,
-	member_num number NOT NULL,
+	members_num number NOT NULL,
 	product_num number NOT NULL,
 	cart_item_sort_num number,
 	cart_item_quantity number NOT NULL,
@@ -52,7 +52,7 @@ CREATE TABLE Cart_item
 CREATE TABLE Counsel
 (
 	counsel_num number NOT NULL,
-	member_num number NOT NULL,
+	members_num number NOT NULL,
 	counsel_type varchar2(50) NOT NULL,
 	counsel_title varchar2(150) NOT NULL,
 	counsel_content varchar2(400) NOT NULL,
@@ -99,23 +99,23 @@ CREATE TABLE Event
 
 CREATE TABLE Members
 (
-	member_num number NOT NULL,
-	member_id varchar2(30) NOT NULL UNIQUE,
-	member_password varchar2(30) NOT NULL,
-	member_name varchar2(20) NOT NULL,
-	member_years number NOT NULL,
-	member_phone_number number NOT NULL,
-	member_email varchar2(30) NOT NULL,
-	member_gender varchar2(8) NOT NULL,
-	member_post number,
-	member_address varchar2(600),
-	member_detail_address varchar2(600),
-	member_extra_address varchar2(200),
-	member_add_number number,
-	member_job varchar2(50),
-	member_favorite varchar2(200),
-	member_regdate date NOT NULL,
-	PRIMARY KEY (member_num)
+	members_num number NOT NULL,
+	members_id varchar2(30) NOT NULL UNIQUE,
+	members_password varchar2(200) NOT NULL,
+	members_name varchar2(20) NOT NULL,
+	members_years varchar2(50) NOT NULL,
+	members_phone_number varchar2(50) NOT NULL,
+	members_email varchar2(100) NOT NULL UNIQUE,
+	members_gender varchar2(8) NOT NULL,
+	members_post varchar2(60),
+	members_address varchar2(600),
+	members_detail_address varchar2(600),
+	members_extra_address varchar2(200),
+	members_add_number varchar2(50),
+	members_job varchar2(50),
+	members_favorite varchar2(200),
+	members_regdate date NOT NULL,
+	PRIMARY KEY (members_num)
 );
 
 
@@ -123,7 +123,7 @@ CREATE TABLE Mileage
 (
 	mileage_num number NOT NULL,
 	order_num number NOT NULL,
-	member_num number NOT NULL,
+	members_num number NOT NULL,
 	mileage_score number NOT NULL,
 	mileage_date date NOT NULL,
 	PRIMARY KEY (mileage_num)
@@ -144,7 +144,7 @@ CREATE TABLE News
 CREATE TABLE New_item_notice
 (
 	new_item_notice_num number NOT NULL,
-	member_num number NOT NULL,
+	members_num number NOT NULL,
 	editor_num number NOT NULL,
 	New_item_notice_date date NOT NULL,
 	PRIMARY KEY (new_item_notice_num)
@@ -165,7 +165,7 @@ CREATE TABLE Notice
 CREATE TABLE Orders
 (
 	order_num number NOT NULL,
-	member_num number NOT NULL,
+	members_num number NOT NULL,
 	total_price number NOT NULL,
 	-- 1. 결제 대기
 	-- 2. 결제 완료
@@ -240,7 +240,7 @@ CREATE TABLE Produc_category
 CREATE TABLE Push
 (
 	push_num number NOT NULL,
-	member_num number NOT NULL,
+	members_num number NOT NULL,
 	admin_num number NOT NULL,
 	push_category varchar2(20) NOT NULL,
 	push_content varchar2(600) NOT NULL,
@@ -253,7 +253,7 @@ CREATE TABLE Review
 (
 	review_num number NOT NULL,
 	order_item_num number NOT NULL,
-	member_num number NOT NULL,
+	members_num number NOT NULL,
 	review_img varchar2(200) NOT NULL,
 	review_title varchar2(150) NOT NULL,
 	review_content varchar2(600) NOT NULL,
@@ -269,7 +269,7 @@ CREATE TABLE Review
 CREATE TABLE Today_view
 (
 	Today_view_num number NOT NULL,
-	member_num number NOT NULL,
+	members_num number NOT NULL,
 	product_num number NOT NULL,
 	today_view_date date NOT NULL,
 	PRIMARY KEY (Today_view_num)
@@ -279,7 +279,7 @@ CREATE TABLE Today_view
 CREATE TABLE Wishlist
 (
 	wishlist_num number NOT NULL,
-	member_num number NOT NULL,
+	members_num number NOT NULL,
 	product_num number NOT NULL,
 	wishlist_date date NOT NULL,
 	PRIMARY KEY (wishlist_num)
@@ -338,56 +338,56 @@ ALTER TABLE Products
 
 
 ALTER TABLE Cart_item
-	ADD FOREIGN KEY (member_num)
-	REFERENCES Members (member_num)
+	ADD FOREIGN KEY (members_num)
+	REFERENCES Members (members_num)
 ;
 
 
 ALTER TABLE Counsel
-	ADD FOREIGN KEY (member_num)
-	REFERENCES Members (member_num)
+	ADD FOREIGN KEY (members_num)
+	REFERENCES Members (members_num)
 ;
 
 
 ALTER TABLE Mileage
-	ADD FOREIGN KEY (member_num)
-	REFERENCES Members (member_num)
+	ADD FOREIGN KEY (members_num)
+	REFERENCES Members (members_num)
 ;
 
 
 ALTER TABLE New_item_notice
-	ADD FOREIGN KEY (member_num)
-	REFERENCES Members (member_num)
+	ADD FOREIGN KEY (members_num)
+	REFERENCES Members (members_num)
 ;
 
 
 ALTER TABLE Orders
-	ADD FOREIGN KEY (member_num)
-	REFERENCES Members (member_num)
+	ADD FOREIGN KEY (members_num)
+	REFERENCES Members (members_num)
 ;
 
 
 ALTER TABLE Push
-	ADD FOREIGN KEY (member_num)
-	REFERENCES Members (member_num)
+	ADD FOREIGN KEY (members_num)
+	REFERENCES Members (members_num)
 ;
 
 
 ALTER TABLE Review
-	ADD FOREIGN KEY (member_num)
-	REFERENCES Members (member_num)
+	ADD FOREIGN KEY (members_num)
+	REFERENCES Members (members_num)
 ;
 
 
 ALTER TABLE Today_view
-	ADD FOREIGN KEY (member_num)
-	REFERENCES Members (member_num)
+	ADD FOREIGN KEY (members_num)
+	REFERENCES Members (members_num)
 ;
 
 
 ALTER TABLE Wishlist
-	ADD FOREIGN KEY (member_num)
-	REFERENCES Members (member_num)
+	ADD FOREIGN KEY (members_num)
+	REFERENCES Members (members_num)
 ;
 
 

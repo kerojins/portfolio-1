@@ -27,7 +27,7 @@
 		<ul class=" aside_menu_list" id="collapseExample3">
 			<li><a href="<c:url value='/mypage_qna'/>">1:1문의</a></li>
 			<li><a href="<c:url value='/mypage_review'/>">리뷰관리</a></li>
-			<li><a href="<c:url value='/modification'/>">정보변경</a></li>
+			<li><a href="<c:url value='/modification?members_num=${sessionScope.member.members_num}'/>">정보변경</a></li>
 			<li><a href="#">회원탈퇴</a></li>
 		</ul>
 	</div>

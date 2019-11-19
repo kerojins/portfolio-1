@@ -3,55 +3,64 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <div id="join">
 	<div class="container">
-		<form id="join_form">
-			<h2>회원가입</h2>
+		<form id="join_form" action="<c:url value='/member_join'/>"
+			method="post">
+			<h2>회원 수정</h2>
 			<div class="join_table_wrap">
 				<h3>필수 정보 입력</h3>
 				<table class="join_essential_info">
 					<tr>
 						<th>아이디</th>
-						<td colspan="3"><input type="text" class="join_classic_input"
-							name="join_id"></td>
+						<td colspan="3"><input type="text" readonly="readonly"
+							value="${vo.members_id}" class="join_classic_input"
+							name="members_id"></td>
 					</tr>
 					<tr>
 						<th>비밀번호</th>
 						<td colspan="3"><input type="password"
-							class="join_classic_input" name="join_pwd"></td>
+							value="${vo.members_password }" class="join_classic_input"
+							name="members_password"></td>
 					</tr>
 					<tr>
 						<th>비밀번호확인</th>
 						<td colspan="3"><input type="password"
-							class="join_classic_input" name="join_pwd_ok"></td>
+							class="join_classic_input" name="members_password_ok"></td>
 					</tr>
 					<tr>
 						<th>이름</th>
 						<td class="half_td"><input type="text"
-							class="join_classic_input" name="join_name"></td>
+							value="${vo.members_name }" class="join_classic_input"
+							name="members_name"></td>
 						<th>생년월일</th>
 						<td><input type="text" class="join_years_td"
-							name="join_years"> - <input type="text"
-							class="join_gender_td" width="16" name="join_gender">
-							*******</td>
+							name="members_years" value="${vo.members_years}"> - <input
+							type="text" class="join_gender_td" value="${gender}" width="16"
+							name="members_years"> ******</td>
 					</tr>
 					<tr>
 						<th>휴대폰 번호</th>
-						<td colspan="3"><select name="order_pNumber"><option>010</option>
-								<option>011</option>
-								<option>016</option></select> - <input type="text" class="phone_input"
-							name="order_pNumber"> - <input type="text"
-							class="phone_input" name="order_pNumber"></td>
+						<td colspan="3"><select name="members_phone_number"
+							id="members_phone_number">
+								<option>선택</option>
+								<option value="010">010</option>
+								<option value="011">011</option>
+								<option value="016">016</option>
+						</select> - <input type="text" class="phone_input" value="${phone[1]}"
+							name="members_phone_number"> - <input type="text"
+							class="phone_input" value="${phone[2]}"
+							name="members_phone_number"></td>
 					</tr>
 					<tr>
 						<th>이메일</th>
 						<td colspan="3"><input type="text" class="join_classic_input"
-							name="join_email"> @ <input type="text"
-							class="join_email_input" name="join_email"> <select
-							name="join_email">
+							name="members_email" value="${email[0]}"> @ <input
+							type="text" class="join_email_input" value="${email[1]}"
+							name="members_email"> <select>
 								<option>직접입력</option>
-								<option>naver.com</option>
-								<option>hanmail.net</option>
-								<option>yahoo.com</option>
-								<option>gmail.com</option>
+								<option value="naver.com">naver.com</option>
+								<option value="hanmail.net">hanmail.net</option>
+								<option value="yahoo.com">yahoo.com</option>
+								<option value="gmail.com">gmail.com</option>
 						</select></td>
 					</tr>
 				</table>
@@ -61,86 +70,124 @@
 				<table class="join_essential_info">
 					<tr class="address_row">
 						<th>주소(배송지)</th>
-						<td colspan="3"><input type="text" id="sample6_postcode"
-							placeholder="우편번호"> <input type="button"
+						<td colspan="3"><input type="text" name="members_post"
+							id="sample6_postcode" placeholder="우편번호"
+							value="${vo.members_post}"> <input type="button"
 							onclick="sample6_execDaumPostcode()" value="우편번호 찾기"><br>
-							<input type="text" id="sample6_address" placeholder="주소"><br>
-							<input type="text" id="sample6_detailAddress" placeholder="상세주소">
-							<input type="text" id="sample6_extraAddress" placeholder="참고항목"></td>
+							<input type="text" value="${vo.members_address}"
+							name="members_address" id="sample6_address" placeholder="주소"><br>
+							<input type="text" name="members_detail_address"
+							value="${vo.members_detail_address}" id="sample6_detailAddress"
+							placeholder="상세주소"> <input
+							value="${vo.members_extra_address}" type="text"
+							name="members_extra_address" id="sample6_extraAddress"
+							placeholder="참고항목"></td>
 					</tr>
 					<tr>
 						<th>추가 연락처</th>
-						<td colspan="3"><select name="order_number">
+						<td colspan="3"><select id="add_number"
+							name="members_add_number">
 								<option>선택</option>
-								<option>010</option>
-								<option>011</option>
-								<option>016</option>
-						</select> - <input type="text" class="phone_input" name="order_number">
-							- <input type="text" class="phone_input" name="order_number"></td>
+								<option value="010">010</option>
+								<option value="011">011</option>
+								<option value="016">016</option>
+						</select> - <input type="text" class="phone_input" value="${add_number[1]}"
+							name="members_add_number"> - <input type="text"
+							class="phone_input" value="${add_number[2]}"
+							name="members_add_number"></td>
 					</tr>
 					<tr>
 						<th>직업</th>
-						<td colspan="3"><select name="order_number">
+						<td colspan="3"><select id="members_job" name="members_job">
 								<option>선택</option>
-								<option>학생</option>
-								<option>회사원</option>
-								<option>전문직</option>
-								<option>공무원</option>
-								<option>주부</option>
-								<option>기타</option>
+								<option value="학생">학생</option>
+								<option value="회사원">회사원</option>
+								<option value="전문직">전문직</option>
+								<option value="공무원">공무원</option>
+								<option value="주부">주부</option>
+								<option value="기타">기타</option>
 						</select></td>
 					</tr>
-					<tr> 
-						<th>관심분야(최대5개)</th> 
-						<td colspan="3"> 
-							<p class="item_select_option join_favorite"> 
-								<span><input type="checkbox" id="cate_1" 
-									class="item_checking"><label for="cate_1"
-									class="input_label"></label><label for="cate_1">소설</label>
+					<tr>
+						<th>관심분야(최대5개)</th>
+						<td colspan="3">
+							<p class="item_select_option join_favorite">
+								<span><input type="checkbox" id="cate_1"
+									name="members_favorite" value="소설" class="item_checking"><label
+									for="cate_1" class="input_label"></label><label for="cate_1">소설</label>
+								</span> <span><input type="checkbox" id="cate_2"
+									name="members_favorite" value="시/에세이" class="item_checking"><label
+									for="cate_2" class="input_label"></label><label for="cate_2">시/에세이</label>
+								</span> <span><input type="checkbox" id="cate_3"
+									name="members_favorite" value="경제/경영" class="item_checking"><label
+									for="cate_3" class="input_label"></label><label for="cate_3">경제/경영</label>
+								</span> <span><input type="checkbox" id="cate_4"
+									name="members_favorite" value="자기계발" class="item_checking"><label
+									for="cate_4" class="input_label"></label><label for="cate_4">자기계발</label>
+								</span> <span><input type="checkbox" id="cate_5"
+									name="members_favorite" value="인문" class="item_checking"><label
+									for="cate_5" class="input_label"></label><label for="cate_5">인문</label>
+								</span> <span><input type="checkbox" id="cate_6"
+									name="members_favorite" value="정치/사회" class="item_checking"><label
+									for="cate_6" class="input_label"></label><label for="cate_6">정치/사회</label>
+								</span> <span><input type="checkbox" id="cate_7"
+									name="members_favorite" value="예술/대중문화" class="item_checking"><label
+									for="cate_7" class="input_label"></label><label for="cate_7">예술/대중문화</label>
+								</span> <span><input type="checkbox" id="cate_8"
+									name="members_favorite" value="어린이" class="item_checking"><label
+									for="cate_8" class="input_label"></label><label for="cate_8">어린이</label>
 								</span>
-									<span><input type="checkbox" id="cate_2"
-									class="item_checking"><label for="cate_2"
-									class="input_label"></label><label for="cate_2">시/에세이</label>
-								</span>
-									<span><input type="checkbox" id="cate_3"
-									class="item_checking"><label for="cate_3"
-									class="input_label"></label><label for="cate_3">경제/경영</label>
-								</span>
-									<span><input type="checkbox" id="cate_4"
-									class="item_checking"><label for="cate_4"
-									class="input_label"></label><label for="cate_4">자기계발</label>
-								</span>
-									<span><input type="checkbox" id="cate_5"
-									class="item_checking"><label for="cate_5"
-									class="input_label"></label><label for="cate_5">인문</label>
-								</span>
-									<span><input type="checkbox" id="cate_6"
-									class="item_checking"><label for="cate_6"
-									class="input_label"></label><label for="cate_6">정치/사회</label>
-								</span>
-									<span><input type="checkbox" id="cate_7"
-									class="item_checking"><label for="cate_7"
-									class="input_label"></label><label for="cate_7">예술/대중문화</label>
-								</span>
-									<span><input type="checkbox" id="cate_8"
-									class="item_checking"><label for="cate_8"
-									class="input_label"></label><label for="cate_8">어린이</label>
-								</span> 
 							</p>
 						</td>
-					</tr> 
+					</tr>
 				</table>
 			</div>
 			<button type="submit" class="btn join_btn">가입신청</button>
 		</form>
 	</div>
-</div> 
+</div>
 
 
 <%-- 배송지 주소 API --%>
 <script
 	src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>
+	var phone = document.getElementById('members_phone_number'); // 휴대폰 번호 앞자리 select
+	var phone_val = "${phone[0]}";
+	for (var i = 1; i < phone.length; i++) {
+		if (phone[i].value == phone_val)
+			phone[i].setAttribute("selected", "selected");
+	}
+
+	var add_number = document.getElementById('add_number'); // 추가 번호 앞자리 select
+	var add_number_val = "${add_number[0]}";
+	for (var i = 1; i < phone.length; i++) {
+		if (add_number[i].value == add_number_val)
+			add_number[i].setAttribute("selected", "selected");
+	}
+	var members_job = document.getElementById('members_job'); // 직업 select
+	var members_job_val = "${vo.members_job}";
+	for (var i = 1; i < phone.length; i++) {
+		if (members_job[i].value == members_job_val)
+			members_job[i].setAttribute("selected", "selected");
+	}
+	var favorite = "${vo.members_favorite}"; // 관심분야 체크
+	var fa_array = favorite.split(",");
+	var fa_check = document.getElementsByName("members_favorite");
+	for (var i = 0; i < fa_array.length; i++) {
+		for (var j = 0; j < fa_check.length; j++) {
+			if (fa_array[i] == fa_check[j].value) {
+				alert("d");
+				fa_check[j].setAttribute("checked", "checked");
+				var label = fa_check[j].nextElementSibling;
+				label.innerHTML='<i class="fas fa-check"></i>';
+				
+			}
+		}
+	}
+
+
+
 	function sample6_execDaumPostcode() {
 		new daum.Postcode(
 				{
@@ -192,5 +239,6 @@
 								.focus();
 					}
 				}).open();
+
 	}
 </script>

@@ -2306,16 +2306,29 @@ td.order_total_price span {
 }
 
 .join_essential_info input, .join_essential_info select {
-	border: 1px solid #ccc;
-	height: 27px;
-	padding-left: 5px;
-	font-size: 14px;
+    border: 1px solid #ccc;
+    height: 27px;
+    padding: 0 5px;
+    font-size: 13px;
 }
 
 .join_classic_input {
 	width: 160px;
 }
 
+#id_check{
+	margin-left: 8px;
+}
+.join_msg{
+	margin-left: 8px;
+	font-size: 14px;
+	font-weight: 600;
+	   
+}
+.join_msg i.fa-check{
+	color:#00b92a !important;
+}   
+ 
 .join_years_td {
 	width: 100px;
 }

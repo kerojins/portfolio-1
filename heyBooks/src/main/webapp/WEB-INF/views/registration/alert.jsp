@@ -3,12 +3,11 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <div class="container login_box" id="container">
 	<div class="form-container sign-in-container">
-		<form action="<c:url value='/member_login' />" class="login_form" method="post">
+		<form action="#" class="login_form">
 			<h3>Login</h3>
-			<input type="text" name="members_id"
-				placeholder="아이디" /> <input type="password" name="members_password"
+			<input type="text"
+				placeholder="아이디" /> <input type="password"
 				placeholder="비밀번호" /> <a href="#">아이디나 비밀번호를 잊으셨나요?</a>
-				<p>${msg}</p> 
 			<button>로그인</button>
 		</form>
 	</div>
