@@ -324,72 +324,99 @@ $("document")
 					$("#join_form input")
 							.click(
 									function() {
-										$("span[title='true']")
+										$(".join_essential span[title='true']")
 												.html(
 														"<i class='fas fa-check' aria-hidden='true'></i>");
 										if ($("span[title='false']").length > 0) {
-											$("span[title='false']").parent()
-													.children().first().focus();
+											$("span.one_area[title='false']")
+													.parent().children()
+													.first().focus();
 										} else {
 											$(this).focus();
 										}
 
 									});
-				});
 
+					// 회원 수정 - 관심분야 체크된 항목 카운트
+					var checked = $(".join_favorite input[type='checkbox']");
+
+					checked.each(function(index, item) {
+						var checked_val = $(item).prop("checked");
+						if (checked_val){
+							++cnt1;
+							}
+					});
+
+					// 회원 수정 - 관심분야 체크 제한 5개
+					$(".join_favorite input[type='checkbox']").change(
+							function() {
+								var checked = $(this).prop("checked");
+								if (checked) {
+									++cnt1;
+								} else {
+									--cnt1;
+								}
+								if (cnt1 > 5) {
+									--cnt1;
+									alert("최대 5개까지 선택하실 수 있습니다.");
+									$(this).prop("checked",false);
+									$(this).next().children().hide();
+								}
+							});
+
+				});
+   
 // 회원가입 유효성 검사
 
 window.onload = join;
-
+var id_check = true;
 function join() { // 아이디 입력란 포커스주기
-	var obj = document.join_form;
-	obj.members_id.focus();
-
+	/*
+	 * var obj = document.join_form; obj.members_id.focus();
+	 */
 }
 function join1() { // 아이디 조건 검사
 	var obj = document.join_form;
 	for (var i = 0; i < obj.members_id.value.length; i++) {
 		var ch = obj.members_id.value.charAt(i);
-		if (!(ch >= '0' && ch <= '9') && !(ch >= 'a' && ch <= 'z')
-				&& !(ch >= 'A' && ch <= 'Z')) {
+		if (!(ch >= '0' && ch <= '9')
+				&& !(ch >= 'a' && ch <= 'z')
+				&& !(ch >= 'A' && ch <= 'Z')
+				|| (obj.members_id.value.length < 4 || obj.members_id.value.length > 10)) {
 			obj.members_id.nextSibling.nextSibling.style.color = 'red';
 			obj.members_id.nextSibling.nextSibling.setAttribute("title",
 					"false");
 			obj.members_id.nextSibling.nextSibling.innerHTML = '영문,숫자를 사용한 4~10글자를 입력하세요';
-
 		} else {
-			if (obj.members_id.value.length >= 4
-					&& obj.members_id.value.length <= 10) {
-				obj.members_id.nextSibling.nextSibling.style.color = '#00b92a';
-				obj.members_id.nextSibling.nextSibling.setAttribute("title",
-						"true");
-				obj.members_id.nextSibling.nextSibling.innerHTML = '영문,숫자를 사용한 4~10글자를 입력하세요';
-			}
+			obj.members_id.nextSibling.nextSibling.style.color = '#00b92a';
 		}
 	}
-	if (obj.members_id.value.length < 4 || obj.members_id.value.length > 12) {
-
+	if (obj.members_id.nextSibling.nextSibling.getAttribute("title") == "true") { // 중복확인
+																					// 후
+																					// 아이디
+																					// 수정 시
+		obj.members_id.nextSibling.nextSibling.setAttribute("title", "false");
+		obj.members_id.nextSibling.nextSibling.style.color = 'red';
+		obj.members_id.nextSibling.nextSibling.innerHTML = '중복검사는 필수사항입니다.';
 	}
 }
+
 function join2() { // 비밀번호 조건글씨 나타내기
 	var obj = document.join_form;
-	obj.members_password.nextSibling.innerHTML = "영문,숫자를 사용한 8글자 이상 입력하세요";
 }
 
 function join3() { // 비밀번호 조건 검사
 	var obj = document.join_form;
 	for (var i = 0; i < obj.members_password.value.length; i++) {
 		var ch = obj.members_password.value.charAt(i);
-		if (!(ch >= '0' && ch <= '9') && !(ch >= 'a' && ch <= 'z')
-				&& !(ch >= 'A' && ch <= 'Z')) {
+		if ((!(ch >= '0' && ch <= '9') && !(ch >= 'a' && ch <= 'z') && !(ch >= 'A' && ch <= 'Z'))
+				|| obj.members_password.value.length < 8) {
 			obj.members_password.nextSibling.style.color = 'red';
 			obj.members_password.nextSibling.setAttribute("title", "false");
 			obj.members_password.nextSibling.innerHTML = "영문,숫자를 사용한 8글자 이상 입력하세요";
 		} else {
-			if (obj.members_password.value.length >= 8) {
-				obj.members_password.nextSibling.style.color = '#00b92a';
-				obj.members_password.nextSibling.setAttribute("title", "true");
-			}
+			obj.members_password.nextSibling.style.color = '#00b92a';
+			obj.members_password.nextSibling.setAttribute("title", "true");
 		}
 	}
 }
@@ -397,10 +424,10 @@ function join4() { // 비밀번호 확인
 	var obj = document.join_form;
 	var password = obj.members_password;
 	var password_ok = obj.members_password_ok;
-	if (password.value == "") {
+	if (password.value == "") { // 비밀번호 입력 안했을 시 포커스
 		password.focus();
-		password_ok.value="";
-	} 
+		password_ok.value = "";
+	}
 	for (var i = 0; i < password.value.length; i++) {
 		var ch = password.value.charAt(i);
 		var ch2 = password_ok.value.charAt(i);
@@ -472,35 +499,115 @@ function join7() { // 생년월일 검사 뒷자리
 	}
 }
 
-function join8(){ // 전화번호 중간자리 
+function join8() { // 전화번호 중간자리
 	var obj = document.join_form;
 	var phone = obj.members_phone_number;
 	var phone_span = document.getElementById("phone_span");
-	for(var i=0; i < phone[1].value.length ; i++){
+	for (var i = 0; i < phone[1].value.length; i++) {
 		var ch = phone[1].value.charAt(i);
-		if(!(ch>=0 && ch <=9 )){
+		if (!(ch >= 0 && ch <= 9)) {
 			alert("숫자 이외에는 입력하실 수 없습니다")
 			phone[1].value = "";
 			phone_span.setAttribute("title", "false");
 		}
-	} 
-	if(phone[1].value.length == 4) phone[2].focus();
-}   
+	}
+	if (phone[1].value.length == 4)
+		phone[2].focus();
+}
 
-function join9(){ // 전화번호 뒷자리 
+function join9() { // 전화번호 뒷자리
 	var obj = document.join_form;
 	var phone = obj.members_phone_number;
 	var phone_span = document.getElementById("phone_span");
-	for(var i=0; i < phone[2].value.length ; i++){
+	for (var i = 0; i < phone[2].value.length; i++) {
 		var ch = phone[2].value.charAt(i);
-		if(!(ch>=0 && ch <=9 )){
+		if (!(ch >= 0 && ch <= 9)) {
 			alert("숫자 이외에는 입력하실 수 없습니다")
 			phone[2].value = "";
 			phone_span.setAttribute("title", "false");
-		}else{ 
-			if(phone[1].value.length == 4 && phone[1].value.length == 4){
+		} else {
+			if (phone[1].value.length == 4 && phone[1].value.length == 4) {
 				phone_span.setAttribute("title", "true");
 			}
 		}
-	} 
+	}
+}
+
+function join10() { // 이메일 앞칸
+	var obj = document.join_form;
+	var email = obj.members_email;
+	var email_span = document.getElementById("email_span");
+	for (var i = 0; i < email[0].value.length; i++) {
+		var ch = email[0].value.charAt(i);
+		if (!(ch >= 1 && ch <= 9) && !(ch >= 'a' && ch <= 'z')
+				&& !(ch >= 'A' && ch <= 'Z')) {
+			alert('영문,숫자 이외에는 입력하실 수 없습니다')
+			email[0].value = '';
+			email_span.setAttribute('title', 'false');
+		} else {
+
+		}
+	}
+}
+
+function join11() { // 이메일 뒷칸
+	var obj = document.join_form;
+	var email = obj.members_email;
+	var email_span = document.getElementById("email_span");
+	for (var i = 0; i < email[1].value.length; i++) {
+		var ch = email[1].value.charAt(i);
+		if (!(ch >= 'a' && ch <= 'z') && !(ch >= 'A' && ch <= 'Z')
+				&& !(ch == '.')) {
+			alert('영문 의외에는 입력하실 수 없습니다')
+			email[1].value = '';
+			email_span.setAttribute('title', 'false');
+		} else {
+			if (email[0].value.length >= 4
+					&& email[1].value.match(/.com/) == ".com") {
+				email_span.setAttribute('title', 'true');
+			}
+		}
+	}
+}
+
+function join12(select_obj) { // 이메일 양식 선택
+	var obj = document.join_form;
+	var input = obj.join_email_input;
+	var select_index = select_obj.selectedIndex;
+	var selected_val = select_obj.options[select_index].value;
+	input.value = selected_val;
+}
+
+function join13() { // 전화번호 중간자리
+	var obj = document.join_form;
+	var phone = obj.members_add_number;
+	var phone_span = document.getElementById("phone_add_span");
+	for (var i = 0; i < phone[1].value.length; i++) {
+		var ch = phone[1].value.charAt(i);
+		if (!(ch >= 0 && ch <= 9)) {
+			alert("숫자 이외에는 입력하실 수 없습니다")
+			phone[1].value = "";
+			phone_span.setAttribute("title", "false");
+		}
+	}
+	if (phone[1].value.length == 4)
+		phone[2].focus();
+}
+
+function join14() { // 전화번호 뒷자리
+	var obj = document.join_form;
+	var phone = obj.members_add_number;
+	var phone_span = document.getElementById("phone_add_span");
+	for (var i = 0; i < phone[2].value.length; i++) {
+		var ch = phone[2].value.charAt(i);
+		if (!(ch >= 0 && ch <= 9)) {
+			alert("숫자 이외에는 입력하실 수 없습니다")
+			phone[2].value = "";
+			phone_span.setAttribute("title", "false");
+		} else {
+			if (phone[1].value.length == 4 && phone[1].value.length == 4) {
+				phone_span.setAttribute("title", "true");
+			}
+		}
+	}
 }

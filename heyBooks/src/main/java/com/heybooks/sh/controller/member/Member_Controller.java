@@ -56,7 +56,7 @@ public class Member_Controller {
 		} else {
 			vo.setMembers_gender("남자");
 		}
-		;
+		
 
 		String member_phone = vo.getMembers_phone_number().replace(",", "-"); // 핸드폰 번호 "-"변환
 		vo.setMembers_phone_number(member_phone);
@@ -71,11 +71,13 @@ public class Member_Controller {
 			String members_favorite = "";
 			vo.setMembers_favorite(members_favorite);
 		}
-		if (service.join(vo) == 0) {
-			return ".registration.login";
+		try {
+			service.join(vo);
+			return "redirect:/member_login";
+		} catch (Exception e) {
+			return ".registration.alert";
 		}
-		;
-		return ".registration.alert";
+		
 	}
 
 	// 2. 회원 로그인
@@ -110,8 +112,8 @@ public class Member_Controller {
 	}
 
 	// 3. 회원 정보 수정
-	@RequestMapping(value = "/modification", method = RequestMethod.GET)
-	public String modification(int members_num, Model model) {
+	@RequestMapping(value = "/member_update", method = RequestMethod.GET)
+	public String update(int members_num, Model model) {
 		Member_Vo vo = service.getInfo(members_num);
 		if (vo != null) {
 			logger.info(vo.toString());
@@ -126,10 +128,7 @@ public class Member_Controller {
 				String[] add_number = vo.getMembers_add_number().split("-");
 				model.addAttribute("add_number", add_number);
 			}
-		/*	if (vo.getMembers_favorite() != null) { // 관심분야 배열생성
-				String[] favorite = vo.getMembers_favorite().split(",");
-				model.addAttribute("favorite", favorite);
-			}*/
+
 			if (vo.getMembers_gender().equals("여자")) { // 생년월일 성별 구분번호
 				model.addAttribute("gender", "2");
 			} else {
@@ -139,6 +138,47 @@ public class Member_Controller {
 		} else {
 			return ".registration.alert";
 		}
+	}
+	@RequestMapping(value = "/member_update", method = RequestMethod.POST)
+	public String update(Member_Vo vo) {
+		logger.info("post member-update");
+		
+		String inputPass = vo.getMembers_password(); // 비밀번호 암호화
+		String password = passEncoder.encode(inputPass);
+		vo.setMembers_password(password);
+
+		String[] member_years = vo.getMembers_years().split(","); // 생년월일, 성별구분
+		vo.setMembers_years(member_years[0]);
+		if (member_years[1].equals("2")) {
+			vo.setMembers_gender("여자");
+		} else {
+			vo.setMembers_gender("남자");
+		}
+
+		String member_phone = vo.getMembers_phone_number().replace(",", "-"); // 핸드폰 번호 "-"변환
+		vo.setMembers_phone_number(member_phone);
+
+		String member_email = vo.getMembers_email().replace(",", "@"); // 이메일 "@"추가
+		vo.setMembers_email(member_email);
+
+		String member_add_number = vo.getMembers_add_number().replace(",", "-"); // 추가 연락처 "-"변환
+		vo.setMembers_add_number(member_add_number);
+
+		if (vo.getMembers_favorite() == null) {
+			String members_favorite = "";
+			vo.setMembers_favorite(members_favorite);
+		}
+		
+			service.update(vo);
+			return "redirect:/mypage";
+		
+		/*	try {
+			service.update(vo);
+			return "redirect:/mypage";
+		} catch (Exception e) {
+			return ".registration.alert";
+		}*/
+		
 	}
 
 	// 마이페이지
@@ -190,29 +230,6 @@ public class Member_Controller {
 		return ".member.mypage_mileage";
 	}
 
-	// 마이페이지 - 1:1문의
-	@RequestMapping(value = "/mypage_qna", method = RequestMethod.GET)
-	public String mypage_qna() {
-		return ".member.mypage_qna";
-	}
-
-	// 마이페이지 - 1:1문의 작성
-	@RequestMapping(value = "/mypage_qna_write", method = RequestMethod.GET)
-	public String mypage_qna_write() {
-		return ".member.mypage_qna_write";
-	}
-
-	// 마이페이지 - 1:1문의 상세내용
-	@RequestMapping(value = "/mypage_qna_detail", method = RequestMethod.GET)
-	public String mypage_qna_detail() {
-		return ".member.mypage_qna_detail";
-	}
-
-	// 마이페이지 - 리뷰관리
-	@RequestMapping(value = "/mypage_review", method = RequestMethod.GET)
-	public String mypage_review() {
-		return ".member.mypage_review";
-	}
 
 	// 쇼핑카트
 	@RequestMapping(value = "/cart", method = RequestMethod.GET)

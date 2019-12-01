@@ -5,7 +5,7 @@
 	<div class="search-form-container">
 		<div class=" admin_page_head">
 			<h2>작가 리스트</h2>
-			<a class="admin_btn" href="<c:url value='/admin_editor_add'/>">작가등록</a>
+			<a class="admin_btn" href="<c:url value='/editor_add'/>">작가등록</a>
 		</div>
 		<form>
 			<table class="search-form-table">
@@ -91,8 +91,6 @@
 											<input type="text" name="estock" value="" size="7"
 											class="line onlynumber" row_group="stock"></td>
 									</tr>
-								
-
 								</tbody>
 							</table>
 						</td>
@@ -108,21 +106,24 @@
 			</p>
 			<div class="admin_select_list">
 				<select>
-					<option>최신순</option>
-					<option>재고순</option>
-					<option>판매명순</option>
+					<option>등록순</option>
+					<option>이름순</option>
+					<option>판매량순</option>
+					<option>최근작품순</option>
 				</select>
 			</div>
 		</div>
 		<table id="user_list_table" class="list-table-style " cellspacing="0">
 			<!-- 테이블 헤더 : 시작 -->
 			<colgroup>
-				<col width="3%">
+				<col width="2%">
 				<!-- checkbox -->
-				<col width="3%">
+				<col width="2%">
 				<!-- 번호 --> 
 				<col width="10%">
 				<!-- 이름 -->
+				<col width="8%">
+				<!-- 생년월일 -->
 				<col width="8%">
 				<!-- 전화번호 -->
 				<col width="15%">
@@ -136,13 +137,10 @@
 				<tr>
 					<th><input type="checkbox" onclick="chkAll(this,'member_chk');"></th>
 					<th>번호</th>
-					
-					
 					<th>작가명</th>
-					
+					<th>생년월일</th>
 					<th>등록작품 수</th>
 					<th>최신 작품등록일</th>
-					
 					<th>판매부수</th>
 					<th>관리</th>
 				</tr>
@@ -150,85 +148,23 @@
 			<!-- 테이블 헤더 : 끝 -->
 
 			<tbody id="user-tr-list" class="ltb otb">
+			<c:forEach var="vo" items="${list }">
 				<tr class="list-row">
-					<td class="ctd"><input type="checkbox" name="member_chk[]" value="7" cellphone="" email="" grade="1" grade_name="일반" class="member_chk"></td>
-					<td class="ctd">1</td>
-					<td class="ltd">(test)</td>
+					<td class="ctd"><input type="checkbox" name="member_chk[]"  class="member_chk"></td>
+					<td class="ctd">${vo.editor_num}</td>
+					<td class="ltd">${vo.editor_name }</td>
+					<td class="ltd">${vo.editor_birth }</td>
 					<td class="ltd">없음</td>
 					<td class="ltd">2019-08-21 10:44:21<br>2019-08-21
-						10:46:10
+						10:46:10 
 					</td>
 					<td class="ltd"><span class="blue hand" onclick="point_pop('7');">0</span></td>
-					<td class="ctd"><span class="btn small valign-middle"><input type="button" name="manager_modify_btn" value="상세" onclick="open_crm_summary(this);"></span></td>
+					<td class="ctd"><span class="btn small valign-middle"><a href="<c:url value='/editor_delete?editor_num=${vo.editor_num }'/>" class="admin_list_btn">삭제</a><a href="<c:url value='/editor_update?editor_num=${vo.editor_num }'/>" class="admin_list_btn">수정</a></span></td>
 				</tr>
-				
-				
+			</c:forEach>
+				 
 			</tbody>
 		</table>
 	</div>
-	<div id="member_info_layers" class="member_info_layer"
-		style="">
-		<div class="memberInfoWrap">
-			<div class="layer_close">x</div>
-			<div stype="padding:8px;">
-			<table width="310" cellspacing="0" cellpadding="0"
-				class="memberInfoTable">
-				<colgroup> 
-					<col style="width: 60px">  
-					<col style="width: *">
-					<col style="width: 110px"> 
-					<col style="width: 50px">
-				</colgroup> 
-				<thead> 
-					<tr> 
-						<th colspan="4" style="padding-left:8px"> 고객CRM</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-						<th><a href="/admincrm/main/user_detail?member_seq=7"
-							target="_blank">악성도</a></th>
-						<td class="">없음</td>
-						<th>SNS 정보</th>
-						<td class="snsList">없음</td>
-					</tr>
-					<tr>
-						<th><a href="/admincrm/member/point_list?member_seq=7"
-							target="_blank">포인트</a></th>
-						<td class="blueText bold">0</td>
-						<th><a href="/admincrm/order/refund_catalog?member_seq=7"
-							target="_blank">미처리 환불</a></th>
-						<td class=" bdbottom">0</td>
-					</tr>
-					<tr>
-						<th><a href="/admincrm/member/cash_list?member_seq=7"
-							target="_blank">예치금</a></th>
-						<td class="blueText bold">0</td>
-						<th><a href="/admincrm/board/qna_catalog?member_seq=7"
-							target="_blank">미처리 상품문의</a></th>
-						<td class="">0</td>
-					</tr>
-					<tr>
-						<th><a
-							href="/admincrm/member/member_coupon_list?member_seq=7"
-							target="_blank">쿠폰</a></th>
-						<td class="">0장</td>
-						<th><a href="/admincrm/board/mbqna_catalog?member_seq=7"
-							target="_blank">미처리 1:1문의</a></th>
-						<td class="">0</td>
-					</tr>
-					<tr>
-						<th><a
-							href="/admincrm/member/member_coupon_list?tab=3&amp;member_seq=7"
-							target="_blank">코드</a></th>
-						<td class="">0장</td>
-						<th><a href="/admincrm/board/counsel_catalog?member_seq=7"
-							target="_blank">미처리 상담</a></th>
-						<td class="">0</td>
-					</tr>
-				</tbody>
-			</table>
-			</div>
-		</div> 
-	</div>
+	
 </div>

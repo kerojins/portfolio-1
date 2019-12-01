@@ -3,65 +3,62 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <div id="join">
 	<div class="container">
-		<form id="join_form" action="<c:url value='/member_join'/>"
-			method="post">
-			<h2>회원 수정</h2>
+		<form id="join_form" name="join_form"
+			action="<c:url value='/member_update'/>" method="post">
+			<h2>회원 수정</h2> 
 			<div class="join_table_wrap">
 				<h3>필수 정보 입력</h3>
-				<table class="join_essential_info">
+				<table class="join_essential_info join_essential">
 					<tr>
 						<th>아이디</th>
-						<td colspan="3"><input type="text" readonly="readonly"
-							value="${vo.members_id}" class="join_classic_input"
-							name="members_id"></td>
-					</tr>
+						<td colspan="3">
+							<input type="text" hidden="hidden" name="members_num" class="join_classic_input" onkeyup="join1();"
+							value="${vo.members_num}" > <!-- 회원 번호 -->
+							<input type="text"  readonly="readonly" name="members_id" class="join_classic_input" onkeyup="join1();"
+							value="${vo.members_id}" >
+						</td> 
+					</tr>  
 					<tr>
 						<th>비밀번호</th>
 						<td colspan="3"><input type="password"
-							value="${vo.members_password }" class="join_classic_input"
-							name="members_password"></td>
+							value="${vo.members_password }" class="join_classic_input" onfocus="join2();" onkeyup="join3();" name="members_password"><span class="join_msg one_area" title=""></span>
+							</td>
 					</tr>
-					<tr>
+					<tr> 
 						<th>비밀번호확인</th>
 						<td colspan="3"><input type="password"
-							class="join_classic_input" name="members_password_ok"></td>
+							class="join_classic_input" onkeyup="join4();" name="members_password_ok"><span class="join_msg one_area" title=""></span></td>
 					</tr>
 					<tr>
-						<th>이름</th>
-						<td class="half_td"><input type="text"
-							value="${vo.members_name }" class="join_classic_input"
-							name="members_name"></td>
+						<th>이름</th> 
+						<td class="half_td"><input type="text" 
+							value="${vo.members_name }"  class="join_classic_input" onkeyup="join5();"  name="members_name"><span class="join_msg one_area" title=""></span></td>
 						<th>생년월일</th>
-						<td><input type="text" class="join_years_td"
-							name="members_years" value="${vo.members_years}"> - <input
-							type="text" class="join_gender_td" value="${gender}" width="16"
-							name="members_years"> ******</td>
-					</tr>
-					<tr>
+						<td><input type="text" class="join_years_td" 
+							name="members_years" value="${vo.members_years}" maxlength="6" onkeyup="join6();"> - <input type="text"
+							class="join_gender_td" value="${gender}  width="16" readonly="readonly" maxlength="1" name="members_years" onkeyup="join7();">
+							****** <span id="years_span" class="join_msg" title=""></span></td>
+					</tr> 
+					<tr> 
 						<th>휴대폰 번호</th>
-						<td colspan="3"><select name="members_phone_number"
-							id="members_phone_number">
-								<option>선택</option>
-								<option value="010">010</option>
+						<td colspan="3"><select name="members_phone_number" id="members_phone_number"><option
+									value="010">010</option> 
 								<option value="011">011</option>
-								<option value="016">016</option>
-						</select> - <input type="text" class="phone_input" value="${phone[1]}"
-							name="members_phone_number"> - <input type="text"
-							class="phone_input" value="${phone[2]}"
-							name="members_phone_number"></td>
-					</tr>
-					<tr>
+								<option value="016">016</option></select> - <input type="text" value="${phone[1]}"
+							class="phone_input" name="members_phone_number" onkeyup="join8();" maxlength="4"> - <input
+							type="text" class="phone_input" name="members_phone_number" value="${phone[2]}" onkeyup="join9();" maxlength="4"><span id="phone_span"class="join_msg" title=""></span></td>
+					</tr>  
+					<tr>    
 						<th>이메일</th>
 						<td colspan="3"><input type="text" class="join_classic_input"
-							name="members_email" value="${email[0]}"> @ <input
-							type="text" class="join_email_input" value="${email[1]}"
-							name="members_email"> <select>
-								<option>직접입력</option>
-								<option value="naver.com">naver.com</option>
+							name="members_email"  value="${email[0]}"  onkeyup="join10();"> @ <input type="text"
+							class="join_email_input"  id="join_email_input"  value="${email[1]}" onkeyup="join11();"  name="members_email"> <select id="member_email" onchange="join12(this);" >
+								<option value="">직접입력</option>
+								<option value="naver.com">naver.com</option> 
 								<option value="hanmail.net">hanmail.net</option>
-								<option value="yahoo.com">yahoo.com</option>
+								<option value="yahoo.com">yahoo.com</option> 
 								<option value="gmail.com">gmail.com</option>
-						</select></td>
+						</select><span class="join_msg" id="email_span" title=""></span></td>
 					</tr>
 				</table>
 			</div>
@@ -71,30 +68,24 @@
 					<tr class="address_row">
 						<th>주소(배송지)</th>
 						<td colspan="3"><input type="text" name="members_post"
-							id="sample6_postcode" placeholder="우편번호"
-							value="${vo.members_post}"> <input type="button"
-							onclick="sample6_execDaumPostcode()" value="우편번호 찾기"><br>
-							<input type="text" value="${vo.members_address}"
-							name="members_address" id="sample6_address" placeholder="주소"><br>
+							id="sample6_postcode" value="${vo.members_post}" placeholder="우편번호"> <input
+							 type="button" onclick="sample6_execDaumPostcode()"
+							value="우편번호 찾기"><br> <input type="text"
+							name="members_address" id="sample6_address" value="${vo.members_address}"  placeholder="주소"><br>
 							<input type="text" name="members_detail_address"
-							value="${vo.members_detail_address}" id="sample6_detailAddress"
-							placeholder="상세주소"> <input
-							value="${vo.members_extra_address}" type="text"
-							name="members_extra_address" id="sample6_extraAddress"
-							placeholder="참고항목"></td>
+							value="${vo.members_detail_address}" id="sample6_detailAddress" placeholder="상세주소"> <input
+							type="text" value="${vo.members_extra_address}" name="members_extra_address"
+							id="sample6_extraAddress" placeholder="참고항목"></td>
 					</tr>
 					<tr>
-						<th>추가 연락처</th>
-						<td colspan="3"><select id="add_number"
-							name="members_add_number">
-								<option>선택</option>
+						<th>추가 연락처</th> 
+						<td colspan="3"><select id="add_number" name="members_add_number">
 								<option value="010">010</option>
 								<option value="011">011</option>
 								<option value="016">016</option>
-						</select> - <input type="text" class="phone_input" value="${add_number[1]}"
-							name="members_add_number"> - <input type="text"
-							class="phone_input" value="${add_number[2]}"
-							name="members_add_number"></td>
+						</select> - <input type="text" onkeyup="join13();" class="phone_input"  value="${add_number[1]}"
+							name="members_add_number" maxlength="4"> - <input type="text" onkeyup="join14();"
+							class="phone_input"  value="${add_number[2]}" name="members_add_number" maxlength="4"><span id="phone_add_span"class="join_msg" title=""></span></td>
 					</tr>
 					<tr>
 						<th>직업</th>
@@ -142,7 +133,7 @@
 					</tr>
 				</table>
 			</div>
-			<button type="submit" class="btn join_btn">가입신청</button>
+			<button type="submit" class="btn join_btn">수정 완료</button>
 		</form>
 	</div>
 </div>
@@ -161,13 +152,13 @@
 
 	var add_number = document.getElementById('add_number'); // 추가 번호 앞자리 select
 	var add_number_val = "${add_number[0]}";
-	for (var i = 1; i < phone.length; i++) {
+	for (var i = 1; i < add_number.length; i++) {
 		if (add_number[i].value == add_number_val)
 			add_number[i].setAttribute("selected", "selected");
 	}
 	var members_job = document.getElementById('members_job'); // 직업 select
 	var members_job_val = "${vo.members_job}";
-	for (var i = 1; i < phone.length; i++) {
+	for (var i = 1; i < members_job.length; i++) {
 		if (members_job[i].value == members_job_val)
 			members_job[i].setAttribute("selected", "selected");
 	}
@@ -177,17 +168,14 @@
 	for (var i = 0; i < fa_array.length; i++) {
 		for (var j = 0; j < fa_check.length; j++) {
 			if (fa_array[i] == fa_check[j].value) {
-				alert("d");
 				fa_check[j].setAttribute("checked", "checked");
 				var label = fa_check[j].nextElementSibling;
 				label.innerHTML='<i class="fas fa-check"></i>';
-				
+				 
 			}
 		}
 	}
-
-
-
+	 
 	function sample6_execDaumPostcode() {
 		new daum.Postcode(
 				{

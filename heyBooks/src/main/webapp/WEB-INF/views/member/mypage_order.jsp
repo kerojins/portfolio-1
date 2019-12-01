@@ -76,7 +76,7 @@ $("#order_pre_date").datepicker({
     showAnim:"fold", //애니메이션효과
 
 	maxDate: 0,
-});
+}); 
 
 $("#order_ep_date").datepicker({
     dayNamesMin:["일","월","화","수","목","금","토"], // 요일에 표시되는 형식 설정

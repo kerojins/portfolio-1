@@ -29,10 +29,15 @@ public class Member_DaoImpl implements Member_Dao{
 	public Member_Vo login(Member_Vo vo) {
 		return sqlSession.selectOne(NAMESPACE + ".login", vo);
 	}
-	// 3. 회원 정보 수정
+	// 3. 회원 정보 
 	@Override
 	public Member_Vo getInfo(int num) {
 		return sqlSession.selectOne(NAMESPACE +".getInfo", num);
+	}
+	// 회원 정보 수정
+	@Override
+	public int update(Member_Vo vo) {
+		return sqlSession.update(NAMESPACE + ".update", vo);
 	}
 	
 	

@@ -20,7 +20,7 @@ DROP TABLE Editor CASCADE CONSTRAINTS;
 DROP TABLE Mileage CASCADE CONSTRAINTS;
 DROP TABLE Orders CASCADE CONSTRAINTS;
 DROP TABLE Members CASCADE CONSTRAINTS;
-DROP TABLE Produc_category CASCADE CONSTRAINTS;
+DROP TABLE Product_category CASCADE CONSTRAINTS;
 
 
 
@@ -81,6 +81,7 @@ CREATE TABLE Editor
 	editor_introduce varchar2(1000),
 	editor_school varchar2(800),
 	editor_award varchar2(1000),
+	editor_date date NOT NULL,
 	PRIMARY KEY (editor_num)
 );
 
@@ -196,7 +197,7 @@ CREATE TABLE Order_items
 CREATE TABLE Products
 (
 	product_num number NOT NULL,
-	product_type_num varchar2(20) NOT NULL,
+	product_type_num number NOT NULL,
 	editor_num number,
 	product_editor varchar2(50) NOT NULL,
 	product_publish varchar2(50) NOT NULL,
@@ -216,6 +217,19 @@ CREATE TABLE Products
 );
 
 
+CREATE TABLE Product_category
+(
+	cate_num number NOT NULL,
+	cate_name varchar2(30) NOT NULL,
+	cate_ref1 varchar2(20) UNIQUE,
+	cate_ref2 varchar2(20),
+	cate_ref3 varchar2(20),
+	cate_order number,
+	cate_date date NOT NULL,
+	PRIMARY KEY (cate_num)
+);
+
+
 CREATE TABLE Product_supplement
 (
 	supplement_num number NOT NULL,
@@ -223,17 +237,6 @@ CREATE TABLE Product_supplement
 	supplement_count number NOT NULL,
 	supplyment_date date NOT NULL,
 	PRIMARY KEY (supplement_num)
-);
-
-
-CREATE TABLE Produc_category
-(
-	cate_num varchar2(20) NOT NULL,
-	cate_name varchar2(30) NOT NULL,
-	cate_ref1 varchar2(20),
-	cate_ref2 varchar2(20),
-	cate_ref3 varchar2(20),
-	PRIMARY KEY (cate_num)
 );
 
 
@@ -441,7 +444,7 @@ ALTER TABLE Wishlist
 
 ALTER TABLE Products
 	ADD FOREIGN KEY (product_type_num)
-	REFERENCES Produc_category (cate_num)
+	REFERENCES Product_category (cate_num)
 ;
 
 

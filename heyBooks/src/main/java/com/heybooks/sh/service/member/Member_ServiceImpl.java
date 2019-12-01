@@ -29,10 +29,15 @@ public class Member_ServiceImpl implements Member_Service{
 	public Member_Vo login(Member_Vo vo) {
 		return dao.login(vo);
 	}
-	// 3. 회원 정보 수정
+	// 3. 회원 정보 
 	@Override
 	public Member_Vo getInfo(int num) {
 		return dao.getInfo(num);
+	}
+	// 회원 정보 수정
+	@Override
+	public int update(Member_Vo vo) {
+		return dao.update(vo);
 	}
 	
 }

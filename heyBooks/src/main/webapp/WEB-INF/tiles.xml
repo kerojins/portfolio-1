@@ -28,7 +28,6 @@
 	<definition name=".admin.*" extends=".admin">
 		<put-attribute name="admin_content" value="/WEB-INF/views/admin/{1}.jsp" />
 	</definition> 
-	 
 	
 	<definition name=".items" template="/WEB-INF/views/layout-basic.jsp">
 		<put-attribute name="header" value="/WEB-INF/views/header.jsp"/>

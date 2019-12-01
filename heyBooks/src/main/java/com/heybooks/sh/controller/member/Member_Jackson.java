@@ -1,6 +1,8 @@
 package com.heybooks.sh.controller.member;
 
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.slf4j.Logger;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.heybooks.sh.service.member.Member_Service;
+import com.heybooks.sh.vo.member.Member_Vo;
 
 @Controller
 public class Member_Jackson {
@@ -24,9 +27,9 @@ public class Member_Jackson {
 	public Boolean searchId(String id) {
 		Boolean id_check = true;
 		String members_id = service.searchId(id);
-		logger.info(members_id);
+		logger.info(members_id); 
 		if(members_id != null) {
-			id_check= false;
+			id_check= false;  
 		};
 		return id_check;
 	}

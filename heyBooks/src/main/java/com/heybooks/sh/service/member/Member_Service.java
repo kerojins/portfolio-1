@@ -13,6 +13,9 @@ public interface Member_Service {
 	// 2. 로그인
 	public Member_Vo login(Member_Vo vo);
 	
-	// 3. 회원 정보 수정
+	// 3. 회원 정보 
 	public Member_Vo getInfo(int num); 
+	
+	// 회원 정보 수정
+	public int update(Member_Vo vo);
 }

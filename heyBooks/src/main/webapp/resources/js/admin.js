@@ -45,8 +45,9 @@ $(document)
 					// 관리자 상품등록 - 목차 추가 
 				
 					$('.index_add').click(function() {
+						var name = $(this).attr("title");
 						var index_cnt = $(this).prev().find("li").length;
-										$(this).prev().append('<li><input type="text" name="" class="cal-len line" style="width: 85%" value="" title="" placeholder="'
+										$(this).prev().append('<li><input type="text" name="'+ name +'" class="cal-len line" style="width: 85%" title="" placeholder="'
 																+ ++index_cnt
 																+ '."></li>');
 									});
@@ -67,7 +68,9 @@ $(document)
 						$('#boardview').hide();
 						$("#writeform").show();
 					});
-
+					
+					
+					 
 					// summernote 활용
 
 					$('#summernote').summernote({

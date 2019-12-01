@@ -18,7 +18,7 @@
 						<th>연결 카테고리</th>
 					</tr>
 					<tr>
-						<td></td>
+						<td id="cate_txt"></td>
 					</tr>
 				</table>
 			</div>
@@ -116,7 +116,7 @@
 								<li><input type="text" name="" class="cal-len line"
 									style="width: 85%" value="" title="" placeholder="10."></li>
 							</ul>
-							<span class="index_add">목차추가</span>
+							<span class="index_add" title="">목차추가</span>
 
 						</td>
 					</tr>
@@ -340,44 +340,35 @@
 					<tr>
 						<td class="center">
 							<div>
-								<select class="line" name="category1" size="7"
-									style="width: 100%"><option value="0001">카메라</option>
-									<option value="0002">렌즈</option>
-									<option value="0003">플래쉬</option>
-									<option value="0004">메모리</option>
-									<option value="0005">베터리</option>
-									<option value="0006">가방</option>
-									<option value="0007">삼각대</option>
-									<option value="0008">스트랩</option>
-									<option value="0010">관리용품</option>
-									<option value="0011">기타용품</option>
-									<option value="0012">강의</option>
-									<option value="0013">New node</option>
-									<option value="0014">New node</option>
-									<option value="0015">New node</option>
-									<option value="0016">소품</option>
-									<option value="0017">New node</option></select>
+								<select class="line" name="category1" size="7" id="select_cate1"
+									style="width: 100%"><option value="100">국내도서</option>
+									<option value="700">외국도서</option>
+								</select>
 							</div>
 						</td>
 						<td class="center">
 							<div>
-								<select class="line" name="category2" size="7"
-									style="width: 100%"></select>
-							</div>
+								<select class="line" name="category2" size="7" id="select_cate2"
+									style="width: 100%">
+									 
+									</select>
+							</div>  
 						</td>
-						<td class="center">
+						<td class="center"> 
 							<div>
-								<select class="line" name="category3" size="7"
-									style="width: 100%"></select>
+								<select class="line" name="category3" size="7" id="select_cate3"
+									style="width: 100%">
+									
+									</select>
 							</div>
 						</td>
 
 					</tr>
 				</tbody>
 			</table>
-			<a class="category_select_btn">카테고리 연결</a>
+			<a class="category_select_btn" id="category_select_btn">카테고리 연결</a>
 		</form>
-	</div>
+	</div>   
 </div>
 <div id="editor_select" class="category_select">
 	<div class="category_select_title_box">
@@ -388,11 +379,9 @@
 		<form name="categoryConnectFrm" method="post"
 			action="../goods_process/category_connect" target="actionFrame">
 			<table class="simplelist-table-style" style="width: 100%">
-
 				<thead>
 					<tr>
 						<th>작가 선택</th>
-
 					</tr>
 				</thead>
 				<tbody>
@@ -473,3 +462,40 @@
 		</form>
 	</div>
 </div>
+
+
+<script>
+ 	$(document).ready(function(){
+ 		
+ 		// 카테고리 불러오기 AJAX 연결
+ 		$('#select_cate1').change(function(){
+ 			$("#select_cate2").html('');
+ 			var cate_code = $(this).val();
+ 			$.getJSON("<c:url value='/jackson/item_cate' />",
+ 					{ cate_code : cate_code },
+ 					function(data){
+ 					data.forEach(function(item,index){
+ 						$("#select_cate2").append("<option value='" + item.cate_ref1 +"'>"+ item.cate_name+"</option>");
+ 					});
+ 			});
+ 		}); 
+		$('#select_cate2').change(function(){
+ 			$("#select_cate3").html('');
+ 			var cate_code = $(this).val();
+ 			$.getJSON("<c:url value='/jackson/item_cate' />",
+ 					{ cate_code : cate_code },
+ 					function(data){
+ 					data.forEach(function(item,index){
+ 						$("#select_cate3").append("<option value='" + item.cate_ref1 +"'>"+ item.cate_name+"</option>");
+ 					});
+ 			}); 
+ 		});
+		$('#category_select_btn').click(function(){
+			var sel1 = $("#select_cate1 option:selected").text();
+			var sel2 = $("#select_cate2 option:selected").text(); 
+			var sel3 = $("#select_cate3 option:selected").text();
+			$("#cate_txt").text(sel1 + " > " + sel2 + " > " + sel3);
+			$("#category_select").hide(); 
+		});
+ 	});
+</script>

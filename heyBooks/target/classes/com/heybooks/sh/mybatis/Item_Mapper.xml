@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.heybooks.sh.mybatis.Item_Mapper">
+	
+	
+	<!-- 아이템 카테고리 -->
+	<select id="cate_list"  parameterType="string" resultType="com.heybooks.sh.vo.item.Item_Cate_Vo">
+		select * from product_category where  (cate_ref2  = #{cate_code} and cate_ref3 IS NULL) or cate_ref3 = #{cate_code} 
+	</select>	     
+	<!-- 1. 작가 등록 -->
+	<insert id="editor_insert" parameterType="com.heybooks.sh.vo.item.Item_Editor_Vo">
+		insert into editor values(seq_editor_num.nextval, #{editor_name},#{editor_birth},#{editor_nation},#{editor_introduce},#{editor_school},#{editor_award},sysdate)
+	</insert> 
+	<!-- 2. 작가 리스트 -->
+	<select id="editor_list" resultType="com.heybooks.sh.vo.item.Item_Editor_Vo">
+		select * from editor 	
+	</select>
+	<!-- 3. 작가 삭제 --> 
+	<delete id="editor_delete" parameterType="int">
+		delete from editor where editor_num = #{editor_num}
+	</delete>
+	<!-- 4. 작가 정보 -->
+	<select id="editor_getinfo" parameterType="int" resultType="com.heybooks.sh.vo.item.Item_Editor_Vo">
+		select * from editor where editor_num = #{editor_num}
+	</select>
+	<!-- 작가 정보 수정 -->
+	<update id="editor_update" parameterType="com.heybooks.sh.vo.item.Item_Editor_Vo">
+	 	update editor set editor_name = #{editor_name}, editor_birth = #{editor_birth}, editor_nation = #{editor_nation}, editor_introduce = #{editor_introduce}, 
+	 					  editor_school = #{editor_school}, editor_award = #{editor_award} 
+	 				  where editor_num = #{editor_num}
+	</update>
+</mapper>  
+
+
+ 
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

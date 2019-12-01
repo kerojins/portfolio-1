@@ -53,10 +53,10 @@
 						<li><a href="/sh/event_proceed">매출</a></li>
 					</ul>
 					<ul id="header_middle_right">
-						<li><a href="<c:url value='/admin_editor_list'/>">작가관리</a></li>
+						<li><a href="<c:url value='/editor_list'/>">작가관리</a></li>
 						<li><a href="#">AD</a></li>
 					</ul>
-				</nav>
+				</nav> 
 			</div>
 		</div>
 	</div>

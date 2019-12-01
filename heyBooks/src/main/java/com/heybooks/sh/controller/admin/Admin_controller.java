@@ -98,29 +98,7 @@ public class Admin_controller {
 		return ".admin.admin_order_list";
 	}
 
-	// 게시판 - 목록별 리스트
-	@RequestMapping(value = "/admin_board", method = RequestMethod.GET)
-	public String admin_board() {
-		return ".admin.admin_board";
-	}
+	
 
-	// 게시판 - 목록 상세 리스트
-	@RequestMapping(value = "/admin_board_list", method = RequestMethod.GET)
-	public String admin_board_list(String board, Model model) {
-		model.addAttribute("board", board);
-		return ".admin.admin_board_list";
-	}
-
-	// 작가 - 리스트
-	@RequestMapping(value = "/admin_editor_list", method = RequestMethod.GET)
-	public String admin_editor_list() {
-		return ".admin.admin_editor_list";
-	}
-
-	// 작가 - 등록
-	@RequestMapping(value = "/admin_editor_add", method = RequestMethod.GET)
-	public String admin_editor_add() {
-		return ".admin.admin_editor_add";
-	}
 
 }
