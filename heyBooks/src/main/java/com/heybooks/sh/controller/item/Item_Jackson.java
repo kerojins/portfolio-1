@@ -22,8 +22,8 @@ public class Item_Jackson {
 	@ResponseBody
 	public List<Item_Cate_Vo> cate_list(String cate_code){
 		logger.info("get Item-cate-list");
-		List<Item_Cate_Vo> list = service.cate_list(cate_code);
-		logger.info(String.valueOf(list.size()));
-		return list; 
+		List<Item_Cate_Vo> clist = service.cate_list(cate_code);
+		logger.info(String.valueOf(clist.size()));
+		return clist; 
 	}
 }

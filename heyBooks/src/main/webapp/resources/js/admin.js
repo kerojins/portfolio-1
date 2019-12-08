@@ -67,9 +67,14 @@ $(document)
 					$('.boad_modify_btn').click(function() {
 						$('#boardview').hide();
 						$("#writeform").show();
+					}); 
+					
+					// 관리자 상품등록 - 사진 미리보기 창
+					$('.item_preview_btn').click(function(){
+						var scroll = $(document).scrollTop();
+						$("#item_preview").css('top',''+(scroll+150)+'px');
+						$("#item_preview").show();
 					});
-					
-					
 					 
 					// summernote 활용
 

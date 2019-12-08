@@ -15,7 +15,7 @@ public class Item_Category_ServiceImpl implements Item_Category_Service{
 	
 	@Resource Item_Category_Dao dao;
 	
-	// 카테고리 목록 리스트
+	// 아이템 카테고리 목록 리스트
 	@Override
 	public List<Item_Cate_Vo> cate_list(String cate_code) {
 		return dao.cate_list(cate_code);
@@ -44,6 +44,11 @@ public class Item_Category_ServiceImpl implements Item_Category_Service{
 	@Override
 	public int editor_update(Item_Editor_Vo vo) {
 		return dao.editor_update(vo);
+	}
+	// 5. 출판사 리스트
+	@Override
+	public List<String> publishing_list() {
+		return dao.publishing_list();
 	}
 	
 	

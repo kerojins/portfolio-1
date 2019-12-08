@@ -15,7 +15,7 @@ public class Item_Category_DaoImpl implements Item_Category_Dao{
 	
 	@Resource SqlSession sqlSession;
 	private static final String NAMESPACE ="com.heybooks.sh.mybatis.Item_Mapper";
-	// 카테고리 목록 리스트
+	// 아이템 카테고리 목록 리스트
 	
 	@Override  
 	public List<Item_Cate_Vo> cate_list(String cate_code) {
@@ -47,6 +47,11 @@ public class Item_Category_DaoImpl implements Item_Category_Dao{
 	@Override
 	public int editor_update(Item_Editor_Vo vo) {
 		return sqlSession.update(NAMESPACE + ".editor_update", vo);
+	}
+	// 5. 출판사 리스트
+	@Override
+	public List<String> publishing_list() {
+		return sqlSession.selectList(NAMESPACE + ".publishing_list");
 	}
 
 	

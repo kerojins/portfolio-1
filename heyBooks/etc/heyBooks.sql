@@ -197,21 +197,21 @@ CREATE TABLE Order_items
 CREATE TABLE Products
 (
 	product_num number NOT NULL,
-	product_type_num number NOT NULL,
-	editor_num number,
-	product_editor varchar2(50) NOT NULL,
+	cate_num number NOT NULL,
+	editor_num number NOT NULL,
 	product_publish varchar2(50) NOT NULL,
 	product_name varchar2(100) NOT NULL,
 	product_page number(5,0) NOT NULL,
-	product_price number NOT NULL,
 	product_discription varchar2(2000),
-	product_size varchar2(30),
-	product_index nvarchar2(1500),
-	product_pictuer number,
+	product_index varchar2(1500),
 	product_status varchar2(15) NOT NULL,
-	product_discount varchar2(20),
-	product_view varchar2(10),
+	product_view varchar2(10) NOT NULL,
+	product_shipping_charge varchar2(100) NOT NULL,
+	product_discount varchar2(20) NOT NULL,
+	product_price number NOT NULL,
 	product_stock  number NOT NULL,
+	product_pictuer varchar2(1000),
+	product_preview varchar2(1000),
 	product_date date NOT NULL,
 	PRIMARY KEY (product_num)
 );
@@ -443,7 +443,7 @@ ALTER TABLE Wishlist
 
 
 ALTER TABLE Products
-	ADD FOREIGN KEY (product_type_num)
+	ADD FOREIGN KEY (cate_num)
 	REFERENCES Product_category (cate_num)
 ;
 

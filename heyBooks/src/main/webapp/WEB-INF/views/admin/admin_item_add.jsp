@@ -2,10 +2,11 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <div class="container admin_item_add">
-	<form>
+	<form name="item_form" method="post" enctype="multipart/form-data">
 		<div class="admin_page_head">
 			<h2>상품등록</h2>
 		</div>
+		<%-- 카테고리 등록 --%> 
 		<div class="item_category">
 			<div class="col-md-4">
 				<div class="item_add_head">
@@ -33,7 +34,7 @@
 						<th>연결 작가</th>
 					</tr>
 					<tr>
-						<td></td>
+						<td id="editor_txt"></td>
 					</tr>
 				</table>
 			</div>
@@ -48,11 +49,12 @@
 						<th>연결 출판사</th>
 					</tr>
 					<tr>
-						<td></td>
+						<td id="publishing_text"></td>
 					</tr>
 				</table>
 			</div>
 		</div>
+		<%-- 상품 기본 정보 --%>
 		<div class="item_basic_info">
 			<div class="item_add_head">
 				<h3>기본 정보</h3>
@@ -63,12 +65,11 @@
 					<col>
 				</colgroup>
 				<tbody>
-
 					<tr>
 						<th class="its-th-align center">제목명 <span
 							class="goods_required"></span>
 						</th>
-						<td class="its-td"><input type="text" name="goodsName"
+						<td class="its-td"><input type="text" name="product_name"
 							class="cal-len line" maxlength="255" style="width: 85%" value=""
 							title="" onkeyup="calculate_input_len(this);"
 							onblur="calculate_input_len(this);" placeholder="제목을 입력하세요">
@@ -76,7 +77,7 @@
 					</tr>
 					<tr>
 						<th class="its-th-align center">페이지 수</th>
-						<td class="its-td"><input type="text" name="keyword"
+						<td class="its-td"><input type="text" name="product_page"
 							class="line cal-len" maxlength="50" style="width: 8%" value=""
 							title="태그는 ,(콤마)로 구분됩니다" placeholder="예) 230"
 							onkeyup="calculate_input_len(this);"
@@ -84,7 +85,7 @@
 					</tr>
 					<tr>
 						<th class="its-th-align center">소개</th>
-						<td class="its-td"><textarea name="summary" rows="10"
+						<td class="its-td"><textarea name="product_discription" rows="10"
 								class="cal-len line" maxlength="255" style="width: 85%" value=""
 								title="상품 설명을 입력하세요" onkeyup="calculate_input_len(this);"
 								onblur="calculate_input_len(this);" placeholder="상품 설명을 입력하세요"></textarea><span
@@ -94,35 +95,31 @@
 					<tr>
 						<th class="its-th-align center">목차</th>
 						<td class="its-td">
-							<ul class="index_list">
-								<li><input type="text" name="" class="cal-len line"
+							<ul id="index_list" class="index_list">
+								<li><input type="text" name="product_index" class="cal-len line"
 									style="width: 85%" value="" title="" placeholder="1."></li>
-								<li><input type="text" name="" class="cal-len line"
+								<li><input type="text" name="product_index" class="cal-len line"
 									style="width: 85%" value="" title="" placeholder="2."></li>
-								<li><input type="text" name="" class="cal-len line"
+								<li><input type="text" name="product_index" class="cal-len line"
 									style="width: 85%" value="" title="" placeholder="3."></li>
-								<li><input type="text" name="" class="cal-len line"
+								<li><input type="text" name="product_index" class="cal-len line"
 									style="width: 85%" value="" title="" placeholder="4."></li>
-								<li><input type="text" name="" class="cal-len line"
+								<li><input type="text" name="product_index" class="cal-len line"
 									style="width: 85%" value="" title="" placeholder="5."></li>
-								<li><input type="text" name="" class="cal-len line"
+								<li><input type="text" name="product_index" class="cal-len line"
 									style="width: 85%" value="" title="" placeholder="6."></li>
-								<li><input type="text" name="" class="cal-len line"
+								<li><input type="text" name="product_index" class="cal-len line"
 									style="width: 85%" value="" title="" placeholder="7."></li>
-								<li><input type="text" name="" class="cal-len line"
+								<li><input type="text" name="product_index" class="cal-len line"
 									style="width: 85%" value="" title="" placeholder="8."></li>
-								<li><input type="text" name="" class="cal-len line"
-									style="width: 85%" value="" title="" placeholder="9."></li>
-								<li><input type="text" name="" class="cal-len line"
-									style="width: 85%" value="" title="" placeholder="10."></li>
 							</ul>
 							<span class="index_add" title="">목차추가</span>
-
 						</td>
 					</tr>
 				</tbody>
 			</table> 
 		</div>
+		<%-- 상품 판매 정보 --%>
 		<div class="item_sale_info">
 			<div class="item_add_head">
 				<h3>판매 정보</h3>
@@ -138,10 +135,10 @@
 						<td class="its-td">
 							<div id="" class="">
 								<label class="item_radio"><input type="radio"
-									name="goodsView" value="look" checked="checked"> 정상</label> <label
-									class="item_radio"><input type="radio" name="goodsView"
-									value="notLook"> 품절</label><label class="item_radio"><input
-									type="radio" name="goodsView" value="notLook"> 판매중지</label>
+									name="product_status" value="정상" checked="checked"> 정상</label> <label
+									class="item_radio"><input type="radio" name="product_status"
+									value="품절"> 품절</label><label class="item_radio"><input
+									type="radio" name="product_status" value="판매중지"> 판매중지</label>
 							</div>
 						</td>
 					</tr>
@@ -150,23 +147,21 @@
 						<td class="its-td">
 							<div id="" class="">
 								<label class="item_radio"><input type="radio"
-									name="goodsView" value="look" checked="checked"> 노출</label> <label
-									class="item_radio"><input type="radio" name="goodsView"
-									value="notLook"> 미노출</label>
+									name="product_view" value="노출" checked="checked"> 노출</label> <label
+									class="item_radio"><input type="radio" name="product_view"
+									value="미노출"> 미노출</label>
 							</div>
 						</td>
 					</tr>
-					<tr>
+					<tr> 
 						<td class="its-th-align center">배송비</td>
 						<td class="its-td">
 							<div id="" class="">
 								<label class="item_radio"><input type="radio"
-									name="goodsView" value="look" checked="checked"> 2,500원</label>
-								<label class="item_radio"><input type="radio"
-									name="goodsView"> 3,000원</label> <label class="item_radio"><input
-									type="radio" name="goodsView"> 없음</label> <label
-									class="item_radio"><input class="direct_price"
-									type="text" name="goodsView"> 원</label>
+									name="product_shipping_charge" value="2,500" checked="checked"> 2,500원</label>
+								<label class="item_radio"><input type="radio" value="3,000"
+									name="product_shipping_charge"> 3,000원</label> <label class="item_radio"><input
+									type="radio"name="product_shipping_charge" value="0"> 없음</label>
 							</div>
 						</td>
 					</tr>
@@ -175,39 +170,40 @@
 						<td class="its-td">
 							<div id="" class="">
 								<label class="item_radio"><input type="radio"
-									name="goodsView" value="look" checked="checked"> 10%</label> <label
-									class="item_radio"><input type="radio" name="goodsView"
-									value="notLook"> 20%</label> <label class="item_radio"><input
-									type="radio" name="goodsView" value="notLook"> 30%</label>
+									name="product_discount" value="10" onclick="discount()" checked="checked"> 10%</label> <label
+									class="item_radio"><input type="radio" name="product_discount"
+									value="20" onclick="discount()"> 20%</label> <label class="item_radio"><input
+									type="radio" name="product_discount" value="30" onclick="discount()"> 30%</label>
 									<label class="item_radio"><input
-									type="radio" name="goodsView" value="notLook"> 없음</label>
-							</div>
-						</td>
-					</tr>
+									type="radio" name="product_discount" value="0" onclick="discount()"> 없음</label>
+							</div>  
+						</td>  
+					</tr>  
 					<tr>
 						<td class="its-th-align center">가격</td>
 						<td class="its-td">
 							<div id="item_price" class="">
 								<label class="item_radio">정가 <input type="text"
-									width="150" name="goodsView"> 원
-								</label> ~ <label class="item_radio"> 판매가 <input type="text"
-									width="150" name="goodsView"> 원
-								</label>
-							</div>
+									width="300" onkeyup="discount();"  name="product_price" id="origin_price"> 원
+								</label> - <label class="item_radio"> 판매가 <input type="text"
+									width="300" name="product_price" id="discount_price"> 원
+								</label> 
+							</div> 
 						</td>
-					</tr>
+					</tr>  
 					<tr>
 						<td class="its-th-align center">재고</td>
 						<td class="its-td">
 							<div id="item_price" class="">
-								<label class="item_radio"><input class="direct_price"
-									type="text" name="goodsView"> 개</label>
-							</div>
-						</td>
+								<label class="item_radio"><input class="direct_price" width="200"
+									type="text" name="product_stock"> 개</label>
+							</div> 
+						</td> 
 					</tr>
 				</tbody>
 			</table>
 		</div>
+		<%-- 상품 사진 등록--%> 
 		<div class="item_image">
 			<div class="item_add_head">
 				<h3>사진 등록</h3>
@@ -218,9 +214,9 @@
 						<tr>
 							<th class="its-th-align center" style="padding: 10px;"
 								width="600"><img id="viewImg" style="max-width: 580px;"
-								src="/data/tmp/tmp_a8a800e36574347bc489cd1e205eb7862008view.jpg?1570989319076"><img
+								src=""><img
 								id="viewImgtmp" class="hide"
-								src="/data/tmp/tmp_a8a800e36574347bc489cd1e205eb7862008view.jpg?1570989319076"></th>
+								src=""></th>
 							<td class="its-td" style="min-width: 470px;">
 								<div style="font-weight: bold; float: left; padding-right: 5px">대표컷
 									- 상품상세(기본)</div>
@@ -231,7 +227,7 @@
 											id="imgDownload" onclick="each_goods_image_download();">삭제하기</button></span>
 								</div>
 								<table class="img-info-tb img_detail_table">
-									<tbody>
+									<tbody> 
 										<tr>
 											<td>• 주소</td>
 											<td>:</td>
@@ -276,15 +272,13 @@
 				<tbody>
 					<tr class="cut-tr cutnum1">
 						<td class="its-td-align left firstCol pdl30" rowspan="1"><span
-							class="btn large"><button type="button"
-									class="batchImageMultiRegist">등록하기</button></span>&nbsp;<span
-							class="helpicon"
-							title="<b>여러 컷 일괄등록이란?</b><br>쇼핑몰에서 상품 사진은 여러 페이지에서 보여지게 되며,<br>각각의 페이지에 알맞은 사이즈로 나타나야 합니다.<br>여러 컷 일괄등록이란 입력된 일괄등록 사이즈 설정값을 기준으로 <br>필요한 사이즈의 상품 여러개의 사진을 한꺼번에 등록합니다.<br><br><b>일괄등록이란?</b><br>일괄등록이란 입력된 일괄등록 사이즈 설정값을 기준으로 <br>필요한 사이즈의 상품 사진을 한 번에 등록합니다.<br><br><b>개별등록이란?</b><br>일괄등록으로 등록된 상품사진을 개별적으로 변경하여 등록합니다."></span>
+							class="btn large"><input type="file" 
+									class="batchImageMultiRegist"></span>
 						<td class="its-td-align center"><input type="hidden"
 							name="goodsImageColor[]" value=""> <span
 							class="fileColorTitle"></span><span class="btn small lightblue"><button
-									type="button" class="batchImageRegist">미리보기 등록</button></span>
-							<div class="pdt10">
+									type="button" class="item_preview_btn">미리보기 등록</button></span>
+							<div class="pdt10"> 
 								<span class="btn large"><button type="button"
 										class="ImageSort" >순서변경 및 삭제</button></span>
 							</div></td>
@@ -308,6 +302,7 @@
 					</tr>
 				</tbody>
 			</table>
+			<button class="add_submit" onclick="check_form()">등록 하기</button>
 		</div>
 	</form>
 </div>
@@ -321,8 +316,7 @@
 			class="category_select_cancel" role="button"><span>close</span></a>
 	</div>
 	<div class="category_select_content" style="">
-		<form name="categoryConnectFrm" method="post"
-			action="../goods_process/category_connect" target="actionFrame">
+		<form>
 			<table class="simplelist-table-style" style="width: 100%">
 				<colgroup>
 					<col width="25%">
@@ -362,7 +356,6 @@
 									</select>
 							</div>
 						</td>
-
 					</tr>
 				</tbody>
 			</table>
@@ -388,29 +381,20 @@
 					<tr>
 						<td class="center">
 							<div>
-								<select class="line" name="category1" size="7"
-									style="width: 100%"><option value="0001">카메라</option>
-									<option value="0002">렌즈</option>
-									<option value="0003">플래쉬</option>
-									<option value="0004">메모리</option>
-									<option value="0005">베터리</option>
-									<option value="0006">가방</option>
-									<option value="0007">삼각대</option>
-									<option value="0008">스트랩</option>
-									<option value="0010">관리용품</option>
-									<option value="0011">기타용품</option>
-									<option value="0012">강의</option>
-									<option value="0013">New node</option>
-									<option value="0014">New node</option>
-									<option value="0015">New node</option>
-									<option value="0016">소품</option>
-									<option value="0017">New node</option></select>
-							</div>
-						</td>
+								<select class="line" name="category1" size="7" id="cate_editor"
+									style="width: 100%">
+									<c:forEach var="list" items="${editor_list }" >
+										<option value=''>${list.editor_name } / ${list.editor_birth}</option>
+									</c:forEach> 
+								</select>
+							</div>  
+						</td> 
 					</tr>
 				</tbody>
 			</table>
-			<a class="category_select_btn">작가 연결</a>
+			<p class="select_btn_box">
+			<a id="editor_select_btn" class="editor_select_btn">작가 연결</a>
+			<a href="<c:url value='/editor_add'/>" class="editor_select_btn">신규 등록</a></p>
 		</form>
 	</div>
 </div>
@@ -437,36 +421,43 @@
 						<td class="center">
 							<div>
 								<select class="line" name="category1" size="7"
-									style="width: 100%"><option value="0001">카메라</option>
-									<option value="0002">렌즈</option>
-									<option value="0003">플래쉬</option>
-									<option value="0004">메모리</option>
-									<option value="0005">베터리</option>
-									<option value="0006">가방</option>
-									<option value="0007">삼각대</option>
-									<option value="0008">스트랩</option>
-									<option value="0010">관리용품</option>
-									<option value="0011">기타용품</option>
-									<option value="0012">강의</option>
-									<option value="0013">New node</option>
-									<option value="0014">New node</option>
-									<option value="0015">New node</option>
-									<option value="0016">소품</option>
-									<option value="0017">New node</option></select>
+									style="width: 100%">
+										<c:forEach var="list" items="${ publishing_list }" >
+										<option value=''>${list} </option>
+									</c:forEach> 
+								</select>
 							</div>
 						</td>
 					</tr>
 				</tbody>
 			</table>
-			<a class="category_select_btn">출판사 연결</a>
+			<p class="select_btn_box">
+			<a id="editor_select_btn" class="editor_select_btn">출판사 연결</a>
+			<a id="publicsh_select_btn" class="editor_select_btn">직접 입력</a></p>
 		</form>
 	</div>
 </div>
 
+<%-- 상품 미리보기 등록 --%>
+<div id="item_preview" class="category_select" >
+	<div class="category_select_title_box">
+		<span class="category_select_title">미리보기 등록</span><a href="#" class="category_select_cancel" role="button"><span>close</span></a>
+	</div>
+	<div class="category_select_content" style="">
+		<form name="categoryConnectFrm" method="post" action="../goods_process/category_connect" target="actionFrame">
+			<span></span>
+			<span></span>
+			<span></span>
+			<span></span>
+			<p class="select_btn_box">
+			<a id="editor_select_btn" class="editor_select_btn">미리보기 저장</a>
+			<p>
+		</form>
+	</div>
+</div>
 
 <script>
  	$(document).ready(function(){
- 		
  		// 카테고리 불러오기 AJAX 연결
  		$('#select_cate1').change(function(){
  			$("#select_cate2").html('');
@@ -494,8 +485,101 @@
 			var sel1 = $("#select_cate1 option:selected").text();
 			var sel2 = $("#select_cate2 option:selected").text(); 
 			var sel3 = $("#select_cate3 option:selected").text();
-			$("#cate_txt").text(sel1 + " > " + sel2 + " > " + sel3);
+			var val = $("#select_cate3 option:selected").attr('value');
+			$("#cate_txt").html("<input type='text' readonly  name='"+ val +"' value='"+ sel1 + " > " + sel2 + " > " + sel3+ "'>");
 			$("#category_select").hide(); 
 		});
- 	});
+		$('#editor_select_btn').click(function(){   
+			var sel = $("#cate_editor").text();
+			var val = $("#cate_editor").val();
+			$("#editor_txt").html("<input type='text' readonly name='"+ val +"' value='"+ sel+ "'>");
+			$("#editor_select").hide(); 
+		}); 
+		$("#publicsh_select_btn").click(function(){
+			$("#publishing_text").append("<input type='text' name='product_publish' id='publishing_direct' >");
+			$("#publishing_direct").focus();
+			$("#publishing_select").hide();     
+		});  
+ 	}); 
+ 	
+ 	// 책 목차 빈칸 시 여백 넘기기
+ 	function check_form(){
+ 		var form = document.item_form;
+ 		var item_index = form.index_list;
+ 		item_index.forEach(function(index,item){
+ 			if(item.value == ""){
+ 				item.setAttribute("name") = "";
+ 			}
+ 		});
+ 	}
+ 	
+	  
+	
+ 	// 정가 입력시 할인가 자동 적용 및 금액 단위 표시
+ 	
+ 	function discount(){
+ 		var form = document.item_form;
+ 		var charge = parseInt(document.querySelector('input[name="product_discount"]:checked').value);
+ 		var arr =  form.origin_price.value.split(',');
+ 		var origin = form.origin_price.value;
+ 		var origin_len = form.origin_price.value.length;
+ 		var rtnStr = "";
+ 		var origin_val = "";
+ 		var last_val = "";
+ 		var last_val2 = "";
+ 		
+ 		arr.forEach(function(item,index){  
+			origin_val += item; 
+		});
+		
+ 		//판매가 자동 할인금액 적용 , 숫자만 표시
+		var price = parseInt(origin_val);
+		var dis_price = Math.floor(price - (price * (charge * 0.01)));
+ 		var dis_val = String(dis_price).split("");
+		 
+ 		for (var i = 0; i < origin_val.length ; i++) {
+ 			var ch = origin_val.charAt(i);
+ 			if (!(ch >= '0' && ch <= '9')){  
+	 				 alert("숫자만 입력 가능합니다.");
+	 				 form.origin_price.value = ''; 
+	 				 form.discount_price.value = ''; 
+ 				}     
+ 		}        
+ 		  
+ 		//금액 , 추가하기
+		var array_str =  origin_val.split("");
+		array_str =  array_str.reverse(); // 배열 순서 뒤집기 
+		for(var i = array_str.length - 1   ; i  >= 0 ; i--){
+				if(i % 3 == 0 && ( i!=0 ) ){
+					array_str.splice(i, 0, ",");
+				}			      
+		}  
+		array_str  =  array_str.reverse();
+		array_str.forEach(function(item,index){
+			last_val += item;  
+		}); 
+		form.origin_price.value = last_val;
+		
+		
+		dis_val  =  dis_val.reverse();
+		for(var i = dis_val.length - 1   ; i  >= 0 ; i--){
+				if(i % 3 == 0 && ( i!=0 ) ){
+					dis_val.splice(i, 0, ",");
+				}			      
+		}    
+		dis_val  =  dis_val.reverse();  
+		dis_val.forEach(function(item,index){
+			last_val2 += item;  
+		}); 
+		form.discount_price.value = last_val2;
+	
+		if( charge == 0 ){
+			form.discount_price.value = origin_price.value;
+ 		} 
+		if(form.origin_price.value == "" && charge != 0){
+			form.discount_price.value == "";
+		}  
+ 	} 
+
+ 	 
 </script>

@@ -80,12 +80,6 @@ public class Admin_controller {
 		return ".admin.admin_item_list";
 	}
 
-	// 상품 - 등록
-	@RequestMapping(value = "/admin_item_add", method = RequestMethod.GET)
-	public String admin_item_add() {
-		return ".admin.admin_item_add";
-	}
-
 	// 회원 관리목록
 	@RequestMapping(value = "/admin_user_list", method = RequestMethod.GET)
 	public String admin_user_list() {

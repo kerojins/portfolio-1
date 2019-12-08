@@ -20,6 +20,7 @@ public class Item_Catrgory_Controller {
 	@Resource
 	Item_Category_Service service;
 
+	
 	// 1. 작가 등록
 	@RequestMapping(value = "/editor_add", method = RequestMethod.GET)
 	public String admin_editor_add() {
@@ -94,6 +95,7 @@ public class Item_Catrgory_Controller {
 			return ".registration.alert";
 		}
 	}
+	
 
 }
 

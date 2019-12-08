@@ -921,6 +921,20 @@ div.skin-add-form table.sf-option-table  li:first-child {
 	font-weight: 600;
 	margin-top: 25px;
 }
+.select_btn_box{
+	text-align:center;
+	margin: 20px auto;
+}
+.editor_select_btn {
+	
+	background: #8a8a8a;
+	color: white !important;
+	padding: 5px 8px;
+	width: 100px;
+	text-align: center;
+	font-weight: 600;
+	margin-top: 25px;
+}
 
 #editor_select {
 	width: 500px;
@@ -950,7 +964,10 @@ div.skin-add-form table.sf-option-table  li:first-child {
 	border-top: 1px solid #aaa;
 	margin-top: 10px;
 }
-
+ .admin_item_add .item_category table input{
+	width:95%;
+	border: 1px solid #ddd !important;
+}
 .admin_item_add table th {
 	text-align: center;
 	font-weight: normal;
@@ -962,7 +979,7 @@ div.skin-add-form table.sf-option-table  li:first-child {
 
 .admin_item_add table input[type=text], .admin_item_add table textarea{
 	padding: 2px 5px;
-	border: 1px solid #aaa;
+	border: 1px solid #dedada;
 }  
 .admin_item_add table select{
 	border-color: #aaa; 
@@ -1007,9 +1024,9 @@ div.skin-add-form table.sf-option-table  li:first-child {
 	font-weight: 500;
 }
 
-
+ 
 #item_price input, .direct_price {
-	width: 70px;
+	width: 110px;
 }
 
 .item_sale_info tr td:first-child {
@@ -1119,7 +1136,12 @@ a.admin_list_btn{
 #user_list_table tbody tr {
 	height: 53px;
 }
-
+#item_preview{
+	width: 1000px;
+	height:500px; 
+	left:20%;
+	
+}
 
 /* 주문상세창 */
 .order_settle {
