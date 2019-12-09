@@ -49,7 +49,8 @@ $(document)
 						var index_cnt = $(this).prev().find("li").length;
 										$(this).prev().append('<li><input type="text" name="'+ name +'" class="cal-len line" style="width: 85%" title="" placeholder="'
 																+ ++index_cnt
-																+ '."></li>');
+																+ '." value="'+ ++index_cnt
+																+'"></li>');
 									});
  
 					$('.layer_close').click(function() {
@@ -60,7 +61,7 @@ $(document)
 					});
 					$('.order_btn').click(function() {
 						$('.order_detail_box').show();
-					});
+					}); 
 					$('.board_list .close_btn').click(function() {
 						$('.board_list_view').hide();
 					});

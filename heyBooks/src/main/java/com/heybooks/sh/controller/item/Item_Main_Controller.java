@@ -3,6 +3,7 @@ package com.heybooks.sh.controller.item;
 import java.util.List;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,16 +12,17 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.heybooks.sh.controller.admin.Admin_controller;
 import com.heybooks.sh.service.item.Item_Category_Service;
+import com.heybooks.sh.service.item.Item_Main_Service;
 import com.heybooks.sh.vo.item.Item_Editor_Vo;
 import com.heybooks.sh.vo.item.Item_Vo;
 
 @Controller
 public class Item_Main_Controller {
-	private static final Logger logger = LoggerFactory.getLogger(Admin_controller.class);
+	private static final Logger logger = LoggerFactory.getLogger(Item_Main_Controller.class);
     @Resource   
     Item_Category_Service cate_service;
+   
 	// 상품 - 추가 
 	@RequestMapping(value = "/admin_item_add", method = RequestMethod.GET)
 	public String admin_item_add(Model model) {
@@ -33,12 +35,20 @@ public class Item_Main_Controller {
 		List<String> publishing_list = cate_service.publishing_list();
 		model.addAttribute("publishing_list",publishing_list);
 		return ".admin.admin_item_add";
-	}
-	
+	}   
+	  
 	@RequestMapping(value = "/admin_item_add", method = RequestMethod.POST)
 	public String admin_item_add(Item_Vo vo) {
+		logger.info("post item-add"); 
 		
-		return "redirect:/admin_item_list";
+		/*      
+		 * System.out.println(vo.toString()); service.item_insert(vo);
+		 */ 
+		return "redirect:/editor_list";  
+		/* 
+		 * try { service.item_insert(vo); return "redirect:/editor_list"; } catch
+		 * (Exception e) { return ".registration.alert"; }
+		 */ 
 	}
  
 }

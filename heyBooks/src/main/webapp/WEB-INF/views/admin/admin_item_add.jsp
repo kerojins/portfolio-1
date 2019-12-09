@@ -2,11 +2,11 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <div class="container admin_item_add">
-	<form name="item_form" method="post" enctype="multipart/form-data">
+	<form id="item_form" name="item_form" action="<c:url value='/admin_item_add'/>" method="post">
 		<div class="admin_page_head">
-			<h2>상품등록</h2>
+			<h2>상품등록</h2> 
 		</div>
-		<%-- 카테고리 등록 --%> 
+		<%-- 카테고리 등록 --%>     
 		<div class="item_category">
 			<div class="col-md-4">
 				<div class="item_add_head">
@@ -15,12 +15,12 @@
 						연결</a>
 				</div>
 				<table class="item_add_table">
-					<tr>
+					<tr>  
 						<th>연결 카테고리</th>
 					</tr>
 					<tr>
-						<td id="cate_txt"></td>
-					</tr>
+						<td id="cate_txt"><input name="cate_num"></td>
+					</tr>  
 				</table>
 			</div>
 			<div class="col-md-4">
@@ -71,27 +71,24 @@
 						</th>
 						<td class="its-td"><input type="text" name="product_name"
 							class="cal-len line" maxlength="255" style="width: 85%" value=""
-							title="" onkeyup="calculate_input_len(this);"
-							onblur="calculate_input_len(this);" placeholder="제목을 입력하세요">
+							 placeholder="제목을 입력하세요">
 							<span class="view-len"><b>0</b>/255</span></td>
 					</tr>
 					<tr>
 						<th class="its-th-align center">페이지 수</th>
 						<td class="its-td"><input type="text" name="product_page"
-							class="line cal-len" maxlength="50" style="width: 8%" value=""
-							title="태그는 ,(콤마)로 구분됩니다" placeholder="예) 230"
-							onkeyup="calculate_input_len(this);"
-							onblur="calculate_input_len(this);"> P</td>
+							class="line cal-len" maxlength="50" style="width: 8%"placeholder="예) 230"
+							> P</td>
 					</tr>
 					<tr>
 						<th class="its-th-align center">소개</th>
 						<td class="its-td"><textarea name="product_discription" rows="10"
-								class="cal-len line" maxlength="255" style="width: 85%" value=""
-								title="상품 설명을 입력하세요" onkeyup="calculate_input_len(this);"
-								onblur="calculate_input_len(this);" placeholder="상품 설명을 입력하세요"></textarea><span
+								class="cal-len line" maxlength="255" style="width: 85%" 
+								title="상품 설명을 입력하세요" 
+							    placeholder="상품 설명을 입력하세요"></textarea><span
 							class="view-len"> <b> 0</b>/1000
 						</span></td>
-					</tr>
+					</tr>  
 					<tr>
 						<th class="its-th-align center">목차</th>
 						<td class="its-td">
@@ -151,7 +148,7 @@
 									class="item_radio"><input type="radio" name="product_view"
 									value="미노출"> 미노출</label>
 							</div>
-						</td>
+						</td> 
 					</tr>
 					<tr> 
 						<td class="its-th-align center">배송비</td>
@@ -186,10 +183,10 @@
 								<label class="item_radio">정가 <input type="text"
 									width="300" onkeyup="discount();"  name="product_price" id="origin_price"> 원
 								</label> - <label class="item_radio"> 판매가 <input type="text"
-									width="300" name="product_price" id="discount_price"> 원
+									width="300" name="product_discount_price" id="discount_price"> 원
 								</label> 
 							</div> 
-						</td>
+						</td> 
 					</tr>  
 					<tr>
 						<td class="its-th-align center">재고</td>
@@ -201,112 +198,116 @@
 						</td> 
 					</tr>
 				</tbody>
-			</table>
+			</table> 
 		</div>
-		<%-- 상품 사진 등록--%> 
-		<div class="item_image">
-			<div class="item_add_head">
-				<h3>사진 등록</h3>
-			</div>
-			<div id="goodsImagePriview">
-				<table width="100%" class="info-table-style" id="goodsImageMake">
-					<tbody>
+		<input type="text" name="product_picture">
+		<input type="text" name="product_preview"> 
+		<button class="add_submit" value="">등록하기</button>
+	</form>
+	<%-- 상품 사진 등록--%> 
+	<%-- <form name="item_img_form">  
+			<div class="item_image">
+				<div class="item_add_head">  
+					<h3>사진 등록</h3> 
+				</div> 
+				<div id="goodsImagePriview">
+					<table width="100%" class="info-table-style" id="goodsImageMake">
+						<tbody>
+							<tr>
+								<th class="its-th-align center" style="padding: 10px;"
+									width="600"><img id="viewImg" style="max-width: 580px;"
+									src=""><img
+									id="viewImgtmp" class="hide"
+									src=""></th>
+								<td class="its-td" style="min-width: 470px;">
+									<div style="font-weight: bold; float: left; padding-right: 5px">대표컷
+										- 상품상세(기본)</div>
+									<div>
+										<span class=""><button type="button"
+												id="eachImageRegist" onclick="each_goods_image();">편집</button></span>
+										<span class=""><button type="button"
+												id="imgDownload" onclick="each_goods_image_download();">삭제하기</button></span>
+									</div>
+									<table class="img-info-tb img_detail_table">
+										<tbody> 
+											<tr>
+												<td>• 주소</td>
+												<td>:</td>
+												<td><span id="fileurl">/data/tmp/tmp_a8a800e36574347bc489cd1e205eb7862008view.jpg?1570989319076</span>
+												</td>
+											</tr> 
+											<tr>
+												<td>• 사이즈</td>
+												<td>:</td>
+												<td><span id="filesize">400 X 252</span></td>
+											</tr>
+										</tbody>
+									</table>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<table class="info-table-style item_image_table" style="width: 100%"
+					id="goodsImageTable">
+					<colgroup>
+						<col width="15%">
+						<col width="9%">
+						<col width="11%">
+						<col width="11%">
+						<col width="11%">
+						<col width="11%">
+						<col width="11%">
+						<col width="11%">
+						<col width="11%">
+					</colgroup>
+					<thead>
 						<tr>
-							<th class="its-th-align center" style="padding: 10px;"
-								width="600"><img id="viewImg" style="max-width: 580px;"
-								src=""><img
-								id="viewImgtmp" class="hide"
-								src=""></th>
-							<td class="its-td" style="min-width: 470px;">
-								<div style="font-weight: bold; float: left; padding-right: 5px">대표컷
-									- 상품상세(기본)</div>
-								<div>
-									<span class=""><button type="button"
-											id="eachImageRegist" onclick="each_goods_image();">편집</button></span>
-									<span class=""><button type="button"
-											id="imgDownload" onclick="each_goods_image_download();">삭제하기</button></span>
-								</div>
-								<table class="img-info-tb img_detail_table">
-									<tbody> 
-										<tr>
-											<td>• 주소</td>
-											<td>:</td>
-											<td><span id="fileurl">/data/tmp/tmp_a8a800e36574347bc489cd1e205eb7862008view.jpg?1570989319076</span>
-											</td>
-										</tr> 
-										<tr>
-											<td>• 사이즈</td>
-											<td>:</td>
-											<td><span id="filesize">400 X 252</span></td>
-										</tr>
-									</tbody>
-								</table>
-							</td>
+							<th class="its-th-align center">상품 사진등록</th>
+							<th class="its-th-align center">상품 미리보기 등록</th>
+							<th class="its-th-align center">상품상세(확대)</th>
+							<th class="its-th-align center">상품상세(기본)</th>
+							<th class="its-th-align center">리스트</th>
+							<th class="its-th-align center">썸네일(장바구니/주문)</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr class="cut-tr cutnum1">
+							<td class="its-td-align left firstCol pdl30" rowspan="1"><span
+								class="btn large"><input type="file" 
+										class="batchImageMultiRegist"></span>
+							<td class="its-td-align center"><input type="hidden"
+								name="goodsImageColor[]" value=""> <span
+								class="fileColorTitle"></span><span class="btn small lightblue"><button
+										type="button" class="item_preview_btn">미리보기 등록</button></span>
+								<div class="pdt10"> 
+									<span class="btn large"><button type="button"
+											class="ImageSort" >순서변경 및 삭제</button></span>
+								</div></td>
+							<td class="its-td-align center"><span
+								class="goodslarge view hand blue" imagetype="large">보기<input
+									type="hidden" name="largeGoodsImage[]" value=""><input
+									type="hidden" name="largeGoodsLabel[]" value=""></span></td>
+							<td class="its-td-align center"><span
+								class="goodsview view hand blue" imagetype="view">보기<input
+									type="hidden" name="viewGoodsImage[]" value=""><input
+									type="hidden" name="viewGoodsLabel[]" value=""></span></td>
+							<td class="its-td-align center"><span
+								class="goodslist1 view hand blue" imagetype="list1">보기<input
+									type="hidden" name="list1GoodsImage[]" value=""><input
+									type="hidden" name="list1GoodsLabel[]" value=""></span></td>
+							<td class="its-td-align center"><span
+								class="goodsthumbView view hand blue" imagetype="thumbView">보기<input
+									type="hidden" name="thumbViewGoodsImage[]" value=""><input
+									type="hidden" name="thumbViewGoodsLabel[]" value=""></span></td>
 						</tr>
 					</tbody>
 				</table>
 			</div>
-			<table class="info-table-style item_image_table" style="width: 100%"
-				id="goodsImageTable">
-				<colgroup>
-					<col width="15%">
-					<col width="9%">
-					<col width="11%">
-					<col width="11%">
-					<col width="11%">
-					<col width="11%">
-					<col width="11%">
-					<col width="11%">
-					<col width="11%">
-				</colgroup>
-				<thead>
-					<tr>
-						<th class="its-th-align center">상품 사진등록</th>
-						<th class="its-th-align center">상품 미리보기 등록</th>
-						<th class="its-th-align center">상품상세(확대)</th>
-						<th class="its-th-align center">상품상세(기본)</th>
-						<th class="its-th-align center">리스트</th>
-						<th class="its-th-align center">썸네일(장바구니/주문)</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr class="cut-tr cutnum1">
-						<td class="its-td-align left firstCol pdl30" rowspan="1"><span
-							class="btn large"><input type="file" 
-									class="batchImageMultiRegist"></span>
-						<td class="its-td-align center"><input type="hidden"
-							name="goodsImageColor[]" value=""> <span
-							class="fileColorTitle"></span><span class="btn small lightblue"><button
-									type="button" class="item_preview_btn">미리보기 등록</button></span>
-							<div class="pdt10"> 
-								<span class="btn large"><button type="button"
-										class="ImageSort" >순서변경 및 삭제</button></span>
-							</div></td>
-						<td class="its-td-align center"><span
-							class="goodslarge view hand blue" imagetype="large">보기<input
-								type="hidden" name="largeGoodsImage[]" value=""><input
-								type="hidden" name="largeGoodsLabel[]" value=""></span></td>
-						<td class="its-td-align center"><span
-							class="goodsview view hand blue" imagetype="view">보기<input
-								type="hidden" name="viewGoodsImage[]" value=""><input
-								type="hidden" name="viewGoodsLabel[]" value=""></span></td>
-						<td class="its-td-align center"><span
-							class="goodslist1 view hand blue" imagetype="list1">보기<input
-								type="hidden" name="list1GoodsImage[]" value=""><input
-								type="hidden" name="list1GoodsLabel[]" value=""></span></td>
-						<td class="its-td-align center"><span
-							class="goodsthumbView view hand blue" imagetype="thumbView">보기<input
-								type="hidden" name="thumbViewGoodsImage[]" value=""><input
-								type="hidden" name="thumbViewGoodsLabel[]" value=""></span></td>
-
-					</tr>
-				</tbody>
-			</table>
-			<button class="add_submit" onclick="check_form()">등록 하기</button>
-		</div>
-	</form>
+		</form> --%>
+		
 </div>
-
+ 
 
 
 <%-- 카테고리 연결창--%>
@@ -316,7 +317,6 @@
 			class="category_select_cancel" role="button"><span>close</span></a>
 	</div>
 	<div class="category_select_content" style="">
-		<form>
 			<table class="simplelist-table-style" style="width: 100%">
 				<colgroup>
 					<col width="25%">
@@ -356,11 +356,10 @@
 									</select>
 							</div>
 						</td>
-					</tr>
+					</tr> 
 				</tbody>
 			</table>
 			<a class="category_select_btn" id="category_select_btn">카테고리 연결</a>
-		</form>
 	</div>   
 </div>
 <div id="editor_select" class="category_select">
@@ -369,8 +368,7 @@
 			class="category_select_cancel" role="button"><span>close</span></a>
 	</div>
 	<div class="category_select_content" style="">
-		<form name="categoryConnectFrm" method="post"
-			action="../goods_process/category_connect" target="actionFrame">
+		
 			<table class="simplelist-table-style" style="width: 100%">
 				<thead>
 					<tr>
@@ -383,11 +381,11 @@
 							<div>
 								<select class="line" name="category1" size="7" id="cate_editor"
 									style="width: 100%">
-									<c:forEach var="list" items="${editor_list }" >
-										<option value=''>${list.editor_name } / ${list.editor_birth}</option>
+									<c:forEach var="list" items="${editor_list}" >
+										<option value='${list.editor_num}'>${list.editor_name } / ${list.editor_birth}</option>
 									</c:forEach> 
 								</select>
-							</div>  
+							</div>    
 						</td> 
 					</tr>
 				</tbody>
@@ -395,7 +393,6 @@
 			<p class="select_btn_box">
 			<a id="editor_select_btn" class="editor_select_btn">작가 연결</a>
 			<a href="<c:url value='/editor_add'/>" class="editor_select_btn">신규 등록</a></p>
-		</form>
 	</div>
 </div>
 <div id="publishing_select" class="category_select">
@@ -404,8 +401,7 @@
 			class="category_select_cancel" role="button"><span>close</span></a>
 	</div>
 	<div class="category_select_content" style="">
-		<form name="categoryConnectFrm" method="post"
-			action="../goods_process/category_connect" target="actionFrame">
+		
 			<table class="simplelist-table-style" style="width: 100%">
 				<colgroup>
 
@@ -422,22 +418,21 @@
 							<div>
 								<select class="line" name="category1" size="7"
 									style="width: 100%">
-										<c:forEach var="list" items="${ publishing_list }" >
-										<option value=''>${list} </option>
+										<c:forEach var="list" items="${publishing_list}" >
+										<option value=''>${list}</option>
 									</c:forEach> 
 								</select>
 							</div>
 						</td>
 					</tr>
-				</tbody>
+				</tbody> 
 			</table>
 			<p class="select_btn_box">
 			<a id="editor_select_btn" class="editor_select_btn">출판사 연결</a>
 			<a id="publicsh_select_btn" class="editor_select_btn">직접 입력</a></p>
-		</form>
 	</div>
 </div>
-
+ 
 <%-- 상품 미리보기 등록 --%>
 <div id="item_preview" class="category_select" >
 	<div class="category_select_title_box">
@@ -452,11 +447,12 @@
 			<p class="select_btn_box">
 			<a id="editor_select_btn" class="editor_select_btn">미리보기 저장</a>
 			<p>
-		</form>
+		</form> 
 	</div>
 </div>
 
 <script>
+
  	$(document).ready(function(){
  		// 카테고리 불러오기 AJAX 연결
  		$('#select_cate1').change(function(){
@@ -486,34 +482,28 @@
 			var sel2 = $("#select_cate2 option:selected").text(); 
 			var sel3 = $("#select_cate3 option:selected").text();
 			var val = $("#select_cate3 option:selected").attr('value');
-			$("#cate_txt").html("<input type='text' readonly  name='"+ val +"' value='"+ sel1 + " > " + sel2 + " > " + sel3+ "'>");
-			$("#category_select").hide(); 
-		});
+			$("#cate_txt").html("<input type='text' hidden = 'hidden'  name='cate_num' value='"+ val + "'> <input type='text' readonly  value='"+ sel1 + " > " + sel2 + " > " + sel3+ "'>");
+			$("#category_select").hide();  
+		});  
+		//작가 리스트 값 뿌려주기
 		$('#editor_select_btn').click(function(){   
-			var sel = $("#cate_editor").text();
-			var val = $("#cate_editor").val();
-			$("#editor_txt").html("<input type='text' readonly name='"+ val +"' value='"+ sel+ "'>");
-			$("#editor_select").hide(); 
-		}); 
+			var sel = $.trim($("#cate_editor").text());
+			var val = $("#cate_editor").val(); 
+			$("#editor_txt").html('<input type="text" hidden = "hidden"  name="editor_num" value="'+ val +'"> <input type="text" readonly  value="'+sel+'">');
+			$("#editor_select").hide();   
+		});    
 		$("#publicsh_select_btn").click(function(){
-			$("#publishing_text").append("<input type='text' name='product_publish' id='publishing_direct' >");
+			$("#publishing_text").append("<input type='text' name='product_publish' id='publishing_direct' >"); 
 			$("#publishing_direct").focus();
 			$("#publishing_select").hide();     
 		});  
- 	}); 
+		
+	/* 	$(".add_submit").click(function(){
+			$("#item_form").submit();
+		}); */
+ 	});  
  	
- 	// 책 목차 빈칸 시 여백 넘기기
- 	function check_form(){
- 		var form = document.item_form;
- 		var item_index = form.index_list;
- 		item_index.forEach(function(index,item){
- 			if(item.value == ""){
- 				item.setAttribute("name") = "";
- 			}
- 		});
- 	}
- 	
-	  
+  
 	
  	// 정가 입력시 할인가 자동 적용 및 금액 단위 표시
  	
@@ -522,16 +512,16 @@
  		var charge = parseInt(document.querySelector('input[name="product_discount"]:checked').value);
  		var arr =  form.origin_price.value.split(',');
  		var origin = form.origin_price.value;
- 		var origin_len = form.origin_price.value.length;
- 		var rtnStr = "";
- 		var origin_val = "";
+ 		var origin_len = form.origin_price.value.length; 
+ 		var rtnStr = ""; 
+ 		var origin_val = ""; 
  		var last_val = "";
  		var last_val2 = "";
  		
  		arr.forEach(function(item,index){  
 			origin_val += item; 
 		});
-		
+		 
  		//판매가 자동 할인금액 적용 , 숫자만 표시
 		var price = parseInt(origin_val);
 		var dis_price = Math.floor(price - (price * (charge * 0.01)));
