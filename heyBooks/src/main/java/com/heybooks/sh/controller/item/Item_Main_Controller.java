@@ -20,9 +20,11 @@ import com.heybooks.sh.vo.item.Item_Vo;
 @Controller
 public class Item_Main_Controller {
 	private static final Logger logger = LoggerFactory.getLogger(Item_Main_Controller.class);
-    @Resource   
-    Item_Category_Service cate_service;
-   
+	@Resource
+	Item_Category_Service cate_service;
+	@Resource
+    Item_Main_Service service;
+	
 	// 상품 - 추가 
 	@RequestMapping(value = "/admin_item_add", method = RequestMethod.GET)
 	public String admin_item_add(Model model) {
@@ -40,11 +42,8 @@ public class Item_Main_Controller {
 	@RequestMapping(value = "/admin_item_add", method = RequestMethod.POST)
 	public String admin_item_add(Item_Vo vo) {
 		logger.info("post item-add"); 
-		
-		/*      
-		 * System.out.println(vo.toString()); service.item_insert(vo);
-		 */ 
-		return "redirect:/editor_list";  
+		service.item_insert(vo);
+		return "redirect:/admin_item_list";  
 		/* 
 		 * try { service.item_insert(vo); return "redirect:/editor_list"; } catch
 		 * (Exception e) { return ".registration.alert"; }
@@ -52,3 +51,4 @@ public class Item_Main_Controller {
 	}
  
 }
+   

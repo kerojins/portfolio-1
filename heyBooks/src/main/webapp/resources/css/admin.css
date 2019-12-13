@@ -870,6 +870,42 @@ div.skin-add-form table.sf-option-table  li:first-child {
 	height: 55px;
 }
 
+#item_viewImg{
+	width: 203px;
+	height: 305px;
+}
+
+#item_img_box{
+	display: none;
+}
+.img_view_btn:hover{
+	cursor: pointer; 
+} 
+#preview_box{
+	padding: 20px;
+	overflow: hidden;
+}
+#preview_box span{
+	margin: 5px 10px;
+	position: relative;
+	display: block;
+	float: left;
+}
+#preview_box span i{
+	position: absolute;
+	right: 0;
+	background: rgb(255,255,255,0.5);
+	color: #444;
+	width:18px;
+	height:18px;
+	font-size: 15px;
+	padding-left: 3px;
+	padding-top: 2px;
+}
+#preview_box img{
+	width:130px; 
+	height: 180px;
+}
 .category_select {
 	display: none;
 	z-index: 10002;
@@ -925,7 +961,7 @@ div.skin-add-form table.sf-option-table  li:first-child {
 	text-align:center;
 	margin: 20px auto;
 }
-.editor_select_btn {
+.select_btn {
 	
 	background: #8a8a8a;
 	color: white !important;

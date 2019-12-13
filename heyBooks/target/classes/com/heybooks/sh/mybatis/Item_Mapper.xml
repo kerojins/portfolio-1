@@ -7,13 +7,13 @@
 	
 	<!-- 1. 상품 추가 -->
 	<insert id="item_insert" parameterType="com.heybooks.sh.vo.item.Item_Vo">
-		insert into products values(dbms_random.value(100000000000,999999999999),#{cate_num},#{editor_num},#{product_publish},#{product_name},#{product_page},#{product_discription},
-								   #{product_index},#{product_status},#{product_view},#{product_shipping_charge},#{product_discount},#{product_price},#{product_stock},#{product_picture},#{product_preview},sysdate)
+		insert into products (product_num, product_cate_num, product_editor_num, product_publish, product_name, product_page, product_discription, product_index, product_status, product_view, product_shipping_charge, product_discount, product_price,product_discount_price, product_stock, product_date)  
+					   values((select ROUND(DBMS_RANDOM.VALUE (10000000,99999999),0) FROM DUAL),#{product_cate_num},#{product_editor_num}, #{product_publish}, #{product_name}, #{product_page}, #{product_discription}, #{product_index},#{product_status},#{product_view},#{product_shipping_charge},#{product_discount},#{product_price},#{product_discount_price},#{product_stock},sysdate)
 	</insert>
+	   
+	 
 	
-	
-	
-	<!-- 아이템 카테고리 -->
+	<!-- 아이템 카테고리 -->   
 	<select id="cate_list"  parameterType="string" resultType="com.heybooks.sh.vo.item.Item_Cate_Vo">
 		select * from product_category where  (cate_ref2  = #{cate_code} and cate_ref3 IS NULL) or cate_ref3 = #{cate_code} 
 	</select>	     

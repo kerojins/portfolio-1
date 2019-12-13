@@ -4,8 +4,8 @@ import java.sql.Date;
 
 public class Item_Vo {
 	private int product_num;
-	private int cate_num;
-	private int editor_num;
+	private int product_cate_num;
+	private int product_editor_num;
 	private String product_publish;
 	private String product_name;
 	private int product_page;
@@ -22,15 +22,15 @@ public class Item_Vo {
 	private String product_preview;
 	private Date product_date;
 	public Item_Vo() {}
-	public Item_Vo(int product_num, int cate_num, int editor_num, String product_publish, String product_name,
-			int product_page, String product_discription, String product_index, String product_status,
-			String product_view, String product_shipping_charge, String product_discount, String product_price,
-			String product_discount_price, int product_stock, String product_picture, String product_preview,
-			Date product_date) {
+	public Item_Vo(int product_num, int product_cate_num, int product_editor_num, String product_publish,
+			String product_name, int product_page, String product_discription, String product_index,
+			String product_status, String product_view, String product_shipping_charge, String product_discount,
+			String product_price, String product_discount_price, int product_stock, String product_picture,
+			String product_preview, Date product_date) {
 		super();
 		this.product_num = product_num;
-		this.cate_num = cate_num;
-		this.editor_num = editor_num;
+		this.product_cate_num = product_cate_num;
+		this.product_editor_num = product_editor_num;
 		this.product_publish = product_publish;
 		this.product_name = product_name;
 		this.product_page = product_page;
@@ -53,17 +53,17 @@ public class Item_Vo {
 	public void setProduct_num(int product_num) {
 		this.product_num = product_num;
 	}
-	public int getCate_num() {
-		return cate_num;
+	public int getProduct_cate_num() {
+		return product_cate_num;
 	}
-	public void setCate_num(int cate_num) {
-		this.cate_num = cate_num;
+	public void setProduct_cate_num(int product_cate_num) {
+		this.product_cate_num = product_cate_num;
 	}
-	public int getEditor_num() {
-		return editor_num;
+	public int getProduct_editor_num() {
+		return product_editor_num;
 	}
-	public void setEditor_num(int editor_num) {
-		this.editor_num = editor_num;
+	public void setProduct_editor_num(int product_editor_num) {
+		this.product_editor_num = product_editor_num;
 	}
 	public String getProduct_publish() {
 		return product_publish;
@@ -157,15 +157,15 @@ public class Item_Vo {
 	}
 	@Override
 	public String toString() {
-		return "Item_Vo [product_num=" + product_num + ", cate_num=" + cate_num + ", editor_num=" + editor_num
-				+ ", product_publish=" + product_publish + ", product_name=" + product_name + ", product_page="
-				+ product_page + ", product_discription=" + product_discription + ", product_index=" + product_index
-				+ ", product_status=" + product_status + ", product_view=" + product_view + ", product_shipping_charge="
-				+ product_shipping_charge + ", product_discount=" + product_discount + ", product_price="
-				+ product_price + ", product_discount_price=" + product_discount_price + ", product_stock="
-				+ product_stock + ", product_picture=" + product_picture + ", product_preview=" + product_preview
-				+ ", product_date=" + product_date + "]";
+		return "Item_Vo [product_num=" + product_num + ", product_cate_num=" + product_cate_num
+				+ ", product_editor_num=" + product_editor_num + ", product_publish=" + product_publish
+				+ ", product_name=" + product_name + ", product_page=" + product_page + ", product_discription="
+				+ product_discription + ", product_index=" + product_index + ", product_status=" + product_status
+				+ ", product_view=" + product_view + ", product_shipping_charge=" + product_shipping_charge
+				+ ", product_discount=" + product_discount + ", product_price=" + product_price
+				+ ", product_discount_price=" + product_discount_price + ", product_stock=" + product_stock
+				+ ", product_picture=" + product_picture + ", product_preview=" + product_preview + ", product_date="
+				+ product_date + "]";
 	}
 	
-	 
 }

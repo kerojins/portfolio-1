@@ -197,8 +197,8 @@ CREATE TABLE Order_items
 CREATE TABLE Products
 (
 	product_num number NOT NULL,
-	cate_num number NOT NULL,
-	editor_num number NOT NULL,
+	product_cate_num number NOT NULL,
+	product_editor_num number NOT NULL,
 	product_publish varchar2(50) NOT NULL,
 	product_name varchar2(100) NOT NULL,
 	product_page number(5,0) NOT NULL,
@@ -336,7 +336,7 @@ ALTER TABLE New_item_notice
 
 
 ALTER TABLE Products
-	ADD FOREIGN KEY (editor_num)
+	ADD FOREIGN KEY (product_editor_num)
 	REFERENCES Editor (editor_num)
 ;
 
@@ -444,7 +444,7 @@ ALTER TABLE Wishlist
 
 
 ALTER TABLE Products
-	ADD FOREIGN KEY (cate_num)
+	ADD FOREIGN KEY (product_cate_num)
 	REFERENCES Product_category (cate_num)
 ;
 

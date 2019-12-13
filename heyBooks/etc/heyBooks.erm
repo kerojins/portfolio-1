@@ -11,7 +11,7 @@
 	</page_setting>
 	<category_index>0</category_index>
 	<zoom>2.0</zoom>
-	<x>1147</x>
+	<x>2567</x>
 	<y>282</y>
 	<default_color>
 		<r>128</r>
@@ -135,7 +135,7 @@
 			</connections>
 			<display>false</display>
 			<creation_date>2019-08-06 11:38:21</creation_date>
-			<updated_date>2019-12-09 18:53:36</updated_date>
+			<updated_date>2019-12-11 18:54:08</updated_date>
 			<model_property>
 				<name>프로젝트명</name>
 				<value></value>
@@ -7122,7 +7122,7 @@
 					<description></description>
 					<unique_key_name></unique_key_name>
 					<logical_name></logical_name>
-					<physical_name></physical_name>
+					<physical_name>product_cate_num</physical_name>
 					<type>decimal</type>
 					<constraint></constraint>
 					<default_value></default_value>
@@ -7156,7 +7156,7 @@
 					<description></description>
 					<unique_key_name></unique_key_name>
 					<logical_name></logical_name>
-					<physical_name></physical_name>
+					<physical_name>product_editor_num</physical_name>
 					<type>decimal</type>
 					<constraint></constraint>
 					<default_value></default_value>

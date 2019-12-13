@@ -23,8 +23,8 @@
 						</th>
 						<td class="its-td"><input type="text" name="editor_name"
 							class="cal-len line" maxlength="255" style="width: 85%" value=""
-							title="" onkeyup="calculate_input_len(this);"
-							onblur="calculate_input_len(this);" placeholder="작가명을 입력하세요">
+							title="" 
+							 placeholder="작가명을 입력하세요">
 						</td>
 					</tr>
 					<tr>
@@ -45,8 +45,8 @@
 						<th class="its-th-align center">작가 소개</th>
 						<td class="its-td"><textarea name="editor_introduce" rows="10"
 								class="cal-len line" maxlength="255" style="width: 85%" name="editor_introduce"
-								title="상품 설명을 입력하세요" onkeyup="calculate_input_len(this);"
-								onblur="calculate_input_len(this);" placeholder="작가 설명을 입력하세요"></textarea><span
+								title="상품 설명을 입력하세요" 
+								 placeholder="작가 설명을 입력하세요"></textarea><span
 							class="view-len"> <b> 0</b>/1000
 						</span></td>
 					</tr>
@@ -55,15 +55,15 @@
 						<td class="its-td">
 							<ul class="index_list">
 								<li><input type="text" name="editor_school" class="cal-len line"
-									style="width: 85%" title="" placeholder="1."></li>
+									style="width: 85%"  value="" title="" placeholder="1."></li>
 								<li><input type="text" name="editor_school" class="cal-len line"
-									style="width: 85%" title="" placeholder="2."></li>
+									style="width: 85%"  value="" title="" placeholder="2."></li>
+								<li><input type="text"  name="editor_school" class="cal-len line"
+									style="width: 85%"  value="" title="" placeholder="3."></li>
 								<li><input type="text" name="editor_school" class="cal-len line"
-									style="width: 85%" title="" placeholder="3."></li>
-								<li><input type="text" name="editor_school" class="cal-len line"
-									style="width: 85%" title="" placeholder="4."></li>
-								<li><input type="text" name="editor_school" class="cal-len line"
-									style="width: 85%" title="" placeholder="5."></li>
+									style="width: 85%"   value="" title="" placeholder="4."></li>
+								<li><input type="text"   name="editor_school" class="cal-len line"
+									style="width: 85%"  value=""title="" placeholder="5."></li>
 							</ul>
 							<span class="index_add" title="editor_school">추가</span>
 						</td>
@@ -73,16 +73,16 @@
 						<td class="its-td">
 							<ul class="index_list">
 								<li><input type="text" name="editor_award" class="cal-len line"
-									style="width: 85%"  title="" placeholder="1."></li>
+									style="width: 85%" value="" title="" placeholder="1."></li>
 								<li><input type="text" name="editor_award" class="cal-len line"
-									style="width: 85%"  title="" placeholder="2."></li>
+									style="width: 85%" value="" title="" placeholder="2."></li>
 								<li><input type="text" name="editor_award" class="cal-len line"
-									style="width: 85%"  title="" placeholder="3."></li>
+									style="width: 85%" value="" title="" placeholder="3."></li>
 								<li><input type="text" name="editor_award" class="cal-len line"
-									style="width: 85%"  title="" placeholder="4."></li>
+									style="width: 85%" value="" title="" placeholder="4."></li>
 								<li><input type="text" name="editor_award" class="cal-len line"
-									style="width: 85%"  title="" placeholder="5."></li>
-							</ul>
+									style="width: 85%" value="" title="" placeholder="5."></li>
+							</ul> 
 							<span class="index_add" title="editor_award">추가</span>
 						</td>
 					</tr>
@@ -114,16 +114,18 @@ function check_form(){
 	var form = document.editor_form;
 	var school = form.editor_school;
 	var award = form.editor_award;
-	school.forEach(function(index,item){
-		if(item.value == ""){
-			item.setAttribute("name") = "";
-		}
-	});
-	award.forEach(function(index,item){
-		if(item.value == ""){
-			item.setAttribute("name") = "";
-		}
-	});
+	for(var i = school.length - 1 ; i >= 0 ; i--){
+		if(school[i].value == ''){ 
+			alert(i);   
+			school[i].removeAttribute('name'); 
+		}       
+	} 
+	for(var i = award.length - 1 ; i >= 0 ; i--){
+		if(award[i].value == ''){ 
+			alert(i);   
+			award[i]. removeAttribute('name'); 
+		}       
+	}   
 }
 </script>
 

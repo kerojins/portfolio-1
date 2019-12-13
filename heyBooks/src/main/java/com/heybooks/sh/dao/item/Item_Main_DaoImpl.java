@@ -15,6 +15,6 @@ public class Item_Main_DaoImpl implements Item_Main_Dao {
 	
 	// 1. 상품 등록
 	public int item_insert(Item_Vo vo) {
-		return sqlSession.insert(NAMESPACE + ".item_insert");
+		return sqlSession.insert(NAMESPACE + ".item_insert", vo);
 	}
 }

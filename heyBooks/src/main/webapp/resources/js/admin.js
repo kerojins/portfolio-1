@@ -48,10 +48,9 @@ $(document)
 						var name = $(this).attr("title");
 						var index_cnt = $(this).prev().find("li").length;
 										$(this).prev().append('<li><input type="text" name="'+ name +'" class="cal-len line" style="width: 85%" title="" placeholder="'
-																+ ++index_cnt
-																+ '." value="'+ ++index_cnt
-																+'"></li>');
-									});
+																+ ++index_cnt + '." value=""></li>');
+									}); 
+					
  
 					$('.layer_close').click(function() {
 						$('#member_info_layers').hide();
@@ -73,9 +72,9 @@ $(document)
 					// 관리자 상품등록 - 사진 미리보기 창
 					$('.item_preview_btn').click(function(){
 						var scroll = $(document).scrollTop();
-						$("#item_preview").css('top',''+(scroll+150)+'px');
+						$("#item_preview").css('top',''+ scroll +'px');
 						$("#item_preview").show();
-					});
+					}); 
 					 
 					// summernote 활용
 

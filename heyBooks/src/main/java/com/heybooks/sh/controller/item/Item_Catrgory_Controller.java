@@ -17,9 +17,10 @@ import com.heybooks.sh.vo.item.Item_Editor_Vo;
 @Controller
 public class Item_Catrgory_Controller {
 	private static final Logger logger = LoggerFactory.getLogger(Item_Catrgory_Controller.class);
+	
 	@Resource
 	Item_Category_Service service;
-
+	
 	
 	// 1. 작가 등록
 	@RequestMapping(value = "/editor_add", method = RequestMethod.GET)
