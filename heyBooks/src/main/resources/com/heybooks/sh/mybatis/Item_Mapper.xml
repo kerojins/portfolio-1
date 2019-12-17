@@ -10,9 +10,14 @@
 		insert into products (product_num, product_cate_num, product_editor_num, product_publish, product_name, product_page, product_discription, product_index, product_status, product_view, product_shipping_charge, product_discount, product_price,product_discount_price, product_stock, product_date)  
 					   values((select ROUND(DBMS_RANDOM.VALUE (10000000,99999999),0) FROM DUAL),#{product_cate_num},#{product_editor_num}, #{product_publish}, #{product_name}, #{product_page}, #{product_discription}, #{product_index},#{product_status},#{product_view},#{product_shipping_charge},#{product_discount},#{product_price},#{product_discount_price},#{product_stock},sysdate)
 	</insert>
+	 <update id="item_img_insert" parameterType="com.heybooks.sh.vo.item.Item_Vo">
+		update products set product_picture = #{product_picture} ,product_preview = #{product_preview}
+	</update> 
+	<select id="item_list" resultType="com.heybooks.sh.vo.item.Item_Vo">
+		select * from products
+	</select>   
 	   
 	 
-	
 	<!-- 아이템 카테고리 -->   
 	<select id="cate_list"  parameterType="string" resultType="com.heybooks.sh.vo.item.Item_Cate_Vo">
 		select * from product_category where  (cate_ref2  = #{cate_code} and cate_ref3 IS NULL) or cate_ref3 = #{cate_code} 

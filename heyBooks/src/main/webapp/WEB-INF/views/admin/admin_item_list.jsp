@@ -228,18 +228,19 @@
 						<th>관리</th>
 					</tr>
 				</thead>
-
+ 
 				<tbody class="ltb">
+				<c:forEach var="list" items="${item_list }">
 					<tr class="list-row" style="height: 70px;">
 						<td align="center"><input type="checkbox" class="chk"
 							name="goods_seq[]" value="61" data-provider_seq="1"></td>
-						<td align="center" class="page_no">12</td>
+						<td align="center" class="page_no">${list.product_num }</td>
 						<td align="right"><a href="/goods/view?no=62" target="_blank"><img
-								src="/data/goods/1/2019/10/62_tmp_ad31bac084941e657c4c024f76dee8249552thumbView.jpg?dummy=1570712076"
-								width="50"></a></td>
+								src="<c:url value='${list.product_picture }' />" 
+								width="50"></a></td>   
 						<td align="left" style="padding-left: 10px;">
-							<div class="fx11 gray"></div>
-							<div>
+							<div class="fx11 gray"></div> 
+							<div>  
 								<a href="../goods/regist?no=61" target="_blank">미니어처 별</a>
 								<div></div>
 								<div style="padding-top: 3px;"></div>
@@ -289,6 +290,7 @@
 							</div>
 						</td>
 					</tr>
+				</c:forEach>	
 				</tbody>
 			</table>
 	</div>

@@ -211,7 +211,7 @@ CREATE TABLE Products
 	product_price varchar2(100) NOT NULL,
 	product_discount_price varchar2(100),
 	product_stock  number NOT NULL,
-	product_pictuer varchar2(1000),
+	product_picture varchar2(1000),
 	product_preview varchar2(1000),
 	product_date date NOT NULL,
 	PRIMARY KEY (product_num)

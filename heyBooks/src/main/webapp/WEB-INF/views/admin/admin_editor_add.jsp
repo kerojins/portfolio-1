@@ -116,13 +116,11 @@ function check_form(){
 	var award = form.editor_award;
 	for(var i = school.length - 1 ; i >= 0 ; i--){
 		if(school[i].value == ''){ 
-			alert(i);   
 			school[i].removeAttribute('name'); 
 		}       
 	} 
 	for(var i = award.length - 1 ; i >= 0 ; i--){
 		if(award[i].value == ''){ 
-			alert(i);   
 			award[i]. removeAttribute('name'); 
 		}       
 	}   

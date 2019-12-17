@@ -539,6 +539,8 @@
 			}       
 		}   
 		
+		document.getElementById("item_form").submit();
+		
 		var pv_length = String(sel_files.length);
 		sel_files.forEach(function(item,index){
 			img_form.append("pv_arr"+ index +"", item);
@@ -549,17 +551,16 @@
 			type: 'post',
 			url: "<c:url value='/file_upload' />",
 			data: img_form,
-			dataType : 'json', 
 			processData : false,  
 			contentType : false,
-			success: function(response){
-				alert("success");
-			},error: function(jqXHR){
-				alert("error");
-			}  
-		});
+			success: function(data){
+				console_log("result:" + data);
+			},
+			error: function(request,status,error){
+				console_log("code = "+ request.status + " message = " + request.responseText + " error = " + error);
+			}    
+		}); 
 		
-		document.getElementById("item_form").submit();
    }
 	 
  	// 정가 입력시 할인가 자동 적용 및 금액 단위 표시
@@ -574,10 +575,12 @@
  		var last_val = "";
  		var last_val2 = "";
  		
+ 		
+ 		  
  		arr.forEach(function(item,index){  
 			origin_val += item; 
 		});
-		 
+		
  		//판매가 자동 할인금액 적용 , 숫자만 표시
 		var price = parseInt(origin_val);
 		var dis_price = Math.floor(price - (price * (charge * 0.01)));
@@ -613,19 +616,18 @@
 					dis_val.splice(i, 0, ",");
 				}			      
 		}    
+		
 		dis_val  =  dis_val.reverse();  
 		dis_val.forEach(function(item,index){
 			last_val2 += item;  
 		}); 
-		form.discount_price.value = last_val2;
-	
-		if( charge == 0 ){
+		if(!(origin == '' || origin == null) ){
+			form.discount_price.value = last_val2;
+		}    
+		if( charge == 0 ){ 
 			form.discount_price.value = origin_price.value;
  		} 
-		if(form.origin_price.value == "" && charge != 0){
-			form.discount_price.value == "";
-		}  
- 	} 
+ 	}     
  	//파일 전송 전 미리보기
  	
  	//상품 대표사진 한장 
@@ -647,8 +649,7 @@
  		$("#item_img_box").hide();
  		 
  	}
- 	// 상품 미리보기 여러장
- 	
+ 	// 상품 여러장 미리보기
  	function preview_img(input){
  		var img_files = input.files; 
  		var filesArr = Array.prototype.slice.call(img_files);
@@ -670,23 +671,21 @@
  		});    
  	}
  	 
+ 	// 상품 미리보기 위치 변경 시 배열 
+ 	
+ 	var pv_bool = false;
  	//미리보기 삭제
  	function delete_img(del){
+ 		pv_bool = false;
  		var pv_list = document.getElementsByClassName("preview_list");
- 		for(var i = 0 ; i < pv_list.length ; i ++){
- 			if(pv_list[i] == del.parentNode) {
- 				var idx = i;
- 				
- 			}
- 		}   
- 		sel_files.splice(idx,1);
 	 	del.parentNode.remove(); 
 	 	console.log(sel_files);
  	}
+ 	 
  	var pv_idx1 = 0;   
  	var pv_idx2 = 0;
- 	var pv_bool = false;
  	var val = null;
+ 	//미리보기 사진 클릭시 해당 요소값 따로 저장 및 제거하기
  	function mouseDown(span){
  		pv_bool = true;
  		var pv_list = document.getElementsByClassName("preview_list");
@@ -697,7 +696,8 @@
  		sel_files.splice(pv_idx1,1); 
  		console.log(pv_idx1);
  		
- 	}      
+ 	}       
+ 	//미리보기 사진에서 범위 벗어났을 때 해당 인덱스값 얻고 저장해둔 요소값 추가, 파일 배열 맞춰주기
  	function mouseOut(span){  
  		if(pv_bool == true){
 	 		var pv_list = document.getElementsByClassName("preview_list");

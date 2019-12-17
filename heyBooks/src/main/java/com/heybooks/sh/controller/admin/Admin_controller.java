@@ -74,12 +74,7 @@ public class Admin_controller {
 		return "redirect:/admin";
 	}
 
-	// 상품 - 리스트
-	@RequestMapping(value = "/admin_item_list", method = RequestMethod.GET)
-	public String admin_item_list() {
-		return ".admin.admin_item_list";
-	}
-
+	
 	// 회원 관리목록
 	@RequestMapping(value = "/admin_user_list", method = RequestMethod.GET)
 	public String admin_user_list() {

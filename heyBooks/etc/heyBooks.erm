@@ -11,8 +11,8 @@
 	</page_setting>
 	<category_index>0</category_index>
 	<zoom>2.0</zoom>
-	<x>2567</x>
-	<y>282</y>
+	<x>1109</x>
+	<y>447</y>
 	<default_color>
 		<r>128</r>
 		<g>128</g>
@@ -135,7 +135,7 @@
 			</connections>
 			<display>false</display>
 			<creation_date>2019-08-06 11:38:21</creation_date>
-			<updated_date>2019-12-11 18:54:08</updated_date>
+			<updated_date>2019-12-16 16:00:18</updated_date>
 			<model_property>
 				<name>프로젝트명</name>
 				<value></value>
@@ -1493,7 +1493,7 @@
 			<char_semantics>false</char_semantics>
 			<description></description>
 			<logical_name>상품 사진</logical_name>
-			<physical_name>product_pictuer</physical_name>
+			<physical_name>product_picture</physical_name>
 			<type>varchar(n)</type>
 		</word>
 		<word>
