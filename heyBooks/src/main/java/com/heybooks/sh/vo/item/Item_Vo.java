@@ -1,6 +1,6 @@
 package com.heybooks.sh.vo.item;
 
-import java.sql.Date;
+import java.util.Date;
 
 public class Item_Vo {
 	private int product_num;
@@ -17,16 +17,18 @@ public class Item_Vo {
 	private String product_discount;
 	private String product_price;
 	private String product_discount_price;
+	private int product_supplement;
 	private int product_stock;
 	private String product_picture;
 	private String product_preview;
+	private Date product_update_date; 
 	private Date product_date;
 	public Item_Vo() {}
 	public Item_Vo(int product_num, int product_cate_num, int product_editor_num, String product_publish,
 			String product_name, int product_page, String product_discription, String product_index,
 			String product_status, String product_view, String product_shipping_charge, String product_discount,
-			String product_price, String product_discount_price, int product_stock, String product_picture,
-			String product_preview, Date product_date) {
+			String product_price, String product_discount_price, int product_supplement, int product_stock,
+			String product_picture, String product_preview, Date product_update_date, Date product_date) {
 		super();
 		this.product_num = product_num;
 		this.product_cate_num = product_cate_num;
@@ -42,9 +44,11 @@ public class Item_Vo {
 		this.product_discount = product_discount;
 		this.product_price = product_price;
 		this.product_discount_price = product_discount_price;
+		this.product_supplement = product_supplement;
 		this.product_stock = product_stock;
 		this.product_picture = product_picture;
 		this.product_preview = product_preview;
+		this.product_update_date = product_update_date;
 		this.product_date = product_date;
 	}
 	public int getProduct_num() {
@@ -131,6 +135,12 @@ public class Item_Vo {
 	public void setProduct_discount_price(String product_discount_price) {
 		this.product_discount_price = product_discount_price;
 	}
+	public int getProduct_supplement() {
+		return product_supplement;
+	}
+	public void setProduct_supplement(int product_supplement) {
+		this.product_supplement = product_supplement;
+	}
 	public int getProduct_stock() {
 		return product_stock;
 	}
@@ -149,6 +159,12 @@ public class Item_Vo {
 	public void setProduct_preview(String product_preview) {
 		this.product_preview = product_preview;
 	}
+	public Date getProduct_update_date() {
+		return product_update_date;
+	}
+	public void setProduct_update_date(Date product_update_date) {
+		this.product_update_date = product_update_date;
+	}
 	public Date getProduct_date() {
 		return product_date;
 	}
@@ -163,9 +179,10 @@ public class Item_Vo {
 				+ product_discription + ", product_index=" + product_index + ", product_status=" + product_status
 				+ ", product_view=" + product_view + ", product_shipping_charge=" + product_shipping_charge
 				+ ", product_discount=" + product_discount + ", product_price=" + product_price
-				+ ", product_discount_price=" + product_discount_price + ", product_stock=" + product_stock
-				+ ", product_picture=" + product_picture + ", product_preview=" + product_preview + ", product_date="
-				+ product_date + "]";
-	}
-	
+				+ ", product_discount_price=" + product_discount_price + ", product_supplement=" + product_supplement
+				+ ", product_stock=" + product_stock + ", product_picture=" + product_picture + ", product_preview="
+				+ product_preview + ", product_update_date=" + product_update_date + ", product_date=" + product_date
+				+ "]";
+	} 
+	 
 }

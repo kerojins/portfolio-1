@@ -17,38 +17,25 @@
 					<a>종합 베스트</a>
 				</p>
 				<p>
-					<a>국내 도서</a><i class="fas fa-plus" data-toggle="collapse"
+					<a>국내 도서</a><i class="fas fa-plus <c:if test='${cate_ref2 eq 100}'>collapsed</c:if>" data-toggle="collapse"
 						data-target="#collapseExample1" aria-expanded="false"
-						aria-controls="collapseExample1"></i>
+						aria-controls="collapseExample1"></i> 
 				</p>
-				<ul class="collapse aside_menu_list" id="collapseExample1">
-					<li><a href="#">소설</a></li>
-					<li><a href="#">에세이</a></li>
-					<li><a href="#">국내소설</a></li>
-					<li><a href="#">시</a></li>
-					<li><a href="#">어린이</a></li>
-					<li><a href="#">가정생활</a></li>
-					<li><a href="#">정치사회</a></li>
-					<li><a href="#">경제경영</a></li>
-					<li><a href="#">건강</a></li>
-					<li><a href="#">유아</a></li>
-					<li><a href="#">종교</a></li>
-					<li><a href="#">아동만화</a></li>
-					<li><a href="#">역사문화</a></li>
-					<li><a href="#">자기계발</a></li>
-					<li><a href="#">여행</a></li>
-					<li><a href="#">만화</a></li>
-				</ul>
-				<p>
-					<a>외국 도서</a><i class="fas fa-plus" data-toggle="collapse"
+				<ul class="collapse aside_menu_list <c:if test='${cate_ref2 eq 100}'>show</c:if>" id="collapseExample1">
+					<c:forEach var="domestic_vo" items="${domestic_vo}">
+						<li><a <c:if test='${cate_num eq domestic_vo.cate_num}'>style="color:#0e7eda; font-weight:bold"</c:if> href='<c:url value="/weekly_best_seller?cate_num=${domestic_vo.cate_num}&cate_ref2=${domestic_vo.cate_ref2}"/>'>${domestic_vo.cate_name }</a></li>
+					</c:forEach> 
+				</ul> 
+				<p>  
+					<a>외국 도서</a><i class="fas fa-plus <c:if test='${cate_ref2 eq 700}'>collapsed</c:if>" data-toggle="collapse" 
 						data-target="#collapseExample2" aria-expanded="false"
 						aria-controls="collapseExample2"></i>
 				</p>
-				<ul class="collapse aside_menu_list" id="collapseExample2">
-					<li><a href="#">일반 서적</a></li>
-					<li><a href="#">전문 서적</a></li>
-					<li><a href="#">컴퓨터</a></li>
-				</ul>
+				<ul class="collapse aside_menu_list <c:if test='${cate_ref2 eq 700}'>show</c:if>" id="collapseExample2">
+					<c:forEach var="oversea_vo" items="${oversea_vo}"> 
+						<li><a <c:if test='${cate_num eq oversea_vo.cate_num}'>style="color:#0e7eda; font-weight:bold"</c:if> href='<c:url value="/weekly_best_seller?cate_num=${oversea_vo.cate_num }&cate_ref2=${oversea_vo.cate_ref2}"/>'>${oversea_vo.cate_name }</a></li>
+					</c:forEach>
+				</ul> 
 			</div>
 		</aside>
 		<div class="sub_right_box best_seller_right">

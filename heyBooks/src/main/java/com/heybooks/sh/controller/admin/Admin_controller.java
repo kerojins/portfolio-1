@@ -86,6 +86,8 @@ public class Admin_controller {
 	public String admin_order_list() {
 		return ".admin.admin_order_list";
 	}
+	
+	
 
 	
 

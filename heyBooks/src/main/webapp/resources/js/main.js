@@ -363,10 +363,84 @@ $("document")
 									$(this).next().children().hide();
 								}
 							});
-
-				});
+					//장바구니 한개 추가 - ajax
+					$(".cart_btn").click(function(){
+						var product_num= $(this).siblings(".item_select_option").find(".item_checking").val();
+						var count= $(this).siblings(".item_select_option").find(".item_count_num").val();
+						$.get( getContextPath() +'/cart_insert', 
+		 					{ product_num : product_num,
+							  count : count },   
+			 				function(data){
+								  	if(data == "not login"){
+								  		if(confirm("로그인 후 이용가능합니다. 로그인 페이지로 이동하시겠습니까?") == true){ 
+											   location.href= getContextPath()+"/member_login";
+											}else{   
+											    return;
+											} 
+								  	}else if(data =="overlap"){
+								  		if(confirm("이미 장바구니에 존재하는 상품입니다. 수량은 장바구니 페이지에서 변경 가능합니다. 이동하시겠습니까?") == true){
+								  			 location.href= getContextPath()+"/cart";
+								  		}else{
+								  			return;
+								  		}
+								  	}
+								  	else{
+								  		if(confirm("장바구니에 담겼습니다. 장바구니 페이지로 이동하시겠습니까?") == true){   
+											   location.href= getContextPath()+"/cart";
+											}else{   
+											    return;
+											} 
+								  	}
+								
+			 			});
+					
+					}); 
+					// 장바구니 여러개 추가 - ajax
+					$(".all_cart").click(function(){ 
+						var small_cate_form = $("#small_cate_form").serialize();
+						$(".item_checking").each(function(index){
+							if($(this).prop("checked") == false){ 
+								$(this).siblings(".item_count_num").val(null);
+							}  
+						});        
+						$.ajax({
+							url: getContextPath()+'/cart_multiple_insert',
+							type: "POST",  
+							data : small_cate_form,
+							async: true, 
+							processData : false,   
+							contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+							success: function(data){ 
+								$(".item_count_num").val("1");
+								$(".item_checking").prop("checked",false);
+								$(".fa-check").remove();
+								if(data == "not login"){
+							  		if(confirm("로그인 후 이용가능합니다. 로그인 페이지로 이동하시겠습니까?") == true){ 
+										   location.href= getContextPath()+"/member_login";
+										}else{   
+										    return;
+										} 
+								}else if(data == "cart_add_ok"){
+							  		if(confirm("장바구니에 담겼습니다. 장바구니로 이동하시겠습니까?") == true){   
+										   location.href= getContextPath()+"/cart";
+										}else{   
+										    return;
+										} 
+							  	}else{  
+							 		if(confirm("기존 존재하는 "+ data +"을(를) 제외하고 추가되었습니다. 장바구니로 이동하시겠습니까?") == true){   
+										   location.href= getContextPath()+"/cart";
+										}else{    
+										    return;
+										} 
+							  	}
+							},    
+							error: function(request,status,error){
+							}      
+						});  
+					});     
+				});  
    
-// 회원가입 유효성 검사
+// 회원가입 유효성 검사  
 
 window.onload = join;
 var id_check = true;

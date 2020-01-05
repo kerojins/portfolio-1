@@ -11,14 +11,12 @@
 			</ol>
 		</nav>
 		<aside>
-			<h2>소설</h2>
+			<h2>${cate_name}</h2>
 			<ul class="aside_menu_list">
-				<li><a href="<c:url value='/small_category_book'/>">한국 소설</a></li>
-				<li><a href="#">영미 소설</a></li>
-				<li><a href="#">중국 소설</a></li>
-				<li><a href="#">러시아 소설</a></li>
-				<li><a href="#">프랑스 소설</a></li>
-			</ul>
+				<c:forEach var="medium_cate_vo" items="${medium_cate_vo}">
+					<li><a href="<c:url value='/small_category_book?cate_num=${medium_cate_vo.cate_num}&cate_name=${medium_cate_vo.cate_name}'/>">${medium_cate_vo.cate_name}</a></li>
+				</c:forEach> 
+			</ul> 
 		</aside>
 		<div class="sub_right_box">
 			<div class="category_array_box">

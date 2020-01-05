@@ -12,10 +12,9 @@ DROP TABLE Counsel CASCADE CONSTRAINTS;
 DROP TABLE New_item_notice CASCADE CONSTRAINTS;
 DROP TABLE Review CASCADE CONSTRAINTS;
 DROP TABLE Order_items CASCADE CONSTRAINTS;
-DROP TABLE Product_supplement CASCADE CONSTRAINTS;
 DROP TABLE Today_view CASCADE CONSTRAINTS;
 DROP TABLE Wishlist CASCADE CONSTRAINTS;
-DROP TABLE Products CASCADE CONSTRAINTS;
+DROP TABLE Products CASCADE CONSTRAINTS; 
 DROP TABLE Editor CASCADE CONSTRAINTS;
 DROP TABLE Mileage CASCADE CONSTRAINTS;
 DROP TABLE Orders CASCADE CONSTRAINTS;
@@ -42,7 +41,6 @@ CREATE TABLE Cart_item
 	cart_item_num number NOT NULL,
 	members_num number NOT NULL,
 	product_num number NOT NULL,
-	cart_item_sort_num number,
 	cart_item_quantity number NOT NULL,
 	cart_item_date date NOT NULL,
 	PRIMARY KEY (cart_item_num)
@@ -168,6 +166,7 @@ CREATE TABLE Orders
 	order_num number NOT NULL,
 	members_num number NOT NULL,
 	total_price number NOT NULL,
+	total_count number,
 	-- 1. 결제 대기
 	-- 2. 결제 완료
 	-- 3. 배송 준비중
@@ -198,7 +197,7 @@ CREATE TABLE Products
 (
 	product_num number NOT NULL,
 	product_cate_num number NOT NULL,
-	product_editor_num number NOT NULL,
+	product_editor_num number,
 	product_publish varchar2(50) NOT NULL,
 	product_name varchar2(100) NOT NULL,
 	product_page number(5,0) NOT NULL,
@@ -210,9 +209,11 @@ CREATE TABLE Products
 	product_discount varchar2(20) NOT NULL,
 	product_price varchar2(100) NOT NULL,
 	product_discount_price varchar2(100),
+	product_supplement number NOT NULL,
 	product_stock  number NOT NULL,
 	product_picture varchar2(1000),
 	product_preview varchar2(1000),
+	product_update_date date,
 	product_date date NOT NULL,
 	PRIMARY KEY (product_num)
 );
@@ -228,16 +229,6 @@ CREATE TABLE Product_category
 	cate_order number,
 	cate_date date NOT NULL,
 	PRIMARY KEY (cate_num)
-);
-
-
-CREATE TABLE Product_supplement
-(
-	supplement_num number NOT NULL,
-	product_num number NOT NULL,
-	supplement_count number NOT NULL,
-	supplyment_date date NOT NULL,
-	PRIMARY KEY (supplement_num)
 );
 
 
@@ -420,12 +411,6 @@ ALTER TABLE Cart_item
 
 
 ALTER TABLE Order_items
-	ADD FOREIGN KEY (product_num)
-	REFERENCES Products (product_num)
-;
-
-
-ALTER TABLE Product_supplement
 	ADD FOREIGN KEY (product_num)
 	REFERENCES Products (product_num)
 ;

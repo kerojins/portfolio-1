@@ -92,7 +92,7 @@ header h1 a {
 }
 
 #header_content #search_box {
-	margin-left: 30%;
+	margin-left: 31.3%;
 	background-color: white;
 	height: 33px;
 	padding: 1px 0px 0px 15px;
@@ -217,7 +217,7 @@ header h1 a {
 
 #header_middle_box .admin_nav {
 	float: left;
-	margin-left: 29%;
+	margin-left: 31%;
 }
 
 #header_middle_box #header_middle_right {
@@ -453,6 +453,12 @@ a.list-group-item, button.list-group-item {
 	margin: 0;
 }
 
+.item_pagenum {
+	display: flex;
+	margin-top: 40px;
+	justify-content: center;
+}
+
 /* 아코디언 */
 .panel:last-child {
 	border-bottom: none;
@@ -623,10 +629,20 @@ a.list-group-item, button.list-group-item {
 
 .admin_page_head h2 {
 	float: left;
-	margin-left: 43.5%;
+	margin-left: 45.5%;
 	font-size: 23px;
 	margin-top: 10px;
 	font-weight: 600;
+}
+
+#page_ck {
+	background-color: #0daf91;
+}
+
+#page_ck a {
+	font-weight: bold;
+	color: white !important;
+	background-color: transparent;
 }
 
 .admin_page_head a {
@@ -870,42 +886,53 @@ div.skin-add-form table.sf-option-table  li:first-child {
 	height: 55px;
 }
 
-#item_viewImg{
+.item_info_cell span {
+	display: table-cell
+}
+
+#item_viewImg {
 	width: 203px;
 	height: 305px;
 }
 
-#item_img_box{
+#item_img_box {
 	display: none;
 }
-.img_view_btn:hover{
-	cursor: pointer; 
-} 
-#preview_box{
+
+.img_view_btn:hover {
+	cursor: pointer;
+}
+
+#preview_box {
 	padding: 20px;
 	overflow: hidden;
 }
-#preview_box span{
+
+#preview_box span {
 	margin: 5px 10px;
 	position: relative;
 	display: block;
 	float: left;
 }
-#preview_box span i{
+
+#preview_box span i {
 	position: absolute;
 	right: 0;
-	background: rgb(255,255,255,0.5);
+	background: rgb(255, 255, 255, 0.5);
 	color: #444;
-	width:18px;
-	height:18px;
+	width: 18px;
+	height: 18px;
 	font-size: 15px;
 	padding-left: 3px;
 	padding-top: 2px;
+	display: none;
 }
-#preview_box img{
-	width:130px; 
+
+#preview_box img {
+	width: 130px;
 	height: 180px;
 }
+
 .category_select {
 	display: none;
 	z-index: 10002;
@@ -957,12 +984,13 @@ div.skin-add-form table.sf-option-table  li:first-child {
 	font-weight: 600;
 	margin-top: 25px;
 }
-.select_btn_box{
-	text-align:center;
+
+.select_btn_box {
+	text-align: center;
 	margin: 20px auto;
 }
+
 .select_btn {
-	
 	background: #8a8a8a;
 	color: white !important;
 	padding: 5px 8px;
@@ -1000,10 +1028,12 @@ div.skin-add-form table.sf-option-table  li:first-child {
 	border-top: 1px solid #aaa;
 	margin-top: 10px;
 }
- .admin_item_add .item_category table input{
-	width:95%;
+
+.admin_item_add .item_category table input {
+	width: 95%;
 	border: 1px solid #ddd !important;
 }
+
 .admin_item_add table th {
 	text-align: center;
 	font-weight: normal;
@@ -1013,20 +1043,40 @@ div.skin-add-form table.sf-option-table  li:first-child {
 	background-color: #f1f1f1;
 }
 
-.admin_item_add table input[type=text], .admin_item_add table textarea{
+.admin_item_add table input[type=text], .admin_item_add table textarea {
 	padding: 2px 5px;
 	border: 1px solid #dedada;
-}  
-.admin_item_add table select{
-	border-color: #aaa; 
+}
+
+.admin_item_add table select {
+	border-color: #aaa;
 	padding: 3px 0;
 }
+
 .admin_item_add table  td {
 	border-left: 1px solid #dadada;
 	border-bottom: 1px solid #dadada;
 	padding: 9px 0 9px 15px;
 }
-
+.file_box {
+	position: relative;
+	width: 100%;
+}
+.file_box .hide_pic_name{
+	position: absolute;
+	top: 6px;
+	left: 90px;
+	width: 290px;
+	border: transparent !important;
+	
+}
+.file_box .hide_pics_name{
+	top:2px;
+	left: 80px;
+    width: 800px;
+    background: white;
+    display: block !important;
+}
 .item_basic_info table th {
 	
 }
@@ -1060,7 +1110,6 @@ div.skin-add-form table.sf-option-table  li:first-child {
 	font-weight: 500;
 }
 
- 
 #item_price input, .direct_price {
 	width: 110px;
 }
@@ -1078,41 +1127,44 @@ div.skin-add-form table.sf-option-table  li:first-child {
 	text-align: center;
 }
 
-.admin_item_add button,  .admin_item_add .index_add{
+.admin_item_add button, .admin_item_add .index_add {
 	padding: 5px;
 	font-size: 13px;
 	background: #fff;
-	border: 1px solid #ddd; 
+	border: 1px solid #ddd;
 }
 
 .item_image_table button {
 	width: 140px;
 }
 
-.add_submit{
+.add_submit {
 	text-align: center;
-    display: block;
-    width: 170px;
-    height: 50px;
-    margin: 20px auto;
-    border-radius: 5px;
-    font-weight: 600;
-    font-size: 16px !important;
-    background: #0daf91;
-    color: white !important;
-    background-color: #0daf91 !important; 
+	display: block;
+	width: 170px;
+	height: 50px;
+	margin: 20px auto;
+	border-radius: 5px;
+	font-weight: 600;
+	font-size: 16px !important;
+	background: #0daf91;
+	color: white !important;
+	background-color: #0daf91 !important;
+	border: transparent;
 } 
 
 .user_list_box table td {
 	text-align: center;
 }
-a.admin_list_btn{
+
+a.admin_list_btn {
 	display: block;
 	padding: 2px 10px;
 	border: 1px solid #ccc;
 	font-size: 13px;
 	margin: 3px 0;
 }
+
 .order_settle h4 {
 	font-size: 14px;
 	font-weight: bold;
@@ -1173,11 +1225,11 @@ a.admin_list_btn{
 #user_list_table tbody tr {
 	height: 53px;
 }
-#item_preview{
+
+#item_preview {
 	width: 1000px;
-	height:500px; 
-	left:20%;
-	
+	height: 500px;
+	left: 20%;
 }
 
 /* 주문상세창 */
@@ -1340,10 +1392,10 @@ td.order_item_info>p, td.order_item_info .order_item_title {
 	height: 60px;
 }
 
-#boardmain .fl,#boardmain .fr {
+#boardmain .fl, #boardmain .fr {
 	width: 49.2%;
 	margin: 30px 3px 0;
-} 
+}
 
 .fl table, .fr table {
 	margin: 0 !important;
@@ -1461,7 +1513,7 @@ table.bbsview_table_style tbody td.cell {
 	padding-top: 4px;
 	padding-bottom: 4px;
 }
-  
+
 .ui-widget-content {
 	border: 1px solid #cccccc;
 	background: #f9f9f9;
@@ -1479,55 +1531,64 @@ table.bbsview_table_style tbody td.cell {
 	top: 40px;
 	left: 97px;
 }
-.board_list_view button{
+
+.board_list_view button {
 	font-size: 12px;
-	padding:3px 5px;
+	padding: 3px 5px;
 	color: white;
 	background: #444;
-	border:none;
+	border: none;
 }
 
-.board_list_view tr{
+.board_list_view tr {
 	border-bottom: 1px solid #ddd;
 }
-.board_list_info tr{
-	border:none !important;
+
+.board_list_info tr {
+	border: none !important;
 }
+
 #boardview .content {
-    padding: 10px 5px;
-    line-height: 1.4;
+	padding: 10px 5px;
+	line-height: 1.4;
 }
-#board_view_form{
+
+#board_view_form {
 	position: relative;
 }
-.page-buttons-right .btn{
+
+.page-buttons-right .btn {
 	padding: 0 !important;
 }
+
 #boardmain table th {
-    text-align: center;
-    height: 28px;
-    border-top: 1px solid #7f8180;
-    border-bottom: 1px solid #7f8180;
-    font-weight: normal;
-    background: #f1f1f1;
-    border-left: 1px solid #ccc;
+	text-align: center;
+	height: 28px;
+	border-top: 1px solid #7f8180;
+	border-bottom: 1px solid #7f8180;
+	font-weight: normal;
+	background: #f1f1f1;
+	border-left: 1px solid #ccc;
 }
-#writeform{
+
+#writeform {
 	display: none;
-	
-} 
-#writeform #page-title-bar-area .page-buttons-left li{
+}
+
+#writeform #page-title-bar-area .page-buttons-left li {
 	float: left;
 }
-#writeform #page-title-bar-area .page-buttons-left li .btn{
-	padding:0 !important;
-	margin-right: 5px; 
-} 
-.note-btn-group>button{
+
+#writeform #page-title-bar-area .page-buttons-left li .btn {
+	padding: 0 !important;
+	margin-right: 5px;
+}
+
+.note-btn-group>button {
 	background: white !important;
 	color: #333 !important;
 }
-/* 게시판 목록 */ 
+/* 게시판 목록 */
 @media ( max-width : 1600px) {
 	.container {
 		width: 100%
@@ -1540,91 +1601,106 @@ table.bbsview_table_style tbody td.cell {
 @import url(https://fonts.googleapis.com/css?family=Roboto:300);
 
 .login-page {
-  width: 360px;
-  padding: 8% 0 0;
-  margin: auto;
-}
-.login-page .form {
-  position: relative;
-  z-index: 1;
-  background: #FFFFFF;
-  max-width: 360px;
-  margin: 0 auto 100px;
-  padding: 45px;
-  text-align: center;
-  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
-}
-.login-page .form input {
-  font-family: "Roboto", sans-serif;
-  outline: 0;
-  background: #f2f2f2;
-  width: 100%;
-  border: 0;
-  margin: 0 0 15px;
-  padding: 15px;
-  box-sizing: border-box;
-  font-size: 14px;
-}
-.login-page .form input[type=submit] {
-  font-family: "Roboto", sans-serif;
-  text-transform: uppercase;
-  outline: 0;
-  background:  #0daf91;
-  width: 100%;
-  border: 0;
-  padding: 15px;
-  color: #FFFFFF;
-  font-size: 14px;
-  -webkit-transition: all 0.3 ease;
-  transition: all 0.3 ease;
-  cursor: pointer;
-}
-.login-page .form button:hover,.form button:active,.form button:focus {
-  background: #0daf91;
-}
-.login-page .form .message {
-  margin: 15px 0 0;
-  color: #b3b3b3;
-  font-size: 12px;
-} 
-.login-page .form .message a {
-  color: #4CAF50;
-  text-decoration: none;
-}
-.login-page .form .register-form {
-  display: none;
-}
-.login-page {
-  position: relative;
-  z-index: 1;
-  max-width: 400px;
-  margin: 0 auto;
-}
-.login-page:before, .login-page:after {
-  content: "";
-  display: block;
-  clear: both;
-}
-.login-page .info {
-  margin: 50px auto;
-  text-align: center;
-}
-.login-page .info h1 {
-  margin: 0 0 15px;
-  padding: 0; 
-  font-size: 36px;
-  font-weight: 300;
-  color: #1a1a1a;
-}
-.login-page .info span {
-  color: #4d4d4d;
-  font-size: 12px;
-}
-.login-page .info span a {
-  color: #000000;
-  text-decoration: none;
-}
-.login-page .info span .fa {
-  color: #EF3B3A;
+	width: 360px;
+	padding: 8% 0 0;
+	margin: auto;
 }
 
+.login-page .form {
+	position: relative;
+	z-index: 1;
+	background: #FFFFFF;
+	max-width: 360px;
+	margin: 0 auto 100px;
+	padding: 45px;
+	text-align: center;
+	box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0
+		rgba(0, 0, 0, 0.24);
+}
+
+.login-page .form input {
+	font-family: "Roboto", sans-serif;
+	outline: 0;
+	background: #f2f2f2;
+	width: 100%;
+	border: 0;
+	margin: 0 0 15px;
+	padding: 15px;
+	box-sizing: border-box;
+	font-size: 14px;
+}
+
+.login-page .form input[type=submit] {
+	font-family: "Roboto", sans-serif;
+	text-transform: uppercase;
+	outline: 0;
+	background: #0daf91;
+	width: 100%;
+	border: 0;
+	padding: 15px;
+	color: #FFFFFF;
+	font-size: 14px;
+	-webkit-transition: all 0.3 ease;
+	transition: all 0.3 ease;
+	cursor: pointer;
+}
+
+.login-page .form button:hover, .form button:active, .form button:focus
+	{
+	background: #0daf91;
+}
+
+.login-page .form .message {
+	margin: 15px 0 0;
+	color: #b3b3b3;
+	font-size: 12px;
+}
+
+.login-page .form .message a {
+	color: #4CAF50;
+	text-decoration: none;
+}
+
+.login-page .form .register-form {
+	display: none;
+}
+
+.login-page {
+	position: relative;
+	z-index: 1;
+	max-width: 400px;
+	margin: 0 auto;
+}
+
+.login-page:before, .login-page:after {
+	content: "";
+	display: block;
+	clear: both;
+}
+
+.login-page .info {
+	margin: 50px auto;
+	text-align: center;
+}
+
+.login-page .info h1 {
+	margin: 0 0 15px;
+	padding: 0;
+	font-size: 36px;
+	font-weight: 300;
+	color: #1a1a1a;
+}
+
+.login-page .info span {
+	color: #4d4d4d;
+	font-size: 12px;
+}
+
+.login-page .info span a {
+	color: #000000;
+	text-decoration: none;
+}
+
+.login-page .info span .fa {
+	color: #EF3B3A;
+}

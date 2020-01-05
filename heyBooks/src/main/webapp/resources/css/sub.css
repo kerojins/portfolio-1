@@ -206,7 +206,7 @@ form.best_seller_date_form button {
 
 .item_select_option input[type="checkbox"] {
 	display: none;
-}
+} 
 
 .item_select_option input[type="checkbox"]+label.input_label {
 	display: inline-block;
@@ -247,7 +247,7 @@ form.best_seller_date_form button {
 	margin-left: 5px;
 }
 
-.item_all_choice a {
+.item_all_choice input {
 	padding: 5px 10px;
 	font-size: 12px;
 	background: #0e7eda;
@@ -256,10 +256,17 @@ form.best_seller_date_form button {
 
 .book_item_box {
 	overflow: hidden;
-	padding-top: 20px;
-	clear: both;
+    clear: both;
+    margin-top: 17px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #ccc;
 }
-
+.small_cate_form .array_select_list{
+	float: left;
+}
+.small_cate_form .item_select_option{
+	margin-top:0 !important;
+} 
 .book_item_box_left {
 	width: 79%;
 	float: left;
@@ -403,7 +410,9 @@ form.best_seller_date_form button {
 	width: 52px;
 	height: 12px;
 }
-
+.small_cate_form  .itemList_top_menu{
+	border-bottom: none;
+}
 .item_select_option .fa-check {
 	color: #0e7eda;
 	position: relative;
@@ -434,6 +443,7 @@ form.best_seller_date_form button {
 	height: 32px;
 	line-height: 32px;
 	font-weight: 600;
+	border:none;
 }
 
 .book_item_box_right .buy_btn {
@@ -449,6 +459,7 @@ form.best_seller_date_form button {
 .book_item_box_right  .library_btn {
 	border: 2px solid #ddd;
 	line-height: 28px;
+	background: white;
 }
 
 .item_quantity {
@@ -496,8 +507,8 @@ form.best_seller_date_form button {
 }
 
 .sub_right_content .item_pagenum {
-	width: 302px;
-	margin: 40px auto 10px;
+	margin-top: 40px;
+	 justify-content: center;
 }
 
 .sub_right_content .item_pagenum .page-link {
@@ -1550,7 +1561,7 @@ td.order_item_info>p, td.order_item_info .order_item_title {
 	font-weight: 600;
 }
 
-.order_item_price  .order_item_mileage span {
+.order_item_price  .order_item_mileage span.point_txt {
 	font-weight: 600;
 	color: #ff6a6a;
 	margin-right: 3px;

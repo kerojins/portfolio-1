@@ -20,114 +20,73 @@
 							<th width="14%">합계</th>
 							<th width="15%">선택</th>
 						</tr>
-						<tr>
-							<td class="order_item_info">
-								<p class="item_select_option">
-									<input type="checkbox" id="check_item1" class="item_checking"><label
-										for="check_item1" class="input_label"></label>
-								</p>
-								<p class="order_item_img">
-									<a href="#"><img width="80"
-										src="<c:url value='/resources/images/list_item1.jpg'/>"></a>
-								</p>
-								<div class="order_item_title">
-									<p>
-										<span class="discount_tag">할인도서</span><span class="parcel_tag">무료배송</span>
+						<c:forEach var="vo" items="${item_list}" varStatus="status" >
+							<tr> 
+								<td class="order_item_info">
+									<p class="item_select_option">
+										<input type="checkbox" id="check_item1" class="item_checking"><label
+											for="check_item1" class="input_label"></label>
 									</p>
-									<p class="order_item_title_txt">
-										<a href="#">대도시의 사랑법</a>
+									<c:set var="img" value="${vo.product_picture}"/>
+									<% 
+										String img_txt = (String)pageContext.getAttribute("img");
+										String img_name = img_txt.split(",")[1];
+										pageContext.setAttribute("img_name", img_name);
+									%>
+									<p class="order_item_img">
+										<a href="#"><img width="80"
+											src="<c:url value='/resources/upload/${img_name}'/>"></a>
 									</p>
-									<p>
-										<span class="order_item_editor">민지형</span><span
-											class="order_item_publising">민음사</span>
+									<div class="order_item_title"> 
+										<p>
+											<c:if test="${vo.product_discount != '0'}"> 
+												<span class="discount_tag">할인도서</span>
+											</c:if>
+											<c:if test="${vo.product_shipping_charge eq '0'}">
+												<span class="parcel_tag">무료배송</span>
+											</c:if> 
+										</p>
+										<p class="order_item_title_txt">
+											<a href="#">${vo.product_name}</a>
+										</p>
+										<p>
+											<span class="order_item_editor">${editor_name[status.index]}</span><span
+												class="order_item_publising">${vo.product_publish }</span>
+										</p>
+									</div>
+	 
+								</td>
+								<td class="order_item_price">
+									<p class="order_item_price_txt">${vo.product_discount_price}</p>
+									<p class="order_item_discount">
+										(<span>${vo.product_discount}%</span><i class="fas fa-long-arrow-alt-down"></i>)
 									</p>
-								</div>
-
-							</td>
-							<td class="order_item_price">
-								<p class="order_item_price_txt">13,320원</p>
-								<p class="order_item_discount">
-									(<span>10%</span><i class="fas fa-long-arrow-alt-down"></i>)
-								</p>
-								<p class="order_item_mileage">
-									<span>P</span>640원
-								</p>
-							</td>
-							<td class="order_item_count">
-								<p class="item_select_option">
-									<input type="text" name="qnt" value="1" class="num" size="2"
-										maxlength="2" onkeydown="onlyNumber();" onkeyup=""><span
-										class="item_quantity"><a class="item_quantity_plus"><i
-											class="fas fa-caret-up" aria-hidden="true"></i></a><a
-										class="item_quantity_minus"><i class="fas fa-caret-down"
-											aria-hidden="true"></i></a></span>
-								</p>
-								<p>
-									<a href="#" class="order_count_change">변경</a>
-								</p>
-
-							</td>
-							<td class="order_item_allPrice">
-								<p class="order_item_allPrice_txt">43,300원</p>
-							</td>
-							<td class="order_item_choice"><a class="order_item_quickBuy">바로구매</a>
-								<a class="order_item_library">서재담기</a> <a
-								class="order_item_delete">삭제</a></td>
-						</tr>
-						<tr>
-							<td class="order_item_info">
-								<p class="item_select_option">
-									<input type="checkbox" id="check_item2" class="item_checking"><label
-										for="check_item2" class="input_label"></label>
-								</p>
-								<p class="order_item_img">
-									<a href="#"><img width="80"
-										src="<c:url value='/resources/images/list_item1.jpg'/>"></a>
-								</p>
-								<div class="order_item_title">
-									<p>
-										<span class="discount_tag">할인도서</span><span class="parcel_tag">무료배송</span>
+									<p class="order_item_mileage">
+										<span class="point_txt">P</span><span class="mileage_text">640원</span>
+									</p> 
+								</td> 
+								<td class="order_item_count">
+									<p class="item_select_option">
+										<input type="text" name="qnt" value="${cart_list[status.index].cart_item_quantity}" class="num" size="2"
+											maxlength="2" onkeydown="onlyNumber();" onkeyup=""><span
+											class="item_quantity"><a class="item_quantity_plus"><i 
+												class="fas fa-caret-up" aria-hidden="true"></i></a><a 
+											class="item_quantity_minus"><i class="fas fa-caret-down"
+												aria-hidden="true"></i></a></span>
 									</p>
-									<p class="order_item_title_txt">
-										<a href="#">대도시의 사랑법</a>
+									<p> 
+										<a href="#" class="order_count_change">변경</a>
 									</p>
-									<p>
-										<span class="order_item_editor">민지형</span><span
-											class="order_item_publising">민음사</span>
-									</p>
-								</div>
-
-							</td>
-							<td class="order_item_price">
-								<p class="order_item_price_txt">13,320원</p>
-								<p class="order_item_discount">
-									(<span>10%</span><i class="fas fa-long-arrow-alt-down"></i>)
-								</p>
-								<p class="order_item_mileage">
-									<span>P</span>640원
-								</p>
-							</td>
-							<td class="order_item_count">
-								<p class="item_select_option">
-									<input type="text" name="qnt" value="1" class="num" size="2"
-										maxlength="2" onkeydown="onlyNumber();" onkeyup=""><span
-										class="item_quantity"><a class="item_quantity_plus"><i
-											class="fas fa-caret-up" aria-hidden="true"></i></a><a
-										class="item_quantity_minus"><i class="fas fa-caret-down"
-											aria-hidden="true"></i></a></span>
-								</p>
-								<p>
-									<a href="#" class="order_count_change">변경</a>
-								</p>
-
-							</td>
-							<td class="order_item_allPrice">
-								<p class="order_item_allPrice_txt">43,300원</p>
-							</td>
-							<td class="order_item_choice"><a class="order_item_quickBuy">바로구매</a>
-								<a class="order_item_library">서재담기</a> <a
-								class="order_item_delete">삭제</a></td>
-						</tr>
+	
+								</td>
+								<td class="order_item_allPrice">
+									<p class="order_item_allPrice_txt">43,300원</p>
+								</td>
+								<td class="order_item_choice"><a class="order_item_quickBuy">바로구매</a>
+									<a class="order_item_library">서재담기</a> <a
+									class="order_item_delete">삭제</a></td>
+							</tr>
+						</c:forEach>
 					</tbody>
 				</table>
 				<p class="order_mileage">총 적립가능액: <span>상품적립금 1,890원</span></p>
@@ -157,8 +116,8 @@
 						class="fas fa-equals"></i></span> 
 				</div>
 			</div>
-			<div class="order_btn">
-				<a class="order_home_btn" href="/">쇼핑계속하기</a><a class="order_page_btn"  href="<c:url value='/order' />">주문하기</a>
+			<div class="twin_btn">
+				<a class="twin_home_btn" href="/">쇼핑계속하기</a><a class="twin_page_btn"  href="<c:url value='/order' />">주문하기</a>
 			</div>
 		</form>
 	</div>

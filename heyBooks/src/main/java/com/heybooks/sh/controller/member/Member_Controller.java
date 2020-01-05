@@ -56,7 +56,6 @@ public class Member_Controller {
 		} else {
 			vo.setMembers_gender("남자");
 		}
-		
 
 		String member_phone = vo.getMembers_phone_number().replace(",", "-"); // 핸드폰 번호 "-"변환
 		vo.setMembers_phone_number(member_phone);
@@ -77,7 +76,7 @@ public class Member_Controller {
 		} catch (Exception e) {
 			return ".registration.alert";
 		}
-		
+
 	}
 
 	// 2. 회원 로그인
@@ -139,10 +138,11 @@ public class Member_Controller {
 			return ".registration.alert";
 		}
 	}
+
 	@RequestMapping(value = "/member_update", method = RequestMethod.POST)
 	public String update(Member_Vo vo) {
 		logger.info("post member-update");
-		
+
 		String inputPass = vo.getMembers_password(); // 비밀번호 암호화
 		String password = passEncoder.encode(inputPass);
 		vo.setMembers_password(password);
@@ -168,18 +168,17 @@ public class Member_Controller {
 			String members_favorite = "";
 			vo.setMembers_favorite(members_favorite);
 		}
-		
-			service.update(vo);
-			return "redirect:/mypage";
-		
-		/*	try {
+
+		try {
 			service.update(vo);
 			return "redirect:/mypage";
 		} catch (Exception e) {
 			return ".registration.alert";
-		}*/
-		
+		}
+
 	}
+
+	
 
 	// 마이페이지
 	@RequestMapping(value = "/mypage", method = RequestMethod.GET)
@@ -230,17 +229,6 @@ public class Member_Controller {
 		return ".member.mypage_mileage";
 	}
 
-
-	// 쇼핑카트
-	@RequestMapping(value = "/cart", method = RequestMethod.GET)
-	public String cart() {
-		return ".order.cart";
-	}
-
-	// 주문페이지
-	@RequestMapping(value = "/order", method = RequestMethod.GET)
-	public String order() {
-		return ".order.order";
-	}
+	
 
 }

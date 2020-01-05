@@ -104,67 +104,119 @@
 			<p>
 				전체 <span>9</span>개
 			</p>
-			<div class="admin_select_list">
-				<select>
-					<option>등록순</option>
-					<option>이름순</option>
-					<option>판매량순</option>
-					<option>최근작품순</option>
-				</select>
-			</div>
+				<div class="admin_select_list">
+				<select name = "item_list_arr_list" id="item_list_arr_list">
+					<option value="editor_date" <c:if test="${list_arr eq 'editor_date'}">selected </c:if> >최신등록순</option>
+					<option value="editor_name" <c:if test="${list_arr eq 'editor_name'}">selected  </c:if>>작가명순</option>
+				</select>     
+				<select name = "item_rowCount_list" id="item_rowCount_list">
+					<option value="10" <c:if test="${rowCount eq 10}">selected </c:if>>10개씩</option>
+					<option value="50" <c:if test="${rowCount eq 50}">selected </c:if>>50개씩</option> 
+					<option value="100" <c:if test="${rowCount eq 100}">selected </c:if>>100개씩</option>   
+					<option value="200" <c:if test="${rowCount eq 200}">selected </c:if>>200개씩</option>
+				</select> 
+			</div> 
 		</div>
-		<table id="user_list_table" class="list-table-style " cellspacing="0">
-			<!-- 테이블 헤더 : 시작 -->
-			<colgroup>
-				<col width="2%">
-				<!-- checkbox -->
-				<col width="2%">
-				<!-- 번호 --> 
-				<col width="10%">
-				<!-- 이름 -->
-				<col width="8%">
-				<!-- 생년월일 -->
-				<col width="8%">
-				<!-- 전화번호 -->
-				<col width="15%">
-				<!-- 가입일 -->
-				<col width="5%">
-				<!-- 예치금 -->
-				<col width="5%">
-				<!-- 관리 -->
-			</colgroup>
-			<thead class="lth">
-				<tr>
-					<th><input type="checkbox" onclick="chkAll(this,'member_chk');"></th>
-					<th>번호</th>
-					<th>작가명</th>
-					<th>생년월일</th>
-					<th>등록작품 수</th>
-					<th>최신 작품등록일</th>
-					<th>판매부수</th>
-					<th>관리</th>
-				</tr>
-			</thead> 
-			<!-- 테이블 헤더 : 끝 -->
-
-			<tbody id="user-tr-list" class="ltb otb">
-			<c:forEach var="vo" items="${list }">
-				<tr class="list-row">
-					<td class="ctd"><input type="checkbox" name="member_chk[]"  class="member_chk"></td>
-					<td class="ctd">${vo.editor_num}</td>
-					<td class="ltd">${vo.editor_name }</td>
-					<td class="ltd">${vo.editor_birth }</td>
-					<td class="ltd">없음</td>
-					<td class="ltd">2019-08-21 10:44:21<br>2019-08-21
-						10:46:10 
-					</td>
-					<td class="ltd"><span class="blue hand" onclick="point_pop('7');">0</span></td>
-					<td class="ctd"><span class="btn small valign-middle"><a href="<c:url value='/editor_delete?editor_num=${vo.editor_num }'/>" class="admin_list_btn">삭제</a><a href="<c:url value='/editor_update?editor_num=${vo.editor_num }'/>" class="admin_list_btn">수정</a></span></td>
-				</tr>
-			</c:forEach>
-				 
-			</tbody>
-		</table>
-	</div>
+		<form action="<c:url value='/editor_delete'/>" method="post" id="editor_list_form">
+			<table id="user_list_table" class="list-table-style">
+				<!-- 테이블 헤더 : 시작 -->
+				<colgroup>  
+					<col width="1%">
+					<!-- checkbox -->
+					<col width="2%">
+					<!-- 번호 --> 
+					<col width="10%">
+					<!-- 이름 -->
+					<col width="8%">
+					<!-- 생년월일 -->
+					<col width="8%">
+					<!-- 전화번호 -->
+					<col width="15%"> 
+					<!-- 가입일 -->
+					<col width="5%">
+					<!-- 예치금 -->
+					<col width="5%">
+					<!-- 관리 -->
+				</colgroup>
+				<thead class="lth">
+					<tr>
+						<th><input type="checkbox" class="ckAll" onclick="ckAll();"></th>
+						<th>번호</th>
+						<th>작가명</th> 
+						<th>생년월일</th>
+						<th>등록작품 수</th>
+						<th>최신 작품등록일</th>
+						<th>판매부수</th>
+						<th>관리</th>
+					</tr>
+				</thead> 
+				<!-- 테이블 헤더 : 끝 -->
 	
+				<tbody id="user-tr-list" class="ltb otb">
+				<c:forEach var="vo" items="${list }">
+					<tr class="list-row">
+						<td class="ctd"><input type="checkbox" name="select_ck_num" class="select_ck_num" value="${vo.editor_num}"></td>
+						<td class="ctd">${vo.editor_num}</td>
+						<td class="ltd">${vo.editor_name }</td> 
+						<td class="ltd">${vo.editor_birth }</td>
+						<td class="ltd">없음</td>
+						<td class="ltd">2019-08-21 10:44:21<br>2019-08-21
+							10:46:10 
+						</td>
+						<td class="ltd"><span class="blue hand">0</span></td>
+						<td class="ctd"><span class="btn small valign-middle"><a href="<c:url value='/editor_delete?editor_num=${vo.editor_num }'/>" class="admin_list_btn" onclick="editor_del()">삭제</a><a href="<c:url value='/editor_update?editor_num=${vo.editor_num }'/>" class="admin_list_btn">상세</a></span></td>
+					</tr>
+				</c:forEach>
+					 
+				</tbody>
+			</table>
+			<p style="margin-top:10px;"><input onclick="editor_del()" type="button" value="선택 삭제"></p>
+		</form>
+		<ul class="pagination item_pagenum"> 
+			<li class="page-item"><a class="page-link" href="#"
+				aria-label="Previous"> <span aria-hidden="true">«</span>
+			</a></li>
+			<c:forEach var="i" begin="${util.startPageNum }" end="${util.endPageNum }">
+				<c:choose> 
+					<c:when test="${util.pageNum==i }"> 
+						<li class="page-item" id="page_ck" ><a class="page-link"  href="<c:url value='/editor_list?pageNum=${i}'/>">${i}</a></li>
+					</c:when>  
+					<c:otherwise> 
+						<li class="page-item"><a class="page-link" href="<c:url value='/editor_list?pageNum=${i}'/>">${i}</a></li>
+					</c:otherwise>
+				</c:choose>  
+			</c:forEach>  
+			<li class="page-item"><a class="page-link" href="#" 
+				aria-label="Next"> <span aria-hidden="true">»</span>
+			</a></li>   
+		</ul>
+	</div>
 </div>
+
+<script type="text/javascript"> 
+	$(document).ready(function(){
+   		 <%-- 아이템 항목별,갯수별 리스트 불러오기 --%>
+		$("#item_rowCount_list").change(function(){
+			var rowCount = $(this).val(); 
+			var list_arr = $("#item_list_arr_list").val();
+			location.href = "<c:url value='/editor_list?rowCount="+ rowCount +"&list_arr="+list_arr+"'/>";
+		}); 
+		$("#item_list_arr_list").change(function(){ 
+			var rowCount = $("#item_rowCount_list").val();
+			var list_arr = $(this).val();
+			location.href = "<c:url value='/editor_list?rowCount="+ rowCount +"&list_arr="+list_arr+"'/>";
+		});
+		 
+
+	}); 
+	function editor_del(){
+		if (confirm("삭제시 해당 등록작품의 작가정보가 사라집니다. 삭제하시겠습니까?") == true){    //확인
+		   var editor_form = document.getElementById("editor_list_form");
+		   editor_form.submit();
+		}else{   //취소
+		    return;
+		} 
+
+	}
+     
+</script>

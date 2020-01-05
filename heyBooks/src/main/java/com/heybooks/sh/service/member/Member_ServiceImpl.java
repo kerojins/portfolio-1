@@ -5,12 +5,15 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 import com.heybooks.sh.dao.member.Member_Dao;
+import com.heybooks.sh.vo.item.Cart_Vo;
 import com.heybooks.sh.vo.member.Member_Vo;
 
 @Service
 public class Member_ServiceImpl implements Member_Service{
 	@Resource
 	private Member_Dao dao;
+	
+	// ------ 회원 --------
 	
 	// 1. 회원 가입
 	@Override
@@ -39,5 +42,7 @@ public class Member_ServiceImpl implements Member_Service{
 	public int update(Member_Vo vo) {
 		return dao.update(vo);
 	}
+	
+
 	
 }

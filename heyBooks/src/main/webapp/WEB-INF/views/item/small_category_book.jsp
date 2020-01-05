@@ -21,96 +21,128 @@
 					href="<c:url value='#'/>">신상품</a></li>
 			</ul>
 			<div class="sub_right_content">
-				<form class="new_book_form">
+				<form class="small_cate_form" id="small_cate_form" method="post">
 					<div class="itemList_top_menu">
-						<div class="itemList_array_menu">
+						<div class="itemList_array_menu"> 
 							<div class="array_select_list">
 								<ul>
 									<li><a>판매량순</a></li>
-									<li><a>등록일순</a></li>
+									<li><a>등록일순</a></li> 
 									<li><a>가격순</a></li>
 									<li><a>상품명순</a></li>
 									<li><a>평점순</a></li>
 									<li><a>리뷰순</a></li>
 								</ul>
 							</div>
-							<div class="item_all_choice">
-								<span class="item_select_option"> 전체 <input
-									type="checkbox" id="item_all_check"><label
-									for="item_all_check" class="input_label"></label>
-								</span> <a href="#" class="btn btn-primary">쇼핑카트 담기</a> <a href="#"
-									class="btn btn-primary">위시리스트</a>
+							<div class="item_all_choice"> 
+								<span class="item_select_option"> 전체 
+									<input type="checkbox" id="item_all_check">
+									<label for="item_all_check" class="input_label"></label>
+								</span>   
+								<input class="btn btn-primary all_cart"  type="button" value="쇼핑카트 담기">
+								<input class="btn btn-primary all_wish"  value="위시리스트">
 							</div>
-						</div>
-
-					</div>
-
+						</div> 
+					</div> 
 					<div class="book_item_list_box">
 						<ul class="book_item_list">
-							<li class="book_item_box">
-								<div class="book_item_box_left">
-									<div class="book_item_imgBox">
-										<p class="book_item_rank">1</p>
-										<a href="#"> <img width="110"
-											src="<c:url value='/resources/images/list_item1.jpg'/>"></a>
+							<c:forEach var="vo" items="${item_list}" varStatus="status"> 
+								<li class="book_item_box">
+									<div class="book_item_box_left">  
+										<div class="book_item_imgBox">
+											<p class="book_item_rank">${status.count}</p>
+											<a href="#">  
+												<c:set var="img" value="${vo.product_picture}"/>
+												<% 
+													String img_txt = (String)pageContext.getAttribute("img");
+												
+													String img_name = img_txt.split(",")[1];
+													pageContext.setAttribute("img_name", img_name);
+												%>
+												<img width="110" src="<c:url value='/resources/upload/${img_name}'/>">
+											</a> 
+										</div>  
+										<div class="book_item_content"> 
+											<p class="item_tag">
+												<c:if test="${vo.product_discount != '0'}"> 
+													<span class="discount_tag">할인도서</span>
+												</c:if>
+												<c:if test="${vo.product_shipping_charge eq '0'}">
+													<span class="parcel_tag">무료배송</span>
+												</c:if> 
+											</p> 
+											<h3 class="list_book_title"> 
+												<a>${vo.product_name}</a>
+											</h3>
+											<p class="book_info">평점
+												<span class="star_before">
+													<span class="star_after"></span>
+												</span> 
+												<span class="item_reviewCount">9명</span> 
+												<span class="book_editor">
+													<a>${editor_name[status.index]}</a>
+												</span> 
+												<span class="book_publising">
+													<a>${vo.product_publish}</a>
+												</span>   
+												<span class="category">
+													<a>${cate_name}</a>
+												</span>    
+											</p> 
+											<p class="book_summary">${vo.product_discription}</p>
+											<p class="book_price">가격 
+												<span class="book_buy_price">
+													<span>${vo.product_discount_price}</span>원
+												</span>
+												<span class="discount_percent">(<span>${vo.product_discount}%</span>↓)</span>
+												<span class="origin_price"><span>${vo.product_price}</span>원</span>
+											</p>  
+										</div> 
 									</div>
-									<div class="book_item_content">
-										<p class="item_tag">
-											<span class="discount_tag">할인도서</span><span
-												class="parcel_tag">무료배송</span>
+									<div class="book_item_box_right book_item_check">
+										<p class="item_select_option">
+											<input type="checkbox" name="item_checking" id="check_item${status.count}" value="${vo.product_num}" class="item_checking">
+											<label for="check_item${status.count}" class="input_label"></label>
+											<span style="font-size: 13px; margin-right: 5px; margin-top: 2px;">수량</span> 
+											<input type="text" name="item_count_num" value="1" class="item_count_num" size="2" maxlength="2">
+											<span class="item_quantity">
+												<a class="item_quantity_plus">
+											    	<i class="fas fa-caret-up"></i>
+											    </a>  
+											    <a class="item_quantity_minus">
+													<i class="fas fa-caret-down"></i>
+												</a>
+											</span>
 										</p>
-										<h3 class="list_book_title">
-											<a>대도시의 사랑법</a>
-										</h3>
-										<p class="book_info">
-											평점<span class="star_before"><span class="star_after"></span></span><span
-												class="item_reviewCount">9명</span> <span class="book_editor"><a>박상영</a></span>
-											<span class="book_publising"><a>창비</a></span> <span
-												class="category"><a>한국소설</a></span>
-										</p>
-										<p class="book_summary">여름밤, 나의 아름다운 도시, 어쩌면 너 때문에 젊은 소설의
-											첨단, 박상영 신작 소설 2019년 젊은작가상 대상을 수상하고, 한권의 소설집(『알려지지 않은 예술가의 눈물과
-											자이툰 파스타』)이 일약 수많은 독자들을 매료한 박상영의 연작소설 『대도시의...</p>
-										<p class="book_price">
-											가격 <span class="book_buy_price"><span>11,880</span>원</span><span
-												class="discount_percent">(<span>10%</span>↓)
-											</span><span class="origin_price"><span>13,200</span>원</span>
-										</p>
+										<a class="buy_btn item_right_btn">바로 구매</a>
+										<a class="cart_btn item_right_btn">쇼핑카트 담기</a>
+										<a onclick="javascript: form.action='/mypage_wishlist';" class="library_btn item_right_btn">위시리스트</a>
 									</div>
-								</div>
-								<div class="book_item_box_right book_item_check">
-									<p class="item_select_option">
-										<input type="checkbox" id="check_item1" class="item_checking"><label
-											for="check_item1" class="input_label"></label><span
-											style="font-size: 13px; margin-right: 5px; margin-top: 2px;">수량
-										</span> <input type="text" name="qnt" value="1" class="num" size="2"
-											maxlength="2" onkeydown="onlyNumber();" onkeyup=""><span
-											class="item_quantity"><a class="item_quantity_plus"><i
-												class="fas fa-caret-up"></i></a><a class="item_quantity_minus"><i
-												class="fas fa-caret-down"></i></a></span>
-									</p>
-									<a href="#" class="buy_btn item_right_btn">바로 구매</a> <a
-										href="#" class="cart_btn item_right_btn">쇼핑카트 담기</a> <a
-										href="#" class="library_btn item_right_btn">위시리스트</a>
-								</div>
-							</li>
+								</li>
+							</c:forEach>
 						</ul>
 					</div>
 				</form>
+				<%-- 페이지 네비게이션 --%>
 				<ul class="pagination item_pagenum">
 					<li class="page-item"><a class="page-link" href="#"
-						aria-label="Previous"> <span aria-hidden="true">&laquo;</span>
+						aria-label="Previous"> <span aria-hidden="true">«</span>
 					</a></li>
-					<li class="page-item"><a class="page-link" href="#">1</a></li>
-					<li class="page-item"><a class="page-link" href="#">2</a></li>
-					<li class="page-item"><a class="page-link" href="#">3</a></li>
-					<li class="page-item"><a class="page-link" href="#">4</a></li>
-					<li class="page-item"><a class="page-link" href="#">5</a></li>
-					<li class="page-item"><a class="page-link" href="#"
-						aria-label="Next"> <span aria-hidden="true">&raquo;</span>
-					</a></li>
+					<c:forEach var="i" begin="${util.startPageNum }" end="${util.endPageNum }">
+						<c:choose> 
+							<c:when test="${util.pageNum==i }"> 
+								<li class="page-item" id="page_ck" ><a class="page-link"  href="<c:url value='/small_category_book?pageNum=${i}'/>">${i}</a></li>
+							</c:when> 
+							<c:otherwise> 
+								<li class="page-item"><a class="page-link" href="<c:url value='/small_category_book?pageNum=${i}'/>">${i}</a></li>
+							</c:otherwise>
+						</c:choose>  
+					</c:forEach>  
+					<li class="page-item"><a class="page-link" href="#" 
+						aria-label="Next"> <span aria-hidden="true">»</span>
+					</a></li>   
 				</ul>
-			</div>
+			</div> 
 		</div>
 	</div>
 </div>

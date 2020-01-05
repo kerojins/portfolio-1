@@ -23,12 +23,12 @@
 						<td class="its-td">
 						<input type="text" name="editor_num" hidden="hidden"
 							class="cal-len line" maxlength="255" style="width: 85%" value="${vo.editor_num }">
-						<input type="text" name="editor_name"
+						<input type="text" name="editor_name" readonly="readonly"
 							class="cal-len line" maxlength="255" style="width: 85%" value="${vo.editor_name }"
 							title=""
 							 placeholder="작가명을 입력하세요">
 						</td>
-					</tr>
+					</tr> 
 					<tr>
 						<th class="its-th-align center">생년월일</th>
 						<td class="its-td"><input type="text" id="editor_birth" name="editor_birth" value="${vo.editor_birth }">

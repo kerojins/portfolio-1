@@ -13,22 +13,10 @@
 		<aside>
 			<h2>국내 도서</h2>
 			<ul class="aside_menu_list">
-				<li><a href="<c:url value='/medium_category_book'/>">소설</a></li>
-				<li><a href="#">시/에세이</a></li>
-				<li><a href="#">경제/경영</a></li>
-				<li><a href="#">어린이</a></li>
-				<li><a href="#">가정생활</a></li>
-				<li><a href="#">정치사회</a></li>
-				<li><a href="#">경제경영</a></li>
-				<li><a href="#">건강</a></li>
-				<li><a href="#">유아</a></li>
-				<li><a href="#">종교</a></li>
-				<li><a href="#">아동만화</a></li>
-				<li><a href="#">역사문화</a></li>
-				<li><a href="#">자기계발</a></li>
-				<li><a href="#">여행</a></li>
-				<li><a href="#">만화</a></li>
-			</ul>
+				<c:forEach var="domestic_vo" items="${domestic_vo}">
+					<li><a href='<c:url value="/medium_category_book?cate_ref1=${domestic_vo.cate_ref1}&cate_name=${domestic_vo.cate_name}"/>'>${domestic_vo.cate_name}</a></li>
+				</c:forEach>
+			</ul> 
 		</aside>
 		<div class="sub_right_box">
 			<div class="national_category_box">
