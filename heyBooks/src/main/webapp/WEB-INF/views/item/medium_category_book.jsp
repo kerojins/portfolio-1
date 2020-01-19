@@ -14,7 +14,7 @@
 			<h2>${cate_name}</h2>
 			<ul class="aside_menu_list">
 				<c:forEach var="medium_cate_vo" items="${medium_cate_vo}">
-					<li><a href="<c:url value='/small_category_book?cate_num=${medium_cate_vo.cate_num}&cate_name=${medium_cate_vo.cate_name}'/>">${medium_cate_vo.cate_name}</a></li>
+					<li><a href="<c:url value='/small_category_book?cate_num=${medium_cate_vo.cate_num}&cate_name=${medium_cate_vo.cate_name}&list_arr=best'/>">${medium_cate_vo.cate_name}</a></li>
 				</c:forEach> 
 			</ul> 
 		</aside>

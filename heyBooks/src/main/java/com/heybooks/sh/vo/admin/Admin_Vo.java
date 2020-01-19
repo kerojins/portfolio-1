@@ -39,11 +39,10 @@ public class Admin_Vo {
 	public void setRegDatd(Date regdate) {
 		this.regdate = regdate;
 	}
-	
-	@Override
+	@Override 
 	public String toString() {
-		return "Admin_Login_Vo [admin_num=" + admin_num + ", admin_id=" + admin_id + ", admin_password="
-				+ admin_password + ", regdate=" + regdate + "]";
+		return "Admin_Vo [admin_num=" + admin_num + ", admin_id=" + admin_id + ", admin_password=" + admin_password
+				+ ", regdate=" + regdate + "]";
 	}
 	
 	

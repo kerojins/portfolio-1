@@ -29,8 +29,8 @@
 
 					<c:choose>
 						<c:when test="${sessionScope.member != null }">
-							<span><a href="<c:url value='/mypage?members_num=${sessionScope.member.members_num }'/>">마이페이지</a></span>
-							<span><a href="<c:url value='/cart?members_num=${sessionScope.member.members_num }'/>">장바구니</a></span>
+							<span><a href="<c:url value='/mypage'/>">마이페이지</a></span>
+							<span><a href="<c:url value='/cart'/>">장바구니</a></span>
 							<span><a href="<c:url value='/member_logout'/>">로그아웃</a></span>
 						</c:when>
 						<c:otherwise>
@@ -38,7 +38,7 @@
 							<span><a href="<c:url value='/member_login'/>">로그인</a></span>
 						</c:otherwise>
 					</c:choose>
-
+  
 				</div>
 			</div>
 		</div>

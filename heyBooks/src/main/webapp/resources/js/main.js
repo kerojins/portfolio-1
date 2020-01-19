@@ -1,3 +1,5 @@
+
+
 $("document")
 		.ready(
 				function() {
@@ -169,6 +171,8 @@ $("document")
 													.prop("checked", false);
 											$(label).html("");
 										}
+										
+										order_check();
 									});
 
 					// 상품 아이템 리스트 - 목록 체크
@@ -263,7 +267,7 @@ $("document")
 									box.css("height", "232px");
 								}
 							});
-					// 상세페이지 리뷰 대댓글
+					// 책 상세페이지 - 리뷰 대댓글 펼치기 접기
 					$(".review_reply_btn").click(function() {
 						var reply = $(this).parent().next();
 						var reply_type = reply.attr("data-type");
@@ -283,7 +287,6 @@ $("document")
 					});
 
 					// 마이페이지 - 주문 정보 변경
-
 					$(".change_shipping").click(function() {
 						$(".my_order_shipping").hide();
 						$(".change_order_shipping").show();
@@ -363,6 +366,8 @@ $("document")
 									$(this).next().children().hide();
 								}
 							});
+					 
+					
 					//장바구니 한개 추가 - ajax
 					$(".cart_btn").click(function(){
 						var product_num= $(this).siblings(".item_select_option").find(".item_checking").val();
@@ -438,7 +443,175 @@ $("document")
 							}      
 						});  
 					});     
-				});  
+					
+					//  *** 장바구니 리스트 페이지 ***
+					var price = $("#cart_form .order_item_price_txt");
+					var total_mileage = 0;
+					var total_count = 0;
+					var total_price = 0;
+					
+					// 적립금 5%계산 및 쉼표 넣어주기
+				 	for(var i = 0; i < price.length ; i++){
+				 		var price_txt = Number($(price[i]).text().replace(/,/gi,""));
+				 		var mileage_origin = Math.floor(price_txt*0.05);
+				 		total_mileage += mileage_origin;
+				 		var mileage = won_transform(String(mileage_origin));
+				 		$(price[i]).siblings("#cart_form .order_item_mileage").children("#cart_form .mileage_text").text(mileage);
+				 	}  
+				
+				 	// 장바구니 총액 구하고 쉼표 넣어주기 
+				 	for(var i = 0; i < price.length ; i++){
+				 		var price_txt = Number($(price[i]).text().replace(/,/gi,""));
+				 		var item_count = $(price[i]).parent().next().children().find(".item_count").val();
+				 		total_count += Number(item_count);
+				 		total_price += price_txt * item_count;
+				 		var total = won_transform(String(price_txt * item_count));
+				 		$(price[i]).parent().next().next().children().find(".allPrice_txt").text(total);
+				 	}    
+				 	 
+				 	$("#cart_form .total_mileage").text(won_transform(String(total_mileage)));
+				 	$("#cart_form .item_total_price_val").val(won_transform(String(total_price)));
+				 	$("#cart_form .order_total_count .count_subject").text(price.length);
+				 	$("#cart_form .order_total_count .count_num").text(total_count);
+				 	
+				 	var org_price = $("#cart_form .item_origin_price");
+				 	var total_org = 0;
+				 	var total_discount = 0;
+				 	var total_shipping = 0;
+				 	for(var i = 0; i < org_price.length ; i++){
+				 		var item_count = Number($(org_price[i]).parent().next().children().find(".item_count").val());
+				 		org_price_txt = $(org_price[i]).val().replace(/,/gi,"");
+				 		total_org += (Number(org_price_txt) * item_count);  
+				 		var discount = Number($(org_price[i]).siblings("#cart_form .order_item_discount").children(".discount_txt").text());
+				 		total_discount += Math.ceil(Number(org_price_txt) * item_count * 0.01 * discount);
+				 	}  
+				 	 
+				 	var shipping = $("#cart_form .item_shipping");
+				 	for(var i = 0; i < shipping.length ; i++){
+				 		var shipping_val = Number($(shipping[i]).val().replace(/,/gi,""));
+				 		if(total_shipping < shipping_val){  
+				 			total_shipping =  shipping_val;
+				 		}
+				 	}
+				 	$("#cart_form .order_total_originPrice span").text(won_transform(String(total_org)));
+				 	$("#cart_form .order_total_dicount span").text(won_transform(String(Math.floor(total_discount)))); 
+				 	$("#cart_form .order_total_parcel span").text(won_transform(String(total_shipping))); 
+				 	
+				 	var all_total_price = total_org - Math.ceil(total_discount) + total_shipping;
+				 	$("#cart_form .order_total_price span").text(won_transform(String(Math.floor(all_total_price)))); 
+				 	$("#cart_form .total_price_val").val(won_transform(String(Math.floor(all_total_price)))); 
+				 	
+				 	// 장바구니 수량 수정  
+				 	$("#cart_form .order_count_change").click(function(){
+				 		var cart_num = $(this).parents(".order_item_count").prev().children(".cart_item_num").val();
+				 		var item_count = $(this).parent().prev().children(".item_count").val();
+				 		$(this).attr("href",  getContextPath() + "/cart_update?cart_item_num="+ cart_num +"&cart_item_quantity=" + item_count );
+				 	});
+				 	
+				 	
+				 	// 장바구니 선택삭제
+				 	$(".cart_sel_del").click(function(){
+				 		$("#cart_form").attr("action",  getContextPath()+"/cart_delete" )
+				 		$("#cart_form").submit();
+				 	});
+				 	
+				 	$(".order_btn").click(function(){
+				 		/*$(".total_price_val").val($(".total_price_txt").text());
+				 		$(".item_total_price_val").val($(".order_total_originPrice span").text());*/
+				 	});
+				 
+				 	// 주문 - 바로구매
+				 	$(".buy_btn").click(function(){ 
+				 		var item_num = $(this).siblings(".item_select_option").children(".item_checking").val();
+				 		var item_count = $(this).siblings(".item_select_option").children(".item_count_num").val();
+				 		$(this).attr("href", getContextPath()+"/order?product_num="+ item_num +"&item_count="+ item_count +"");
+				 	});
+				 	  
+				 	// 주문 페이지 - 간략 상품 목록 
+					var order_price = $("#order_form .order_table .item_total_text");
+				 	for(var i = 0 ; i < order_price.length ; i++){
+				 		var price = Number($(order_price[i]).text().replace(/,/gi,""));
+				 		var count = Number($(order_price[i]).parents(".order_item_price").siblings(".order_item_count").children().find(".item_count_text").text());
+				 		var shipping = Number($(order_price[i]).parents(".order_item_price").siblings(".order_item_shipping").children().find(".shipping_txt").text().replace(/,/gi,""));
+				 		if(order_price.length==1){
+				 			$(".item_total_text").text(won_transform(String(price * count)));
+					 		$(".shipping_text").text(won_transform(String(shipping)));
+					 		$(".total_text").text(won_transform(String(price*count+shipping)));
+				 		}
+				 		$(order_price[i]).text(won_transform(String(price * count)));
+				 		$(order_price[i]).parents(".order_item_price").siblings(".order_item_mileage").children().find(".mileage_txt").text(won_transform(String(Math.round(price * 0.05))));
+				 		$(order_price[i]).parents(".order_item_price").siblings(".order_item_allPrice").children().find(".allPrice_txt").text(won_transform(String(price*count+shipping)));
+				 	}     
+				    // 주문 페이지 - 아이템 상세보기 목록 
+				 	$(".order_list_view").click(function(){
+				 		$(".order_brief_box").hide();
+				 		$(".cart_order_box").show();
+				 		  
+				 	}); 
+				 	$(".order_brief_view").click(function(){
+				 		$(".order_brief_box").show();
+				 		$(".cart_order_box").hide();
+				 	}); 
+				 	 
+				 	// 주문 적립금 금액 적용하기
+				 	 $(".mileage_money").text(won_transform($(".mileage_money").text()));
+				 	$(".mileage_btn").click(function(){
+				 		var use_mileage  = $(".use_mileage_val").val();
+				 		var have_mileage  = $(".mileage_money").text().replace(/,/gi,"");
+				 		var total_price = $(".order_total_price span").text().replace(/,/gi,"");
+				 		if(Number(use_mileage)>Number(have_mileage)){
+				 			alert("사용 적립금이 부족합니다.");
+				 			$(".use_mileage_val").val("0");
+				 		}else{
+				 			$(".discount_text").text(use_mileage);
+				 			$(".mileage_money").text(won_transform(String(Number(have_mileage)-Number(use_mileage))));
+				 			$(".order_total_price span").text(won_transform(String(Number(total_price)-Number(use_mileage))));
+				 		}    
+				 	
+				 	});
+				 	// 주문 페이지 - 배송지 회원정보와 동일 버튼
+					$(".same_info").click(function(){
+						var members_num = $(".members_num_val").val(); 
+				 		$.get(getContextPath() +'/member_getinfo',  
+				 			 {members_num:members_num},
+				 		function(data){
+				 				 var phone_arr= data.members_phone_number.split("-")
+				 				 var number_arr= data.members_add_number.split("-")
+				 				 $(".order_name").val(data.members_name);
+				 				 $(".order_phone_number0").val(phone_arr[0]); 
+				 				 $(".order_phone_number1").val(phone_arr[1]);
+				 				 $(".order_phone_number2").val(phone_arr[2]);
+				 				 $(".order_add_number0").val(number_arr[0]);
+				 				 $(".order_add_number1").val(number_arr[1]);
+				 				 $(".order_add_number2").val(number_arr[2]);
+				 				 $(".order_post").val(data.members_post);
+				 				 $(".order_address").val(data.members_address);
+				 				 $(".order_detail_address").val(data.members_detail_address);
+				 				 $(".order_extra_address").val(data.members_extra_address);
+				 		})
+					});
+				 	// 주문 페이지 - 배송지 새로입력 버튼 클릭
+			 		$(".reset_info").click(function(){
+			 			var input = $(".order_shipping input[type='text']");
+			 			for(var i = 0; i < input.length; i++){
+			 				$(input[i]).val(""); 
+			 			}
+			 		}); 
+			 		
+				 	// 주문 페이지 - 결제하기 버튼 클릭 시	
+				 	$(".pay_btn").click(function(){ 
+				 		var form = $("#order_form");
+				 		var price_str = $(".cart_order_box input[name='order_item_price']");
+				 		for(var i = 0; i < price_str.length; i++){
+				 			$(price_str[i]).val($(price_str[i]).val() +"/"); //숫자 구분단위 추가
+				 		}
+				 		$(".total_count_val").val($(".order_total_count").text().trim());
+				 		$(".total_price_val").val($(".order_total_price span").text());
+				 		$(".get_mileage_val").val($(".order_breif_table .order_item_mileage span").text().replace(/,/gi,""));
+				 		$(".order_shipping_charge_val").val($(".order_breif_table .shipping_txt").text());
+				 		form.submit();
+				 	});	   
+				});    
    
 // 회원가입 유효성 검사  
 
@@ -684,4 +857,81 @@ function join14() { // 전화번호 뒷자리
 			}
 		}
 	}
+}
+
+//장바구니 체크
+function order_check(){
+	var total_org = 0;
+ 	var total_discount = 0; 
+ 	var total_mileage = 0; 
+ 	var total_count = 0; 
+ 	var total_shipping = 0; 
+ 	var total_price = 0;
+	var org_ck = new Array();
+	var mile_ck = new Array();
+	var count_ck = new Array();
+	var shipping_ck = new Array();
+	var total_ck = new Array();
+ 	var check = $("#cart_form .item_checking");
+ 	for(var i = 0; i < check.length ; i++){
+ 		if($(check[i]).prop("checked")){ 
+ 			org_ck.push($(check[i]).parents(".order_item_info").siblings(".order_item_price").children(".item_origin_price"));
+ 			mile_ck.push($(check[i]).parents(".order_item_info").siblings(".order_item_price").children().find(".mileage_text"));
+ 			count_ck.push($(check[i]).parents(".order_item_info").siblings(".order_item_count").children().find(".item_count"));
+ 			shipping_ck.push($(check[i]).parents(".order_item_info").siblings(".order_item_price").children(".item_shipping"));
+ 			total_ck.push($(check[i]).parents(".order_item_info").siblings(".order_item_allPrice").children().find(".allPrice_txt"));
+ 		} 
+ 	} 
+	for(var i = 0; i < org_ck.length ; i++){
+ 		org_price_txt = Number($(org_ck[i]).val().replace(/,/gi,"")) * Number($(count_ck[i]).val());
+ 		total_org += org_price_txt;  
+ 		var discount = Number($(org_ck[i]).siblings(".order_item_discount").children(".discount_txt").text());
+ 		total_discount += Math.ceil(org_price_txt * 0.01 * discount);
+ 	}  
+	for(var i = 0; i < mile_ck.length ; i++){
+ 		var mileage_origin = Number($(mile_ck[i]).text().replace(/,/gi,""));
+ 		total_mileage += mileage_origin;
+ 		var mileage = won_transform(String(mileage_origin));
+ 	} 
+	for(var i = 0; i < count_ck.length ; i++){
+		var item_count = $(count_ck[i]).val();
+ 		total_count += Number(item_count);
+	} 
+	for(var i = 0; i < shipping_ck.length ; i++){
+		var shipping = Number($(shipping_ck[i]).val().replace(/,/gi,""));
+		if(total_shipping < shipping){
+			total_shipping = shipping; 
+		} 
+	}
+	for(var i = 0; i < total_ck.length ; i++){
+		var price = $(total_ck[i]).text().replace(/,/gi,"");
+ 		total_price += Number(price);
+	}
+	$("#cart_form .order_total_count .count_subject").text(org_ck.length);
+ 	$("#cart_form .order_total_count .count_num").text(total_count);
+	$("#cart_form .total_mileage").text(won_transform(String(total_mileage)));
+	$("#cart_form .order_total_originPrice span").text(won_transform(String(total_org)));
+ 	$("#cart_form .order_total_dicount span").text(won_transform(String(Math.ceil(total_discount)))); 
+ 	$("#cart_form .order_total_parcel span").text(won_transform(String(total_shipping))); 
+ 	$("#cart_form .item_total_price_val").val(won_transform(String(total_price))); 
+ 	var all_total_price = total_org - Math.ceil(total_discount) + total_shipping;  
+ 	$("#cart_form .total_price_val").val(won_transform(String(Math.floor(all_total_price)))); 
+ 	$("#cart_form .order_total_price span").text(won_transform(String(Math.floor(all_total_price)))); 
+}   
+  
+//금액 천단위 쉼표 변환 함수
+function won_transform(won_txt){
+	var won_result = "";
+	var won_array = won_txt.split("");
+	won_array = won_array.reverse(); // 배열 순서 뒤집기 
+	for(var i = won_array.length - 1   ; i  >= 0 ; i--){
+			if(i % 3 == 0 && ( i!=0 ) ){
+				won_array.splice(i, 0, ",");
+			}			       
+	}    
+	won_array  =  won_array.reverse();
+	won_array.forEach(function(item,index){
+		won_result += item;  
+	}); 
+	return won_result;
 }

@@ -156,10 +156,7 @@ $(document)
 					$('.board_list .close_btn').click(function() {
 						$('.board_list_view').hide();
 					});
-					$('.boad_modify_btn').click(function() {
-						$('#boardview').hide();
-						$("#writeform").show();
-					}); 
+				
 					
 					// 관리자 상품등록 - 사진 미리보기 창
 					$('.item_preview_btn').click(function(){
@@ -172,18 +169,139 @@ $(document)
 						$("#item_preview").hide(); 
 					});  
 					
-					  
-					// summernote 플러그인
+					// 관리자 게시판 관리 
+					$(".layer_board_view_btn").click(function(){
+						$(".board_list_view").show(); 
+					});  
+					// 게시글 닫기 버튼 클릭시
+					$(".board_delete_btn").click(function(){
+						$(".board_list_view").hide();
+						location.reload();
+						  
+					});
+					
+					// 1:1문의 상세 클릭할 경우
+					$(".counsel_table .layer_board_view_btn").click(function(){
+						$(".board_reply_btn").show();
+						$(".board_modify_btn").hide();
+					});    
+					
+					$(".layer_board_view_btn").click(function(){
+						$(".board_list_view").show();
+						$('#boardview').show();
+						$("#writeform").hide();
+						var board_id = $(this).attr("board_id");
+						var board_seq = $(this).attr("board_seq");
+						var board_answer = $(this).attr("board_answer");
+						$(".board_modify_btn").attr("board_seq", board_seq);
+						$(".board_modify_btn").attr("board_id", board_id);
+						$.get( getContextPath() +'/ajax/board_detail', 
+		 					{ board_seq : board_seq, 
+							  board_id : board_id },    
+			 				function(data){       
+								$(".board_list_view .detail_board_num").val(data.num); 
+								$(".board_list_view .detail_board_name").text(data.name); 
+								$(".board_list_view .detail_board_title").text(data.title);
+								$(".board_list_view .detail_board_content").html(data.content);
+								$(".board_list_view .board_another_info").text(data.another);
+								$(".board_list_view .detail_board_date").text(data.date);
+								if(board_answer == '답변대기'){    
+									$(".counsel_reply_content").show();  
+									$(".counsel_reply_insert").show();
+								}else if(board_answer == '답변완료'){
+									$("#counsel_reply_box").show();
+									$("#counsel_reply_box").text(data.reply_vo.counsel_reply_content);
+								}
+		 					});      
+					}); 
+					// 1:1 답변 등록
+					$(".counsel_reply_insert").click(function(){
+						var board_view_form = $("#board_view_form").serialize();
+						$.ajax({
+							url: getContextPath()+'/counsel_reply_insert',
+							type: "POST",  
+							data : board_view_form,
+							async: true, 
+							processData : false,   
+							contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+							success: function(data){ 
+								$(".counsel_reply_content").hide();
+								$("#counsel_reply_box").text(data.reply_vo.counsel_reply_content);
+								$(".board_reply_btn").hide();
+							},    
+							error: function(request,status,error){
+							}      
+						});  
+						
+					});  
+					
+					// 게시판 글쓰기 버튼 클릭시
+					
+					$('.board_write_btn').click(function() {
+						$('#boardview').hide();
+						$(".board_list_view").show();
+						$("#writeform").show();
+						$("#writeform").attr("action", getContextPath()+'/board_insert');
+					});  
+					// 게시판 글쓰기 창에서 저장하기 클릭시
+					$('#board_add_btn').click(function(){
+						var board_id = $(this).attr("board_id");
+					});
+					// 게시판 수정버튼 클릭 시 
+					$('.board_modify_btn').click(function() {
+						$(".board_list_view").show();
+						$("#writeform").show();
+						$('#boardview').hide();
+						var board_id = $(this).attr("board_id");
+						var board_seq = $(this).attr("board_seq");
+						$.get( getContextPath() +'/ajax/board_detail', 
+		 					{ board_seq : board_seq,
+							  board_id : board_id },   
+			 				function(data){        
+								$(".board_list_view .board_num").val(data.num); 
+								$(".board_list_view .board_writer").text(data.name); 
+								$(".board_list_view .board_title").val(data.title);
+								$(".board_list_view .note-editable").html(data.content);
+								$(".board_list_view .detail_board_date").text(data.date);
+								$(".board_list_view .board_content").val(data.content);
+								if(board_id == 'event'){   
+									$(".board_list_view #event_period").val(data.period);
+									$(".board_list_view .event_thumb").attr('src', getContextPath()+"/resources/upload/editor/"+data.thumbnail);
+									$(".board_list_view .thumb_name").val(data.thumbnail);
+									$(".thumb_name").show()
+									$('.event_thumb_box .del_thumb').show();
+									if(data.thumbnail == null){ 
+										$(".thumb_name").hide()
+										$('.event_thumb_box .del_thumb').hide();
+										$(".board_list_view .event_thumb").attr('src', "");
+									}
+									
+								}    
+							  });   
+						$("#writeform").attr("action", getContextPath()+'/board_update');
+					}); 
+					$('.event_thumb_box .del_thumb').click(function() {
+						$(".board_list_view .event_thumb").attr('src', null);
+						$(".thumb_file").val("");
+						$(".thumb_name").val("");  
+						$(".thumb_name").hide();   
+						$(this).hide();  
+					});  
+					// summernote 플러그인 
 					$('#summernote').summernote({
 						height : 300, // set editor height
-						minHeight : null, // set minimum height of editor
-						maxHeight : null, // set maximum height of editor
-						focus : true
-					});
-	
-				});
-
-
+						focus : true,
+						callbacks:{
+							onImageUpload: function(files, editor, welEditable) {
+								for (var i = files.length - 1; i >= 0; i--) {
+					            	sendFile(files[i], this);
+					            }
+					        }	
+						} 
+					}); 
+				}); 
+ 
+ 
 
 // 관리자 회원 상세보기창
 function open_crm_summary(ent) {
@@ -273,7 +391,7 @@ var pv_bool = 'false';
 	
 		//판매가 자동 할인금액 적용 , 숫자만 표시
 	var price = parseInt(origin_val);
-	var dis_price = Math.floor(price - (price * (charge * 0.01)));
+	var dis_price = Math.round(price - (price * (charge * 0.01)));
 		var dis_val = String(dis_price).split("");
 		for (var i = 0; i < origin_val.length ; i++) {
 			var ch = origin_val.charAt(i);
@@ -284,7 +402,7 @@ var pv_bool = 'false';
 				}     
 		}        
 		  
-		//상품 금액 입력시 쉼표(,) 추가하기 
+	//상품 금액 입력시 쉼표(,) 추가하기 
 	var array_str =  origin_val.split("");
 	array_str =  array_str.reverse(); // 배열 순서 뒤집기 
 	for(var i = array_str.length - 1   ; i  >= 0 ; i--){
@@ -292,7 +410,7 @@ var pv_bool = 'false';
 				array_str.splice(i, 0, ",");
 			}			      
 	}  
-	array_str  =  array_str.reverse();
+	array_str  =  array_str.reverse(); 
 	array_str.forEach(function(item,index){
 		last_val += item;  
 	}); 
@@ -336,6 +454,8 @@ var pv_bool = 'false';
 			reader.readAsDataURL(input.files[0]);
 		}    
 	} 
+	
+	
 	function item_img_del(del){
 		$("#item_img_box").hide();
 		 
@@ -418,3 +538,41 @@ var pv_bool = 'false';
 		 	pv_bool = false; 
 		}       
 	}    
+	
+	// 에디터 이미지 보내주기 
+	function sendFile(file, el) {
+		var form_data = new FormData();
+      	form_data.append('file', file);
+      	$.ajax({
+        	data: form_data, 
+        	type: "POST",
+        	url:  getContextPath()+'/editor_img_insert',
+        	cache: false, 
+        	contentType: false,
+        	enctype: 'multipart/form-data',
+        	processData: false,
+        	success: function(img_name){
+        		// 에디터에 이미지 출력 
+        		var url =  getContextPath() + img_name;
+        		alert(url);
+          		$(el).summernote('editor.insertImage', url);
+        	}
+      	});  
+    } 
+	// 이벤트 썸네일 이미지 미리보기
+	
+	//상품 대표사진 한장 
+	function e_readURL(input){
+		if(input.files && input.files[0]){
+			var reader = new FileReader();
+			reader.onload = function(e){
+				var img = $(".event_thumb").attr('src',e.target.result);
+				if(img.width() < 372 || img.height() < 186){
+					alert("이미지 권장 사이즈는 372x186입니다.");
+				} ;
+				$(".event_thumb_box .del_thumb").show();
+			}  
+			reader.readAsDataURL(input.files[0]);
+		} 
+	}
+	

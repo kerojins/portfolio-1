@@ -23,7 +23,7 @@ public class Item_Catrgory_Controller {
 	private static final Logger logger = LoggerFactory.getLogger(Item_Catrgory_Controller.class);
 
 	@Resource
-	Item_Category_Service service;
+	private Item_Category_Service service;
 
 	// 1. 작가 등록
 	@RequestMapping(value = "/editor_add", method = RequestMethod.GET)
@@ -35,7 +35,6 @@ public class Item_Catrgory_Controller {
 	@RequestMapping(value = "/editor_add", method = RequestMethod.POST)
 	public String admin_editor_add(Item_Editor_Vo vo) {
 		logger.info("post editor-add");
-
 		String introduce = vo.getEditor_introduce().replaceAll("<br>","\r\n"); // 작가 소개 줄바꿈 표시
 		vo.setEditor_introduce(introduce);
 		try { 

@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.heybooks.sh.mybatis.Board_Mapper">
+
+	
+
+	
+	<!-- 1:1문의글 전체 갯수 -->   
+	<select id="counsel_count" parameterType="HashMap" resultType="int">
+		select NVL(count(*),0) cnt from counsel  
+		<if test="members_num != null">
+			where members_num = #{members_num} 
+		</if> 
+		<if test="counsel_type != null">
+			where counsel_type = #{counsel_type} 
+		</if>   
+	</select>  
+	<!-- 1:1문의글 추가 -->   
+	<insert id="counsel_insert" parameterType="com.heybooks.sh.vo.board.Counsel_Vo">
+		insert into counsel values(counsel_num_seq.nextVal, #{members_num}, #{counsel_type}, #{counsel_title}, #{counsel_content}, #{counsel_answer}, sysdate)
+	</insert>
+	
+	<!-- 1:1문의글 삭제 -->   
+	<delete id="counsel_delete" parameterType="int">
+		delete from counsel where counsel_num = #{counsel_num} 
+	</delete>
+	
+	<!-- 1:1문의글 리스트 -->  
+	<select id="counsel_list" parameterType="HashMap" resultType="com.heybooks.sh.vo.board.Counsel_Vo">
+		select * from 
+		( 
+			select aa.*, rownum rnum from
+			(
+				select * from counsel
+				<if test ="members_num != null">
+				where members_num = #{members_num}
+				</if>  
+				order by ${list_arr}  
+			)aa      
+		)    
+		<if test = "startRow != null">
+		<![CDATA[ where rnum >= #{startRow} and rnum <= #{endRow} ]]>
+		</if>
+	</select>
+	<!-- 1:1문의글 상세 -->
+	<select id="counsel_detail" parameterType="int" resultType="com.heybooks.sh.vo.board.Counsel_Vo">
+		select * from counsel where counsel_num = #{counsel_num}
+	</select>
+	<!-- 1:1문의글 수정 -->   
+	<update id="counsel_update" parameterType="com.heybooks.sh.vo.board.Counsel_Vo">
+		update counsel set counsel_title = #{counsel_title} , counsel_content= #{counsel_content}, counsel_type = #{counsel_type}, counsel_answer = #{counsel_answer} where counsel_num = #{counsel_num}
+	</update> 
+	<!-- 1:1답변 추가 -->
+	<insert id="counsel_reply_insert" parameterType="com.heybooks.sh.vo.board.Counsel_Reply_Vo">
+		insert into counsel_reply values(counsel_reply_num_seq.nextVal, #{counsel_num}, #{admin_num}, #{counsel_reply_content}, sysdate)
+	</insert>  
+	<!-- 1:1답변 상세 -->
+	<select id="counsel_reply_detail" parameterType="int" resultType="com.heybooks.sh.vo.board.Counsel_Reply_Vo">
+		select * from counsel_reply where counsel_num = #{counsel_num}
+	</select> 
+	<!-- 1:1답변 삭제 -->   
+	<delete id="counsel_reply_delete" parameterType="int">
+		delete from counsel_reply where counsel_num = #{counsel_num} 
+	</delete> 
+	
+	
+	<!-- ===== 공지사항 ====== --> 
+	
+	<!-- 공지사항 resultMap --> 
+	<resultMap type="com.heybooks.sh.vo.board.Notice_Vo" id="notice_map"> 
+		<result property="notice_content" column="NOTICE_CONTENT" jdbcType="CLOB" javaType="java.lang.String"/>
+	</resultMap> 
+	
+	<!-- 공지사항 갯수 -->
+	<select id="notice_count" resultType="int">
+		select NVL(count(*),0) cnt from notice 
+	</select>  
+	 
+	<!-- 공지사항 추가 -->
+	<insert id="notice_insert" parameterType="com.heybooks.sh.vo.board.Notice_Vo">
+		insert into notice values(notice_num_seq.nextVal, #{admin_num}, #{notice_title}, #{notice_content:CLOB}, 0, sysdate)
+	</insert> 
+	<!-- 공지사항 수정 -->
+	<update id="notice_update" parameterType="com.heybooks.sh.vo.board.Notice_Vo">
+		update notice set notice_title = #{notice_title}, notice_content = #{notice_content} where notice_num = #{notice_num}
+	</update>  
+	
+	<!-- 공지사항 삭제 -->
+	<delete id="notice_delete" parameterType="int">
+		delete from notice where notice_num = #{notice_num}
+	</delete>   
+	
+	     
+	<!-- 공지사항 리스트 --> 
+	<select id="notice_list" parameterType="HashMap" resultMap="notice_map">
+	 	select * from 
+		( 
+			select aa.*, rownum rnum from
+			(
+				select * from notice
+				order by ${list_arr}  
+			)aa      
+		)    
+		<if test = "startRow != null">
+		<![CDATA[ where rnum >= #{startRow} and rnum <= #{endRow} ]]>
+		</if> 
+	</select>
+	<!-- 공지사항 상세정보 -->
+	<select id="notice_detail" parameterType="int" resultMap="notice_map">
+		select * from notice where notice_num = #{notice_num}
+	</select>
+	
+	<!-- ======= 이벤트 ======== -->
+	
+	<!-- 공지사항 resultMap --> 
+	<resultMap type="com.heybooks.sh.vo.board.Event_Vo" id="event_map"> 
+		<result property="event_content" column="EVENT_CONTENT" jdbcType="CLOB" javaType="java.lang.String"/>
+	</resultMap>  
+	
+	<!-- 이벤트 갯수 -->
+	<select id="event_count" resultType="int">
+		select NVL(count(*),0) cnt from event 
+	</select>  
+	
+	<!-- 이벤트 추가 -->
+	<insert id="event_insert" parameterType="com.heybooks.sh.vo.board.Event_Vo">
+		insert into event values(event_num_seq.nextVal , #{admin_num}, #{event_title}, #{event_content} , #{event_period} , #{event_thumbnail} , #{event_hit}, sysdate)
+	</insert> 
+	
+	<!-- 이벤트 수정 -->
+	<update id="event_update" parameterType="com.heybooks.sh.vo.board.Event_Vo">
+		update event set event_title = #{event_title}, event_content = #{event_content}, event_period = #{event_period}, event_thumbnail = #{event_thumbnail} where event_num = #{event_num}
+	</update>  
+	
+	<!-- 이벤트 삭제 -->
+	<delete id="event_delete" parameterType="int">
+		delete from event where event_num = #{event_num}
+	</delete>   
+	       
+	<!-- 공지사항 리스트 --> 
+	<select id="event_list" parameterType="HashMap" resultMap="event_map">
+	 	select * from 
+		( 
+			select aa.*, rownum rnum from
+			(
+				select * from event
+				order by ${list_arr}  
+			)aa       
+		)    
+		<if test = "startRow != null">
+		<![CDATA[ where rnum >= #{startRow} and rnum <= #{endRow} ]]>
+		</if> 
+	</select>
+	<!-- 공지사항 상세정보 -->
+	<select id="event_detail" parameterType="int" resultMap="event_map">
+		select * from event where event_num = #{event_num}
+	</select>
+</mapper>    
+   
+   
+
+ 
+
+ 
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+

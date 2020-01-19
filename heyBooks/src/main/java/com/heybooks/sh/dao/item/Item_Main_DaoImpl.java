@@ -14,13 +14,14 @@ import com.heybooks.sh.vo.item.Item_Vo;
 public class Item_Main_DaoImpl implements Item_Main_Dao {
 	
 	
-	@Resource SqlSession sqlSession;
+	@Resource 
+	private SqlSession sqlSession;
 	private static final String NAMESPACE ="com.heybooks.sh.mybatis.Item_Mapper";
 	
 	// 상품 총 갯수
 	@Override
-	public int get_count() {
-		return sqlSession.selectOne(NAMESPACE + ".get_count");
+	public int get_count(HashMap<String, Object> count_map) {
+		return sqlSession.selectOne(NAMESPACE + ".get_count",count_map);
 	}
 	// 1. 상품 등록
 	@Override
@@ -39,13 +40,13 @@ public class Item_Main_DaoImpl implements Item_Main_Dao {
 	}
 	// 3. 상품 삭제
 	@Override
-	public int item_delete(int proudct_num) {
-		return sqlSession.delete(NAMESPACE + ".item_delete", proudct_num); 
+	public int item_delete(int product_num) {
+		return sqlSession.delete(NAMESPACE + ".item_delete", product_num); 
 	}
 	// 4. 상품 상세정보 
 	@Override
-	public Item_Vo item_getinfo(int proudct_num) {
-		return sqlSession.selectOne(NAMESPACE + ".item_getinfo", proudct_num);
+	public Item_Vo item_getinfo(int product_num) {
+		return sqlSession.selectOne(NAMESPACE + ".item_getinfo", product_num);
 	}
 	
 	// 5. 상품 이미지 수정

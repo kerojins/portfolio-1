@@ -1,17 +1,23 @@
 package com.heybooks.sh.dao.member;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
 import com.heybooks.sh.vo.member.Member_Vo;
+import com.heybooks.sh.vo.member.Mileage_Vo;
 
 @Repository
 public class Member_DaoImpl implements Member_Dao{
 	@Resource 
 	private SqlSession sqlSession;
 	private final static String NAMESPACE="com.heybooks.sh.mybatis.Member_Mapper";
+	
+	
+	// ===== 회원 관리 ======
 	
 	// 1. 회원 가입
 	@Override
@@ -40,5 +46,17 @@ public class Member_DaoImpl implements Member_Dao{
 		return sqlSession.update(NAMESPACE + ".update", vo);
 	}
 	
+	// ======= 마일리지 ========
 	
+	//마일리지 정보 추가
+	@Override
+	public int mileage_insert(Mileage_Vo vo) {
+		return sqlSession.insert(NAMESPACE+ ".mileage_insert", vo);
+	}
+	 
+	// 마일리지 상세 정보 
+	@Override  
+	public List<Mileage_Vo> mileage_getinfo(int members_num) {
+		return sqlSession.selectList(NAMESPACE +".mileage_getinfo", members_num);
+	} 
 }

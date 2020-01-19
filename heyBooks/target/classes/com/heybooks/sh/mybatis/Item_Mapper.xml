@@ -4,10 +4,15 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.heybooks.sh.mybatis.Item_Mapper">
 	 
+	<!--  ======== 상품 관리 ========  -->
+	 
 	<!-- 상품 총 데이터 수 -->   
-	<select id="get_count" resultType="int">
-		select NVL(count(*),0) cnt from products    
-	</select> 
+	<select id="get_count" parameterType="HashMap" resultType="int">
+		select NVL(count(*),0) cnt from products  
+		<if test="cate_num != null">
+			where product_cate_num = #{cate_num} 
+		</if>  
+	</select>  
 	
 	<!-- 1. 상품 추가 -->
 	<update id="item_insert" parameterType="com.heybooks.sh.vo.item.Item_Vo">
@@ -28,16 +33,15 @@
 				select * from products 
 				<if test ="cate_num != null">
 				where product_cate_num = #{cate_num}
-				</if>
+				</if> 
 				order by ${list_arr}  
-				
 			)aa      
 		)    
 		<![CDATA[ where rnum >= #{startRow} and rnum <= #{endRow} ]]>
 	</select> 
 	<!-- 3. 상품 삭제 -->
 	<delete id="item_delete" parameterType="int">
-		delete products where product_num = #{product_num}
+		delete from products where product_num = #{product_num}
 	</delete>
 	
 	<!-- 4. 상품 상세 정보 -->
@@ -53,7 +57,7 @@
 	  
 	   
 	   
-	   
+	<!--  ======= 아이템 카테고리 =======  -->  
 	  
 	<!-- 아이템 카테고리 -->   
 	<select id="cate_list"  parameterType="string" resultType="com.heybooks.sh.vo.item.Item_Cate_Vo">
@@ -112,7 +116,7 @@
 	</select>
 	  
 	  
-    <!-- 주문 관리 -->
+    <!--  ======= 장바구니 ========  -->
 	
 	<!-- 1. 장바구니 추가 -->
 	<insert id="cart_insert" parameterType="com.heybooks.sh.vo.item.Cart_Vo">
@@ -122,10 +126,30 @@
 	<select id="cart_list" parameterType="int" resultType="com.heybooks.sh.vo.item.Cart_Vo">
 		select * from cart_item where members_num = #{members_num}		
 	</select>
+	<!-- 3. 장바구니 수정 -->
+	<update id="cart_update" parameterType="HashMap">
+		update cart_item set cart_item_quantity = #{cart_item_quantity} where cart_item_num = #{cart_item_num}
+	</update>
+	<!-- 4. 장바구니 삭제 -->
+	<delete id="cart_delete" parameterType="int">
+		delete from cart_item where cart_item_num = #{cart_item_num}
+	</delete>
+	<!-- 5. 장바구니 상세정보 -->
+	<select id="cart_getinfo" parameterType="int" resultType="com.heybooks.sh.vo.item.Cart_Vo">
+		select * from cart_item where cart_item_num = #{cart_item_num}
+	</select>
 	
+	<!-- ======= 주문 ======== -->	  
 	
-		  
-</mapper>   
+	<!-- 1. 주문 추가 -->
+	<insert id="order_insert" parameterType="com.heybooks.sh.vo.item.Order_Vo">
+		insert into orders values (#{order_num}, #{members_num}, #{total_price}, #{total_count}, #{order_name}, #{order_phone_number}, #{order_add_number}, #{order_post}, #{order_address}, #{order_detail_address}, #{order_extra_address}, #{order_message}, #{order_shipping_charge}, #{payment_methods}, 1, sysdate)
+	</insert>
+	<!-- 주문 아이템 추가 -->
+	<insert id="order_item_insert" parameterType="com.heybooks.sh.vo.item.Order_Item_Vo">
+		insert into order_items values (order_item_num_seq.nextVal, #{product_num}, #{order_num}, #{order_item_quantity}, #{order_item_price}, sysdate)
+	</insert>
+</mapper>    
 
 
  

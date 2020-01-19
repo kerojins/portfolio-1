@@ -1,5 +1,7 @@
 package com.heybooks.sh.service.member;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
@@ -7,13 +9,14 @@ import org.springframework.stereotype.Service;
 import com.heybooks.sh.dao.member.Member_Dao;
 import com.heybooks.sh.vo.item.Cart_Vo;
 import com.heybooks.sh.vo.member.Member_Vo;
+import com.heybooks.sh.vo.member.Mileage_Vo;
 
 @Service
 public class Member_ServiceImpl implements Member_Service{
 	@Resource
 	private Member_Dao dao;
 	
-	// ------ 회원 --------
+	// ======= 회원 =======
 	
 	// 1. 회원 가입
 	@Override
@@ -43,6 +46,17 @@ public class Member_ServiceImpl implements Member_Service{
 		return dao.update(vo);
 	}
 	
-
+	// ======= 마일리지 ========
+	
+	//
+	@Override
+	public int mileage_insert(Mileage_Vo vo) {
+		return dao.mileage_insert(vo);
+	}
+	// 마일리지 상세정보 
+	@Override
+	public List<Mileage_Vo> mileage_getinfo(int members_num) {
+		return dao.mileage_getinfo(members_num);
+	} 
 	
 }

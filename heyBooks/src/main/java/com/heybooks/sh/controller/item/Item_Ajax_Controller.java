@@ -37,11 +37,11 @@ import net.coobird.thumbnailator.Thumbnails;
 public class Item_Ajax_Controller {
 	private static final Logger logger = LoggerFactory.getLogger(Item_Ajax_Controller.class);
 	@Resource
-	Item_Category_Service cate_service;
+	private Item_Category_Service cate_service;
 	@Resource
-	Item_Main_Service service;
+	private Item_Main_Service service;
 	@Resource
-	Item_Order_Service order_service;
+	private Item_Order_Service order_service;
 
 	// 상품 카테고리 리스트
 	@RequestMapping("/jackson/item_cate")
@@ -161,7 +161,7 @@ public class Item_Ajax_Controller {
 
 	}
 
-	// 장바구니 추가
+	// 장바구니 한개만 추가
 	@RequestMapping("/cart_insert")
 	@ResponseBody
 	public String cart_insert(int product_num, int count, HttpServletRequest request) {
@@ -185,7 +185,6 @@ public class Item_Ajax_Controller {
 
 	// 장바구니 여러개 추가
 	@RequestMapping(value = "/cart_multiple_insert", method = RequestMethod.POST ,produces ="application/text; charset=utf8")
-
 	@ResponseBody
 	public String cart_multiple_insert(HttpServletRequest request) {
 		logger.info("get cart-multiple-insert"); 

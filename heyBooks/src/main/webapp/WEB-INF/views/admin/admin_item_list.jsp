@@ -160,11 +160,11 @@
 			</p>
 			<div class="admin_select_list">
 				<select name = "item_list_arr_list" id="item_list_arr_list">
-					<option value="product_date" <c:if test="${list_arr eq 'product_date'}">selected </c:if> >최신순</option>
-					<option value="product_stock"<c:if test="${list_arr eq 'product_stock'}">selected  </c:if>>재고순</option>
-					<option value="product_name"<c:if test="${list_arr eq 'product_name'}">selected  </c:if>>판매명순</option>
+					<option value="product_date" <c:if test="${list_arr eq 'product_date'}">selected="selected"</c:if>>최신순</option>
+					<option value="product_stock"<c:if test="${list_arr eq 'product_stock'}">selected="selected"</c:if>>재고순</option>
+					<option value="product_name"<c:if test="${list_arr eq 'product_name'}">selected="selected"</c:if>>판매명순</option>
 				</select>  
-				<select name = "item_rowCount_list" id="item_rowCount_list">
+				<select name = "item_rowCount_list" id="item_rowCount_list"> 
 					<option value="10" <c:if test="${rowCount eq 10}">selected </c:if>>10개씩</option>
 					<option value="50" <c:if test="${rowCount eq 50}">selected </c:if>>50개씩</option> 
 					<option value="100" <c:if test="${rowCount eq 100}">selected </c:if>>100개씩</option>   
@@ -280,7 +280,7 @@
 							<c:set var="insert_date" value="${list.product_date}" />
 							<%-- 수정 등록일 날짜,시간 표시 --%>
 							<%
-								Date update_date = (Date) pageContext.getAttribute("update_date");
+									Date update_date = (Date) pageContext.getAttribute("update_date");
 									Date insert_date = (Date) pageContext.getAttribute("insert_date");
 									SimpleDateFormat sdate = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 									String update_date_txt = sdate.format(update_date);
@@ -326,22 +326,44 @@
 		
 		<%-- 페이지 네비게이션 --%>
 		<ul class="pagination item_pagenum">
-			<li class="page-item"><a class="page-link" href="#"
-				aria-label="Previous"> <span aria-hidden="true">«</span>
-			</a></li>
+			<li class="page-item"> 
+				<c:choose>
+					<c:when test="${(util.startPageNum%util.pageBlockCount==1) && (util.startPageNum>util.pageBlockCount)}">
+						<a class="page-link" href="<c:url value='/mypage_qna?pageNum=${util.startPageNum-1 }&list_arr=${list_arr}&rowCount=${rowCount}'/>" aria-label="Previous">
+							<span aria-hidden="true">«</span>
+						</a>
+					</c:when>   
+					<c:otherwise>
+						<a class="page-link" href="<c:url value='/admin_item_list?pageNum=${util.pageNum-1 }&list_arr=${list_arr}&rowCount=${rowCount}'/>" aria-label="Previous">
+						<span aria-hidden="true">«</span>
+						</a> 
+					</c:otherwise>
+				</c:choose>   
+			</li> 
 			<c:forEach var="i" begin="${util.startPageNum }" end="${util.endPageNum }">
 				<c:choose> 
 					<c:when test="${util.pageNum==i }"> 
-						<li class="page-item" id="page_ck" ><a class="page-link"  href="<c:url value='/admin_item_list?pageNum=${i}'/>">${i}</a></li>
+						<li class="page-item" id="page_ck" ><a class="page-link"  href="<c:url value='/admin_item_list?pageNum=${i}&list_arr=${list_arr}&rowCount=${rowCount}'/>">${i}</a></li>
 					</c:when> 
 					<c:otherwise> 
-						<li class="page-item"><a class="page-link" href="<c:url value='/admin_item_list?pageNum=${i}'/>">${i}</a></li>
+						<li class="page-item"><a class="page-link" href="<c:url value='/admin_item_list?pageNum=${i}&list_arr=${list_arr}&rowCount=${rowCount}'/>">${i}</a></li>
 					</c:otherwise>
-				</c:choose>  
+				</c:choose>   
 			</c:forEach>  
-			<li class="page-item"><a class="page-link" href="#" 
-				aria-label="Next"> <span aria-hidden="true">»</span>
-			</a></li>   
+			<li class="page-item">
+				<c:choose>
+					<c:when test="${util.pageNum < util.totalPageCount}">
+						<a class="page-link" href="<c:url value='/admin_item_list?pageNum=${util.pageNum + 1 }&list_arr=${list_arr}&'/>" aria-label="Next"> 
+							<span aria-hidden="true">»</span>
+						</a>
+					</c:when>  
+					<c:otherwise>
+						<a class="page-link" href=""> 
+							<span aria-hidden="true">»</span>
+						</a>
+					</c:otherwise>
+				</c:choose>
+			</li>    
 		</ul>
 	</div>
 </div>

@@ -15,9 +15,10 @@ public class MemberLoginInterceptor extends HandlerInterceptorAdapter {
 			throws Exception {
 		HttpSession session = request.getSession();
 		// login처리를 담당하는 사용자 정보를 담고 있는 객체를 가져온다
-		Object obj = session.getAttribute("member");
+		Object member = session.getAttribute("member");
+		Object admin = session.getAttribute("admin");
 
-		if (obj == null) {
+		if (member == null) {
 			response.sendRedirect("member_login"); // 로그인 폼으로 돌려보내기
 			return false; // 더이상 컨트롤러 요청이 가지 않도록 false를 반환
 		}

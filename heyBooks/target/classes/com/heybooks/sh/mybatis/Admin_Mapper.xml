@@ -5,11 +5,16 @@
 <mapper namespace="com.heybooks.sh.mybatis.Admin_Mapper">
 	<!-- 1. 관리자 로그인 -->
 	<select id="login" parameterType="com.heybooks.sh.vo.admin.Admin_Vo" resultType="com.heybooks.sh.vo.admin.Admin_Vo">
-	  select * from admins where admin_password = #{admin_password} 
+	  select * from admins where admin_id = #{admin_id} and admin_password = #{admin_password} 
 	</select>
-
-</mapper>
+	
+	<!-- 1. 관리자 상세정보 -->
+	<select id="admin_detail" parameterType="int" resultType="com.heybooks.sh.vo.admin.Admin_Vo">
+	  select * from admins where admin_num = #{admin_num} 
+	</select>
  
+</mapper>
+  
 
 
 

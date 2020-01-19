@@ -1058,25 +1058,28 @@ div.skin-add-form table.sf-option-table  li:first-child {
 	border-bottom: 1px solid #dadada;
 	padding: 9px 0 9px 15px;
 }
+
 .file_box {
 	position: relative;
 	width: 100%;
 }
-.file_box .hide_pic_name{
+
+.file_box .hide_pic_name {
 	position: absolute;
 	top: 6px;
 	left: 90px;
 	width: 290px;
 	border: transparent !important;
-	
 }
-.file_box .hide_pics_name{
-	top:2px;
+
+.file_box .hide_pics_name {
+	top: 2px;
 	left: 80px;
-    width: 800px;
-    background: white;
-    display: block !important;
+	width: 800px;
+	background: white;
+	display: block !important;
 }
+
 .item_basic_info table th {
 	
 }
@@ -1151,7 +1154,7 @@ div.skin-add-form table.sf-option-table  li:first-child {
 	color: white !important;
 	background-color: #0daf91 !important;
 	border: transparent;
-} 
+}
 
 .user_list_box table td {
 	text-align: center;
@@ -1502,6 +1505,8 @@ table.bbsview_table_style thead th {
 	height: 26px;
 	font-weight: normal;
 	float: left;
+	margin-bottom: 2px;
+	padding-left: 3px;
 }
 
 #page-title-bar-area #page-title-bar .page-buttons-right li {
@@ -1523,8 +1528,8 @@ table.bbsview_table_style tbody td.cell {
 .board_list_view {
 	position: absolute;
 	overflow: hidden;
-	display: block;
-	z-index: 1002;
+	display: none;
+	z-index: 500;
 	outline: 0px;
 	height: auto;
 	width: 90%;
@@ -1536,6 +1541,42 @@ table.bbsview_table_style tbody td.cell {
 	font-size: 12px;
 	padding: 3px 5px;
 	color: white;
+	background: #444;
+	border: none;
+}
+
+.counsel_reply_content, .counsel_reply_insert {
+	display: none;
+}
+
+.board_list_info {
+	margin-top: 0 !important;
+}
+
+.board_list_tables a[type="button"] {
+	font-size: 12px;
+	padding: 6px 7px;
+	background: #fff;
+	border: 1px solid #ddd;
+}
+
+.bbsview_table_style table {
+	margin: 5px 0 3px;
+}
+
+.counsel_reply_content {
+	display: none;
+}
+
+.board_write_form td {
+	padding: 10px 4px;
+}
+
+.board_delete_btn {
+	display: inline-block;
+	font-size: 12px;
+	padding: 3px 5px;
+	color: white !important;
 	background: #444;
 	border: none;
 }
@@ -1571,10 +1612,35 @@ table.bbsview_table_style tbody td.cell {
 	border-left: 1px solid #ccc;
 }
 
+.event_thumb_box {
+	padding: 10px;
+}
+
 #writeform {
 	display: none;
 }
 
+.thumb_file, .thumb_name {
+	float: left;
+}
+
+.thumb_name {
+	display:none;
+	background: white;
+	margin-left: -185px;
+	margin-top: 3px;
+	border: none;
+    width: 80%;
+}
+
+.event_thumb_box {
+	clear: both;
+}
+
+.event_thumb_box .del_thumb {
+	display: none;
+}
+ 
 #writeform #page-title-bar-area .page-buttons-left li {
 	float: left;
 }
@@ -1584,9 +1650,46 @@ table.bbsview_table_style tbody td.cell {
 	margin-right: 5px;
 }
 
+.detail_board_content {
+	padding: 40px 10px !important;
+}
+
+.date p {
+	margin: 3px 0;
+}
+
+#counsel_reply_box {
+	border-top: 1px solid #ddd;
+	padding: 20px 13px 30px;
+	overflow: hidden;
+	background: #e2f5f1;
+	display: none;
+}
+
+#counsel_reply_box textarea {
+	width: 90%;
+	float: left;
+	height: 100px;
+	overflow: scroll;
+	padding: 10px;
+}
+
+#counsel_reply_box input {
+	margin-top: 77px;
+	margin-left: 10px;
+}
+
 .note-btn-group>button {
 	background: white !important;
 	color: #333 !important;
+}
+
+#page-title-bar {
+	overflow: hidden;
+}
+
+.detail_board_title {
+	font-weight: bold !important;
 }
 /* 게시판 목록 */
 @media ( max-width : 1600px) {
@@ -1703,4 +1806,22 @@ table.bbsview_table_style tbody td.cell {
 
 .login-page .info span .fa {
 	color: #EF3B3A;
+}
+
+.note-modal-backdrop {
+	z-index: 0 !important;
+}
+
+.note-btn {
+	background-color: #fff;
+	padding: 5px 10px;
+	margin: auto 0px;
+}
+
+.note-image-input {
+	border: 0px;
+}
+
+.split_pager {
+	border: 5px solid #CCC;
 }

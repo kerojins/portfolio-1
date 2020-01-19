@@ -13,52 +13,58 @@
 						<th>아이디</th>
 						<td colspan="3">
 							<input type="text" hidden="hidden" name="members_num" class="join_classic_input" onkeyup="join1();"
-							value="${vo.members_num}" > <!-- 회원 번호 -->
+							value="${vo.members_num}" >
+							 <%-- 회원 번호 --%>
 							<input type="text"  readonly="readonly" name="members_id" class="join_classic_input" onkeyup="join1();"
 							value="${vo.members_id}" >
 						</td> 
 					</tr>  
 					<tr>
 						<th>비밀번호</th>
-						<td colspan="3"><input type="password"
-							value="${vo.members_password }" class="join_classic_input" onfocus="join2();" onkeyup="join3();" name="members_password"><span class="join_msg one_area" title=""></span>
-							</td>
+						<td colspan="3">
+							<input type="password" value="${vo.members_password }" class="join_classic_input" onfocus="join2();" onkeyup="join3();" name="members_password"><span class="join_msg one_area" title=""></span>
+						</td>
 					</tr>
 					<tr> 
 						<th>비밀번호확인</th>
-						<td colspan="3"><input type="password"
-							class="join_classic_input" onkeyup="join4();" name="members_password_ok"><span class="join_msg one_area" title=""></span></td>
+						<td colspan="3">
+							<input type="password" class="join_classic_input" onkeyup="join4();" name="members_password_ok"><span class="join_msg one_area" title=""></span>
+						</td>
 					</tr>
 					<tr>
 						<th>이름</th> 
-						<td class="half_td"><input type="text" 
-							value="${vo.members_name }"  class="join_classic_input" onkeyup="join5();"  name="members_name"><span class="join_msg one_area" title=""></span></td>
+						<td class="half_td">
+							<input type="text" value="${vo.members_name }"  class="join_classic_input" onkeyup="join5();"  name="members_name">
+							<span class="join_msg one_area" title=""></span>
+						</td>
 						<th>생년월일</th>
-						<td><input type="text" class="join_years_td" 
-							name="members_years" value="${vo.members_years}" maxlength="6" onkeyup="join6();"> - <input type="text"
-							class="join_gender_td" value="${gender}  width="16" readonly="readonly" maxlength="1" name="members_years" onkeyup="join7();">
-							****** <span id="years_span" class="join_msg" title=""></span></td>
+						<td>
+							<input type="text" class="join_years_td" name="members_years" value="${vo.members_years}" maxlength="6" onkeyup="join6();"> - 
+							<input type="text"class="join_gender_td" value="${gender}  width="16" readonly="readonly" maxlength="1" name="members_years" onkeyup="join7();">
+							****** <span id="years_span" class="join_msg" title=""></span>
+						</td>
 					</tr> 
 					<tr> 
 						<th>휴대폰 번호</th>
-						<td colspan="3"><select name="members_phone_number" id="members_phone_number"><option
-									value="010">010</option> 
-								<option value="011">011</option>
-								<option value="016">016</option></select> - <input type="text" value="${phone[1]}"
-							class="phone_input" name="members_phone_number" onkeyup="join8();" maxlength="4"> - <input
-							type="text" class="phone_input" name="members_phone_number" value="${phone[2]}" onkeyup="join9();" maxlength="4"><span id="phone_span"class="join_msg" title=""></span></td>
+						<td colspan="3">
+							<input type="text" onkeyup="join13();" class="phone_input" name="members_add_number" maxlength="3">
+						  - <input type="text" value="${phone[1]}" class="phone_input" name="members_phone_number" onkeyup="join8();" maxlength="4"> - 
+						    <input type="text" class="phone_input" name="members_phone_number" value="${phone[2]}" onkeyup="join9();" maxlength="4"><span id="phone_span"class="join_msg" title=""></span></td>
 					</tr>  
 					<tr>    
 						<th>이메일</th>
-						<td colspan="3"><input type="text" class="join_classic_input"
-							name="members_email"  value="${email[0]}"  onkeyup="join10();"> @ <input type="text"
-							class="join_email_input"  id="join_email_input"  value="${email[1]}" onkeyup="join11();"  name="members_email"> <select id="member_email" onchange="join12(this);" >
+						<td colspan="3">
+							<input type="text" class="join_classic_input" name="members_email"  value="${email[0]}"  onkeyup="join10();"> @ 
+							<input type="text" class="join_email_input"  id="join_email_input"  value="${email[1]}" onkeyup="join11();"  name="members_email"> 
+							<select id="member_email" onchange="join12(this);" >
 								<option value="">직접입력</option>
 								<option value="naver.com">naver.com</option> 
 								<option value="hanmail.net">hanmail.net</option>
 								<option value="yahoo.com">yahoo.com</option> 
 								<option value="gmail.com">gmail.com</option>
-						</select><span class="join_msg" id="email_span" title=""></span></td>
+							</select>
+							<span class="join_msg" id="email_span" title=""></span>
+						</td>
 					</tr>
 				</table>
 			</div>
@@ -67,29 +73,31 @@
 				<table class="join_essential_info">
 					<tr class="address_row">
 						<th>주소(배송지)</th>
-						<td colspan="3"><input type="text" name="members_post"
-							id="sample6_postcode" value="${vo.members_post}" placeholder="우편번호"> <input
-							 type="button" onclick="sample6_execDaumPostcode()"
-							value="우편번호 찾기"><br> <input type="text"
-							name="members_address" id="sample6_address" value="${vo.members_address}"  placeholder="주소"><br>
-							<input type="text" name="members_detail_address"
-							value="${vo.members_detail_address}" id="sample6_detailAddress" placeholder="상세주소"> <input
-							type="text" value="${vo.members_extra_address}" name="members_extra_address"
-							id="sample6_extraAddress" placeholder="참고항목"></td>
+						<td colspan="3">
+							<input type="text" name="members_post" id="sample6_postcode" value="${vo.members_post}" placeholder="우편번호"> 
+							<input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기"><br> 
+							<input type="text" name="members_address" id="sample6_address" value="${vo.members_address}" placeholder="주소"><br>
+							<input type="text" name="members_detail_address" value="${vo.members_detail_address}" id="sample6_detailAddress" placeholder="상세주소"> 
+							<input type="text" value="${vo.members_extra_address}" name="members_extra_address" id="sample6_extraAddress" placeholder="참고항목">
+						</td>
 					</tr>
 					<tr>
 						<th>추가 연락처</th> 
-						<td colspan="3"><select id="add_number" name="members_add_number">
+						<td colspan="3">
+							<select id="add_number" name="members_add_number">
 								<option value="010">010</option>
 								<option value="011">011</option>
 								<option value="016">016</option>
-						</select> - <input type="text" onkeyup="join13();" class="phone_input"  value="${add_number[1]}"
-							name="members_add_number" maxlength="4"> - <input type="text" onkeyup="join14();"
-							class="phone_input"  value="${add_number[2]}" name="members_add_number" maxlength="4"><span id="phone_add_span"class="join_msg" title=""></span></td>
+							</select> - 
+							<input type="text" onkeyup="join13();" class="phone_input"  value="${add_number[1]}" name="members_add_number" maxlength="4"> - 
+							<input type="text" onkeyup="join14();" class="phone_input"  value="${add_number[2]}" name="members_add_number" maxlength="4">
+							<span id="phone_add_span"class="join_msg" title=""></span>
+						</td>
 					</tr>
 					<tr>
 						<th>직업</th>
-						<td colspan="3"><select id="members_job" name="members_job">
+						<td colspan="3">
+							<select id="members_job" name="members_job">
 								<option>선택</option>
 								<option value="학생">학생</option>
 								<option value="회사원">회사원</option>
@@ -97,40 +105,48 @@
 								<option value="공무원">공무원</option>
 								<option value="주부">주부</option>
 								<option value="기타">기타</option>
-						</select></td>
+							</select>
+						</td>
 					</tr>
 					<tr>
 						<th>관심분야(최대5개)</th>
 						<td colspan="3">
 							<p class="item_select_option join_favorite">
-								<span><input type="checkbox" id="cate_1"
-									name="members_favorite" value="소설" class="item_checking"><label
-									for="cate_1" class="input_label"></label><label for="cate_1">소설</label>
-								</span> <span><input type="checkbox" id="cate_2"
-									name="members_favorite" value="시/에세이" class="item_checking"><label
-									for="cate_2" class="input_label"></label><label for="cate_2">시/에세이</label>
-								</span> <span><input type="checkbox" id="cate_3"
-									name="members_favorite" value="경제/경영" class="item_checking"><label
-									for="cate_3" class="input_label"></label><label for="cate_3">경제/경영</label>
-								</span> <span><input type="checkbox" id="cate_4"
-									name="members_favorite" value="자기계발" class="item_checking"><label
-									for="cate_4" class="input_label"></label><label for="cate_4">자기계발</label>
-								</span> <span><input type="checkbox" id="cate_5"
-									name="members_favorite" value="인문" class="item_checking"><label
-									for="cate_5" class="input_label"></label><label for="cate_5">인문</label>
-								</span> <span><input type="checkbox" id="cate_6"
-									name="members_favorite" value="정치/사회" class="item_checking"><label
-									for="cate_6" class="input_label"></label><label for="cate_6">정치/사회</label>
-								</span> <span><input type="checkbox" id="cate_7"
-									name="members_favorite" value="예술/대중문화" class="item_checking"><label
-									for="cate_7" class="input_label"></label><label for="cate_7">예술/대중문화</label>
-								</span> <span><input type="checkbox" id="cate_8"
-									name="members_favorite" value="어린이" class="item_checking"><label
-									for="cate_8" class="input_label"></label><label for="cate_8">어린이</label>
+								<span>
+									<input type="checkbox" id="cate_1" name="members_favorite" value="소설" class="item_checking">
+									<label for="cate_1" class="input_label"></label><label for="cate_1">소설</label>
+								</span> 
+								<span>
+									<input type="checkbox" id="cate_2" name="members_favorite" value="시/에세이" class="item_checking">
+									<label for="cate_2" class="input_label"></label><label for="cate_2">시/에세이</label>
+								</span> 
+								<span>
+									<input type="checkbox" id="cate_3" name="members_favorite" value="경제/경영" class="item_checking">
+									<label for="cate_3" class="input_label"></label><label for="cate_3">경제/경영</label>
+								</span> 
+								<span>
+									<input type="checkbox" id="cate_4" name="members_favorite" value="자기계발" class="item_checking">
+									<label for="cate_4" class="input_label"></label><label for="cate_4">자기계발</label>
+								</span> 
+								<span>
+									<input type="checkbox" id="cate_5" name="members_favorite" value="인문" class="item_checking">
+									<label for="cate_5" class="input_label"></label><label for="cate_5">인문</label>
+								</span> 
+								<span>
+									<input type="checkbox" id="cate_6" name="members_favorite" value="정치/사회" class="item_checking">
+									<label for="cate_6" class="input_label"></label><label for="cate_6">정치/사회</label>
+								</span> 
+								<span>
+									<input type="checkbox" id="cate_7" name="members_favorite" value="예술/대중문화" class="item_checking">
+									<label for="cate_7" class="input_label"></label><label for="cate_7">예술/대중문화</label>
+								</span> 
+								<span>
+									<input type="checkbox" id="cate_8" name="members_favorite" value="어린이" class="item_checking">
+									<label for="cate_8" class="input_label"></label><label for="cate_8">어린이</label>
 								</span>
 							</p>
 						</td>
-					</tr>
+					</tr> 
 				</table>
 			</div>
 			<button type="submit" class="btn join_btn">수정 완료</button>

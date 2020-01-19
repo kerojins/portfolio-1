@@ -29,7 +29,14 @@
 			   where members_num = #{members_num}
 	</insert> 
 	
-	
+	<!-- 마일리지 -->
+	<insert id="mileage_insert" parameterType="com.heybooks.sh.vo.member.Mileage_Vo">
+		insert into mileage values(mileage_num_seq.nextVal, #{order_num}, #{members_num}, #{mileage_score}, #{mileage_total}, sysdate)
+	</insert>  
+	<!-- 마일리지 정보 -->
+	<select id="mileage_getinfo" parameterType="int" resultType="com.heybooks.sh.vo.member.Mileage_Vo">
+		select * from mileage where members_num = #{members_num}  order by mileage_num desc
+	</select> 
 	
 </mapper>  
  

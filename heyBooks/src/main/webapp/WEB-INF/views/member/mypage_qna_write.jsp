@@ -4,35 +4,34 @@
 <div class="sub_right_box my_box_wrap">
 	<div class="sub_right_content">
 		<h3 class="my_page_title" style="margin-bottom: 20px">1:1 문의</h3>
-		<form class="my_qna_form">
-			<div class="form-group">
-				<label for="my_qna_type">질문유형</label> <select
-					class="form-control" id="my_qna_type">
-					<option>-</option>
-					<option>회원계정문의</option>
-					<option>이용문의</option>
-					<option>배송문의</option>
-					<option>환불문의</option>
-					<option>이벤트문의</option>
-					<option>오류문의</option>
-					<option>기타문의</option>
+		<form class="my_qna_form" action="<c:url value='/counsel_insert'/>" method="post">
+			<div class="form-group">  
+				<input name="members_num" hidden="hidden" value="${sessionScope.member.members_num}">
+				<label for="my_qna_type">질문유형</label> 
+				<select class="form-control" name="counsel_type" id="my_qna_type"> 
+					<option value="회원계정문의">회원계정문의</option>
+					<option value="이용문의">이용문의</option>
+					<option value="배송문의">배송문의</option>
+					<option value="환불문의">환불문의</option>
+					<option value="이벤트문의">이벤트문의</option>
+					<option value="오류문의">오류문의</option>
+					<option value="기타문의">기타문의</option>
 				</select>
 			</div>
 			<div class="form-group">
-				<label for="my_qna_title">제목</label> <input
-					type="email" class="form-control" id="my_qna_title">
+				<label for="my_qna_title">제목</label> 
+				<input type="text" name="counsel_title" class="form-control" id="my_qna_title">
 			</div>
-			<div class="form-group">
+			<div class="form-group"> 
 				<label for="my_qna_content">내용</label>
-				<textarea class="form-control" id="my_qna_content"
-					rows="6"></textarea>
+				<textarea class="form-control"  name="counsel_content" id="my_qna_content" rows="6"></textarea>
 			</div>
-		</form> 
 			<div class="twin_btn qna_btn">
-				<a class="twin_home_btn" href="<c:url value='/mypage_qna'/>">목록보기</a><a
-					class="twin_page_btn">제출하기</a>
-			</div>
-	</div>
+				<a class="twin_home_btn" href="<c:url value='/mypage_qna'/>">목록보기</a>
+				<input  type="submit" class="twin_page_btn" value="제출하기">
+			</div> 
+		</form> 
+	</div> 
 </div>
 
 

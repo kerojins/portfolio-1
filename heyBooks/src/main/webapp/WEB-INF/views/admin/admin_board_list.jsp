@@ -1,32 +1,34 @@
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="java.util.Date"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <div class="container admin_item_list">
 	<div class="search-form-container">
 		<div class=" admin_page_head">
-
 			<h2>
 				<c:choose>
-					<c:when test="${board eq 'qna'}">
+					<c:when test="${board_id eq 'counsel'}">
 					[1:1질문]
 					</c:when>
-					<c:when test="${board eq 'notice'}">
+					<c:when test="${board_id eq 'notice'}">
 					[공지사항]
 					</c:when>
-					<c:when test="${board eq 'event'}">
+					<c:when test="${board_id eq 'event'}">
 					[이벤트]
 					</c:when>
-					<c:when test="${board eq 'review'}">
+					<c:when test="${board_id eq 'review'}">
 					[리뷰]
 					</c:when>
 				</c:choose>
-				목록 리스트
+				목록 리스트 
 			</h2>
-		</div>
-		<form>
+			<c:if test="${board_id eq 'notice' or board_id eq 'event'}"><a class="admin_btn board_write_btn" board_id = "${board_id}">글쓰기</a></c:if>
+		</div> 
+		<form> 
 			<table class="search-form-table">
 				<tbody>
-					<tr>
+					<tr> 
 						<td>
 							<table>
 								<tbody>
@@ -109,17 +111,203 @@
 			<div class="admin_select_list">
 				<select>
 					<option>최신순</option>
-					<option>재고순</option>
-					<option>판매명순</option>
-				</select>
+					<option>제목순</option>
+					<option>작성자순</option>
+				</select> 
 			</div>
 		</div>
-		<table class="list-table-style qna_list_table board_list_tables"
+	<c:choose>
+		<c:when test='${board_id eq "counsel"}'>
+		<table class="list-table-style counsel_table board_list_tables"cellspacing="0">
+			<thead class="lth">
+				<tr>
+					<th>
+						<input type="checkbox"  class="ckAll" onclick="ckAll(this);">
+					</th>
+					<th>번호</th>
+					<th>작성자</th>
+					<th>
+						<select name="category" id="searchcategory" class="line">
+							<option value="" selected="selected">- 질문유형전체 -</option>
+							<option value="회원계정문의">회원계정문의</option>
+							<option value="이용문의">이용문의</option>
+							<option value="배송문의">배송문의</option>
+							<option value="환불문의">환불문의</option>
+							<option value="이벤트문의 ">이벤트문의</option>
+							<option value="오류문의">오류문의</option>
+							<option value="기타문의">기타문의</option>
+						</select>
+					</th>
+					<th width="40%">제목</th>
+					<th>등록일</th>
+					<th>
+						<select name="reply" id="selreply" class="line">
+							<option value="" selected="selected">- 답변상태 -</option>
+							<option value="y">답변대기</option>
+							<option value="n">답변완료</option>
+						</select>
+					</th>
+					<th width="7%">관리</th> 
+				</tr> 
+			</thead>
+			<tbody class="ltb otb" id="ajaxTable">
+				<c:forEach var="vo" items="${counsel_list}"  varStatus="status">
+					<tr class="list-row"> 
+						<td align="center"><input type="checkbox" class="select_ck_num"
+								name="select_ck_num" value="${vo.counsel_num}" data-provider_seq="1"></td>
+						<td align="center" class="number">${vo.counsel_num}</td>
+						<td align="center" class="name">${member_list[status.index].members_id}</td>
+						<td align="center" class="category">${vo.counsel_type}</td> 
+						<td align="left">
+							<span class="hand blue layer_board_view_btn" board_answer="${vo.counsel_answer}" board_seq="${vo.counsel_num}" board_id="${board_id }">
+								${vo.counsel_title }
+							</span>  
+						</td> 
+						<c:set var="date" value="${vo.counsel_date}" />
+						<%-- 수정 등록일 날짜,시간 표시 --%>
+						<%
+							Date date = (Date) pageContext.getAttribute("date");
+							SimpleDateFormat sdate = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+							String date_txt = sdate.format(date);
+							pageContext.setAttribute("date_txt", date_txt);
+						%> 
+						<td align="center" class="date">${date_txt}</td>
+						<td align="center">${vo.counsel_answer}</td> 
+						<td align="center">
+							<span class="btn small valign-middle">
+								<input type="button" name="board_reply_btn"  board_answer="${vo.counsel_answer}" board_seq="${vo.counsel_num}"  board_id="${board_id }" class="layer_board_view_btn" value="상세보기">
+							</span> 
+							<span class="btn small valign-middle"> 
+								<a type="button" name="board_delete_btn" href="<c:url value='/board_delete?board_seq=${vo.counsel_num}&board_id=${board_id}'/>">삭제</a>
+							</span> 
+						</td> 
+					</tr> 
+				</c:forEach>
+			</tbody> 
+		</table>
+	</c:when>  
+	<c:when test="${board_id eq 'notice'}">
+		<table class="list-table-style board_list_tables" cellspacing="0">
+			<colgroup>
+			</colgroup> 
+			<thead class="lth"> 
+				<tr>
+					<th>
+						<input type="checkbox" name="checkboxAll" value="" id="checkboxAll">
+					</th>
+					<th>번호</th> 
+					<th>작성자</th>
+					<th width="40%">제목</th>
+					<th>등록일</th>
+					<th>조회수</th> 
+					<th width="7%">관리</th>
+				</tr> 
+			</thead>
+			<tbody class="ltb otb" id="ajaxTable">
+			  <c:forEach var = "vo" items="${notice_list}" varStatus="status">
+			  	<tr class="list-row ">    
+					<td align="center">
+						<input type="checkbox" class="select_ck_num" name="select_ck_num" value="${vo.notice_num}" data-provider_seq="1">
+					</td>   
+					<td align="center" class="number">${vo.notice_num}</td> 
+					<td align="center" class="name">${admin_list[status.index].admin_id}</td> 
+					<td align="left">    
+						<span class="hand blue layer_board_view_btn"  board_seq="${vo.notice_num}" board_id="${board_id}">
+							${vo.notice_title}
+						</span>   
+					</td>   
+					<c:set var="date" value="${vo.notice_date}"/> 
+						<%--  수정 등록일 날짜,시간 표시  --%> 
+						<%  
+							Date date = (Date) pageContext.getAttribute("date");
+							SimpleDateFormat sdate = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+							String date_txt = sdate.format(date);
+							pageContext.setAttribute("date_txt", date_txt); 
+						%> 
+					<td align="center" class="date">${date_txt}</td> 
+					<td align="center">${vo.notice_hit}</td>  
+					<td align="center" nowrap="">
+						<span class="btn small valign-middle">
+							<input type="button" name="board_modify_btn" board_seq="${vo.notice_num}" board_id="${board_id}" value="수정">
+						</span>
+						<span class="btn small valign-middle">
+							<a type="button" name="board_delete_btn" href="<c:url value='/board_delete?board_seq=${vo.notice_num}&board_id=${board_id}'/>">삭제</a>
+						</span>
+					</td>
+				</tr>
+			  </c:forEach>
+			</tbody>
+		</table>  
+	</c:when>
+	<c:when test="${board_id eq 'event'}">
+		<table class="list-table-style qna_list_table board_list_tables">
+			<colgroup>
+			</colgroup> 
+			<thead class="lth">
+				<tr>
+					<th><input type="checkbox" name="checkboxAll" value=""
+						id="checkboxAll"></th>
+					<th>번호</th>
+					<th>작성자</th>
+					<th width="40%">제목</th>
+					<th>등록일/종료일</th>
+					<th>조회수</th> 
+					<th width="7%">관리</th>
+				</tr>
+			</thead>
+			<tbody class="ltb otb" id="ajaxTable">
+				 <c:forEach var = "vo" items="${event_list}" varStatus="status">
+				  	<tr class="list-row ">    
+						<td align="center">
+							<input type="checkbox" class="select_ck_num" name="select_ck_num" value="${vo.event_num}" data-provider_seq="1">
+						</td>   
+						<td align="center" class="number">${vo.event_num}</td> 
+						<td align="center" class="name">${admin_list[status.index].admin_id}</td> 
+						<td align="left">    
+							<span class="hand blue layer_board_view_btn"  board_seq="${vo.event_num}" board_id="${board_id}">
+								${vo.event_title}
+							</span>   
+						</td>    
+						<c:set var="date" value="${vo.event_date}"/> 
+						<c:set var="end_date" value="${vo.event_period}"/> 
+							<%--  수정 등록일 날짜,시간 표시  --%> 
+							<%  
+								Date date = (Date) pageContext.getAttribute("date");
+								Date end_date = (Date) pageContext.getAttribute("end_date");
+								SimpleDateFormat sdate = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+								String date_txt = sdate.format(date);
+								String end_date_txt = sdate.format(end_date);
+								pageContext.setAttribute("date_txt", date_txt); 
+								pageContext.setAttribute("end_date_txt", end_date_txt); 
+								
+							%> 
+						<td align="center" class="date">
+							<p>${date_txt}</p>
+							<p>${end_date_txt}</p>
+						</td> 
+						<td align="center">${vo.event_hit}</td>  
+						<td align="center" nowrap="">
+							<span class="btn small valign-middle">
+								<input type="button" class="board_modify_btn" name="board_modify_btn" board_seq="${vo.event_num}" board_id="${board_id}" value="수정">
+							</span>
+							<span class="btn small valign-middle">
+								<a type="button" name="board_delete_btn" href="<c:url value='/board_delete?board_seq=${vo.event_num}&board_id=${board_id}'/>">삭제</a>
+							</span> 
+						</td>   
+					</tr>
+				  </c:forEach>
+			</tbody>
+			</tbody>
+		</table>
+	</c:when>
+</c:choose>
+		
+		
+	<%-- 	<table class="list-table-style qna_list_table board_list_tables"
 			cellspacing="0">
 			<!-- 테이블 헤더 : 시작 -->
 			<colgroup>
-
-			</colgroup>
+			</colgroup> 
 			<thead class="lth">
 				<tr>
 					<th><input type="checkbox" name="checkboxAll" value=""
@@ -172,26 +360,19 @@
 							</select></th>
 						</c:when>
 					</c:choose>
-					<th><c:choose>
-							<c:when test="${board eq 'qna' or board eq 'review' }">
-						마일리지
-					</c:when>
-							<c:otherwise> 
-						조회수 
-					</c:otherwise>
-						</c:choose></th>
+					<c:choose>
+						<c:when test="${board eq 'review' }">
+						<th>마일리지</th> 
+						</c:when>
+						<c:when test="${board eq 'event' or board eq 'notice'}"> 
+						<th>조회수</th> 
+						</c:when>
+					</c:choose>
+					
 					<th width="7%">관리</th>
 				</tr>
 			</thead>
-			<!-- 테이블 헤더 : 끝 -->
-
-			<!-- 리스트 : 시작 -->
 			<tbody class="ltb otb" id="ajaxTable">
-				<!-- 공지리스트데이터 : 시작 -->
-
-				<!--공지 리스트 : 끝 -->
-
-				<!-- 리스트데이터 : 시작 -->
 				<tr class="list-row  ">
 					<td align="center"><input type="checkbox" name="del[]"
 						value="17" class="checkeds"></td>
@@ -200,27 +381,365 @@
 					<c:if test="${board eq 'qna' or board eq 'notice' }">
 						<td align="center" class="category">기타문의</td>
 					</c:if>
-					<td align="left"><span class="hand blue boad_view_btn"
+					<td align="left"><span class="hand blue board_view_btn"
 						viewlink="/admin/board/mbqna_view?id=mbqna&amp;seq=17"
 						board_seq="17" board_id="mbqna">가정에서의 전기안전</span></td>
 					<td align="center" class="date">2019-06-13 23:05</td>
 					<c:if test="${board eq 'qna' or board eq 'review' }">
 						<td align="center"></td>
 					</c:if>
-					<td align="center"></td>
+					<c:choose>
+						<c:when test="${board eq 'review' }">
+						<td align="center"></td>
+						</c:when> 
+						<c:when test="${board eq 'event' or board eq 'notice'}"> 
+						<td align="center"></td>
+						</c:when>
+					</c:choose>
 					<td align="center" nowrap=""><span
 						class="btn small valign-middle"><input type="button"
-							name="boad_modify_btn" board_seq="17" board_id="mbqna" value="수정"></span>
+							name="board_modify_btn" board_seq="17" board_id="mbqna" value="수정"></span>
 						<span class="btn small valign-middle"><input type="button"
-							name="boad_reply_btn" board_seq="17" board_id="mbqna"
+							name="board_reply_btn" board_seq="17" board_id="mbqna"
 							value="답변등록"></span> <span class="btn small valign-middle"><input
-							type="button" name="boad_delete_btn" board_seq="17"
+							type="button" name="board_delete_btn" board_seq="17"
 							board_id="mbqna" value="삭제"></span></td>
 				</tr>
-
+ 
 			</tbody>
 			<!-- 리스트 : 끝 -->
-		</table>
+		</table> --%>
 	</div>
-
+	<%-- 페이지 네비게이션 --%>
+	<ul class="pagination item_pagenum">
+		<li class="page-item"> 
+			<c:choose>
+				<c:when test="${(util.startPageNum%util.pageBlockCount==1) && (util.startPageNum>util.pageBlockCount)}">
+					<a class="page-link" href="<c:url value='/admin_board_list?pageNum=${util.startPageNum-1 }&list_arr=${list_arr}&rowCount=${rowCount}&board_id=${board_id}'/>" aria-label="Previous">
+						<span aria-hidden="true">«</span>
+					</a> 
+				</c:when>    
+				<c:otherwise>
+					<a class="page-link" href="<c:url value='/admin_board_list?pageNum=${util.pageNum-1 }&list_arr=${list_arr}&rowCount=${rowCount}&board_id=${board_id}'/>" aria-label="Previous">
+					<span aria-hidden="true">«</span>
+					</a> 
+				</c:otherwise>
+			</c:choose>   
+		</li> 
+		<c:forEach var="i" begin="${util.startPageNum }" end="${util.endPageNum }">
+			<c:choose> 
+				<c:when test="${util.pageNum==i }"> 
+					<li class="page-item" id="page_ck" ><a class="page-link"  href="<c:url value='/admin_board_list?pageNum=${i}&list_arr=${list_arr}&rowCount=${rowCount}&board_id=${board_id}'/>">${i}</a></li>
+				</c:when> 
+				<c:otherwise> 
+					<li class="page-item"><a class="page-link" href="<c:url value='/admin_board_list?pageNum=${i}&list_arr=${list_arr}&rowCount=${rowCount}&board_id=${board_id}'/>">${i}</a></li>
+				</c:otherwise>
+			</c:choose>   
+		</c:forEach>  
+		<li class="page-item">
+			<c:choose>
+				<c:when test="${util.pageNum < util.totalPageCount}">
+					<a class="page-link" href="<c:url value='/admin_board_list?pageNum=${util.pageNum + 1 }&list_arr=${list_arr}&board_id=${board_id}'/>" aria-label="Next"> 
+						<span aria-hidden="true">»</span>
+					</a> 
+				</c:when>  
+				<c:otherwise>
+					<a class="page-link" href=""> 
+						<span aria-hidden="true">»</span>
+					</a>
+				</c:otherwise>
+			</c:choose>
+		</li>    
+	</ul>
+	<%-- 게시글 상세보기 레이어 --%>
+	<div class="ui-dialog ui-widget ui-widget-content ui-corner-all ui-draggable board_list_view"
+		tabindex="-1" role="dialog" aria-labelledby="ui-dialog-title-dlg"
+		style="">
+		<div class="ui-dialog-titlebar ui-widget-header ui-corner-all ui-helper-clearfix">
+			<span class="ui-dialog-title" id="ui-dialog-title-dlg">게시글 보기</span>
+			<a href="#" class="ui-dialog-titlebar-close ui-corner-all close_btn" role="button">
+				<span class="ui-icon ui-icon-closethick">close</span>
+			</a>
+		</div>
+		<div id="dlg" class="ui-dialog-content ui-widget-content" style="width: auto; min-height: 58px; height: auto;">
+			<div id="dlg_content">
+				<div id="boardview"> 
+					<br style="line-height: 12px;"> 
+					<div class="viewbox">
+						<form name="form1" id="board_view_form" method="post"
+							target="actionFrame">
+							<!-- 페이지 타이틀 바 : 시작 -->
+							<div id="page-title-bar-area" style="margin-top: -40px;">
+								<div id="page-title-bar">
+									<div class="page-title">
+										<h2><c:choose>
+												<c:when test="${board_id eq 'counsel'}">
+												[1:1질문]
+												</c:when>
+												<c:when test="${board_id eq 'notice'}">
+												[공지사항]
+												</c:when>
+												<c:when test="${board_id eq 'event'}">
+												[이벤트]
+												</c:when> 
+												<c:when test="${board_id eq 'review'}">
+												[리뷰]
+												</c:when>
+											</c:choose> 
+										게시글 보기</h2>
+									</div>
+									<ul class="page-buttons-left">
+										<li>
+											<span class="btn small white">
+												<button type="button" name="boardviewclose">게시글리스트
+													<span class="arrowright"></span>
+												</button> 
+											</span>
+										</li>
+									</ul>
+									<ul class="page-buttons-right">
+										<li>
+											<span class="btn small black">
+												<button type="button" board_seq="" board_id="${board_id}" class="board_modify_btn" name="board_modify_btn">수정</button>
+											</span> 
+										</li>
+										<li>
+											<span class="btn small black">
+												<button type="button" name="board_reply_btn" board_seq="${vo.counsel_num}" class="board_reply_btn counsel_reply_insert" >답변 등록</button>
+											</span>
+										</li>
+										<li> 
+											<span class="btn small black">
+												<a href="#" class="board_delete_btn">닫기</a>
+											</span>
+										</li> 
+									</ul>
+								</div>
+							</div>
+							<!-- 페이지 타이틀 바 : 끝 -->
+							<table class="bbsview_table_style" style="width: 100%" cellpadding="0" cellspacing="0" border="0">
+								<colgroup>
+									<col>
+									<col width="300px">
+								</colgroup>
+								<thead>
+									<tr>
+										<th class="left pdl5  pdt5 pdb5 detail_board_title">
+											게시글 상세 제목
+										</th>
+										<th class="right"></th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td class="cell" colspan="2">
+											<table width="100%" border="0" cellpadding="0" cellspacing="0">
+												<tbody>
+													<tr style="border: none">
+														<td width="5"></td>
+														<td>
+															<table align="right" class="board_list_info" border="0" cellpadding="0"  width="100%">
+																<tbody>
+																	<tr>
+																		<td>
+																			<span class="fl">
+																				<span class="han">작성자</span>
+																			:&nbsp;
+																			</span>
+																			<span class="fl detail_board_name">게시글 상세 작성자</span>
+																		</td>
+																		<td class="cell_bar">|</td>
+																		<td>
+																			<c:choose>
+																				<c:when test="${board_id eq 'counsel'}">
+																					<span class="han ">답변 상태</span> 
+																				</c:when>
+																				<c:when test="${board_id eq 'notice'}">
+																					<span class="han ">조회</span> 
+																				</c:when>
+																				<c:when test="${board_id eq 'event'}">
+																					<span class="han ">조회</span> 
+																				</c:when> 
+																				<c:when test="${board_id eq 'review'}">
+																					<span class="han ">조회</span> 
+																				</c:when>
+																			</c:choose> 
+																		
+																			<span class="num board_another_info">0</span>
+																		</td>
+																		<td class="cell_bar">|</td>
+																		<td>
+																			<span class="han">등록일:</span> 
+																			<span class="num detail_board_date">게시글 상세 등록일</span>
+																		</td>
+																	</tr>
+																</tbody> 
+															</table>
+														</td>
+														<td width="5"></td>
+													</tr>
+												</tbody>
+											</table>
+											<div class="cboth"></div>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+							<div class="content detail_board_content"></div>
+							<div id="counsel_reply_box">
+								<input hidden="hidden" class="detail_board_num" name="counsel_num" value="">
+							</div>
+							<textarea class="counsel_reply_content" name="counsel_reply_content"></textarea>
+						</form>
+					</div>
+				</div>  
+				<form id="writeform" class="board_write_form" method="post" enctype="multipart/form-data" >
+					<div id="page-title-bar-area" style="margin-top: -20px;">
+						<div id="page-title-bar">
+							<div class="page-title"> 
+								<h2><c:choose>
+										<c:when test="${board_id eq 'counsel'}">
+										[1:1질문]
+										</c:when>
+										<c:when test="${board_id eq 'notice'}">
+										[공지사항]
+										</c:when>
+										<c:when test="${board_id eq 'event'}">
+										[이벤트]
+										</c:when> 
+										<c:when test="${board_id eq 'review'}">
+										[리뷰]
+										</c:when>
+									</c:choose> 게시글 등록</h2>
+							</div>
+							<ul class="page-buttons-left">
+								<li>
+									<span class="btn large white">
+										<button type="button">게시글리스트
+											<span class="arrowright"></span>
+										</button>
+									</span>
+								</li>
+								<li>
+									<span class="btn large white board_view_btn">
+										<button type="button">게시글보기</button>
+									</span>
+								</li>  
+							</ul>
+							<ul class="page-buttons-right">
+								<li>
+									<span class="btn large black">
+										<button id="board_add_btn" type="submit">저장하기</button>
+									</span> 
+									<span>
+										<a class="board_delete_btn">닫기</a> 
+									</span> 
+								</li>
+							</ul>
+						</div>
+					</div>
+					<div>
+						<table class="info-table-style" style="width: 100%">
+							<colgroup>
+								<col width="15%">
+								<col>
+							</colgroup>
+							<thead class="hide">
+								<tr>
+									<th class="its-th-align center" colspan="4">기본정보</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<th class="its-th-align center">작성자</th>
+									<td class="its-td board_writer">관리자</td>
+								</tr>
+								
+								<!-- <tr> 
+									<th class="its-th-align center">공지글 여부</th>
+									<td class="its-td"><input type="checkbox" name="notice" id="boardnotice" value="1" onclick="noticecheck()">
+										<label for="boardnotice"> 공지글입니다.</label>
+											<div class="noticelay " style="width: 99%; padding: 3px 5px;">
+												<label> 
+													<input type="radio" name="onlynotice" id="onlynotice0" value="0" disabled="disabled"> 
+													공지글영역과 리스트 영역에 해당 글이 보여집니다.
+												</label>
+												<br> 
+												<label> 
+													<input type="radio" name="onlynotice" id="onlynotice1" value="1" disabled="disabled"> 
+													공지글 영역에서 특정기간동안(설정 시)만 해당 글이 보여집니다.
+												</label> 
+												<span> 
+													<input type="text" name="onlynotice_sdate" id="onlynotice_sdate" value="" class="line datepicker hasDatepicker" maxlength="10" size="10" disabled="disabled">
+													<img class="ui-datepicker-trigger" src="/app/javascript/jquery/icon_calendar.gif" alt="..." title="...">
+													~ 
+													<input type="text" name="onlynotice_edate" id="onlynotice_edate" value="" class="line datepicker hasDatepicker" maxlength="10" size="10" disabled="disabled">
+													<img class="ui-datepicker-trigger" src="/app/javascript/jquery/icon_calendar.gif" alt="..." title="...">
+												</span>
+											</div>
+									</td>
+								</tr> -->
+								<tr>
+									<th class="its-th-align center">제목</th>
+									<td class="its-td">
+										<input type="text" name="${board_id}_title" class="board_title" id="subject" value="제목을 입력해주세요" class="required line" title="제목을 입력해 주세요" style="width: 95%" placeholder="제목을 입력해 주세요">
+										<input hidden="hidden" name="board_id" value="${board_id}" >
+										<input hidden="hidden" class="board_num" name="${board_id}_num" value="" >
+									</td>
+								</tr>
+								<c:if test="${board_id eq 'event'}">
+								<tr>
+									<th class="its-th-align center">이벤트 썸네일</th>
+									<td class="its-td"> 
+										<p class=""><input type="file" class="thumb_file" name="event_file" onchange="e_readURL(this);" ><input readonly="readonly" name="thumb_name" class="thumb_name"></p>
+										<p class="event_thumb_box"><img class="event_thumb" src="" ><i class="fas fa-times del_thumb"></i></p>
+									</td>   
+								</tr> 
+								</c:if> 
+								<tr>
+									<th class="its-th-align center">내용</th>
+									<td class="its-td">
+										<textarea id="summernote" class="board_content" name="${board_id}_content"></textarea>
+									</td>  
+								</tr> 
+								<c:if test="${board_id eq 'event'}">
+								<tr>
+									<th class="its-th-align center">이벤트 종료일</th>
+									<td class="its-td">
+										<input type="text" id="event_period" name="event_period">
+									</td>   
+								</tr> 
+								</c:if>
+								<tr>
+									<th class="its-th-align center" colspan="2">
+										<div class="after">
+											저장후 <input type="radio" name="backtype" id="backtype1"
+												value="list" checked="checked"><label
+												for="backtype1">목록으로 이동</label>
+										</div>
+									</th>
+								</tr> 
+							</tbody>
+						</table>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
 </div>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>	
+<script type="text/javascript">
+$("#event_period").datepicker({
+    dayNamesMin:["일","월","화","수","목","금","토"], // 요일에 표시되는 형식 설정
+
+    dateFormat:"yy-mm-dd", //날짜 형식 설정
+
+    monthNames:["1월","2월","3월","4월","5월","6월","7월",
+
+     "8월","9월","10월","11월","12월"], //월표시 형식 설정
+ 
+    showAnim:"fold", //애니메이션효과
+
+	minDate: 0,
+}); 
+</script>

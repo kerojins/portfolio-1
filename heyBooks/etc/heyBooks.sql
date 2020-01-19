@@ -3,7 +3,6 @@
 
 DROP TABLE Counsel_reply CASCADE CONSTRAINTS;
 DROP TABLE Event CASCADE CONSTRAINTS;
-DROP TABLE News CASCADE CONSTRAINTS;
 DROP TABLE Notice CASCADE CONSTRAINTS;
 DROP TABLE Push CASCADE CONSTRAINTS;
 DROP TABLE Admins CASCADE CONSTRAINTS;
@@ -14,7 +13,7 @@ DROP TABLE Review CASCADE CONSTRAINTS;
 DROP TABLE Order_items CASCADE CONSTRAINTS;
 DROP TABLE Today_view CASCADE CONSTRAINTS;
 DROP TABLE Wishlist CASCADE CONSTRAINTS;
-DROP TABLE Products CASCADE CONSTRAINTS; 
+DROP TABLE Products CASCADE CONSTRAINTS;
 DROP TABLE Editor CASCADE CONSTRAINTS;
 DROP TABLE Mileage CASCADE CONSTRAINTS;
 DROP TABLE Orders CASCADE CONSTRAINTS;
@@ -54,6 +53,7 @@ CREATE TABLE Counsel
 	counsel_type varchar2(50) NOT NULL,
 	counsel_title varchar2(150) NOT NULL,
 	counsel_content varchar2(400) NOT NULL,
+	counsel_answer varchar2(20) NOT NULL,
 	counsel_date date NOT NULL,
 	PRIMARY KEY (counsel_num)
 );
@@ -89,8 +89,10 @@ CREATE TABLE Event
 	event_num number NOT NULL,
 	admin_num number NOT NULL,
 	event_title varchar2(200) NOT NULL,
-	evnet_content clob NOT NULL,
-	event_period varchar2(50),
+	event_content clob NOT NULL,
+	event_period date,
+	event_thumbnail varchar2(200),
+	event_hit number NOT NULL,
 	event_date date NOT NULL,
 	PRIMARY KEY (event_num)
 );
@@ -124,19 +126,9 @@ CREATE TABLE Mileage
 	order_num number NOT NULL,
 	members_num number NOT NULL,
 	mileage_score number NOT NULL,
+	mileage_total number NOT NULL,
 	mileage_date date NOT NULL,
 	PRIMARY KEY (mileage_num)
-);
-
-
-CREATE TABLE News
-(
-	news_num number NOT NULL,
-	admin_num number NOT NULL,
-	news_title varchar2(150) NOT NULL,
-	news_content varchar2(1000) NOT NULL,
-	news_date date NOT NULL,
-	PRIMARY KEY (news_num)
 );
 
 
@@ -156,6 +148,7 @@ CREATE TABLE Notice
 	admin_num number NOT NULL,
 	notice_title varchar2(150) NOT NULL,
 	notice_content clob NOT NULL,
+	notice_hit number,
 	notice_date date NOT NULL,
 	PRIMARY KEY (notice_num)
 );
@@ -165,17 +158,25 @@ CREATE TABLE Orders
 (
 	order_num number NOT NULL,
 	members_num number NOT NULL,
-	total_price number NOT NULL,
-	total_count number,
+	total_price varchar2(200) NOT NULL,
+	total_count varchar2(100),
+	order_name varchar2(100) NOT NULL,
+	order_phone_number varchar2(100) NOT NULL,
+	order_add_number varchar2(100),
+	order_post varchar2(50),
+	order_address varchar2(600) NOT NULL,
+	order_detail_address varchar2(600) NOT NULL,
+	order_extra_address varchar2(200),
+	order_message varchar2(500),
+	order_shipping_charge varchar2(50) NOT NULL,
+	-- 신용카드 / 무통장 입금
+	payment_methods varchar2(20) NOT NULL,
 	-- 1. 결제 대기
 	-- 2. 결제 완료
 	-- 3. 배송 준비중
 	-- 4. 배송중
 	-- 5. 배송 완료
 	order_status number(2,0) NOT NULL,
-	-- 신용카드 / 무통장 입금
-	payment_methods varchar2(20) NOT NULL,
-	order_message varchar2(500),
 	order_date date NOT NULL,
 	PRIMARY KEY (order_num)
 );
@@ -186,8 +187,8 @@ CREATE TABLE Order_items
 	order_item_num number NOT NULL,
 	product_num number NOT NULL,
 	order_num number NOT NULL,
-	order_item_quantity number NOT NULL,
-	order_item_price number NOT NULL,
+	order_item_quantity varchar2(100) NOT NULL,
+	order_item_price varchar2(200) NOT NULL,
 	order_item_date date NOT NULL,
 	PRIMARY KEY (order_item_num)
 );
@@ -291,12 +292,6 @@ ALTER TABLE Counsel_reply
 
 
 ALTER TABLE Event
-	ADD FOREIGN KEY (admin_num)
-	REFERENCES Admins (admin_num)
-;
-
-
-ALTER TABLE News
 	ADD FOREIGN KEY (admin_num)
 	REFERENCES Admins (admin_num)
 ;
@@ -437,12 +432,12 @@ ALTER TABLE Products
 
 /* Comments */
 
+COMMENT ON COLUMN Orders.payment_methods IS '신용카드 / 무통장 입금';
 COMMENT ON COLUMN Orders.order_status IS '1. 결제 대기
 2. 결제 완료
 3. 배송 준비중
 4. 배송중
 5. 배송 완료';
-COMMENT ON COLUMN Orders.payment_methods IS '신용카드 / 무통장 입금';
 
 
 

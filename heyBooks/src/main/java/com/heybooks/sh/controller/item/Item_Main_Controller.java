@@ -34,9 +34,9 @@ public class Item_Main_Controller {
 	private static final Logger logger = LoggerFactory.getLogger(Item_Main_Controller.class);
 
 	@Resource
-	Item_Category_Service cate_service;
+	private Item_Category_Service cate_service;
 	@Resource
-	Item_Main_Service service;
+	private Item_Main_Service service;
 
 	// 1. 상품 - 추가
 	@RequestMapping(value = "/admin_item_add", method = RequestMethod.GET)
@@ -78,17 +78,21 @@ public class Item_Main_Controller {
 			@RequestParam(value = "list_arr", defaultValue = "product_date") String list_arr, Model model,
 			HttpServletRequest request) {
 		logger.info("get item-list");
-		int totalRowCount = service.get_count();
-		PageUtil util = new PageUtil(pageNum, totalRowCount, rowCount, 5);
+		HashMap<String, Object> count_map = new HashMap<String, Object>();
+		int totalRowCount = service.get_count(count_map); // 전체 글 수 얻기
+		if(pageNum<1) pageNum = 1;
+		PageUtil util = new PageUtil(pageNum, totalRowCount, rowCount, 5); // 페이징처리
 		HashMap<String, Object> map = new HashMap<String, Object>();
-		if (!(list_arr.equals("product_name"))) {
-			list_arr = list_arr + " desc";
-		}
-		map.put("list_arr", list_arr);
+		String list_arr_val = list_arr;
+		if (!(list_arr.equals("product_name"))) { // 리스트 순서정하기
+			list_arr_val = list_arr_val + " desc"; 
+		} 
+	
+		map.put("list_arr", list_arr_val); 
 		map.put("startRow", util.getStartRow());
 		map.put("endRow", util.getEndRow());
 		logger.info("list_arr: "+ list_arr);
-		List<Item_Vo> item_list = service.item_list(map);
+		List<Item_Vo> item_list = service.item_list(map); 
 		model.addAttribute("rowCount", rowCount); // 보여질 아이템 갯수
 		model.addAttribute("list_arr", list_arr); // 아이템 정렬 기준
 		model.addAttribute("item_list", item_list);

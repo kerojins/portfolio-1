@@ -77,11 +77,9 @@
 					</tr>
 					<tr>
 						<th>추가 연락처</th>
-						<td colspan="3"><select name="members_add_number">
-								<option value="010">010</option>
-								<option value="011">011</option>
-								<option value="016">016</option>
-						</select> - <input type="text" onkeyup="join13();" class="phone_input"
+						<td colspan="3">
+							<input type="text" onkeyup="join13();" class="phone_input" name="members_add_number" maxlength="3">
+						  - <input type="text" onkeyup="join13();" class="phone_input"
 							name="members_add_number" maxlength="4"> - <input type="text" onkeyup="join14();"
 							class="phone_input" name="members_add_number" maxlength="4"><span id="phone_add_span"class="join_msg" title=""></span></td>
 					</tr>

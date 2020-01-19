@@ -488,6 +488,10 @@ form.best_seller_date_form button {
 	color: #666;
 }
 
+#page_ck a{
+	background-color:#0e7eda;
+	color: white;
+} 
 /* 신간 도서 */
 .new_book_form .array_select_list {
 	float: left;
@@ -514,6 +518,11 @@ form.best_seller_date_form button {
 .sub_right_content .item_pagenum .page-link {
 	font-size: 13px;
 }
+.sub_right_content  .small_cate_form .item_pagenum{
+	margin-top: 0;
+}
+
+
 
 /* 국내도서 */
 .category_array_box {
@@ -1593,12 +1602,18 @@ td.order_item_info>p, td.order_item_info .order_item_title {
 	text-align: center;
 }
 
-.order_item_allPrice .order_item_allPrice_txt {
+
+ .order_item_allPrice .order_item_allPrice_txt,.allPrice_txt {
 	text-align: center;
 	font-weight: 600;
 	font-size: 15px;
+	color: #444;
+} 
+.cart_order_box{
+	display:none;
+	border-bottom: 1px solid #ddd;
+	padding-bottom: 10px;
 }
-
 .order_item_choice {
 	padding: 0 10px;
 }
@@ -1674,7 +1689,9 @@ td.order_total_price {
 td.order_total_price span {
 	color: #ff4141;
 }
-
+.order_total_count i{
+	font-style: normal;
+}
 .order_total_wrap>span {
 	position: absolute;
 	top: 69px;
@@ -1686,17 +1703,17 @@ td.order_total_price span {
 }
 
 .order_total_minus {
-	left: 302px;
+	left: 297px;
 	background: #ffc107;
 }
 
 .order_total_plus {
-	left: 512px;
+	left: 501px;
 	background: #ffc107;
 }
 
 .order_total_equals {
-	left: 721px;
+	left: 705px;
 	background: #1160a0;
 }
 
@@ -1712,13 +1729,31 @@ td.order_total_price span {
 	padding-right: 15px;
 	margin-top: 10px;
 }
-
+.del_btn{
+	color: #444;
+	font-size: 13px;
+	background: #ddd;
+	border-color: #ccc;
+	margin-top:10px;
+	margin-left:10px;
+	width: 100px;
+	
+}
 .order_mileage span {
 	color: #457CAB;
 	font-weight: 600;
 	font-size: 17px;
 }
-
+.order_all_item{
+	float: right;
+	
+}
+.order_all_item a{
+	color: white !important;
+	font-size: 13px;
+	margin-top: 4px;
+}
+ 
 .twin_btn {
 	width: 410px;
 	margin: 50px auto 40px;
@@ -1734,9 +1769,10 @@ td.order_total_price span {
 	background: #0e7eda;
 	color: white !important;
 	margin-left: 10px;
+	border: none;
 }
 
-.twin_btn a {
+.twin_btn a,.twin_btn input {
 	text-align: center;
 	display: inline-block;
 	width: 200px;
@@ -1746,7 +1782,10 @@ td.order_total_price span {
 	font-weight: 600;
 	font-size: 17px;
 }
-
+.order_item_shipping{
+	text-align: center;
+	font-size: 14px;
+}
 .order_item_mileage {
 	text-align: center;
 	font-size: 14px;
@@ -1949,7 +1988,7 @@ td.order_total_price span {
 }
 
 #order_form .order_pay, #order_form .order_total_table {
-	margin-top: 0;
+	margin-top: 15px;
 }
 
 .payment_box span {
@@ -1965,7 +2004,12 @@ td.order_total_price span {
 	position: relative;
 	top: 1px;
 }
-
+.mileage_btn{
+	border: 1px solid #ccc;
+	font-size: 13px;
+	padding: 4px 5px;
+	margin-left: 5px;
+}
 .payment_box .pi_select {
 	border-top: 2px solid #087ddc;
 	padding: 15px;
@@ -3888,8 +3932,7 @@ a.qna_btn {
 }
 
 .qna_btn {
-	width: 310px;
-	margin: 50px auto 40px;
+	margin: 40px auto 40px;
 }
 
 .qna_btn .twin_home_btn { 
@@ -3904,7 +3947,7 @@ a.qna_btn {
 	margin-left: 10px;
 }
 
-.qna_btn a {
+.qna_btn a, .qna_btn input {
 	text-align: center;
 	display: inline-block;
 	width: 150px;

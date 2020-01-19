@@ -14,7 +14,9 @@ import com.heybooks.sh.vo.item.Item_Editor_Vo;
 @Repository
 public class Item_Category_DaoImpl implements Item_Category_Dao{
 	
-	@Resource SqlSession sqlSession;
+	@Resource 
+	private SqlSession sqlSession;
+	
 	private static final String NAMESPACE ="com.heybooks.sh.mybatis.Item_Mapper";
 	// 아이템 카테고리 목록 리스트
 	

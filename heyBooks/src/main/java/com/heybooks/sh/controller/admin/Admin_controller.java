@@ -51,13 +51,16 @@ public class Admin_controller {
 	}
 
 	@RequestMapping(value = "/admin", method = RequestMethod.POST)
-	public String admin_login(Admin_Vo vo, Model model, HttpServletRequest request)
+	public String admin_login(String admin_id, String admin_password, Model model, HttpServletRequest request)
 			throws Exception {
 		logger.info("post admin-login");
-		Admin_Vo login = service.login(vo);
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("admin_id", admin_id);
+		map.put("admin_password", admin_password);
+		Admin_Vo login = service.login(map);
 		HttpSession session = request.getSession();
 		if (login != null) { 
-			session.setAttribute("admin", vo);
+			session.setAttribute("admin", login);
 			return "redirect:/admin_main";
 		}else{
 			session.setAttribute("admin", null);
@@ -86,10 +89,5 @@ public class Admin_controller {
 	public String admin_order_list() {
 		return ".admin.admin_order_list";
 	}
-	
-	
-
-	
-
 
 }

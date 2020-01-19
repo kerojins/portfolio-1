@@ -119,15 +119,13 @@ public class Member_Controller {
 			model.addAttribute("vo", vo);
 			String[] phone = vo.getMembers_phone_number().split("-"); // 휴대폰 번호 배열생성
 			model.addAttribute("phone", phone);
-			if (vo.getMembers_email() != null) { // 이메일 배열생성
-				String[] email = vo.getMembers_email().split("@");
-				model.addAttribute("email", email);
-			}
-			if (vo.getMembers_add_number() != null) { // 휴대폰 번호 배열생성
+			String[] email = vo.getMembers_email().split("@"); // 이메일 배열 생성			
+			model.addAttribute("email", email);
+			
+			if (vo.getMembers_add_number() != null) { // 전화번호 배열생성
 				String[] add_number = vo.getMembers_add_number().split("-");
 				model.addAttribute("add_number", add_number);
-			}
-
+			} 
 			if (vo.getMembers_gender().equals("여자")) { // 생년월일 성별 구분번호
 				model.addAttribute("gender", "2");
 			} else {
@@ -175,9 +173,7 @@ public class Member_Controller {
 		} catch (Exception e) {
 			return ".registration.alert";
 		}
-
 	}
-
 	
 
 	// 마이페이지

@@ -13,5 +13,8 @@ import com.heybooks.sh.vo.admin.Admin_Vo;
 public interface Admin_Dao {
 	
 	// 1. 관리자 로그인
-	public Admin_Vo login(Admin_Vo vo);
+	public Admin_Vo login(HashMap<String, Object> map);
+	
+	// 2. 관리자 상세정보
+	public Admin_Vo admin_detail(int num);
 }

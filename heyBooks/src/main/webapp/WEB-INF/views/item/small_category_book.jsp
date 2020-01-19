@@ -15,25 +15,34 @@
 		<div class="sub_full_box">
 			<!-- <h3 style="margin-bottom:0;">신간도서 </h3>  -->
 			<ul class="nav nav-tabs best_seller_nav">
-				<li class="nav-item"><a class="nav-link active"
-					href="<c:url value='#'/>">베스트셀러</a></li>
-				<li class="nav-item"><a class="nav-link"
-					href="<c:url value='#'/>">신상품</a></li>
-			</ul>
-			<div class="sub_right_content">
+				<li class="nav-item"><a class="nav-link <c:if test="${list_arr eq 'best' }">active</c:if>"
+					href="<c:url value='/small_category_book?cate_num=${cate_num}&cate_name=${cate_name}&list_arr=best'/>">베스트셀러</a></li>
+				<li class="nav-item"><a class="nav-link <c:if test="${list_arr eq 'new' }">active</c:if>"
+					href="<c:url value='/small_category_book?cate_num=${cate_num}&cate_name=${cate_name}&list_arr=new'/>">신상품</a></li>
+			</ul> 
+			<div class="sub_right_content"> 
 				<form class="small_cate_form" id="small_cate_form" method="post">
 					<div class="itemList_top_menu">
 						<div class="itemList_array_menu"> 
-							<div class="array_select_list">
-								<ul>
-									<li><a>판매량순</a></li>
-									<li><a>등록일순</a></li> 
-									<li><a>가격순</a></li>
-									<li><a>상품명순</a></li>
-									<li><a>평점순</a></li>
-									<li><a>리뷰순</a></li>
-								</ul>
-							</div>
+							<%-- 페이지 네비게이션 --%>
+							<ul class="pagination item_pagenum">
+								<li class="page-item"><a class="page-link" href="#"
+									aria-label="Previous"> <span aria-hidden="true">«</span>
+								</a></li>
+								<c:forEach var="i" begin="${util.startPageNum }" end="${util.endPageNum }">
+									<c:choose> 
+										<c:when test="${util.pageNum==i }"> 
+											<li class="page-item" id="page_ck" ><a class="page-link"  href="<c:url value='/small_category_book?pageNum=${i}&cate_num=${cate_num}&cate_name=${cate_name}&list_arr=${list_arr}'/>">${i}</a></li>
+										</c:when>  
+										<c:otherwise> 
+											<li class="page-item"><a class="page-link" href="<c:url value='/small_category_book?pageNum=${i}&cate_num=${cate_num}&cate_name=${cate_name}&list_arr=${list_arr}'/>">${i}</a></li>
+										</c:otherwise>
+									</c:choose>  
+								</c:forEach>  
+								<li class="page-item"><a class="page-link" href="#" 
+									aria-label="Next"> <span aria-hidden="true">»</span>
+								</a></li>   
+							</ul>
 							<div class="item_all_choice"> 
 								<span class="item_select_option"> 전체 
 									<input type="checkbox" id="item_all_check">
@@ -50,14 +59,15 @@
 								<li class="book_item_box">
 									<div class="book_item_box_left">  
 										<div class="book_item_imgBox">
-											<p class="book_item_rank">${status.count}</p>
-											<a href="#">  
+											<p class="book_item_rank">${(util.pageNum -1 ) * 10 + status.count}</p>
+											<a href="#">   
 												<c:set var="img" value="${vo.product_picture}"/>
 												<% 
 													String img_txt = (String)pageContext.getAttribute("img");
-												
-													String img_name = img_txt.split(",")[1];
-													pageContext.setAttribute("img_name", img_name);
+													if(img_txt != null){
+														String img_name = img_txt.split(",")[1];
+														pageContext.setAttribute("img_name", img_name);
+													}
 												%>
 												<img width="110" src="<c:url value='/resources/upload/${img_name}'/>">
 											</a> 
@@ -123,25 +133,7 @@
 						</ul>
 					</div>
 				</form>
-				<%-- 페이지 네비게이션 --%>
-				<ul class="pagination item_pagenum">
-					<li class="page-item"><a class="page-link" href="#"
-						aria-label="Previous"> <span aria-hidden="true">«</span>
-					</a></li>
-					<c:forEach var="i" begin="${util.startPageNum }" end="${util.endPageNum }">
-						<c:choose> 
-							<c:when test="${util.pageNum==i }"> 
-								<li class="page-item" id="page_ck" ><a class="page-link"  href="<c:url value='/small_category_book?pageNum=${i}'/>">${i}</a></li>
-							</c:when> 
-							<c:otherwise> 
-								<li class="page-item"><a class="page-link" href="<c:url value='/small_category_book?pageNum=${i}'/>">${i}</a></li>
-							</c:otherwise>
-						</c:choose>  
-					</c:forEach>  
-					<li class="page-item"><a class="page-link" href="#" 
-						aria-label="Next"> <span aria-hidden="true">»</span>
-					</a></li>   
-				</ul>
+				
 			</div> 
 		</div>
 	</div>
