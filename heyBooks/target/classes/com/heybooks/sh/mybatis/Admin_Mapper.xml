@@ -8,11 +8,23 @@
 	  select * from admins where admin_id = #{admin_id} and admin_password = #{admin_password} 
 	</select>
 	
-	<!-- 1. 관리자 상세정보 -->
+	<!-- 2. 관리자 상세정보 -->
 	<select id="admin_detail" parameterType="int" resultType="com.heybooks.sh.vo.admin.Admin_Vo">
 	  select * from admins where admin_num = #{admin_num} 
 	</select>
  
+   <!-- 관리자 활동 내역 -->
+   
+   <!-- 1. 관리자 활동 내역 등록 -->
+   <insert id="admin_alert_insert" parameterType="com.heybooks.sh.vo.admin.Admin_Alert_Vo">
+   	  insert into admin_alert values(admin_alert_num_seq.nextVal, #{admin_num}, #{admin_alert_type}, #{admin_alert_content},sysdate)
+   </insert>
+   
+   <!-- 2. 관리자 활동 내역 리스트 -->
+	<select id="admin_alert_list" resultType="com.heybooks.sh.vo.admin.Admin_Alert_Vo">
+	  select * from admin_alert  
+	</select>
+  
 </mapper>
   
 

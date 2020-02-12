@@ -10,12 +10,29 @@
 	<!-- 1:1문의글 전체 갯수 -->   
 	<select id="counsel_count" parameterType="HashMap" resultType="int">
 		select NVL(count(*),0) cnt from counsel  
-		<if test="members_num != null">
-			where members_num = #{members_num} 
-		</if> 
-		<if test="counsel_type != null">
-			where counsel_type = #{counsel_type} 
-		</if>   
+		<where>
+			<if test="members_num != null">
+			    members_num = #{members_num} 
+			</if>  
+			<if test="counsel_type != null">
+				and counsel_type = #{counsel_type} 
+			</if> 
+			<if test="counsel_answer != null"> 
+				and counsel_answer = #{counsel_answer}  
+			</if> 
+			<if test="keyword != null"> 
+    	     	and members_num in ( select members_num from members where members_id like '%'||#{keyword}||'%') or counsel_title like '%'||#{keyword}||'%'
+    		</if>  
+    		<if test="search_date != null and search_end_date == null"> 
+    	     	and counsel_date between to_date(#{search_date}) and sysdate 
+    		</if> 
+    		<if test="search_date == null and search_end_date != null"> 
+    	    	 <![CDATA[	and counsel_date <= to_date(#{search_end_date}) + 1 ]]> 
+    		</if>
+    		<if test="search_date != null and search_end_date != null"> 
+    	     	and counsel_date between to_date(#{search_date}) and to_date(#{search_end_date}) + 1
+    		</if>    
+		</where> 
 	</select>  
 	<!-- 1:1문의글 추가 -->   
 	<insert id="counsel_insert" parameterType="com.heybooks.sh.vo.board.Counsel_Vo">
@@ -34,14 +51,34 @@
 			select aa.*, rownum rnum from
 			(
 				select * from counsel
-				<if test ="members_num != null">
-				where members_num = #{members_num}
+			<where>
+				<if test="members_num != null">
+				    members_num = #{members_num} 
 				</if>  
+				<if test="counsel_type != null">
+					and counsel_type = #{counsel_type} 
+				</if> 
+				<if test="counsel_answer != null">
+					and counsel_answer = #{counsel_answer}  
+				</if> 
+				<if test="keyword != null"> 
+	    	     	and members_num in ( select members_num from members where members_id like '%'||#{keyword}||'%') or counsel_title like '%'||#{keyword}||'%' 
+	    		</if> 
+	    		<if test="search_date != null and search_end_date == null"> 
+	    	     	and counsel_date between to_date(#{search_date}) and sysdate  
+	    		</if> 
+	    		<if test="search_date == null and search_end_date != null"> 
+	    	    	 <![CDATA[	and counsel_date <= to_date(#{search_end_date}) + 1 ]]> 
+	    		</if>
+	    		<if test="search_date != null and search_end_date != null"> 
+	    	     	and counsel_date between to_date(#{search_date}) and to_date(#{search_end_date}) + 1
+	    		</if>     
+		    </where> 
 				order by ${list_arr}  
 			)aa      
 		)    
 		<if test = "startRow != null">
-		<![CDATA[ where rnum >= #{startRow} and rnum <= #{endRow} ]]>
+			<![CDATA[ where rnum >= #{startRow} and rnum <= #{endRow} ]]>
 		</if>
 	</select>
 	<!-- 1:1문의글 상세 -->
@@ -74,8 +111,22 @@
 	</resultMap> 
 	
 	<!-- 공지사항 갯수 -->
-	<select id="notice_count" resultType="int">
+	<select id="notice_count" parameterType="HashMap" resultType="int">
 		select NVL(count(*),0) cnt from notice 
+		<where>
+			<if test="keyword != null"> 
+    	     	admin_num in ( select admin_num from admins where admin_id like '%'||#{keyword}||'%') or notice_title like '%'||#{keyword}||'%' 
+    		</if> 
+    		<if test="search_date != null and search_end_date == null"> 
+    	     	and notice_date between to_date(#{search_date}) and sysdate  
+    		</if> 
+    		<if test="search_date == null and search_end_date != null"> 
+    	    	 <![CDATA[	and notice_date <= to_date(#{search_end_date}) + 1 ]]> 
+    		</if>
+    		<if test="search_date != null and search_end_date != null"> 
+    	     	and notice_date between to_date(#{search_date}) and to_date(#{search_end_date}) + 1
+    		</if>     
+		</where>
 	</select>  
 	 
 	<!-- 공지사항 추가 -->
@@ -100,11 +151,25 @@
 			select aa.*, rownum rnum from
 			(
 				select * from notice
+				<where>
+					<if test="keyword != null"> 
+		    	     	admin_num in ( select admin_num from admins where admin_id like '%'||#{keyword}||'%') or notice_title like '%'||#{keyword}||'%' 
+		    		</if> 
+		    		<if test="search_date != null and search_end_date == null"> 
+		    	     	and notice_date between to_date(#{search_date}) and sysdate  
+		    		</if> 
+		    		<if test="search_date == null and search_end_date != null"> 
+		    	    	 <![CDATA[	and notice_date <= to_date(#{search_end_date}) + 1 ]]> 
+		    		</if>
+		    		<if test="search_date != null and search_end_date != null"> 
+		    	     	and notice_date between to_date(#{search_date}) and to_date(#{search_end_date}) + 1
+		    		</if>     
+				</where>
 				order by ${list_arr}  
 			)aa      
 		)    
 		<if test = "startRow != null">
-		<![CDATA[ where rnum >= #{startRow} and rnum <= #{endRow} ]]>
+			<![CDATA[ where rnum >= #{startRow} and rnum <= #{endRow} ]]>
 		</if> 
 	</select>
 	<!-- 공지사항 상세정보 -->
@@ -114,16 +179,30 @@
 	
 	<!-- ======= 이벤트 ======== -->
 	
-	<!-- 공지사항 resultMap --> 
+	<!-- 이벤트 resultMap --> 
 	<resultMap type="com.heybooks.sh.vo.board.Event_Vo" id="event_map"> 
 		<result property="event_content" column="EVENT_CONTENT" jdbcType="CLOB" javaType="java.lang.String"/>
 	</resultMap>  
 	
 	<!-- 이벤트 갯수 -->
-	<select id="event_count" resultType="int">
+	<select id="event_count" parameterType="HashMap" resultType="int">
 		select NVL(count(*),0) cnt from event 
+		<where>
+			<if test="keyword != null"> 
+    	     	admin_num in ( select admin_num from admins where admin_id like '%'||#{keyword}||'%') or event_title like '%'||#{keyword}||'%' 
+    		</if> 
+    		<if test="search_date != null and search_end_date == null"> 
+    	     	and event_date between to_date(#{search_date}) and sysdate  
+    		</if> 
+    		<if test="search_date == null and search_end_date != null"> 
+    	    	 <![CDATA[	and event_date <= to_date(#{search_end_date}) + 1 ]]> 
+    		</if>
+    		<if test="search_date != null and search_end_date != null"> 
+    	     	and event_date between to_date(#{search_date}) and to_date(#{search_end_date}) + 1
+    		</if>     
+		</where> 
 	</select>  
-	
+	 
 	<!-- 이벤트 추가 -->
 	<insert id="event_insert" parameterType="com.heybooks.sh.vo.board.Event_Vo">
 		insert into event values(event_num_seq.nextVal , #{admin_num}, #{event_title}, #{event_content} , #{event_period} , #{event_thumbnail} , #{event_hit}, sysdate)
@@ -139,23 +218,175 @@
 		delete from event where event_num = #{event_num}
 	</delete>   
 	       
-	<!-- 공지사항 리스트 --> 
+	<!-- 이벤트 리스트 --> 
 	<select id="event_list" parameterType="HashMap" resultMap="event_map">
 	 	select * from 
 		( 
 			select aa.*, rownum rnum from
 			(
 				select * from event
+				<where>
+					<if test="keyword != null"> 
+		    	     	admin_num in ( select admin_num from admins where admin_id like '%'||#{keyword}||'%') or event_title like '%'||#{keyword}||'%' 
+		    		</if> 
+		    		<if test="search_date != null and search_end_date == null"> 
+		    	     	and event_date between to_date(#{search_date}) and sysdate  
+		    		</if> 
+		    		<if test="search_date == null and search_end_date != null"> 
+		    	    	 <![CDATA[	and event_date <= to_date(#{search_end_date}) + 1 ]]> 
+		    		</if>
+		    		<if test="search_date != null and search_end_date != null"> 
+		    	     	and event_date between to_date(#{search_date}) and to_date(#{search_end_date}) + 1
+		    		</if>     
+				</where> 
 				order by ${list_arr}  
 			)aa       
 		)    
 		<if test = "startRow != null">
-		<![CDATA[ where rnum >= #{startRow} and rnum <= #{endRow} ]]>
+			<![CDATA[ where rnum >= #{startRow} and rnum <= #{endRow} ]]>
 		</if> 
 	</select>
-	<!-- 공지사항 상세정보 -->
+	<!-- 이벤트 상세정보 -->
 	<select id="event_detail" parameterType="int" resultMap="event_map">
 		select * from event where event_num = #{event_num}
+	</select> 
+	
+	
+	
+	<!-- =========  리뷰 댓글 =========  --> 
+	
+	<!-- 리뷰 갯수 -->
+	<select id="review_count" resultType="int" parameterType="HashMap">
+		select NVL(count(*),0) cnt from review
+		<where>
+			<if test ="members_num != null and product_num == null">
+			    members_num = #{members_num}
+			</if> 
+			<if test ="members_num == null and product_num != null">
+				and product_num = #{product_num}
+			</if> 
+			<if test ="product_num != null and members_num != null">
+				and product_num = #{product_num} and members_num = #{members_num}
+			</if>    
+			<if test="review_grade != null">
+				and review_grade = #{review_grade}
+			</if>
+			<if test="keyword != null"> 
+	    	     and members_num in ( select members_num from members where members_id like '%'||#{keyword}||'%') or review_content like '%'||#{keyword}||'%' 
+    		</if> 
+    		<if test="search_date != null and search_end_date == null"> 
+    	     	and review_date between to_date(#{search_date}) and sysdate  
+    		</if> 
+    		<if test="search_date == null and search_end_date != null"> 
+    	    	 <![CDATA[	and review_date <= to_date(#{search_end_date}) + 1 ]]> 
+    		</if>
+    		<if test="search_date != null and search_end_date != null"> 
+    	     	and review_date between to_date(#{search_date}) and to_date(#{search_end_date}) + 1
+    		</if>    
+		</where>
+	</select>
+	<!-- 리뷰 추가 -->
+	<insert id="review_insert" parameterType="com.heybooks.sh.vo.board.Review_Vo">
+		insert into review values(review_num_seq.nextVal, #{product_num}, #{members_num}, #{review_content}, #{review_grade}, 0, 0, #{review_spoiler}, sysdate)
+	</insert>
+	<!-- 리뷰 상세 --> 
+	<select id="review_detail" resultType="com.heybooks.sh.vo.board.Review_Vo">
+		select * from review where review_num = #{review_num}
+	</select> 
+	<!-- 리뷰 수정 -->
+	<update id="review_update" parameterType="com.heybooks.sh.vo.board.Review_Vo">
+		update review set review_content = #{review_content}, review_grade = #{review_grade}, review_spoiler = #{review_spoiler} where review_num = #{review_num}
+	</update> 
+	<!-- 리뷰 삭제 -->
+	<delete id="review_delete" parameterType="int">
+		delete from review where review_num = #{review_num}
+	</delete>
+	<!-- 리뷰 리스트 --> 
+	<select id="review_list" parameterType="HashMap" resultType="com.heybooks.sh.vo.board.Review_Vo">
+	 	select * from 
+		( 
+			select aa.*, rownum rnum from
+			(
+				select * from review
+				<where>
+					<if test ="members_num != null and product_num == null">
+					    members_num = #{members_num}
+					</if> 
+					<if test ="members_num == null and product_num != null">
+						and product_num = #{product_num}
+					</if> 
+					<if test ="product_num != null and members_num != null">
+						and product_num = #{product_num} and members_num = #{members_num}
+					</if>
+					<if test="review_grade != null">
+						and review_grade = #{review_grade}
+					</if>
+					<if test="keyword != null"> 
+			    	     and members_num in ( select members_num from members where members_id like '%'||#{keyword}||'%') or review_content like '%'||#{keyword}||'%' 
+		    		</if> 
+		    		<if test="search_date != null and search_end_date == null"> 
+		    	     	and review_date between to_date(#{search_date}) and sysdate  
+		    		</if> 
+		    		<if test="search_date == null and search_end_date != null"> 
+		    	    	 <![CDATA[	and review_date <= to_date(#{search_end_date}) + 1 ]]> 
+		    		</if>
+		    		<if test="search_date != null and search_end_date != null"> 
+		    	     	and review_date between to_date(#{search_date}) and to_date(#{search_end_date}) + 1
+		    		</if>         
+				</where>
+				<if test="list_arr != null">
+					order by ${list_arr}      
+				</if> 
+			)aa          
+		)    
+		<if test = "startRow != null">
+			<![CDATA[ where rnum >= #{startRow} and rnum <= #{endRow} ]]>
+		</if> 
+	</select>
+	
+	
+	
+	<!-- =========  리뷰 댓글 =========  --> 
+	
+	<!-- 리뷰 갯수 -->
+	<select id="review_reply_count" resultType="int" parameterType="HashMap">
+		select NVL(count(*),0) cnt from review_reply
+		<if test ="review_num != null">
+			where review_num = #{review_num}
+		</if> 
+		<if test ="members_num != null">
+			where members_num = #{members_num}
+		</if>   
+	</select> 
+	<!-- 리뷰 추가 -->
+	<insert id="review_reply_insert" parameterType="com.heybooks.sh.vo.board.Review_Reply_Vo">
+		insert into review_reply values(review_reply_num_seq.nextVal, #{review_num}, #{members_num}, #{review_reply_content}, sysdate)
+	</insert>
+	<!-- 리뷰 상세 --> 
+	<select id="review_reply_detail" resultType="com.heybooks.sh.vo.board.Review_Reply_Vo">
+		select * from review_reply where review_reply_num = #{review_reply_num}
+	</select> 
+	<!-- 리뷰 수정 -->
+	<update id="review_reply_update" parameterType="com.heybooks.sh.vo.board.Review_Reply_Vo">
+		update review_reply set review_reply_content = #{review_reply_content} where review_reply_num = #{review_reply_num}
+	</update> 
+	<!-- 리뷰 삭제 -->
+	<delete id="review_reply_delete" parameterType="HashMap">
+		delete from review_reply where 
+			<if test ="review_reply_num != null">
+			review_reply_num = #{review_reply_num}  
+			</if>
+			<if test ="review_num != null">
+				review_num = #{review_num}
+			</if>
+	</delete>
+	<!-- 리뷰 리스트 -->  
+	<select id="review_reply_list" parameterType="HashMap" resultType="com.heybooks.sh.vo.board.Review_Reply_Vo">
+		select * from review_reply
+		<if test ="review_num != null">
+			where review_num = #{review_num}
+		</if>  
+		order by ${list_arr}      
 	</select>
 </mapper>    
    

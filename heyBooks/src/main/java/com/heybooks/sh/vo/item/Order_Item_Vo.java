@@ -8,16 +8,18 @@ public class Order_Item_Vo {
 	private int order_item_num;
 	private int product_num;
 	private int order_num;
+	private String order_item_name;
 	private String order_item_quantity;
 	private String order_item_price;
 	private Date order_item_date;
 	public Order_Item_Vo() {}
-	public Order_Item_Vo(int order_item_num, int product_num, int order_num, String order_item_quantity,
-			String order_item_price, Date order_item_date) {
+	public Order_Item_Vo(int order_item_num, int product_num, int order_num, String order_item_name,
+			String order_item_quantity, String order_item_price, Date order_item_date) {
 		super();
 		this.order_item_num = order_item_num;
 		this.product_num = product_num;
 		this.order_num = order_num;
+		this.order_item_name = order_item_name;
 		this.order_item_quantity = order_item_quantity;
 		this.order_item_price = order_item_price;
 		this.order_item_date = order_item_date;
@@ -40,6 +42,12 @@ public class Order_Item_Vo {
 	public void setOrder_num(int order_num) {
 		this.order_num = order_num;
 	}
+	public String getOrder_item_name() {
+		return order_item_name;
+	}
+	public void setOrder_item_name(String order_item_name) {
+		this.order_item_name = order_item_name;
+	}
 	public String getOrder_item_quantity() {
 		return order_item_quantity;
 	}
@@ -61,7 +69,7 @@ public class Order_Item_Vo {
 	@Override
 	public String toString() {
 		return "Order_Item_Vo [order_item_num=" + order_item_num + ", product_num=" + product_num + ", order_num="
-				+ order_num + ", order_item_quantity=" + order_item_quantity + ", order_item_price=" + order_item_price
-				+ ", order_item_date=" + order_item_date + "]";
+				+ order_num + ", order_item_name=" + order_item_name + ", order_item_quantity=" + order_item_quantity
+				+ ", order_item_price=" + order_item_price + ", order_item_date=" + order_item_date + "]";
 	}
-}
+} 

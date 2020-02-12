@@ -1,3 +1,5 @@
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="java.util.Date"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -33,61 +35,67 @@
 			<div class="admin_preview">
 				<div class="col-md-3">
 					<span class="more"><i class="fas fa-plus"></i></span> <span
-						class="count">26</span>
+						class="count">${order_total_cnt}</span>
 					<h2>
 						<i class="fas fa-truck"></i> 주문처리
 					</h2>
 					<table class="shipping_preview_table">
 						<tr>
 							<th>주문접수</th>
-							<td><a href="">0</a>건</td>
+							<td><a href="">${order_cnt_arr[0]}</a>건</td>
 						</tr>
 						<tr>
 							<th>결제확인</th>
-							<td><a href="">2</a>건</td>
+							<td>
+								<a href="">${order_cnt_arr[1]}</a>건
+							</td>
 						</tr>
 						<tr>
 							<th>상품준비</th>
-							<td><a href="">1</a>건</td>
+							<td><a href="">${order_cnt_arr[2]}</a>건</td>
 						</tr>
 						<tr>
 							<th>배송중</th>
-							<td><a href="">4</a>건</td>
+							<td><a href="">${order_cnt_arr[3]}</a>건</td>
 						</tr>
 						<tr>
 							<th>배송완료</th>
-							<td><a href="">2</a>건</td>
+							<td><a href="">${order_cnt_arr[4]}</a>건</td>
 						</tr>
 						<tr>
 							<th>환불접수</th>
-							<td><a href="">1</a>건</td>
+							<td><a href="">${order_cnt_arr[5]}</a>건</td>
 						</tr>
 					</table>
 				</div>
 				<div class="col-md-3">
 					<span class="more"><i class="fas fa-plus"></i></span> <span
-						class="count">3</span>
-					<h2>
+						class="count">${new_item_cnt}</span>
+					<h2> 
 						<i class="fas fa-book"></i> 상품현황
 					</h2>
 					<table class="item_preview_table">
 						<tr>
 							<th>판매 중</th>
-							<td><a href="">150</a>건</td>
+							<td><a href="">${item_cnt_arr[0]}</a>건</td>
+						</tr>
+						<tr> 
+							<th>판매 중지</th>
+							<td><a href="">${item_cnt_arr[1]}</a>건</td>
 						</tr>
 						<tr>
-							<th>판매대기</th>
-							<td><a href="">4</a>건</td>
+							<th>품절</th>
+							<td><a href="">${item_cnt_arr[2]}</a>건</td>
 						</tr>
 						<tr>
-							<th>신규등록</th>
-							<td><a href="">17</a>건</td>
+							<th>신규등록(3일이내)</th>
+							<td><a href="">${new_item_cnt}</a>건</td>
 						</tr>
 						<tr>
 							<th>재고 20개미만</th>
-							<td><a href="">10</a>건</td>
+							<td><a href="">${stock_item_cnt}</a>건</td>
 						</tr>
-					</table>
+					</table> 
 				</div>
 				<div class="col-md-3">
 					<span class="more"><i class="fas fa-plus"></i></span> <span
@@ -96,44 +104,23 @@
 						<i class="far fa-comment-alt"></i> 1:1문의
 					</h2>
 					<table class="qna_preview_table">
-						<tr>
-							<th>상품문의</th>
-							<td><a href="">할인이 되나요??</a></td>
-							<td class="reply_cell">미답변</td>
-							<td>11.30</td>
-						</tr>
-						<tr>
-							<th>환불문의</th>
-							<td><a href="">취소하고싶어요</a></td>
-							<td class="reply_cell"></td>
-							<td>10.28</td>
-						</tr>
-						<tr>
-							<th>배송문의</th>
-							<td><a href="">보통 얼마만에오나요??</a></td>
-							<td class="reply_cell"></td>
-							<td>09.11</td>
-						</tr>
-						<tr>
-							<th>상품문의</th>
-							<td><a href="">표지가 많이 두껍나요</a></td>
-							<td class="reply_cell"></td>
-							<td>09.09</td>
-						</tr>
-						<tr>
-							<th>상품문의</th>
-							<td><a href="">가격이 바뀐건가요</a></td>
-							<td class="reply_cell"></td>
-							<td>09.09</td>
-						</tr>
-						<tr>
-							<th>상품문의</th>
-							<td><a href="">할인 또 언제하나요</a></td>
-							<td class="reply_cell"></td>
-							<td>09.09</td>
-						</tr>
-					</table>
-				</div>
+						<c:forEach var="list"  begin="0" end="6"  items="${counsel_list}">
+							<tr>
+								<th>${list.counsel_type}</th>
+								<td><a href="">${list.counsel_title}</a></td>
+								<td class="reply_cell">${list.counsel_answer}</td>
+							<c:set var="date" value="${list.counsel_date}"/>
+							<%  
+								Date date = (Date) pageContext.getAttribute("date");
+								SimpleDateFormat sdate = new SimpleDateFormat("MM-dd");
+								String date_txt = sdate.format(date);
+								pageContext.setAttribute("date_txt", date_txt);
+							%> 
+								<td>${date_txt}</td>
+							</tr> 
+						</c:forEach>
+					</table> 
+				</div> 
 				<div class="col-md-3">
 					<span class="more"><i class="fas fa-plus"></i></span> <span
 						class="count">2</span>
@@ -141,31 +128,20 @@
 						<i class="far fa-list-alt"></i> 리뷰관리
 					</h2>
 					<table class="qna_preview_table">
-						<tr>
-							<td><a href="">할인이 되나요??</a></td>
-							<td>11.30</td>
-						</tr>
-						<tr>
-							<td><a href="">취소하고싶어요</a></td>
-							<td>10.28</td>
-						</tr>
-						<tr>
-							<td><a href="">보통 얼마만에오나요??</a></td>
-							<td>09.11</td>
-						</tr>
-						<tr>
-							<td><a href="">표지가 많이 두껍나요</a></td>
-							<td>09.09</td>
-						</tr>
-						<tr>
-							<td><a href="">가격이 바뀐건가요</a></td>
-							<td>09.09</td>
-						</tr>
-						<tr>
-							<td><a href="">할인 또 언제하나요</a></td>
-							<td>09.09</td>
-						</tr>
-					</table>
+						<c:forEach var="list" begin="0" end="6"  items="${review_list}">
+							<tr>
+								<td><a href="">${list.review_content}</a></td>
+								<c:set var="date" value="${list.review_date}"/>
+								<%  
+									Date date = (Date) pageContext.getAttribute("date");
+									SimpleDateFormat sdate = new SimpleDateFormat("MM-dd");
+									String date_txt = sdate.format(date);
+									pageContext.setAttribute("date_txt", date_txt);
+								%> 
+								<td>${date_txt}</td>  
+							</tr>
+						</c:forEach>
+					</table> 
 				</div>
 			</div>
 			<div class="board_preview">
@@ -176,30 +152,20 @@
 					</div>
 					<div class="board_privew_content">
 						<table class="">
+							<c:forEach var="list" begin="0" end="6"  items="${event_list}">
 							<tr>
-								<td><a href="">할인이 되나요??</a></td>
-								<td>11.30</td>
+								<td><a href="">${list.event_title}</a></td>
+								<c:set var="date" value="${list.event_date}"/>
+								<%  
+									Date date = (Date) pageContext.getAttribute("date");
+									SimpleDateFormat sdate = new SimpleDateFormat("MM-dd");
+									String date_txt = sdate.format(date);
+									pageContext.setAttribute("date_txt", date_txt);
+								%>  
+								<td>${date_txt}</td>
 							</tr>
-							<tr>
-								<td><a href="">취소하고싶어요</a></td>
-								<td>10.28</td>
-							</tr>
-							<tr>
-								<td><a href="">보통 얼마만에오나요??</a></td>
-								<td>09.11</td>
-							</tr>
-							<tr>
-								<td><a href="">표지가 많이 두껍나요</a></td>
-								<td>09.09</td>
-							</tr>
-							<tr>
-								<td><a href="">가격이 바뀐건가요</a></td>
-								<td>09.09</td>
-							</tr>
-							<tr>
-								<td><a href="">할인 또 언제하나요</a></td>
-								<td>09.09</td>
-							</tr>
+						</c:forEach>
+						
 						</table>
 					</div>
 				</div>
@@ -210,30 +176,21 @@
 					</div>
 					<div class="board_privew_content">
 						<table class="">
+							<c:forEach var="list"  begin="0" end="6"  items="${notice_list}">
 							<tr>
-								<td><a href="">할인이 되나요??</a></td>
-								<td>11.30</td>
+								<td><a href="">${list.notice_title}</a></td>
+								<c:set var="date" value="${list.notice_date}"/>
+								<%  
+									Date date = (Date) pageContext.getAttribute("date");
+									SimpleDateFormat sdate = new SimpleDateFormat("MM-dd");
+									String date_txt = sdate.format(date);
+									pageContext.setAttribute("date_txt", date_txt);
+								%>  
+								<td>${date_txt}</td>
 							</tr>
-							<tr>
-								<td><a href="">취소하고싶어요</a></td>
-								<td>10.28</td>
-							</tr>
-							<tr>
-								<td><a href="">보통 얼마만에오나요??</a></td>
-								<td>09.11</td>
-							</tr>
-							<tr>
-								<td><a href="">표지가 많이 두껍나요</a></td>
-								<td>09.09</td>
-							</tr>
-							<tr>
-								<td><a href="">가격이 바뀐건가요</a></td>
-								<td>09.09</td>
-							</tr>
-							<tr>
-								<td><a href="">할인 또 언제하나요</a></td>
-								<td>09.09</td>
-							</tr>
+						</c:forEach> 
+						
+							
 						</table>
 					</div>
 				</div>
@@ -280,38 +237,47 @@
 				</div>
 				<div class="panel-body">
 					<div class="list-group">
-						<a href="#" class="list-group-item"> <i
+						<c:forEach var="list" items="${admin_alert_list }">
+							<a href="#" class="list-group-item"> 
+								<c:choose>
+									<c:when test="${list.admin_alert_type eq 1}">
+										<i class="fa fa-book fa-fw"></i>
+									</c:when>
+									<c:when test="${list.admin_alert_type eq 2}">
+										<i class="fa fa-comment fa-fw"></i>
+									</c:when>
+								</c:choose> ${list.admin_alert_content} 
+								<span class="pull-right text-muted small">
+								<c:set var="date" value="${list.admin_alert_date}"/>
+								<%   
+									Date date = (Date) pageContext.getAttribute("date");
+									SimpleDateFormat sdate = new SimpleDateFormat("MM-dd hh:mm");
+									String date_txt = sdate.format(date);
+									pageContext.setAttribute("date_txt", date_txt); 
+								%> 
+									<em>${date_txt}</em>
+								</span>
+							</a>
+						</c:forEach>
+					
+					
+					<!-- 	<a href="#" class="list-group-item"> <i
 							class="fa fa-comment fa-fw"></i> New Comment <span
 							class="pull-right text-muted small"><em>4 minutes ago</em>
 						</span>
 						</a> <a href="#" class="list-group-item"> <i
-							class="fa fa-twitter fa-fw"></i> 3 New Followers <span
+							class="fa fa-book fa-fw"></i> 3 New Followers <span
 							class="pull-right text-muted small"><em>12 minutes
 									ago</em> </span>
 						</a> <a href="#" class="list-group-item"> <i
 							class="fa fa-envelope fa-fw"></i> Message Sent <span
 							class="pull-right text-muted small"><em>27 minutes
 									ago</em> </span>
-						</a> <a href="#" class="list-group-item"> <i
-							class="fa fa-tasks fa-fw"></i> New Task <span
-							class="pull-right text-muted small"><em>43 minutes
-									ago</em> </span>
-						</a> <a href="#" class="list-group-item"> <i
-							class="fa fa-upload fa-fw"></i> Server Rebooted <span
-							class="pull-right text-muted small"><em>11:32 AM</em> </span>
-						</a> <a href="#" class="list-group-item"> <i
-							class="fa fa-bolt fa-fw"></i> Server Crashed! <span
-							class="pull-right text-muted small"><em>11:13 AM</em> </span>
-						</a> <a href="#" class="list-group-item"> <i
-							class="fa fa-warning fa-fw"></i> Server Not Responding <span
-							class="pull-right text-muted small"><em>10:57 AM</em> </span>
-						</a> <a href="#" class="list-group-item"> <i
+						</a> 
+						 <a href="#" class="list-group-item"> <i
 							class="fa fa-shopping-cart fa-fw"></i> New Order Placed <span
 							class="pull-right text-muted small"><em>9:49 AM</em> </span>
-						</a> <a href="#" class="list-group-item"> <i
-							class="fa fa-money fa-fw"></i> Payment Received <span
-							class="pull-right text-muted small"><em>Yesterday</em> </span>
-						</a>
+						</a>  -->
 					</div>
 					<a href="#" class="btn btn-default btn-block">View All Alerts</a>
 				</div>

@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.heybooks.sh.service.admin.Admin_Service;
 import com.heybooks.sh.service.board.Board_Service;
@@ -29,6 +30,8 @@ import com.heybooks.sh.vo.board.Counsel_Reply_Vo;
 import com.heybooks.sh.vo.board.Counsel_Vo;
 import com.heybooks.sh.vo.board.Event_Vo;
 import com.heybooks.sh.vo.board.Notice_Vo;
+import com.heybooks.sh.vo.board.Review_Reply_Vo;
+import com.heybooks.sh.vo.board.Review_Vo;
 import com.heybooks.sh.vo.member.Member_Vo;
 
 @Controller
@@ -70,9 +73,9 @@ public class Board_Ajax_Controller {
 			String date_txt = sdate.format(vo.getNotice_date());
 			map.put("num", vo.getNotice_num());  
 			map.put("title", vo.getNotice_title());  
-			map.put("content", vo.getNotice_content());  
+			map.put("content", vo.getNotice_content().replaceAll("\r\n","<br>"));  
 			map.put("date", date_txt);  
-			map.put("another", vo.getNotice_hit());  
+			map.put("another", vo.getNotice_hit());   
 			map.put("name", admin_id);   
 		}
 		else if(board_id.equals("event")) {
@@ -89,6 +92,17 @@ public class Board_Ajax_Controller {
 			map.put("thumbnail", vo.getEvent_thumbnail());  
 			map.put("another", vo.getEvent_hit());  
 			map.put("name", admin_id);   
+		}
+		else if(board_id.equals("review")) {
+			logger.info("ajax/get review-detail");
+			Review_Vo vo = service.review_detail(board_seq);
+			String member_id = member_service.getInfo(vo.getMembers_num()).getMembers_id();
+			String date_txt = sdate.format(vo.getReview_date());
+			map.put("num", vo.getReview_num());  
+			map.put("content", vo.getReview_content());   
+			map.put("date", date_txt);  
+			map.put("another", vo.getReview_report());  
+			map.put("name", member_id);   
 		}
 		return map;       
 	} 
@@ -131,7 +145,89 @@ public class Board_Ajax_Controller {
 		} 
 		return "/resources/upload/editor/" + sav_file_name;
 	}  
-	 
+	
+	
+	// ∏Æ∫‰ ¥Ò±€ ∏ÆΩ∫∆Æ ∫“∑Øø¿±‚
+	@RequestMapping("/review_reply_list")
+	@ResponseBody
+	public HashMap<String, Object> review_reply_list(int review_num) {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("review_num", review_num);
+		map.put("list_arr", "review_reply_date desc");
+		List<Review_Reply_Vo> review_reply_list = service.review_reply_list(map);
+		SimpleDateFormat sdate = new SimpleDateFormat("yyyy-MM-dd");
+		ArrayList<String> id_arr= new ArrayList<String>();
+		ArrayList<String> date_txt = new ArrayList<String>();
+		for(Review_Reply_Vo vo : review_reply_list) {
+			id_arr.add(member_service.getInfo(vo.getMembers_num()).getMembers_id());
+			date_txt.add(sdate.format(vo.getReview_reply_date()));
+		}
+		System.out.println(review_reply_list.toString());
+		map.put("list", review_reply_list);
+		map.put("id_arr", id_arr);
+		map.put("date_txt", date_txt);
+		return map;
+	}  
+		 
+	// ∏Æ∫‰ √ﬂ∞°
+	@RequestMapping(value ="/review_reply_insert")
+	@ResponseBody 
+	public HashMap<String, Object> review_reply_insert(Review_Reply_Vo vo, Model model, HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		Member_Vo member_vo = (Member_Vo)session.getAttribute("member");
+		logger.info(vo.toString());
+		vo.setMembers_num(member_vo.getMembers_num());
+		vo.setReview_reply_content(vo.getReview_reply_content().replaceAll("<br>","\r\n")); // ¡ŸπŸ≤ﬁ √≥∏Æ
+		logger.info(vo.toString());
+		service.review_reply_insert(vo);
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		SimpleDateFormat sdate = new SimpleDateFormat("yyyy-MM-dd");
+		map.put("review_num", vo.getReview_num());
+		map.put("list_arr", "review_reply_date asc");
+		List<Review_Reply_Vo> review_reply_list = service.review_reply_list(map);
+		ArrayList<String> id_arr= new ArrayList<String>();
+		ArrayList<String> date_txt = new ArrayList<String>();
+		 
+		for(Review_Reply_Vo rp_vo : review_reply_list) {
+			id_arr.add(member_service.getInfo(rp_vo.getMembers_num()).getMembers_id());
+			date_txt.add(sdate.format(rp_vo.getReview_reply_date()));
+		}  
+		System.out.println(review_reply_list.toString());
+		map.put("list", review_reply_list);
+		map.put("id_arr", id_arr);
+		map.put("date_txt", date_txt);
+		return map;
+		
+	}  
+	
+	// ∏Æ∫‰ ªË¡¶
+		@RequestMapping(value ="/review_reply_delete")
+		@ResponseBody 
+		public HashMap<String, Object> review_reply_delete(int reply_num, int review_num, Model model, HttpServletRequest request) {
+			HashMap<String, Object> del_map = new HashMap<String, Object>();
+			del_map.put("review_reply_num", reply_num); 
+			service.review_reply_delete(del_map);
+			HashMap<String, Object> map = new HashMap<String, Object>();
+			SimpleDateFormat sdate = new SimpleDateFormat("yyyy-MM-dd");
+			map.put("review_num", review_num);
+			map.put("list_arr", "review_reply_date asc"); 
+			List<Review_Reply_Vo> review_reply_list = service.review_reply_list(map);
+			ArrayList<String> id_arr= new ArrayList<String>();
+			ArrayList<String> date_txt = new ArrayList<String>();
+			 
+			for(Review_Reply_Vo rp_vo : review_reply_list) {
+				id_arr.add(member_service.getInfo(rp_vo.getMembers_num()).getMembers_id());
+				date_txt.add(sdate.format(rp_vo.getReview_reply_date()));
+			}  
+			System.out.println(review_reply_list.toString());
+			map.put("list", review_reply_list);
+			map.put("id_arr", id_arr);
+			map.put("date_txt", date_txt);
+			return map;
+			
+		}  
+  
 	
 	
 	

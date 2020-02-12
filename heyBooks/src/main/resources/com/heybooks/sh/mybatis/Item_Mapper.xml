@@ -9,17 +9,90 @@
 	<!-- 상품 총 데이터 수 -->   
 	<select id="get_count" parameterType="HashMap" resultType="int">
 		select NVL(count(*),0) cnt from products  
-		<if test="cate_num != null">
-			where product_cate_num = #{cate_num} 
-		</if>  
+		<where>
+			<if test ="cate_num != null">
+				product_cate_num = #{cate_num} and product_status = '정상' and product_view = '노출'
+			</if> 
+			<if test="keyword != null">
+			 	and product_num like '%'||#{keyword}||'%' or product_name like '%'||#{keyword}||'%' 
+			</if>  
+			<if test="search_date != null and search_end_date == null"> 
+    	     	and product_date between to_date(#{search_date}) and sysdate 
+    		</if> 
+    		<if test="search_date == null and search_end_date != null"> 
+    	    	 <![CDATA[	and product_date <= to_date(#{search_end_date}) + 1 ]]> 
+    		</if> 
+    		<if test="search_date != null and search_end_date != null"> 
+    	     	and product_date between to_date(#{search_date}) and to_date(#{search_end_date}) + 1
+    		</if>    
+			<if test="category1 != null and category2 == null and category3 == null">
+				and (select cate_ref2 from product_category where cate_num = product_cate_num) = #{category1} 
+			</if>
+			<if test="category2 != null and category3 == null">
+				and (select cate_ref3 from product_category where cate_num = product_cate_num) = #{category2} 
+			</if>
+			<if test="category3 != null">
+				and (select cate_ref1 from product_category where cate_num = product_cate_num) = #{category3} 
+			</if>
+			<if test ="product_publish != null">
+				and product_publish = #{product_publish}
+			</if>
+			<if test ="product_editor_num != null">
+				and product_editor_num = #{product_editor_num}
+			</if> 
+			<if test ='start_price != null and end_price == null'> 
+    			<![CDATA[ and round(replace(product_price, ',', '')) >= round(replace(#{start_price}, ',', '')) ]]>
+    		</if> 
+    			<if test ='start_price == null and end_price != null'> 
+    			<![CDATA[ and round(replace(product_price, ',', '')) <= round(replace(#{end_price}, ',', '')) ]]>
+    		</if>  
+			<if test ='start_price != null and end_price != null'> 
+    			<![CDATA[ and round(replace(product_price, ',', '')) >= round(replace(#{start_price}, ',', '')) and round(replace(product_price, ',', '')) <= round(replace(#{end_price}, ',', '')) ]]>
+    		</if>   
+    		<if test ='start_stock != null and end_stock == null'>  
+    			<![CDATA[ and product_stock >= #{start_stock} ]]>
+    		</if>
+    		<if test ='start_stock == null and end_stock != null'>  
+    			<![CDATA[ and product_stock <= #{end_stock} ]]>
+    		</if>
+    		<if test ='start_stock != null and end_stock != null'>  
+    			<![CDATA[ and product_stock >= #{start_stock} and product_stock <= #{end_stock} ]]>
+    		</if>  
+    		<if test ="product_status != null"> 
+				 and product_status in (${product_status}) 
+			</if>    
+			<if test="product_view != null">
+				and product_view = #{product_view} 
+			</if>
+		</where>   
 	</select>  
 	
+	<!-- 상품 구매수 -->
+	<select id="sell_count" parameterType="int" resultType="int">
+		select sum(order_item_quantity) from order_items group by product_num
+	</select> 
+	
+	<!-- 신규 상품 등록 수 -->
+	<select id="new_item" resultType="int">
+		select count(*) cnt from products where product_date > sysdate - 3
+	</select>
+	
+	<!-- 재고 20개 미만 수 -->
+	<select id="stock_item" resultType="int">
+		 <![CDATA[	select count(*) cnt from products where product_stock < 20 ]]>
+	</select> 
+	 
+	<!-- 상품 상태별 갯수 -->
+	<select id="product_status" resultType="HashMap">
+		select product_status, count(*) product_cnt from products group by product_status
+	</select>
+	 
 	<!-- 1. 상품 추가 -->
 	<update id="item_insert" parameterType="com.heybooks.sh.vo.item.Item_Vo">
 		update products set product_cate_num= #{product_cate_num}, product_editor_num = #{product_editor_num}, product_publish = #{product_publish} , product_name = #{product_name}, product_page = #{product_page}, 
 		                    product_discription = #{product_discription}, product_index = #{product_index}, product_status = #{product_status}, product_view = #{product_view}, product_shipping_charge = #{product_shipping_charge}, product_discount = #{product_discount}, product_price = #{product_price},
-		                    product_discount_price = #{product_discount_price}, product_supplement = #{product_supplement}, product_stock = #{product_stock} where product_num = #{product_num}
-	</update> 
+		                    product_discount_price = #{product_discount_price}, product_supplement = #{product_supplement}, product_stock = #{product_stock}, product_update_date = sysdate where product_num = #{product_num}
+	</update>   
 	<!-- 상품 이미지 추가 -->
 	 <insert id="item_img_insert" parameterType="com.heybooks.sh.vo.item.Item_Vo">
 		insert into products values (#{product_num}, 110, null, 'a', 'a', 0, null, null, 'a', 'a','a', 'a', 'a','a', 0, 0, #{product_picture}, #{product_preview}, sysdate ,sysdate)
@@ -31,14 +104,146 @@
 			select aa.*, rownum rnum from
 			(
 				select * from products 
-				<if test ="cate_num != null">
-				where product_cate_num = #{cate_num}
-				</if> 
-				order by ${list_arr}  
-			)aa      
+				<where>
+					<if test ="cate_num != null">
+						 product_cate_num = #{cate_num} and product_status = '정상' and product_view = '노출'
+					</if> 
+					<if test="keyword != null">
+					 	and product_num like '%'||#{keyword}||'%' or product_name like '%'||#{keyword}||'%' 
+					</if>  
+					<if test="search_date != null and search_end_date == null"> 
+		    	     	and product_date between to_date(#{search_date}) and sysdate 
+		    		</if> 
+		    		<if test="search_date == null and search_end_date != null"> 
+		    	    	 <![CDATA[	and product_date <= to_date(#{search_end_date}) + 1 ]]> 
+		    		</if>
+		    		<if test="search_date != null and search_end_date != null"> 
+		    	     	and product_date between to_date(#{search_date}) and to_date(#{search_end_date}) + 1
+		    		</if>   
+					<if test="category1 != null and category2 == null and category3 == null">
+						and (select cate_ref2 from product_category where cate_num = product_cate_num) = #{category1} 
+					</if>
+					<if test="category2 != null and category3 == null">
+						and (select cate_ref3 from product_category where cate_num = product_cate_num) = #{category2} 
+					</if>
+					<if test="category3 != null">
+						and (select cate_ref1 from product_category where cate_num = product_cate_num) = #{category3} 
+					</if>
+					<if test ="product_publish != null">
+						and product_publish = #{product_publish}
+					</if>
+					<if test ="product_editor_num != null">
+						and product_editor_num = #{product_editor_num}
+					</if> 
+					<if test ='start_price != null and end_price == null'> 
+		    			<![CDATA[ and round(replace(product_price, ',', '')) >= round(replace(#{start_price}, ',', '')) ]]>
+		    		</if> 
+		    			<if test ='start_price == null and end_price != null'> 
+		    			<![CDATA[ and round(replace(product_price, ',', '')) <= round(replace(#{end_price}, ',', '')) ]]>
+		    		</if>  
+					<if test ='start_price != null and end_price != null'> 
+		    			<![CDATA[ and round(replace(product_price, ',', '')) >= round(replace(#{start_price}, ',', '')) and round(replace(product_price, ',', '')) <= round(replace(#{end_price}, ',', '')) ]]>
+		    		</if>   
+		    		<if test ='start_stock != null and end_stock == null'>  
+		    			<![CDATA[ and product_stock >= #{start_stock} ]]>
+		    		</if>
+		    		<if test ='start_stock == null and end_stock != null'>  
+		    			<![CDATA[ and product_stock <= #{end_stock} ]]>
+		    		</if>
+		    		<if test ='start_stock != null and end_stock != null'>  
+		    			<![CDATA[ and product_stock >= #{start_stock} and product_stock <= #{end_stock} ]]>
+		    		</if>  
+		    		<if test ="product_status != null"> 
+						 and product_status in (${product_status}) 
+					</if>   
+					<if test="product_view != null">
+						and product_view = #{product_view} 
+					</if>
+				</where>   
+				order by ${list_arr} desc   
+			)aa       
 		)    
 		<![CDATA[ where rnum >= #{startRow} and rnum <= #{endRow} ]]>
-	</select> 
+	</select>  
+	<!-- 상품 판매순 리스트 -->
+	<select id="sell_list" parameterType="HashMap" resultType="HashMap">
+		select * from (  
+			select aa.*, rownum rnum from (  
+				select * from(
+				        select a.product_num, a.product_cate_num, a.product_name, a.product_price, a.product_discount_price, a.product_stock, sum(b.order_item_quantity) cnt , a.product_update_date, a.product_date, a.product_status, a.product_view, a.product_picture
+						from products a, order_items b
+						where a.product_num = b.product_num 
+						group by a.product_num, a.product_cate_num, a.product_name, a.product_price, a.product_discount_price, a.product_stock, a.product_update_date, a.product_date, a.product_status, a.product_view, a.product_picture
+				       
+				   		union 
+				         
+				     	select a.product_num, a.product_cate_num, a.product_name, a.product_price, a.product_discount_price, a.product_stock , NVL(null,0) cnt, a.product_update_date, a.product_date, a.product_status, a.product_view, a.product_picture
+						from products a
+						where a.product_num not in (select product_num from order_items)   
+			        	)
+	        <where>
+				<if test ="cate_num != null">
+					 product_cate_num = #{cate_num} and product_status = '정상' and product_view = '노출'
+				</if> 
+				<if test="keyword != null">
+				 	and product_num like '%'||#{keyword}||'%' or product_name like '%'||#{keyword}||'%' 
+				</if>  
+				<if test="search_date != null and search_end_date == null"> 
+	    	     	and product_date between to_date(#{search_date}) and sysdate 
+	    		</if> 
+	    		<if test="search_date == null and search_end_date != null"> 
+	    	    	 <![CDATA[	and product_date <= to_date(#{search_end_date}) + 1 ]]> 
+	    		</if>
+	    		<if test="search_date != null and search_end_date != null"> 
+	    	     	and product_date between to_date(#{search_date}) and to_date(#{search_end_date}) + 1
+	    		</if>   
+				<if test="category1 != null and category2 == null and category3 == null">
+					and (select cate_ref2 from product_category where cate_num = product_cate_num) = #{category1} 
+				</if>
+				<if test="category2 != null and category3 == null">
+					and (select cate_ref3 from product_category where cate_num = product_cate_num) = #{category2} 
+				</if>
+				<if test="category3 != null">
+					and (select cate_ref1 from product_category where cate_num = product_cate_num) = #{category3} 
+				</if>
+				<if test ="product_publish != null">
+					and product_publish = #{product_publish}
+				</if>
+				<if test ="product_editor_num != null">
+					and product_editor_num = #{product_editor_num}
+				</if> 
+				<if test ='start_price != null and end_price == null'> 
+	    			<![CDATA[ and round(replace(product_price, ',', '')) >= round(replace(#{start_price}, ',', '')) ]]>
+	    		</if> 
+	    			<if test ='start_price == null and end_price != null'> 
+	    			<![CDATA[ and round(replace(product_price, ',', '')) <= round(replace(#{end_price}, ',', '')) ]]>
+	    		</if>  
+				<if test ='start_price != null and end_price != null'> 
+	    			<![CDATA[ and round(replace(product_price, ',', '')) >= round(replace(#{start_price}, ',', '')) and round(replace(product_price, ',', '')) <= round(replace(#{end_price}, ',', '')) ]]>
+	    		</if>   
+	    		<if test ='start_stock != null and end_stock == null'>  
+	    			<![CDATA[ and product_stock >= #{start_stock} ]]>
+	    		</if>
+	    		<if test ='start_stock == null and end_stock != null'>  
+	    			<![CDATA[ and product_stock <= #{end_stock} ]]>
+	    		</if>
+	    		<if test ='start_stock != null and end_stock != null'>  
+	    			<![CDATA[ and product_stock >= #{start_stock} and product_stock <= #{end_stock} ]]>
+	    		</if>  
+	    		<if test ="product_status != null"> 
+					 and product_status in (${product_status}) 
+				</if>   
+				<if test="product_view != null">
+					and product_view = #{product_view} 
+				</if>
+			</where>     
+	   			order by ${list_arr} desc    
+	   		)aa 
+   		)  
+   		<![CDATA[ where rnum >= #{startRow} and rnum <= #{endRow} ]]>
+	</select>
+
+	
 	<!-- 3. 상품 삭제 -->
 	<delete id="item_delete" parameterType="int">
 		delete from products where product_num = #{product_num}
@@ -47,9 +252,9 @@
 	<!-- 4. 상품 상세 정보 -->
 	<select id="item_getinfo" parameterType="int" resultType="com.heybooks.sh.vo.item.Item_Vo">
 		select * from products where product_num = #{product_num}
-	</select>
+	</select> 
 	
-	<!-- 5. 상품 이미지 수정 -->
+	<!-- 5. 상품 이미지 수정 --> 
 	 <update id="item_img_update" parameterType="com.heybooks.sh.vo.item.Item_Vo">
 		update products set product_picture = #{product_picture}, product_preview = #{product_preview} where product_num = #{product_num}
 	</update> 
@@ -65,9 +270,60 @@
 	</select>	  
 	
 	<!-- 작가 총 데이터 수 -->   
-	<select id="editor_get_count" resultType="int">
+	<select id="editor_get_count" parameterType="HashMap" resultType="int">
 		select NVL(count(*),0) cnt from editor
-	</select>   
+			<where>
+				<if test="keyword != null"> 
+					editor_name like '%'||#{keyword}||'%'
+				</if> 
+				<if test="search_date != null and search_end_date == null"> 
+	    	     	and editor_date between to_date(#{search_date}) and sysdate 
+	    		</if> 
+	    		<if test="search_date == null and search_end_date != null"> 
+	    	    	 <![CDATA[	and editor_date <= to_date(#{search_end_date}) + 1 ]]> 
+	    		</if> 
+	    		<if test="search_date != null and search_end_date != null"> 
+	    	     	and editor_date between to_date(#{search_date}) and to_date(#{search_end_date}) + 1
+	    		</if>    
+	    		<if test ='item_start != null and item_end == null'>  
+	    			<![CDATA[ and editor_num in ( select product_editor_num from products group by product_editor_num having count(*) >= #{item_start} ) ]]>
+	    		</if> 
+	    		<if test ='item_start == null and item_end != null'>  
+	    			<![CDATA[ and editor_num in ( select product_editor_num from products group by product_editor_num having count(*) <= #{item_end} ) ]]>
+	    		</if>  
+	    		<if test ='item_start != null and item_end != null'>  
+	    			<![CDATA[  and editor_num in ( select product_editor_num from products group by product_editor_num having count(*) >= #{item_start} and count(*) <= #{item_end} ) ]]>
+	    		</if>  
+	    		<if test ='sell_start != null and sell_end == null'>  
+	    			<![CDATA[ and editor_num in 
+	    					 (select c.editor_num 
+	    					 from editor c , ( select a.product_editor_num , b.order_item_quantity from products a , order_items b where a.product_num = b.product_num ) d
+	    					 where d.product_editor_num = c.editor_num 
+	    					 group by c.editor_num 
+	    					 having sum(d.order_item_quantity) >= #{sell_start}) ]]>
+	    		</if> 
+	    		<if test ='sell_start == null and sell_end != null'>  
+	    			<![CDATA[ and editor_num in 
+							(select c.editor_num 
+							from editor c , ( select a.product_editor_num , b.order_item_quantity from products a , order_items b where a.product_num = b.product_num ) d
+							where d.product_editor_num = c.editor_num
+							group by c.editor_num
+							having sum(d.order_item_quantity) <= #{sell_end}) ]]>
+	    		</if>  
+	    		<if test ='sell_start != null and sell_end != null'>  
+	    			<![CDATA[ and editor_num in  
+							(select c.editor_num 
+							from editor c , ( select a.product_editor_num , b.order_item_quantity from products a , order_items b where a.product_num = b.product_num ) d
+							where d.product_editor_num = c.editor_num
+							group by c.editor_num
+							having sum(d.order_item_quantity) >= #{sell_start} and sum(d.order_item_quantity) <= #{sell_end}) ]]>
+	    		</if>      
+			</where>  
+	</select>  
+	<select id="editor_item_count" parameterType="int" resultType="int">
+		 select count(*) from products  where product_editor_num = #{product_editor_num} group by product_editor_num
+	</select>
+	  
 	<!-- 1. 작가 등록 -->
 	<insert id="editor_insert" parameterType="com.heybooks.sh.vo.item.Item_Editor_Vo">
 		insert into editor values(seq_editor_num.nextval, #{editor_name},#{editor_birth},#{editor_nation},#{editor_introduce},#{editor_school},#{editor_award},sysdate)
@@ -79,11 +335,137 @@
 			select aa.*, rownum rnum from
 			(
 				select * from editor
-				order by ${list_arr} 
+			<where>
+				<if test="keyword != null"> 
+					editor_name like '%'||#{keyword}||'%'
+				</if> 
+				<if test="search_date != null and search_end_date == null"> 
+	    	     	and editor_date between to_date(#{search_date}) and sysdate 
+	    		</if> 
+	    		<if test="search_date == null and search_end_date != null"> 
+	    	    	 <![CDATA[	and editor_date <= to_date(#{search_end_date}) + 1 ]]> 
+	    		</if> 
+	    		<if test="search_date != null and search_end_date != null"> 
+	    	     	and editor_date between to_date(#{search_date}) and to_date(#{search_end_date}) + 1
+	    		</if>    
+	    		<if test ='item_start != null and item_end == null'>  
+	    			<![CDATA[ and editor_num in ( select product_editor_num from products group by product_editor_num having count(*) >= #{item_start} ) ]]>
+	    		</if> 
+	    		<if test ='item_start == null and item_end != null'>  
+	    			<![CDATA[ and editor_num in ( select product_editor_num from products group by product_editor_num having count(*) <= #{item_end} ) ]]>
+	    		</if>  
+	    		<if test ='item_start != null and item_end != null'>  
+	    			<![CDATA[  and editor_num in ( select product_editor_num from products group by product_editor_num having count(*) >= #{item_start} and count(*) <= #{item_end} ) ]]>
+	    		</if>    
+	    		<if test ='sell_start != null and sell_end == null'>  
+	    			<![CDATA[ and editor_num in 
+	    					 (select c.editor_num 
+	    					 from editor c , ( select a.product_editor_num , b.order_item_quantity from products a , order_items b where a.product_num = b.product_num ) d
+	    					 where d.product_editor_num = c.editor_num 
+	    					 group by c.editor_num 
+	    					 having sum(d.order_item_quantity) >= #{sell_start}) ]]>
+	    		</if> 
+	    		<if test ='sell_start == null and sell_end != null'>  
+	    			<![CDATA[ and editor_num in 
+							(select c.editor_num 
+							from editor c , ( select a.product_editor_num , b.order_item_quantity from products a , order_items b where a.product_num = b.product_num ) d
+							where d.product_editor_num = c.editor_num
+							group by c.editor_num
+							having sum(d.order_item_quantity) <= #{sell_end}) ]]>
+	    		</if>  
+	    		<if test ='sell_start != null and sell_end != null'>  
+	    			<![CDATA[ and editor_num in 
+							(select c.editor_num 
+							from editor c , ( select a.product_editor_num , b.order_item_quantity from products a , order_items b where a.product_num = b.product_num ) d
+							where d.product_editor_num = c.editor_num
+							group by c.editor_num
+							having sum(d.order_item_quantity) >= #{sell_start} and sum(d.order_item_quantity) <= #{sell_end}) ]]>
+	    		</if>    
+			</where>   
+				order by ${list_arr}   
 			)aa       
 		)     
-		<![CDATA[ where rnum >= #{startRow} and rnum <= #{endRow} ]]>	
+		<if test="startRow != null">
+			<![CDATA[ where rnum >= #{startRow} and rnum <= #{endRow} ]]>	
+		</if>
 	</select>
+	
+	<!-- 관리자 작가 리스트 -->
+	<select id="editor_sell_list" parameterType="HashMap" resultType="HashMap">
+		select * from(
+			select aa.* , rownum rnum from(
+					select editor_num, editor_name, editor_birth, editor_date, sum(quan) s_quan , sum(cnt) s_cnt
+			         from(
+			             select c.editor_num, c.editor_name,  c.editor_birth, c.editor_date, sum(d.order_item_quantity) quan , count(c.editor_num) cnt
+			             from editor c , ( select a.product_editor_num , b.order_item_quantity from products a , order_items b where a.product_num = b.product_num ) d
+			             where d.product_editor_num = c.editor_num 
+			             group by c.editor_num, c.editor_name, c.editor_birth, c.editor_date
+			             
+			             union
+			              
+			             select a.editor_num, a.editor_name, a.editor_birth, a.editor_date, NVL(null,0) , count(a.editor_num)
+			             from editor a  
+			             where a.editor_num in (select product_editor_num from products where product_num not in (select product_num from order_items))
+			             group by a.editor_num, a.editor_name , a.editor_birth, a.editor_date
+			            
+			             )
+		        <where>
+					<if test="keyword != null"> 
+						editor_name like '%'||#{keyword}||'%'
+					</if> 
+					<if test="search_date != null and search_end_date == null"> 
+		    	     	and editor_date between to_date(#{search_date}) and sysdate 
+		    		</if> 
+		    		<if test="search_date == null and search_end_date != null"> 
+		    	    	 <![CDATA[	and editor_date <= to_date(#{search_end_date}) + 1 ]]> 
+		    		</if> 
+		    		<if test="search_date != null and search_end_date != null"> 
+		    	     	and editor_date between to_date(#{search_date}) and to_date(#{search_end_date}) + 1
+		    		</if>    
+		    		<if test ='item_start != null and item_end == null'>  
+		    			<![CDATA[ and editor_num in ( select product_editor_num from products group by product_editor_num having count(*) >= #{item_start} ) ]]>
+		    		</if> 
+		    		<if test ='item_start == null and item_end != null'>  
+		    			<![CDATA[ and editor_num in ( select product_editor_num from products group by product_editor_num having count(*) <= #{item_end} ) ]]>
+		    		</if>  
+		    		<if test ='item_start != null and item_end != null'>  
+		    			<![CDATA[  and editor_num in ( select product_editor_num from products group by product_editor_num having count(*) >= #{item_start} and count(*) <= #{item_end} ) ]]>
+		    		</if>    
+		    		<if test ='sell_start != null and sell_end == null'>  
+		    			<![CDATA[ and editor_num in 
+		    					 (select c.editor_num 
+		    					 from editor c , ( select a.product_editor_num , b.order_item_quantity from products a , order_items b where a.product_num = b.product_num ) d
+		    					 where d.product_editor_num = c.editor_num 
+		    					 group by c.editor_num 
+		    					 having sum(d.order_item_quantity) >= #{sell_start}) ]]>
+		    		</if> 
+		    		<if test ='sell_start == null and sell_end != null'>  
+		    			<![CDATA[ and editor_num in 
+								(select c.editor_num 
+								from editor c , ( select a.product_editor_num , b.order_item_quantity from products a , order_items b where a.product_num = b.product_num ) d
+								where d.product_editor_num = c.editor_num
+								group by c.editor_num
+								having sum(d.order_item_quantity) <= #{sell_end}) ]]>
+		    		</if>  
+		    		<if test ='sell_start != null and sell_end != null'>  
+		    			<![CDATA[ and editor_num in 
+								(select c.editor_num 
+								from editor c , ( select a.product_editor_num , b.order_item_quantity from products a , order_items b where a.product_num = b.product_num ) d
+								where d.product_editor_num = c.editor_num
+								group by c.editor_num
+								having sum(d.order_item_quantity) >= #{sell_start} and sum(d.order_item_quantity) <= #{sell_end}) ]]>
+		    		</if>    
+				</where>      
+		         group by editor_num, editor_name ,editor_birth, editor_date
+		         order by ${list_arr} desc
+		         
+		         )aa
+	     	 )
+	      <if test="startRow != null">
+			<![CDATA[ where rnum >= #{startRow} and rnum <= #{endRow} ]]>	
+		  </if>
+	</select> 
+	 
 	<!-- 3. 작가 삭제 --> 
 	<delete id="editor_delete" parameterType="int">
 		delete from editor where editor_num = #{editor_num}
@@ -93,7 +475,6 @@
 	<update id="item_editor_null" parameterType="int">
 		update products set product_editor_num = null where product_editor_num = #{editor_num}
 	</update> 
-	     
 	
 	<!-- 4. 작가 정보 -->
 	<select id="editor_getinfo" parameterType="int" resultType="com.heybooks.sh.vo.item.Item_Editor_Vo">
@@ -131,26 +512,163 @@
 		update cart_item set cart_item_quantity = #{cart_item_quantity} where cart_item_num = #{cart_item_num}
 	</update>
 	<!-- 4. 장바구니 삭제 -->
-	<delete id="cart_delete" parameterType="int">
-		delete from cart_item where cart_item_num = #{cart_item_num}
+	<delete id="cart_delete" parameterType="HashMap">
+		delete from cart_item
+			<where>
+				<if test="cart_item_num != null">
+					cart_item_num = #{cart_item_num}
+				</if>
+				<if test="product_num != null">
+					product_num = #{product_num}
+				</if>
+			</where> 
 	</delete>
 	<!-- 5. 장바구니 상세정보 -->
 	<select id="cart_getinfo" parameterType="int" resultType="com.heybooks.sh.vo.item.Cart_Vo">
 		select * from cart_item where cart_item_num = #{cart_item_num}
 	</select>
 	
-	<!-- ======= 주문 ======== -->	  
 	
+	
+	<!-- ======= 주문 ======== -->	
+	
+	<!-- 전체 글 수 얻기 -->
+	<select id="order_count" parameterType="HashMap" resultType="int">
+		select NVL(count(*),0) cnt from orders
+				<where>
+					<if test="keyword != null"> 
+		    	     	order_num like '%'||#{keyword}||'%' or order_name like '%'||#{keyword}||'%' 
+		    		</if>
+		    	    <if test="methods != null"> 
+		    	     	and payment_methods = #{methods}
+		    		</if>   
+		    		<if test="members_num != null"> 
+		    	     	and members_num = #{members_num} 
+		    		</if> 
+		    		<if test="search_date != null and search_end_date == null"> 
+		    	     	and order_date between to_date(#{search_date}) and sysdate 
+		    		</if> 
+		    		<if test="search_date == null and search_end_date != null"> 
+		    	    	 <![CDATA[	and order_date <= to_date(#{search_end_date}) + 1]]> 
+		    		</if>
+		    		<if test="search_date != null and search_end_date != null"> 
+		    	     	and order_date between to_date(#{search_date}) and to_date(#{search_end_date}) + 1
+		    		</if>  
+		    		<if test ='start_price != null and end_price == null'> 
+		    			<![CDATA[ and round(replace(total_price, ',', '')) >= round(replace(#{start_price}, ',', ''))  ]]>
+		    		</if>  
+		    		<if test ='start_price == null and end_price != null'>  
+		    			<![CDATA[ and round(replace(total_price, ',', '')) <= round(replace(#{end_price}, ',', '')) ]]>
+		    		</if> 
+		    		<if test ='start_price != null and end_price != null'> 
+		    			<![CDATA[ and round(replace(total_price, ',', '')) >= round(replace(#{start_price}, ',', '')) and round(replace(total_price, ',', '')) <= round(replace(#{end_price}, ',', '')) ]]>
+		    		</if>  
+		    		 <if test="order_status != null"> 
+		    	     	and order_status in (${order_status})
+		    		</if>     
+				</where>   
+	</select>      
+	<select id="order_status" resultType="HashMap"> 
+		select order_status, count(*) status_cnt from orders group by order_status
+	</select>
 	<!-- 1. 주문 추가 -->
 	<insert id="order_insert" parameterType="com.heybooks.sh.vo.item.Order_Vo">
-		insert into orders values (#{order_num}, #{members_num}, #{total_price}, #{total_count}, #{order_name}, #{order_phone_number}, #{order_add_number}, #{order_post}, #{order_address}, #{order_detail_address}, #{order_extra_address}, #{order_message}, #{order_shipping_charge}, #{payment_methods}, 1, sysdate)
-	</insert>
+		insert into orders values (#{order_num}, #{members_num}, #{total_price}, #{total_count}, #{total_mileage} ,#{order_name}, #{order_phone_number}, #{order_add_number}, #{order_post}, #{order_address}, #{order_detail_address}, #{order_extra_address}, #{order_message}, #{order_shipping_charge}, #{payment_methods}, '결제대기', sysdate)
+	</insert>   
 	<!-- 주문 아이템 추가 -->
-	<insert id="order_item_insert" parameterType="com.heybooks.sh.vo.item.Order_Item_Vo">
-		insert into order_items values (order_item_num_seq.nextVal, #{product_num}, #{order_num}, #{order_item_quantity}, #{order_item_price}, sysdate)
-	</insert>
-</mapper>    
-
+	<insert id="order_item_insert" parameterType="com.heybooks.sh.vo.item.Order_Item_Vo"> 
+		insert into order_items values (order_item_num_seq.nextVal, #{product_num}, #{order_num}, #{order_item_name}, #{order_item_quantity}, #{order_item_price}, sysdate)
+	</insert> 
+	<!-- 2. 주문 리스트 --> 
+	<select id="order_list" parameterType="HashMap" resultType="com.heybooks.sh.vo.item.Order_Vo">
+			select * from 
+				( 
+				select aa.*, rownum rnum from 
+					(
+					select * from orders  
+					order by ${list_arr}  
+					)aa       
+				)     
+				<![CDATA[ where rnum >= #{startRow} and rnum <= #{endRow} ]]>	
+	</select>
+	<!--  주문 뷰 리스트 -->
+	<select id="order_view_list" parameterType="HashMap" resultType="HashMap">
+		select * from 
+			(  
+			select aa.*, rownum rnum from( 
+				select members_num, order_num, order_date, total_count, order_name, payment_methods, total_price, order_status, order_item_num, order_item_name from 
+					(
+					select a.members_num, a.order_num, a.order_date, a.total_count, a.order_name, a.payment_methods, a.total_price, a.order_status ,b.order_item_num ,b.order_item_name from 
+						orders a, (select *  from order_items where rowid in (select MIN(ROWID) from order_items group by order_num)) b
+		     			where a.order_num = b.order_num 
+		     		)  
+		    			order by ${list_arr} desc
+		    	 )aa   
+		    	<where>  
+		    		<if test="keyword != null"> 
+		    	         aa.order_num like '%'||#{keyword}||'%' or aa.order_name like '%'||#{keyword}||'%' 
+		    		</if>
+		    	    <if test="methods != null"> 
+		    	     	and aa.payment_methods = #{methods}
+		    		</if> 
+		    		 <if test="members_num != null"> 
+		    	     	and aa.members_num = #{members_num} 
+		    		</if>  
+		    		<if test="search_date != null and search_end_date == null"> 
+		    	     	and aa.order_date between to_date('#{search_date}') and sysdate 
+		    		</if> 
+		    		<if test="search_date == null and search_end_date != null"> 
+		    	    	 <![CDATA[	and aa.order_date <= to_date(#{search_end_date}) + 1 ]]> 
+		    		</if> 
+		    		<if test="search_date != null and search_end_date != null"> 
+		    	     	and aa.order_date between to_date(#{search_date}) and to_date(#{search_end_date}) + 1
+		    		</if>
+		    		<if test ='start_price != null and end_price == null'> 
+		    			<![CDATA[ and round(replace(aa.total_price, ',', '')) >= round(replace(#{start_price}, ',', ''))  ]]>
+		    		</if>  
+		    		<if test ='start_price == null and end_price != null'> 
+		    			<![CDATA[ and round(replace(aa.total_price, ',', '')) <= round(replace(#{end_price}, ',', '')) ]]>
+		    		</if>    
+		    		<if test ='start_price != null and end_price != null'> 
+		    			<![CDATA[ and round(replace(aa.total_price, ',', '')) >= round(replace(#{start_price}, ',', '')) and round(replace(aa.total_price, ',', '')) <= round(replace(#{end_price}, ',', '')) ]]>
+		    		</if>   
+		    		 <if test="order_status != null"> 
+		    	     	and aa.order_status in (${order_status})
+		    		</if>   
+		    	</where>  
+		    )     
+	    	<![CDATA[ where rnum >= #{startRow} and rnum <= #{endRow} ]]>		
+	</select>
+	<!-- 주문 아이템 리스트 -->
+	<select id="order_item_list" parameterType="int" resultType="com.heybooks.sh.vo.item.Order_Item_Vo">
+		select * from order_items where order_num = #{order_num}
+	</select>
+	<!-- 3. 주문 상세 정보 -->
+	<select id="order_detail" parameterType="int" resultType="com.heybooks.sh.vo.item.Order_Vo">
+		select * from orders where order_num = #{order_num}
+	</select> 
+	<!-- 주문 아이템 상세정보 -->
+	<select id="order_item_detail" parameterType="Object" resultType="com.heybooks.sh.vo.item.Order_Item_Vo">
+		select * from order_items where order_item_num = #{order_item_num}
+	</select>   
+	<!-- 4. 주문 상태 수정 -->  
+	<update id="order_status_update" parameterType="com.heybooks.sh.vo.item.Order_Vo">
+		update orders set order_status = #{order_status} where order_num = #{order_num}
+	</update> 
+	<!-- 주문 아이템 null -->
+	<update id="order_item_null" parameterType="int">
+		update order_items set product_num = null where product_num = #{product_num} 
+	</update> 
+	<!-- 5. 주문 삭제 -->
+	<delete id="order_delete" parameterType="int">
+		delete from orders where order_num = #{order_num}	
+	</delete>
+	<!-- 주문 아이템 삭제 -->
+	<delete id="order_item_delete" parameterType="int">
+		delete from order_items where order_num = #{order_num}
+	</delete>
+</mapper>     
+ 
 
  
 

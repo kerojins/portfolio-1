@@ -7,6 +7,8 @@ import com.heybooks.sh.vo.board.Counsel_Reply_Vo;
 import com.heybooks.sh.vo.board.Counsel_Vo;
 import com.heybooks.sh.vo.board.Event_Vo;
 import com.heybooks.sh.vo.board.Notice_Vo;
+import com.heybooks.sh.vo.board.Review_Reply_Vo;
+import com.heybooks.sh.vo.board.Review_Vo;
 
 public interface Board_Service {
 	
@@ -42,7 +44,7 @@ public interface Board_Service {
 	// ====== °øÁö»çÇ× =======
 	
 	// °øÁö»çÇ× °¹¼ö
-	public int notice_count();
+	public int notice_count(HashMap<String, Object> map);
 	
 	// °øÁö»çÇ× Ãß°¡
 	public int notice_insert(Notice_Vo vo);
@@ -63,7 +65,7 @@ public interface Board_Service {
 	// ====== ÀÌº¥Æ® =======
 	
 	// ÀÌº¥Æ® °¹¼ö
-	public int event_count();
+	public int event_count(HashMap<String, Object> map);
 	
 	// ÀÌº¥Æ® Ãß°¡  
 	public int event_insert(Event_Vo vo);
@@ -79,4 +81,49 @@ public interface Board_Service {
 	
 	// ÀÌº¥Æ® »ó¼¼Á¤º¸
 	public Event_Vo event_detail(int num);
+	
+	
+	
+	// ======= ¸®ºä ========
+	
+	// ¸®ºä °¹¼ö
+	public int review_count(HashMap<String, Object> map);
+		
+	// ¸®ºä Ãß°¡  
+	public int review_insert(Review_Vo vo);
+	
+	// ¸®ºä »èÁ¦
+	public int review_delete(int num); 
+	
+	// ¸®ºä ¼öÁ¤
+	public int review_update(Review_Vo vo);
+	
+	// ¸®ºä ¸®½ºÆ®  
+	public List<Review_Vo> review_list(HashMap<String, Object> map);
+	
+	// ¸®ºä »ó¼¼Á¤º¸
+	public Review_Vo review_detail(int num);
+		
+	
+	
+	// ======= ¸®ºä ´ñ±Û ========
+	
+	// ¸®ºä´ñ±Û °¹¼ö
+	public int review_reply_count(HashMap<String, Object> map);
+		
+	// ¸®ºä´ñ±Û Ãß°¡  
+	public int review_reply_insert(Review_Reply_Vo vo);
+	
+	// ¸®ºä´ñ±Û »èÁ¦
+	public int review_reply_delete(HashMap<String, Object> map); 
+	 
+	// ¸®ºä´ñ±Û ¼öÁ¤
+	public int review_reply_update(Review_Reply_Vo vo);
+	 
+	// ¸®ºä´ñ±Û ¸®½ºÆ®  
+	public List<Review_Reply_Vo> review_reply_list(HashMap<String, Object> map);
+	
+	// ¸®ºä´ñ±Û »ó¼¼Á¤º¸
+	public Review_Reply_Vo review_reply_detail(int num);
+			
 }

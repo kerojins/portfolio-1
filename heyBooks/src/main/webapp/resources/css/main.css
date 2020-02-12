@@ -571,8 +571,6 @@ header h1 a:hover {
 .star_before {
 	background: url(../images/star_before.svg);
 	display: inline-block;
-	width: 45px;
-	height: 9px;
 	background-size: 100% 100%;
 	position: relative;
 	margin: 0 3px;
@@ -581,16 +579,19 @@ header h1 a:hover {
 .star_after{
 	overflow: hidden;
 	display: block;
-	height: 9px;
+	width: 100%;
+	height: 100%;
 	float:left;
+	position:relative;
 }
 .star_after:after{
 	content:'';
 	background: url(../images/star_after.svg);
-	width: 45px;
-	height: 9px;
+	width: 100%;
+	height: 100%;
 	background-size: 100% 100%;
 	display: block;
+	position:absolute;
 }
 
 

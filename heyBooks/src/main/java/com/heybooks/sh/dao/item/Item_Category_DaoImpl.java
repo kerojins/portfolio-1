@@ -27,22 +27,30 @@ public class Item_Category_DaoImpl implements Item_Category_Dao{
 	
 	 // 작가 리스트 수
 	@Override
- 	public int editor_get_count() {
- 		return sqlSession.selectOne(NAMESPACE + ".editor_get_count"); 
+ 	public int editor_get_count(HashMap<String, Object> map) {
+ 		return sqlSession.selectOne(NAMESPACE + ".editor_get_count", map); 
  	} 
-	
-	
+	// 작가 등록작품 수
+	@Override
+	 public int editor_item_count(int num) {
+		return sqlSession.selectOne(NAMESPACE+".editor_item_count",num);
+	}
 	// 1. 작가 등록 
 	@Override
 	public int editor_insert(Item_Editor_Vo vo) {
 		return sqlSession.insert(NAMESPACE + ".editor_insert",vo);
 	}
-	
 	// 2. 작가 리스트
 	@Override
 	public List<Item_Editor_Vo> editor_list(HashMap<String, Object> map) {
 		return sqlSession.selectList(NAMESPACE + ".editor_list", map);
 	}
+	// 관리자 작가 리스트
+	@Override
+	public List<HashMap<String, Object>> editor_sell_list(HashMap<String, Object> map){
+		return sqlSession.selectList(NAMESPACE+".editor_sell_list", map);
+	}
+	
 	// 3. 작가 삭제
 	@Override
 	public int editor_delete(int num) {

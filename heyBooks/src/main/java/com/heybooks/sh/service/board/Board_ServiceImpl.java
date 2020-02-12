@@ -13,6 +13,8 @@ import com.heybooks.sh.vo.board.Counsel_Reply_Vo;
 import com.heybooks.sh.vo.board.Counsel_Vo;
 import com.heybooks.sh.vo.board.Event_Vo;
 import com.heybooks.sh.vo.board.Notice_Vo;
+import com.heybooks.sh.vo.board.Review_Reply_Vo;
+import com.heybooks.sh.vo.board.Review_Vo;
 
 @Service
 public class Board_ServiceImpl implements Board_Service{
@@ -73,8 +75,8 @@ public class Board_ServiceImpl implements Board_Service{
 	
 	// °øÁö»çÇ× °¹¼ö
 	@Override
-	public int notice_count() {
-		return dao.notice_count();
+	public int notice_count(HashMap<String, Object> map) {
+		return dao.notice_count(map);
 	}
 	// °øÁö»çÇ× Ãß°¡
 	@Override
@@ -106,8 +108,8 @@ public class Board_ServiceImpl implements Board_Service{
 	// ====== ÀÌº¥Æ® =======
 	
 	// ÀÌº¥Æ® °¹¼ö
-	public int event_count() {
-		return dao.event_count();
+	public int event_count(HashMap<String, Object> map) {
+		return dao.event_count(map);
 	} 
 	// ÀÌº¥Æ® Ãß°¡  
 	public int event_insert(Event_Vo vo) {
@@ -128,5 +130,78 @@ public class Board_ServiceImpl implements Board_Service{
 	// ÀÌº¥Æ® »ó¼¼Á¤º¸
 	public Event_Vo event_detail(int num) {
 		return dao.event_detail(num);
+	}
+	
+	
+	// ========= ¸®ºä ´ñ±Û ==========
+	
+	
+	// ¸®ºä °¹¼ö
+	@Override
+	public int review_count(HashMap<String, Object> map) {
+		return dao.review_count(map);
+	}
+	// ¸®ºä Ãß°¡
+	@Override
+	public int review_insert(Review_Vo vo) {
+		return dao.review_insert(vo);
+	}
+	// ¸®ºä »èÁ¦
+	@Override
+	public int review_delete(int num) {
+		return dao.review_delete(num);
+	}
+	// ¸®ºä ¼öÁ¤
+	@Override
+	public int review_update(Review_Vo vo) {
+		return dao.review_update(vo);
+	}
+	// ¸®ºä ¸®½ºÆ®
+	@Override 
+	public List<Review_Vo> review_list(HashMap<String, Object> map) {
+		return dao.review_list(map);
+	}
+	// ¸®ºä »ó¼¼
+	@Override
+	public Review_Vo review_detail(int num) {
+		return dao.review_detail(num);
+	}
+	
+	// ======= ¸®ºä ´ñ±Û ========
+	
+	// ¸®ºä´ñ±Û °¹¼ö
+	@Override
+	public int review_reply_count(HashMap<String, Object> map) {
+		return dao.review_reply_count(map);
+	}
+		
+	// ¸®ºä´ñ±Û Ãß°¡  
+	@Override
+	public int review_reply_insert(Review_Reply_Vo vo) {
+		return dao.review_reply_insert(vo);
+	}
+	
+	// ¸®ºä´ñ±Û »èÁ¦
+	@Override
+	public int review_reply_delete(HashMap<String, Object> map) {
+		return dao.review_reply_delete(map);
+	}
+	 
+	// ¸®ºä´ñ±Û ¼öÁ¤
+	@Override
+	public int review_reply_update(Review_Reply_Vo vo) {
+		return dao.review_reply_update(vo);
+	}
+	 
+	// ¸®ºä´ñ±Û ¸®½ºÆ®  
+	@Override
+	public List<Review_Reply_Vo> review_reply_list(HashMap<String, Object> map){
+		return dao.review_reply_list(map);
+	}
+	
+	// ¸®ºä´ñ±Û »ó¼¼Á¤º¸
+	@Override
+	public Review_Reply_Vo review_reply_detail(int num) {
+		return dao.review_reply_detail(num);
 	}
 }

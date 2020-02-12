@@ -20,6 +20,24 @@ public class Item_Main_ServiceImpl implements Item_Main_Service{
 	public int get_count(HashMap<String, Object> count_map) {
 		return dao.get_count(count_map);
 	}
+	// 상품 판매 갯수
+	@Override
+	public int sell_count(int num) {
+		return dao.sell_count(num);
+	}
+	// 상품 상태별 갯수
+	@Override
+	public List<HashMap<String,Object>> product_status(){
+		return dao.product_status();
+	} 
+	// 신규 상품 등록 갯수
+	public int new_item() {
+		return dao.new_item();
+	}
+	// 재고 2개 미만 상품 갯수
+	public int stock_item() {
+		return dao.stock_item();
+	}
 	// 1. 상품 등록
 	@Override
 	public int item_insert(Item_Vo vo) {
@@ -34,6 +52,11 @@ public class Item_Main_ServiceImpl implements Item_Main_Service{
 	@Override
 	public List<Item_Vo> item_list(HashMap<String, Object> map){
 		return dao.item_list(map);
+	}
+	// 상품 판매순 리스트
+	@Override
+	public List<HashMap<String, Object>> sell_list(HashMap<String, Object> map){
+		return dao.sell_list(map);
 	}
 	// 3. 상품 삭제
 	@Override

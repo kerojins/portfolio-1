@@ -1,12 +1,13 @@
 package com.heybooks.sh.vo.item;
 
-import java.sql.Date;
+import java.util.Date;
 
 public class Order_Vo {
 	private int order_num;
 	private int members_num;
 	private String total_price;
 	private String total_count;
+	private String total_mileage;
 	private String order_name;
 	private String order_phone_number;
 	private String order_add_number;
@@ -17,18 +18,19 @@ public class Order_Vo {
 	private String order_message;
 	private String order_shipping_charge;
 	private String payment_methods;
-	private int order_status;
-	private Date order_date;
+	private String order_status;
+	private Date order_date; 
 	public Order_Vo() {}
-	public Order_Vo(int order_num, int members_num, String total_price, String total_count, String order_name,
-			String order_phone_number, String order_add_number, String order_post, String order_address,
-			String order_detail_address, String order_extra_address, String order_message, String order_shipping_charge,
-			String payment_methods, int order_status, Date order_date) {
+	public Order_Vo(int order_num, int members_num, String total_price, String total_count, String total_mileage,
+			String order_name, String order_phone_number, String order_add_number, String order_post,
+			String order_address, String order_detail_address, String order_extra_address, String order_message,
+			String order_shipping_charge, String payment_methods, String order_status, Date order_date) {
 		super();
 		this.order_num = order_num;
 		this.members_num = members_num;
 		this.total_price = total_price;
 		this.total_count = total_count;
+		this.total_mileage = total_mileage;
 		this.order_name = order_name;
 		this.order_phone_number = order_phone_number;
 		this.order_add_number = order_add_number;
@@ -65,6 +67,12 @@ public class Order_Vo {
 	}
 	public void setTotal_count(String total_count) {
 		this.total_count = total_count;
+	}
+	public String getTotal_mileage() {
+		return total_mileage;
+	}
+	public void setTotal_mileage(String total_mileage) {
+		this.total_mileage = total_mileage;
 	}
 	public String getOrder_name() {
 		return order_name;
@@ -126,10 +134,10 @@ public class Order_Vo {
 	public void setPayment_methods(String payment_methods) {
 		this.payment_methods = payment_methods;
 	}
-	public int getOrder_status() {
+	public String getOrder_status() {
 		return order_status;
 	}
-	public void setOrder_status(int order_status) {
+	public void setOrder_status(String order_status) {
 		this.order_status = order_status;
 	}
 	public Date getOrder_date() {
@@ -141,13 +149,12 @@ public class Order_Vo {
 	@Override
 	public String toString() {
 		return "Order_Vo [order_num=" + order_num + ", members_num=" + members_num + ", total_price=" + total_price
-				+ ", total_count=" + total_count + ", order_name=" + order_name + ", order_phone_number="
-				+ order_phone_number + ", order_add_number=" + order_add_number + ", order_post=" + order_post
-				+ ", order_address=" + order_address + ", order_detail_address=" + order_detail_address
-				+ ", order_extra_address=" + order_extra_address + ", order_message=" + order_message
-				+ ", order_shipping_charge=" + order_shipping_charge + ", payment_methods=" + payment_methods
-				+ ", order_status=" + order_status + ", order_date=" + order_date + "]";
+				+ ", total_count=" + total_count + ", total_mileage=" + total_mileage + ", order_name=" + order_name
+				+ ", order_phone_number=" + order_phone_number + ", order_add_number=" + order_add_number
+				+ ", order_post=" + order_post + ", order_address=" + order_address + ", order_detail_address="
+				+ order_detail_address + ", order_extra_address=" + order_extra_address + ", order_message="
+				+ order_message + ", order_shipping_charge=" + order_shipping_charge + ", payment_methods="
+				+ payment_methods + ", order_status=" + order_status + ", order_date=" + order_date + "]";
 	}
-	
 	
 }

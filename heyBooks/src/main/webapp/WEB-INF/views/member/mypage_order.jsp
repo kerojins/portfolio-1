@@ -13,8 +13,8 @@
 							<p class="order_period_btn">
 								<a>최근 15일</a><a>1개월</a><a>2개월</a><a>3개월</a>
 							</p>
-							<input type="text" id="order_pre_date" placeholder="2019-09-22">
-							~ <input type="text" id="order_ep_date" placeholder="2019-09-22">
+							<input type="text" class="datepickers" placeholder="2019-09-22">
+							~ <input type="text" class="datepickers" placeholder="2019-09-22">
 							<a class="order_period_detail_btn" href="">조회</a>
 						</div>
 					</div>
@@ -60,39 +60,27 @@
 		</div>
 
 <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js"></script>
- 
 <script type="text/javascript">
 //마이페이지 - 주문 목록 조회 달력
-
-$("#order_pre_date").datepicker({
-    dayNamesMin:["일","월","화","수","목","금","토"], // 요일에 표시되는 형식 설정
-
-    dateFormat:"yy-mm-dd", //날짜 형식 설정
-
-    monthNames:["1월","2월","3월","4월","5월","6월","7월",
-
-     "8월","9월","10월","11월","12월"], //월표시 형식 설정
-
-    showAnim:"fold", //애니메이션효과
-
-	maxDate: 0,
-}); 
-
-$("#order_ep_date").datepicker({
-    dayNamesMin:["일","월","화","수","목","금","토"], // 요일에 표시되는 형식 설정
-
-    dateFormat:"yy-mm-dd", //날짜 형식 설정
-
-    monthNames:["1월","2월","3월","4월","5월","6월","7월",
-
-     "8월","9월","10월","11월","12월"], //월표시 형식 설정
-
-    showAnim:"fold", //애니메이션효과
-
-	maxDate: 0,
-});
-
-
+	$(".datepickers").datepicker({
+		 monthNamesShort:["1월","2월","3월","4월","5월","6월","7월",
+	
+			     "8월","9월","10월","11월","12월"], //월표시 형식 설정
+			     
+	    dayNamesMin:["일","월","화","수","목","금","토"], // 요일에 표시되는 형식 설정
+	 
+	    dateFormat:"yy-mm-dd", //날짜 형식 설정
+	
+	    showMonthAfterYear : true, // 년 뒤에 월 표시
+	     
+	    showAnim:"fold", //애니메이션효과
+	    
+	    changeMonth : true, // 월 변경가능
+	    
+	    changeYear : true, // 년 변경가능
+	
+		maxDate: 0,
+	}); 
 </script>
 
 

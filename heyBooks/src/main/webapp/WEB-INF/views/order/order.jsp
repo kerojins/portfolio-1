@@ -46,11 +46,10 @@
 										</p> 
 										<p class="order_item_title_txt">
 											<a href="#">${one_info.product_name}<c:if test="${list[1] != null }">외 ${count_subject_val - 1 }종</c:if></a>
+											<input name="order_item_name" hidden="hidden" value="${one_info.product_name}">
 										</p>
 										<p>
-											
-													<span class="order_item_editor">${editor}</span>
-											
+											<span class="order_item_editor">${editor}</span>
 											<span class="order_item_publising">${one_info.product_publish}</span>
 										</p>
 									</div>
@@ -71,13 +70,14 @@
 								</td>
 								<td class="order_item_shipping">  
 									<p>
+										<input hidden="hidden" class="total_mileage_val" name="total_mileage">
 										<span class="shipping_txt">${one_info.product_shipping_charge}</span>원
 									</p> 
 								</td>	
 								<td class="order_item_mileage">
 									<p> 
-										<span class="mileage_txt">${one_info.product_discount_price}</span>원
-									</p>
+										<span class="mileage_txt">0</span>원
+									</p> 
 								</td>
 								<td class="order_item_allPrice"> 
 									<p class="order_item_allPrice_txt"><span class="allPrice_txt">43,300</span>원</p>
@@ -100,7 +100,6 @@
 							</tr> 
 							<tr> 
 								<td class="order_item_info">
-									
 									<p class="order_item_img">
 										<a href="#">
 											<c:set var="img" value="${one_info.product_picture}"/>
@@ -117,7 +116,7 @@
 									<div class="order_item_title"> 
 										<p>
 											<c:if test="${one_info.product_discount != '0'}"> 
-													<span class="discount_tag">할인도서</span>
+												<span class="discount_tag">할인도서</span>
 											</c:if>
 											<c:if test="${one_info.product_shipping_charge eq '0'}">
 												<span class="parcel_tag">무료배송</span>
@@ -125,12 +124,13 @@
 										</p> 
 										<p class="order_item_title_txt">
 											<a href="#">${one_info.product_name}<c:if test="${list[1] != null }">외 ${count_subject_val - 1 }종</c:if></a>
-										</p>
-										<p>
+											<input name="order_item_name" hidden="hidden" value="${one_info.product_name}">
+										</p> 
+										<p> 
 											<span class="order_item_editor">${editor_list[0].editor_name}</span>
 											<span class="order_item_publising">${one_info.product_publish}</span>
 										</p>
-									</div>
+									</div> 
 								</td>
 								<td class="order_item_count">
 									<p>${total_count_val}</p>
@@ -153,7 +153,7 @@
 									</p>
 								</td>
 								<td class="order_item_allPrice"> 
-											<p class="order_item_allPrice_txt">${total_price_val}원</p>
+									<p class="order_item_allPrice_txt">${total_price_val}원</p>
 								</td>
 							</tr> 
 						</tbody> 
@@ -210,9 +210,10 @@
 											<span class="parcel_tag">무료배송</span>
 										</c:if> 
 									</p> 
-									<p class="order_item_title_txt">
+									<p class="order_item_title_txt"> 
 										<a href="#">${vo.product_name}</a>
-									</p>
+										<input name="order_item_name" hidden="hidden" value="${vo.product_name}">
+									</p>   
 									<p>
 										<span class="order_item_editor">${editor_list[status.index].editor_name}</span>
 										<span class="order_item_publising">${vo.product_publish}</span>
@@ -425,7 +426,7 @@
 				<input class="members_num_val" name="members_num" value="${member_vo.members_num }" hidden="hidden">
 				<input class="total_price_val" name="total_price" hidden="hidden">
 				<input class="total_count_val" name="total_count" hidden="hidden">
-				<input class="get_mileage_val" name="get_mileage" hidden="hidden">
+				<input class="get_mileage_val" name="total_mileage" hidden="hidden">
 				<input class="order_shipping_charge_val" name="order_shipping_charge" hidden="hidden">
 			</div>
 			

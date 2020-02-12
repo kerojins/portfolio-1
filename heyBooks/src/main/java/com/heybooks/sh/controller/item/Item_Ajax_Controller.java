@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -26,9 +27,13 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import com.heybooks.sh.service.item.Item_Category_Service;
 import com.heybooks.sh.service.item.Item_Main_Service;
 import com.heybooks.sh.service.item.Item_Order_Service;
+import com.heybooks.sh.service.member.Member_Service;
 import com.heybooks.sh.vo.item.Cart_Vo;
 import com.heybooks.sh.vo.item.Item_Cate_Vo;
+import com.heybooks.sh.vo.item.Item_Editor_Vo;
 import com.heybooks.sh.vo.item.Item_Vo;
+import com.heybooks.sh.vo.item.Order_Item_Vo;
+import com.heybooks.sh.vo.item.Order_Vo;
 import com.heybooks.sh.vo.member.Member_Vo;
 
 import net.coobird.thumbnailator.Thumbnails;
@@ -36,6 +41,9 @@ import net.coobird.thumbnailator.Thumbnails;
 @Controller
 public class Item_Ajax_Controller {
 	private static final Logger logger = LoggerFactory.getLogger(Item_Ajax_Controller.class);
+	
+	@Resource
+	private Member_Service member_service;
 	@Resource
 	private Item_Category_Service cate_service;
 	@Resource
@@ -232,4 +240,29 @@ public class Item_Ajax_Controller {
 			 return "cart_add_ok"; 
 		 }   
 		}
+	 
+	@RequestMapping("/ajax/order_detail")
+	@ResponseBody
+	public HashMap<String, Object> order_detail(int order_num){
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		List<Order_Item_Vo> list = order_service.order_item_list(order_num);
+		List<Item_Vo> item_list = new ArrayList<Item_Vo>();
+		List<Item_Editor_Vo> editor_list = new ArrayList<Item_Editor_Vo>();
+		for(Order_Item_Vo vo: list) {
+			Item_Vo item_vo = service.item_getinfo(vo.getProduct_num());
+			if(item_vo.getProduct_picture() != null) {
+				item_vo.setProduct_picture(item_vo.getProduct_picture().split(",")[0]);
+			} 
+			item_list.add(item_vo); 
+			editor_list.add(cate_service.editor_getinfo(item_vo.getProduct_editor_num()));
+		}  
+		Order_Vo vo = order_service.order_detail(order_num);
+		Member_Vo member_vo = member_service.getInfo(vo.getMembers_num());
+		map.put("list", list); 
+		map.put("item_list", item_list); 
+		map.put("editor_list", editor_list); 
+		map.put("member_vo", member_vo); 
+		map.put("vo", vo); 
+		return map; 
+	}
 }

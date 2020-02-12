@@ -86,7 +86,7 @@
 					<tr>
 						<th>직업</th>
 						<td colspan="3"><select name="members_job">
-								<option>선택</option>
+								<option value="없음">선택</option>
 								<option value="학생">학생</option>
 								<option value="회사원">회사원</option>
 								<option value="전문직">전문직</option>

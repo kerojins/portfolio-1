@@ -29,8 +29,8 @@
 					</tr>
 					<tr>
 						<th class="its-th-align center">생년월일</th>
-						<td class="its-td"><input type="text" id="editor_birth" name="editor_birth"></td>
-					</tr> 
+						<td class="its-td"><input type="text" class="datepickers" name="editor_birth"></td>
+					</tr>  
 					<tr>  
 						<th class="its-th-align center">국적</th>
 						<td class="its-td"><select name="editor_nation">
@@ -93,22 +93,7 @@
 	</form>
 </div>
 
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>	
 <script type="text/javascript">
-
-$("#editor_birth").datepicker({
-    dayNamesMin:["일","월","화","수","목","금","토"], // 요일에 표시되는 형식 설정
-
-    dateFormat:"yy-mm-dd", //날짜 형식 설정
-
-    monthNames:["1월","2월","3월","4월","5월","6월","7월",
-
-     "8월","9월","10월","11월","12월"], //월표시 형식 설정
-
-    showAnim:"fold", //애니메이션효과
-
-	maxDate: 0,
-}); 
 
 function check_form(){
 	var form = document.editor_form;

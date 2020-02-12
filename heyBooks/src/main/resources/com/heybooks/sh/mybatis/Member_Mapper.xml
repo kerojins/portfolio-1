@@ -4,16 +4,67 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.heybooks.sh.mybatis.Member_Mapper">
 
-	<!-- 회원 -->
-
+	<!-- ===== 회원 ====== -->
+	<!-- 회원 수 -->
+	<select id="member_count" parameterType="HashMap" resultType="int">
+		select NVL(count(*),0) cnt from members
+			<where> 
+	     		<if test="keyword != null">
+	     			and members_name like '%'||#{keyword}||'%' or members_id like '%'||#{keyword}||'%' or members_phone_number like '%'||#{keyword} or members_address like '%'||#{keyword}||'%' or members_detail_address like '%'||#{keyword}||'%' or members_extra_address like '%'||#{keyword}||'%'
+	     		</if> 
+	     		<if test="members_status !=null">
+			     	and members_status = #{members_status}
+			     </if> 
+	     		<if test="birth_date != null and birth_end_date == null">
+	     			and to_date(members_years) between to_date('${birth_date}') and sysdate 
+	     		</if> 
+	     		<if test="birth_date == null and birth_end_date != null"> 
+    	    	 <![CDATA[	and to_date(members_years) <= to_date(#{birth_end_date}) + 1 ]]> 
+	    		</if>
+	    		<if test="birth_date != null and birth_end_date != null"> 
+	    	     	and to_date(members_years) between to_date(#{birth_date}) and to_date(#{birth_end_date}) + 1
+	    		</if>  
+	    		<if test="join_date != null and join_end_date == null">
+	     			and members_regdate between to_date('${join_date}') and sysdate 
+	     		</if> 
+	     		<if test="join_date == null and join_end_date != null"> 
+    	    	 	<![CDATA[ and members_regdate <= to_date(#{join_end_date}) + 1 ]]> 
+	    		</if> 
+	    		<if test="join_date != null and join_end_date != null"> 
+	    	     	and members_regdate between to_date(#{join_date}) and to_date(#{join_end_date}) + 1
+	    		</if>     
+	    		<if test="mile_start != null and mile_end == null">
+	    			<![CDATA[ and members_num in ( select members_num from mileage where mileage_num in ( select max(mileage_num) from mileage group by members_num ) and round(replace(mileage_total, ',', '')) >= round(replace(#{mile_start}, ',', ''))) ]]>
+	    		</if>
+	    		<if test ="mile_start == null and mile_end != null">
+	    			<![CDATA[ and members_num in ( select members_num from mileage where mileage_num in ( select max(mileage_num) from mileage group by members_num ) and round(replace(mileage_total, ',', '')) <= round(replace(#{mile_end}, ',', ''))) ]]>
+	    		</if> 
+	    		<if test ="mile_start != null and mile_end != null">
+	    			<![CDATA[ and members_num in ( select members_num from mileage where mileage_num in ( select max(mileage_num) from mileage group by members_num ) and round(replace(mileage_total, ',', '')) >= round(replace(#{mile_start}, ',', ''))
+	    					  and round(replace(mileage_total, ',', '')) <= round(replace(#{mile_end}, ',', ''))) ]]>
+	    		</if>
+	    		<if test ="order_start != null and order_end == null">  
+	    			<![CDATA[ and members_num in (select members_num from orders group by members_num having count(*) >= #{order_start} ) ]]>
+	    		</if>
+	    		<if test ="order_start == null and order_end != null">  
+	    			<![CDATA[ and members_num in (select members_num from orders group by members_num having count(*) <= #{order_end}) ]]>
+	    		</if> 
+	    		<if test ="order_start != null and order_end != null">
+	    			<![CDATA[ and members_num in (select members_num from orders group by members_num having count(*) >= #{order_start} and count(*) <= #{order_end}) ]]>
+	    		</if> 
+	    		<if test= "members_gender != null">
+	    		 	and members_gender = #{members_gender}
+	    		</if> 
+	    	</where> 
+	</select>  
 	<!-- 1. 회원 가입 -->
 	<insert id="join" parameterType="com.heybooks.sh.vo.member.Member_Vo">
-		insert into members values(seq_member_num.nextval, #{members_id},#{members_password},#{members_name},#{members_years},#{members_phone_number},#{members_email},#{members_gender},#{members_post},#{members_address},#{members_detail_address},#{members_extra_address},#{members_add_number},#{members_job},#{members_favorite},sysdate)
+		insert into members values(seq_member_num.nextval, #{members_id},#{members_password},#{members_name},#{members_years},#{members_phone_number},#{members_email},#{members_gender},#{members_post},#{members_address},#{members_detail_address},#{members_extra_address},#{members_add_number},#{members_job},#{members_favorite},'정상',sysdate)
 	</insert> 
 	<!-- 아이디 중복 검사 -->
 	<select id="searchId" parameterType="String" resultType="String">
-		select * from members where members_id = #{members_id}
-	</select>
+		select * from members where members_id = #{members_id} 
+	</select> 
 	<!-- 2. 로그인 -->
 	<select id="login" parameterType="com.heybooks.sh.vo.member.Member_Vo" resultType="com.heybooks.sh.vo.member.Member_Vo">
 		select * from members where members_id = #{members_id}
@@ -26,8 +77,70 @@
 	<insert id="update" parameterType="com.heybooks.sh.vo.member.Member_Vo">
 		update members set members_password = #{members_password}, members_name = #{members_name}, members_years = #{members_years} , members_phone_number = #{members_phone_number} ,members_email = #{members_email}, members_gender = #{members_gender}, 
 						   members_post = #{members_post}, members_address = #{members_address}, members_detail_address = #{members_detail_address}, members_extra_address = #{members_extra_address}, members_add_number = #{members_add_number}, members_job = #{members_job}, members_favorite = #{members_favorite} 
-			   where members_num = #{members_num}
+			  			   where members_num = #{members_num}
 	</insert> 
+	<update id="member_list_update" parameterType="int">
+		update members set members_status ='정지' where members_num = #{members_num}
+	</update> 
+	<!--  5. 회원 리스트 --> 
+	<select id="member_list" parameterType="HashMap" resultType="com.heybooks.sh.vo.member.Member_Vo">
+	 	 select * from    
+		 	 ( 
+			   select aa.*, rownum rnum from(
+			     select * from members 
+			    	 <where>
+			     		<if test="keyword != null">
+			     			 members_name like '%'||#{keyword}||'%' or members_id like '%'||#{keyword}||'%' or members_phone_number like '%'||#{keyword} or members_address like '%'||#{keyword}||'%' or members_detail_address like '%'||#{keyword}||'%' or members_extra_address like '%'||#{keyword}||'%'
+			     		</if> 
+			     		<if test="members_status !=null">
+			     			and members_status = #{members_status}
+			     		</if> 
+			     		<if test="birth_date != null and birth_end_date == null">
+			     			and to_date(members_years) between to_date('${birth_date}') and sysdate 
+			     		</if> 
+			     		<if test="birth_date == null and birth_end_date != null"> 
+		    	    	 <![CDATA[	and to_date(members_years) <= to_date(#{birth_end_date}) + 1 ]]> 
+			    		</if>
+			    		<if test="birth_date != null and birth_end_date != null"> 
+			    	     	and to_date(members_years) between to_date(#{birth_date}) and to_date(#{birth_end_date}) + 1
+			    		</if>  
+			    		<if test="join_date != null and join_end_date == null">
+			     			and members_regdate between to_date('${join_date}') and sysdate 
+			     		</if> 
+			     		<if test="join_date == null and join_end_date != null"> 
+		    	    	 	<![CDATA[ and members_regdate <= to_date(#{join_end_date}) + 1 ]]> 
+			    		</if> 
+			    		<if test="join_date != null and join_end_date != null"> 
+			    	     	and members_regdate between to_date(#{join_date}) and to_date(#{join_end_date}) + 1
+			    		</if>     
+			    		<if test="mile_start != null and mile_end == null">
+			    			<![CDATA[ and members_num in ( select members_num from mileage where mileage_num in ( select max(mileage_num) from mileage group by members_num ) and round(replace(mileage_total, ',', '')) >= round(replace(#{mile_start}, ',', ''))) ]]>
+			    		</if>
+			    		<if test ="mile_start == null and mile_end != null">
+			    			<![CDATA[ and members_num in ( select members_num from mileage where mileage_num in ( select max(mileage_num) from mileage group by members_num ) and round(replace(mileage_total, ',', '')) <= round(replace(#{mile_end}, ',', ''))) ]]>
+			    		</if> 
+			    		<if test ="mile_start != null and mile_end != null">
+			    			<![CDATA[ and members_num in ( select members_num from mileage where mileage_num in ( select max(mileage_num) from mileage group by members_num ) and round(replace(mileage_total, ',', '')) >= round(replace(#{mile_start}, ',', ''))
+			    					  and round(replace(mileage_total, ',', '')) <= round(replace(#{mile_end}, ',', ''))) ]]>
+			    		</if>
+			    		<if test ="order_start != null and order_end == null">  
+			    			<![CDATA[ and members_num in (select members_num from orders group by members_num having count(*) >= #{order_start} ) ]]>
+			    		</if>
+			    		<if test ="order_start == null and order_end != null">  
+			    			<![CDATA[ and members_num in (select members_num from orders group by members_num having count(*) <= #{order_end}) ]]>
+			    		</if> 
+			    		<if test ="order_start != null and order_end != null">
+			    			<![CDATA[ and members_num in (select members_num from orders group by members_num having count(*) >= #{order_start} and count(*) <= #{order_end}) ]]>
+			    		</if> 
+			    		<if test= "members_gender != null">
+			    		 	and members_gender = #{members_gender}
+			    		</if> 
+			    	</where>
+			     order by #{list_arr}
+			   )aa  
+	    	  )  
+	      <![CDATA[ where rnum >= #{startRow} and rnum <= #{endRow} ]]> 
+	</select>  
 	
 	<!-- 마일리지 -->
 	<insert id="mileage_insert" parameterType="com.heybooks.sh.vo.member.Mileage_Vo">
@@ -36,8 +149,12 @@
 	<!-- 마일리지 정보 -->
 	<select id="mileage_getinfo" parameterType="int" resultType="com.heybooks.sh.vo.member.Mileage_Vo">
 		select * from mileage where members_num = #{members_num}  order by mileage_num desc
-	</select> 
-	
+	</select>
+	<!-- 마일리지 삭제 -->
+	<delete id="mileage_delete" parameterType="int" >
+		delete from mileage where order_num = #{order_num}  
+	</delete> 
+	 
 </mapper>  
  
 
@@ -46,7 +163,7 @@
  
 
 
-
+ 
 
 
 

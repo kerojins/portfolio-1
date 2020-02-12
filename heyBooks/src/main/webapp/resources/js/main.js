@@ -1,5 +1,9 @@
 
-
+function getContextPath() { // ContextPath얻어오기
+						return window.location.pathname.substring(0,
+								window.location.pathname.indexOf("/", 2));
+					}
+var ctp = getContextPath(); // 틀만 잡음
 $("document")
 		.ready(
 				function() {
@@ -39,11 +43,7 @@ $("document")
 					});
 
 					// 뉴스이벤트 마우스 오버시 사진변경
-					function getContextPath() { // ContextPath얻어오기
-						return window.location.pathname.substring(0,
-								window.location.pathname.indexOf("/", 2));
-					}
-					var ctp = getContextPath(); // 틀만 잡음
+					
 					$('#news_event_btn li')
 							.mouseenter(
 									function() {
@@ -247,6 +247,10 @@ $("document")
 									box.css("height", "232px");
 								}
 							});
+					
+					
+					
+					
 
 					// 책 상세페이지 펼쳐보기 - 목차
 					var book_index_height = $(
@@ -267,23 +271,94 @@ $("document")
 									box.css("height", "232px");
 								}
 							});
-					// 책 상세페이지 - 리뷰 대댓글 펼치기 접기
+					var member_num = 0;
+					
+
+					$(".reply_del_btn a").click(function() {
+						var reply_num = $(this).attr("reply_num"); 
+						var review_num = $(this).attr("review_num");
+						alert("dd"); 
+						// ajax 처리
+						$.get(getContextPath() +'/review_reply_delete',  
+					 			 {reply_num:reply_num,
+								  review_num:review_num
+					 			 }, 
+					 		function(data){
+					 				$(this).parents().find(".add_reply_list").html("");
+					 				var reply_list = data.list; 
+					 				reply_list.forEach(function(item,index){
+					 			    $(this).parents().find(".add_reply_list").append('<li class="review_content"><p>'+ item.review_reply_content + '</p>'+
+								 			 '<p class="add_reply_info"><span>'+ data.id_arr[index] +'</span><span>'+ data.date_txt[index] +'</span><span class="reply_del_btn"></span></p>'
+								 			 +'</li>'); 
+					 			    if(member_num == item.members_num){
+					 				 $(this).parents().find(".add_reply_list").children().find(".reply_del_btn").html('<a review_num="'+ item.review_num +'" reply_num="'+item.review_reply_num+'">삭제</a>');
+					 			  }
+					 			});   
+					 		     
+					 		});    
+					}); 
+					
+					// 책 상세페이지 - 리뷰 대댓글 펼치기 접기, 리스트 불러오기
 					$(".review_reply_btn").click(function() {
+						var review_num = $(this).attr("list_num");
+						member_num = $(this).attr("member_num");
 						var reply = $(this).parent().next();
 						var reply_type = reply.attr("data-type");
 						if (reply_type == "hide") {
-							reply.attr("data-type", "show");
-							reply.show();
+							 reply.attr("data-type", "show");
+							 reply.show();
 						} else {
 							reply.attr("data-type", "hide");
 							reply.hide();
 						}
-
-					});
+						// ajax 처리
+						$.get(getContextPath() +'/review_reply_list',  
+					 			 {review_num:review_num}, 
+					 		function(data){
+					 			$(reply).children().find(".add_reply_list").html("");
+					 		   var reply_list = data.list; 
+					 		   reply_list.forEach(function(item,index){
+					 			  $(reply).children().find(".add_reply_list").append('<li class="review_content"><p>'+ item.review_reply_content + '</p>'+
+								 			 '<p class="add_reply_info"><span>'+ data.id_arr[index] +'</span><span>'+ data.date_txt[index] +'</span><span class="reply_del_btn"></span></p>'
+								 			 +'</li>'); 
+					 			  if(member_num == item.members_num){
+					 				 $(reply).children().find(".add_reply_list").children().find(".reply_del_btn").html('<a  onclick="reply_del(this);" review_num="'+ item.review_num +'" reply_num="'+item.review_reply_num+'">삭제</a>');
+					 			  }
+					 			});  
+					 		    
+					 		});    
+					}); 
+					
+					 
+					// 리뷰 댓글달기 
+					$(".review_reply_insert_form .review_btn").click(function(){
+						var reply_form = $(this).parent(".review_reply_insert_form").serialize();
+						var reply_box = $(this).siblings(".add_reply_list");
+						member_num = $(this).attr("member_num");
+						$.ajax({ 
+							url: getContextPath()+'/review_reply_insert',
+							type: "POST",  
+							data : reply_form, 
+							success: function(data){   
+								  reply_box.html(""); 
+								  $(".review_reply_write").val('');
+								  var reply_list = data.list; 
+								  reply_list.forEach(function(item,index){
+					 			  reply_box.append('<li class="review_content"><p>'+ item.review_reply_content + '</p>'+
+								 			 '<p class="add_reply_info"><span>'+ data.id_arr[index] +'</span><span>'+ data.date_txt[index] +'</span><span class="reply_del_btn"></span></p>'
+								 			 +'</li>'); 
+				 			  	  if(member_num == item.members_num){
+				 			  		 reply_box.children().find(".reply_del_btn").html('<a onclick="reply_del(this);" review_num="'+ item.review_num +'" reply_num="'+item.review_reply_num+'">삭제</a>');
+					 			     } 
+								  });  
+							}  
+						});
+					}); 
+					
+					
 					// 주문 페이지 최근배송지목록 버튼
 					$("#call_list").click(function() {
 						$(".recent_list").show();
-
 					});
 
 					// 마이페이지 - 주문 정보 변경
@@ -303,18 +378,8 @@ $("document")
 										$(".review_star_box").empty();
 										$(".review_modify_box").hide();
 										$(".review_list_box_content").show();
-										$(this).parents(
-												".review_list_box_content")
-												.hide();
-										$(this).parents(
-												".review_list_box_content")
-												.next().show();
-										$(this)
-												.parents(".review_list_box")
-												.children()
-												.find(".review_star_box")
-												.append(
-														'<div id="reviewStars-input"> <input id="star-4" type="radio" name="reviewStars"> <label title="gorgeous" for="star-4"></label> <input id="star-3"type="radio" name="reviewStars"> <label title="good"for="star-3"></label> <input id="star-2" type="radio"name="reviewStars"> <label title="regular"for="star-2"></label> <input id="star-1" type="radio"name="reviewStars"> <label title="poor" for="star-1"></label><input id="star-0" type="radio" name="reviewStars"> <label title="bad" for="star-0"></label></div>')
+										$(this).parents(".review_list_box_content").hide();
+										$(this).parents(".review_list_box_content").next().show();
 									});
 
 					$(".review_del_btn").click(function() {
@@ -453,12 +518,13 @@ $("document")
 					// 적립금 5%계산 및 쉼표 넣어주기
 				 	for(var i = 0; i < price.length ; i++){
 				 		var price_txt = Number($(price[i]).text().replace(/,/gi,""));
-				 		var mileage_origin = Math.floor(price_txt*0.05);
+				 		var item_count = $(price[i]).parent().next().children().find(".item_count").val();
+				 		var mileage_origin = Math.floor(price_txt * item_count * 0.05);
 				 		total_mileage += mileage_origin;
-				 		var mileage = won_transform(String(mileage_origin));
+				 		var mileage = won_transform(String(price_txt * 0.05));
 				 		$(price[i]).siblings("#cart_form .order_item_mileage").children("#cart_form .mileage_text").text(mileage);
 				 	}  
-				
+				 
 				 	// 장바구니 총액 구하고 쉼표 넣어주기 
 				 	for(var i = 0; i < price.length ; i++){
 				 		var price_txt = Number($(price[i]).text().replace(/,/gi,""));
@@ -468,10 +534,8 @@ $("document")
 				 		var total = won_transform(String(price_txt * item_count));
 				 		$(price[i]).parent().next().next().children().find(".allPrice_txt").text(total);
 				 	}    
-				 	 
 				 	$("#cart_form .total_mileage").text(won_transform(String(total_mileage)));
 				 	$("#cart_form .item_total_price_val").val(won_transform(String(total_price)));
-				 	$("#cart_form .order_total_count .count_subject").text(price.length);
 				 	$("#cart_form .order_total_count .count_num").text(total_count);
 				 	
 				 	var org_price = $("#cart_form .item_origin_price");
@@ -496,11 +560,11 @@ $("document")
 				 	$("#cart_form .order_total_originPrice span").text(won_transform(String(total_org)));
 				 	$("#cart_form .order_total_dicount span").text(won_transform(String(Math.floor(total_discount)))); 
 				 	$("#cart_form .order_total_parcel span").text(won_transform(String(total_shipping))); 
-				 	
+				 	$("#cart_form .order_total_count .count_subject").text(org_price.length);
 				 	var all_total_price = total_org - Math.ceil(total_discount) + total_shipping;
 				 	$("#cart_form .order_total_price span").text(won_transform(String(Math.floor(all_total_price)))); 
 				 	$("#cart_form .total_price_val").val(won_transform(String(Math.floor(all_total_price)))); 
-				 	
+				
 				 	// 장바구니 수량 수정  
 				 	$("#cart_form .order_count_change").click(function(){
 				 		var cart_num = $(this).parents(".order_item_count").prev().children(".cart_item_num").val();
@@ -539,11 +603,12 @@ $("document")
 					 		$(".total_text").text(won_transform(String(price*count+shipping)));
 				 		}
 				 		$(order_price[i]).text(won_transform(String(price * count)));
-				 		$(order_price[i]).parents(".order_item_price").siblings(".order_item_mileage").children().find(".mileage_txt").text(won_transform(String(Math.round(price * 0.05))));
+				 		$(order_price[i]).parents(".order_item_price").siblings(".order_item_mileage").children().find(".total_mileage_val").text(won_transform(String(Math.round(price * count * 0.05))));
+				 		$(order_price[i]).parents(".order_item_price").siblings(".order_item_mileage").children().find(".mileage_txt").text(won_transform(String(Math.round(price * count * 0.05))));
 				 		$(order_price[i]).parents(".order_item_price").siblings(".order_item_allPrice").children().find(".allPrice_txt").text(won_transform(String(price*count+shipping)));
 				 	}     
-				    // 주문 페이지 - 아이템 상세보기 목록 
-				 	$(".order_list_view").click(function(){
+				    // 주문 페이지 - 아이템 상세보기 목록  
+				 	$(".order_list_view").click(function(){ 
 				 		$(".order_brief_box").hide();
 				 		$(".cart_order_box").show();
 				 		  
@@ -588,7 +653,7 @@ $("document")
 				 				 $(".order_address").val(data.members_address);
 				 				 $(".order_detail_address").val(data.members_detail_address);
 				 				 $(".order_extra_address").val(data.members_extra_address);
-				 		})
+				 		});
 					});
 				 	// 주문 페이지 - 배송지 새로입력 버튼 클릭
 			 		$(".reset_info").click(function(){
@@ -611,9 +676,31 @@ $("document")
 				 		$(".order_shipping_charge_val").val($(".order_breif_table .shipping_txt").text());
 				 		form.submit();
 				 	});	   
-				});    
-   
-// 회원가입 유효성 검사  
+				 	
+				 	// 별점 표시
+				 	
+				 	//아이템 목록 리뷰
+				 	var star_w = $(".item_list_star_before").width();
+			 		$(".item_list_star_before .star_after").width(star_w/2);
+			 		// 이책의 별점 
+			 		var star_w = $(".review_item_star_before").width();
+			 		$(".review_item_star_before .star_after").width(star_w/2);
+			 		// 내가 남긴 별점
+			 		var grade_val = $(".review_grade_val").val();
+			 		var star_w = $(".review_star_before").width();
+			 		$(".review_star_before .star_after").width(star_w/5*grade_val);
+			 		// 리뷰 리스트 별점
+			 		var grade_list_val = $(".grade_list_val");
+			 		var review_list_star = $(".review_list_star_before");
+			 		for(var i= 0 ; i < review_list_star.length ; i++){
+			 			$(review_list_star[i]).children().width($(review_list_star[i]).width()/5*$(grade_list_val[i]).val());
+			 		} 
+			 			
+			 	
+			 		
+				});        
+    
+// 회원가입 유효성 검사   
 
 window.onload = join;
 var id_check = true;
@@ -890,13 +977,11 @@ function order_check(){
  	}  
 	for(var i = 0; i < mile_ck.length ; i++){
  		var mileage_origin = Number($(mile_ck[i]).text().replace(/,/gi,""));
- 		total_mileage += mileage_origin;
  		var mileage = won_transform(String(mileage_origin));
- 	} 
-	for(var i = 0; i < count_ck.length ; i++){
-		var item_count = $(count_ck[i]).val();
+ 		var item_count = $(count_ck[i]).val();
+ 		total_mileage += mileage_origin * item_count;
  		total_count += Number(item_count);
-	} 
+ 	} 
 	for(var i = 0; i < shipping_ck.length ; i++){
 		var shipping = Number($(shipping_ck[i]).val().replace(/,/gi,""));
 		if(total_shipping < shipping){
@@ -906,7 +991,8 @@ function order_check(){
 	for(var i = 0; i < total_ck.length ; i++){
 		var price = $(total_ck[i]).text().replace(/,/gi,"");
  		total_price += Number(price);
-	}
+	} 
+	
 	$("#cart_form .order_total_count .count_subject").text(org_ck.length);
  	$("#cart_form .order_total_count .count_num").text(total_count);
 	$("#cart_form .total_mileage").text(won_transform(String(total_mileage)));
@@ -917,6 +1003,7 @@ function order_check(){
  	var all_total_price = total_org - Math.ceil(total_discount) + total_shipping;  
  	$("#cart_form .total_price_val").val(won_transform(String(Math.floor(all_total_price)))); 
  	$("#cart_form .order_total_price span").text(won_transform(String(Math.floor(all_total_price)))); 
+ 	$(".total_count_val").val($(".order_total_count").text().trim());
 }   
   
 //금액 천단위 쉼표 변환 함수
@@ -934,4 +1021,33 @@ function won_transform(won_txt){
 		won_result += item;  
 	}); 
 	return won_result;
+}
+
+// 스크롤 위치 기억
+function save_scroll(object){
+	document.getElementById('scrollPos').value=object.scrollTop;
+}
+function reply_del(btn){
+	var reply_num = $(btn).attr("reply_num"); 
+	var review_num = $(btn).attr("review_num");
+	var member_num =  $(".member_num").val();
+	var rp_loc = $(btn).parents(".review_list_box").children().find(".add_reply_list");
+	// ajax 처리
+	$.get(getContextPath() +'/review_reply_delete',  
+ 			 {reply_num:reply_num,
+			  review_num:review_num
+ 			 },    
+ 		function(data){    
+ 				rp_loc.html("");
+ 				var reply_list = data.list; 
+ 				reply_list.forEach(function(item,index){ 
+ 					rp_loc.append('<li class="review_content"><p>'+ item.review_reply_content + '</p>'+
+			 			 '<p class="add_reply_info"><span>'+ data.id_arr[index] +'</span><span>'+ data.date_txt[index] +'</span><span class="reply_del_btn"></span></p>'
+			 			 +'</li>');  
+ 			    if(member_num == item.members_num){
+ 			    	rp_loc.children().find(".reply_del_btn").html('<a onclick="reply_del(this);" review_num="'+ item.review_num +'" reply_num="'+item.review_reply_num+'">삭제</a>');
+ 			  }    
+ 			});      
+ 		      
+ 		});  
 }

@@ -706,6 +706,7 @@ form.best_seller_date_form button {
 #category_best .book_item_box {
 	padding: 0;
 	padding-bottom: 10px;
+	margin-top: 4px;
 }
 
 #category_best .item_other_list span {
@@ -1011,7 +1012,7 @@ form.best_seller_date_form button {
 	clear: both;
 }
 
-.item_detail_content .book_about>div, .item_detail_content .book_review>div
+.item_detail_content .book_about>div
 	{
 	height: 232px;
 	overflow: hidden;
@@ -1182,17 +1183,22 @@ form.best_seller_date_form button {
 .book_review_box .star_before {
 	margin-left: 11px;
 }
-
-.book_review_box .star_before, .book_review_box .star_after,
-	.book_review_box .star_after:after {
-	width: 70px;
-	height: 16px;
+.item_list_star_before, .item_list_star_before .star_after:after{
+	width: 44px;
+	height: 9px;
 }
-
+.review_item_star_before, .review_item_star_before .star_after:after{
+	width: 100px;
+	height: 15px;
+}
+.review_star_before, .review_star_before .star_after:after{
+	width: 260px;
+	height: 52px;
+}
 .book_review_box .textarea_wrap {
 	overflow: hidden;
 	clear: both;
-}
+} 
 
 .book_review_box textarea {
 	width: 100%;
@@ -1257,7 +1263,7 @@ form.best_seller_date_form button {
 .review_list {
 	overflow: hidden;
 	border-top: 2px solid #ccc;
-	padding-top: 20px;
+	padding-top: 10px;
 	clear: both;
 }
 
@@ -1281,6 +1287,7 @@ form.best_seller_date_form button {
 .review_list_left {
 	width: 150px;
 	float: left;
+	padding: 10px;
 }
 
 .review_list_left .review_id {
@@ -1301,6 +1308,7 @@ form.best_seller_date_form button {
 
 .review_list_right {
 	font-size: 13px;
+	padding:10px;
 }
 
 .review_content {
@@ -1325,10 +1333,14 @@ form.best_seller_date_form button {
 	padding: 4px 10px;
 	margin-left: 5px;
 	border: 1px solid #ddd;
+	
+	border-radius: 5px;
+}
+.review_list_right .review_list_btn input, .review_list_right .review_list_btn a{
 	font-size: 13px;
 	color: #aaa;
 	font-weight: 600;
-	border-radius: 5px;
+	border:none;
 }
 
 .review_list_right .review_list_btn span i {
@@ -1530,7 +1542,6 @@ td.order_item_info>p, td.order_item_info .order_item_title {
 .order_item_title .order_item_editor {
 	font-size: 13px;
 	position: relative;
-	padding-right: 4px;
 	margin-right: 7px;
 }
 
@@ -4026,7 +4037,7 @@ a.qna_btn {
 	margin-left: 0;
 } 
 .review_form .my_review_box{
-	padding: 20px 0 15px 15px;
+	padding: 20px 0 15px 15px; 
 } 
 .book_review_write .big_star_box {
 	width: auto;

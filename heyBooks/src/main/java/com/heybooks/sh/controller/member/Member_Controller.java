@@ -2,7 +2,10 @@ package com.heybooks.sh.controller.member;
 
 import java.lang.reflect.Member;
 import java.text.DateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 
 import javax.annotation.Resource;
@@ -18,10 +21,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.heybooks.sh.service.member.Member_Service;
+import com.heybooks.sh.util.PageUtil;
 import com.heybooks.sh.vo.member.Member_Vo;
+import com.heybooks.sh.vo.member.Mileage_Vo;
 
 @Controller
 public class Member_Controller {
@@ -101,7 +107,7 @@ public class Member_Controller {
 			return "redirect:/member_login";
 		}
 	}
-
+	// 회원 로그 아웃
 	@RequestMapping(value = "/member_logout", method = RequestMethod.GET)
 	public String logout(HttpServletRequest request) {
 		logger.info("post member-logout");
@@ -172,10 +178,158 @@ public class Member_Controller {
 			return "redirect:/mypage";
 		} catch (Exception e) {
 			return ".registration.alert";
-		}
+		} 
 	}
 	
-
+	// 회원 관리목록
+		@RequestMapping(value = "/member_search", method = RequestMethod.POST)
+		public String member_search(@RequestParam(value = "pageNum", defaultValue = "1") int pageNum, @RequestParam(value = "rowCount", defaultValue = "10") int rowCount,  Model model, HttpServletRequest request,
+									@RequestParam(value = "list_arr", defaultValue = "members_regdate") String list_arr, String keyword, String birth_date, String birth_end_date, String join_date, String join_end_date ,String mile_start, String mile_end, String order_start, 
+									String order_end, String review_start, String review_end, String members_gender) {
+			HashMap<String, Object> map = new HashMap<String, Object>(); 
+			map.put("list_arr", list_arr);
+			if(keyword != null && !(keyword.equals(""))) {
+				map.put("keyword", keyword);
+			} 
+			if(birth_date != null && !(birth_date.equals(""))) {
+				map.put("birth_date", birth_date); 
+			}
+			if(birth_end_date != null && !(birth_end_date.equals(""))) {
+				map.put("birth_end_date", birth_end_date); 
+			} 
+			if(join_date != null && !(join_date.equals(""))) {
+				map.put("join_date", join_date);
+			} 
+			if(join_end_date != null && !(join_end_date.equals(""))) {
+				map.put("join_end_date", join_end_date);
+			}  
+			if(mile_start != null && !(mile_start.equals(""))) {
+				map.put("mile_start", mile_start);
+			} 
+			if(mile_end != null && !(mile_end.equals(""))) {
+				map.put("mile_end", mile_end);  
+			} 
+			int totalRowCount = service.member_count(map); // 전체 글 수 얻기
+			if(pageNum<1) pageNum = 1;
+			PageUtil util = new PageUtil(pageNum, totalRowCount, rowCount, 5); // 페이징처리
+			map.put("startRow", util.getStartRow());
+			map.put("endRow", util.getEndRow());
+			List<Member_Vo> member_list = service.member_list(map);
+			List<Mileage_Vo> mile_list = new ArrayList<Mileage_Vo>();
+			logger.info(member_list.toString());
+			for(Member_Vo vo : member_list) { 
+				mile_list.add(service.mileage_getinfo(vo.getMembers_num()).get(0));
+			}
+			
+			model.addAttribute("keyword", keyword); 
+			model.addAttribute("totalRowCount", totalRowCount);
+			model.addAttribute("rowCount", rowCount);
+			model.addAttribute("list_arr", list_arr);
+			model.addAttribute("member_list", member_list);
+			model.addAttribute("mile_list", mile_list);
+			model.addAttribute("util", util);
+			return ".admin.admin_user_list"; 
+		}
+		  
+	
+	// 회원 관리목록
+	@RequestMapping(value = "/admin_user_list", method = RequestMethod.GET)
+	public String admin_item_list(@RequestParam(value = "pageNum", defaultValue = "1") int pageNum, @RequestParam(value = "rowCount", defaultValue = "10") int rowCount,  Model model, HttpServletRequest request,
+							 	  @RequestParam(value = "list_arr", defaultValue = "members_regdate") String list_arr, String keyword, String birth_date, String birth_end_date, String join_date, String join_end_date ,String mile_start, String mile_end, String order_start, 
+							 	  String order_end, String review_start, String review_end, String members_gender, String members_status) {
+		HashMap<String, Object> map = new HashMap<String, Object>(); 
+		map.put("list_arr", list_arr);
+		if(keyword != null && !(keyword.equals(""))) {
+			map.put("keyword", keyword); 
+		}
+		if(members_status != null && !(members_status.equals(""))) {
+			map.put("members_status", members_status);  
+		}
+		if(birth_date != null && !(birth_date.equals(""))) {
+			map.put("birth_date", birth_date); 
+		}
+		if(birth_end_date != null && !(birth_end_date.equals(""))) {
+			map.put("birth_end_date", birth_end_date); 
+		} 
+		if(join_date != null && !(join_date.equals(""))) {
+			map.put("join_date", join_date);
+		} 
+		if(join_end_date != null && !(join_end_date.equals(""))) {
+			map.put("join_end_date", join_end_date);
+		}  
+		if(mile_start != null && !(mile_start.equals(""))) {
+			map.put("mile_start", mile_start);
+		} 
+		if(mile_end != null && !(mile_end.equals(""))) {
+			map.put("mile_end", mile_end);  
+		} 
+		if(order_start != null && !(order_start.equals(""))) {
+			map.put("order_start", order_start);  
+		} 
+		if(order_end != null && !(order_end.equals(""))) {
+			map.put("order_end", order_end);  
+		} 
+		if(review_start != null && !(review_start.equals(""))) {
+			map.put("review_start", review_start);  
+		} 
+		if(review_end != null && !(review_end.equals(""))) {
+			map.put("review_end", review_end);   
+		}  
+		if(members_gender != null && !(members_gender.equals(""))) {
+			map.put("members_gender", members_gender);   
+		}
+		int totalRowCount = service.member_count(map); // 전체 글 수 얻기
+		if(pageNum<1) pageNum = 1;
+		PageUtil util = new PageUtil(pageNum, totalRowCount, rowCount, 5); // 페이징처리
+		map.put("startRow", util.getStartRow());
+		map.put("endRow", util.getEndRow());
+		List<Member_Vo> member_list = service.member_list(map);
+		List<Integer> mile_list = new ArrayList<Integer>();
+		logger.info(member_list.toString());
+		for(Member_Vo vo : member_list) { 
+			if(service.mileage_getinfo(vo.getMembers_num()).size() > 0){
+				mile_list.add(service.mileage_getinfo(vo.getMembers_num()).get(0).getMileage_total());
+			}else {   
+				mile_list.add(0); 
+			} 
+		}
+		
+		System.out.println(mile_list.toString()); 
+	
+		model.addAttribute("keyword", keyword);  
+		model.addAttribute("birth_date", birth_date); 
+		model.addAttribute("birth_end_date", birth_end_date); 
+		model.addAttribute("join_date", join_date);
+		model.addAttribute("join_end_date", join_end_date);
+		model.addAttribute("mile_start", mile_start);
+		model.addAttribute("mile_end", mile_end);  
+		 
+		model.addAttribute("totalRowCount", totalRowCount);
+		model.addAttribute("rowCount", rowCount);
+		model.addAttribute("list_arr", list_arr);
+		model.addAttribute("member_list", member_list);
+		model.addAttribute("mile_list", mile_list);
+		model.addAttribute("util", util);
+		return ".admin.admin_user_list"; 
+	}
+	  
+	// 마이페이지
+	@RequestMapping(value = "/user_list_update", method = RequestMethod.GET)
+	public String user_list_update(String select_ck_num, String members_num) {
+		if(select_ck_num !=null) { // 회원 정지 다중선택
+			String[] user_arr = select_ck_num.split(","); 
+			for(String user_num : user_arr) {
+				service.member_list_update(Integer.parseInt(user_num));
+			}
+		} 
+		if(members_num != null) { // 하나씩 선택
+			service.member_list_update(Integer.parseInt(members_num));
+		}  
+		 
+		return "redirect:/admin_user_list";
+	}
+	
+	
 	// 마이페이지
 	@RequestMapping(value = "/mypage", method = RequestMethod.GET)
 	public String mypage() {

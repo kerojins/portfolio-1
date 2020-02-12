@@ -1,5 +1,6 @@
 package com.heybooks.sh.controller.item;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -15,8 +16,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.heybooks.sh.service.item.Item_Category_Service;
+import com.heybooks.sh.service.item.Item_Main_Service;
 import com.heybooks.sh.util.PageUtil;
 import com.heybooks.sh.vo.item.Item_Editor_Vo;
+import com.heybooks.sh.vo.item.Item_Vo;
 
 @Controller
 public class Item_Catrgory_Controller {
@@ -24,6 +27,9 @@ public class Item_Catrgory_Controller {
 
 	@Resource
 	private Item_Category_Service service;
+	@Resource
+	private Item_Main_Service item_service;
+	
 
 	// 1. 작가 등록
 	@RequestMapping(value = "/editor_add", method = RequestMethod.GET)
@@ -50,22 +56,70 @@ public class Item_Catrgory_Controller {
 	@RequestMapping(value = "/editor_list", method = RequestMethod.GET)
 	public String editor_list(@RequestParam(value = "pageNum", defaultValue = "1") int pageNum,
 			@RequestParam(value = "rowCount", defaultValue = "10") int rowCount,
-			@RequestParam(value = "list_arr", defaultValue = "editor_date") String list_arr, Model model,
+			@RequestParam(value = "list_arr", defaultValue = "editor_date") String list_arr, String keyword, String search_date, String search_end_date, String item_start, String item_end, String sell_start, String sell_end, Model model,
 			HttpServletRequest request) {
 		logger.info("get editor-list");
-		int totalRowCount = service.editor_get_count();
-		PageUtil util = new PageUtil(pageNum, totalRowCount, rowCount, 5);
 		HashMap<String, Object> map = new HashMap<String, Object>();
-		if (!(list_arr.equals("editor_name"))) {
-			list_arr = list_arr + " desc";
+		if(search_date != null && !(search_date.equals(""))) {
+			map.put("search_date", search_date);  
+		}  
+		if(search_end_date != null && !(search_end_date.equals(""))) {
+			map.put("search_end_date", search_end_date); 
+		}  
+		if(keyword != null && !(keyword.equals(""))) { 
+			map.put("keyword", keyword);    
 		}
+		if(item_start != null && !(item_start.equals(""))) {
+			map.put("item_start", item_start);    
+		}
+		if(item_end != null && !(item_end.equals(""))) {
+			map.put("item_end", item_end);    
+		}
+		if(sell_start != null && !(sell_start.equals(""))) {
+			map.put("sell_start", sell_start);    
+		}
+		if(sell_end != null && !(sell_end.equals(""))) {
+			map.put("sell_end", sell_end);    
+		} 
+		int totalRowCount = service.editor_get_count(map); 
+		if(pageNum<1) pageNum = 1;
+		PageUtil util = new PageUtil(pageNum, totalRowCount, rowCount, 5);
 		map.put("list_arr", list_arr);
 		map.put("startRow", util.getStartRow());
 		map.put("endRow", util.getEndRow());
 		logger.info(list_arr);
-		List<Item_Editor_Vo> editor_list = service.editor_list(map);
-		model.addAttribute("list", editor_list); 
-		model.addAttribute("util", util);
+		List<HashMap<String,Object>> editor_list = service.editor_sell_list(map);
+		ArrayList<Integer> editr_item_count = new ArrayList<Integer>(); 
+		HashMap<String, Object> item_map = new HashMap<String, Object>(); 
+		item_map.put("list_arr", "product_date");
+		if(editor_list.size() > 0) {
+			model.addAttribute("editor_admin_list", editor_list); 
+		}else {
+			List<Item_Editor_Vo> list = service.editor_list(map);
+			List<Item_Vo> item_list = item_service.item_list(item_map);
+			for(Item_Editor_Vo vo : list) {
+				if(item_list.size() > 0) {
+					editr_item_count.add(service.editor_item_count(vo.getEditor_num()));
+				}else {
+					editr_item_count.add(0);
+				}
+			}  
+			model.addAttribute("editr_item_count", editr_item_count); 
+			model.addAttribute("editor_list", list);  
+		}  
+	 
+		 
+		model.addAttribute("search_date", search_date);   
+		model.addAttribute("search_end_date", search_end_date); 
+		model.addAttribute("keyword", keyword);    
+		model.addAttribute("item_start", item_start);    
+		model.addAttribute("item_end", item_end);    
+		model.addAttribute("sell_start", sell_start);     
+		model.addAttribute("sell_end", sell_end);    
+		
+		model.addAttribute("rowCount", rowCount);   
+		model.addAttribute("list_arr", list_arr); 
+		model.addAttribute("util", util);  
 		return ".admin.admin_editor_list";
 	}
 

@@ -1,3 +1,5 @@
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="java.util.Date"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -130,67 +132,15 @@
 											<a href="#">네이비씰 승리의기술</a>
 										</h4>
 										<p class="vertical_item_rate">
-											평점<span class="star_before"><span class="star_after"></span></span><span
-												class="item_reviewCount">9명</span>
+											평점
+											<span class="star_before item_list_star_before">
+												<span class="star_after"></span>
+											</span>
+											<span class="item_reviewCount">9명</span>
 										</p>
 									</div>
-								</div></li>
-							<li><div class="vertical_item_box">
-									<p class="favorite_item_img">
-										<a><img src="resources/images/favorite_item1.jpg"></a>
-									</p>
-									<div>
-										<h4 class="vertical_item_title">
-											<a href="#">네이비씰 승리의기술</a>
-										</h4>
-										<p class="vertical_item_rate">
-											평점<span class="star_before"><span class="star_after"></span></span><span
-												class="item_reviewCount">9명</span>
-										</p>
-									</div>
-								</div></li>
-							<li><div class="vertical_item_box">
-									<p class="favorite_item_img">
-										<a><img src="resources/images/favorite_item1.jpg"></a>
-									</p>
-									<div>
-										<h4 class="vertical_item_title">
-											<a href="#">네이비씰 승리의기술</a>
-										</h4>
-										<p class="vertical_item_rate">
-											평점<span class="star_before"><span class="star_after"></span></span><span
-												class="item_reviewCount">9명</span>
-										</p>
-									</div>
-								</div></li>
-							<li><div class="vertical_item_box">
-									<p class="favorite_item_img">
-										<a><img src="resources/images/favorite_item1.jpg"></a>
-									</p>
-									<div>
-										<h4 class="vertical_item_title">
-											<a href="#">네이비씰 승리의기술</a>
-										</h4>
-										<p class="vertical_item_rate">
-											평점<span class="star_before"><span class="star_after"></span></span><span
-												class="item_reviewCount">9명</span>
-										</p>
-									</div>
-								</div></li>
-							<li><div class="vertical_item_box">
-									<p class="favorite_item_img">
-										<a><img src="resources/images/favorite_item1.jpg"></a>
-									</p>
-									<div>
-										<h4 class="vertical_item_title">
-											<a href="#">네이비씰 승리의기술</a>
-										</h4>
-										<p class="vertical_item_rate">
-											평점<span class="star_before"><span class="star_after"></span></span><span
-												class="item_reviewCount">9명</span>
-										</p>
-									</div>
-								</div></li>
+								</div>
+							</li>
 						</ul>
 
 					</div>
@@ -211,134 +161,153 @@
 						아폴로 8호에서 보내온 사진<br> 노바디의 여행 <br>여행으로 돌아가다
 					</div>
 				</div>
-				<div class="item_detail_middle_box book_review">
-					<h3>리뷰</h3>
-					<form class="review_form">
+				<div class="book_review">
+					<h3>리뷰</h3> 
 						<div class="book_review_box">
-							<div class="book_review_write">
-								<div class="star_box">
-									<p class="small_caption">이 책의 별점</p>
-									<p class="count_txt">4.8</p>
-									<span class="star_before"><span class="star_after"></span></span>
-								</div>
-								<div id="reviewStars-input">
-									<p class="caption">별점을 체크해주세요</p>
-									<input id="star-4" type="radio" name="reviewStars" /> <label
-										title="gorgeous" for="star-4"></label> <input id="star-3"
-										type="radio" name="reviewStars" /> <label title="good"
-										for="star-3"></label> <input id="star-2" type="radio"
-										name="reviewStars" /> <label title="regular" for="star-2"></label>
-
-									<input id="star-1" type="radio" name="reviewStars" /> <label
-										title="poor" for="star-1"></label> <input id="star-0"
-										type="radio" name="reviewStars" /> <label title="bad"
-										for="star-0"></label>
-								</div>
-								<div class="textarea_wrap">
-									<textarea class="review_write"></textarea>
-									<p class="item_select_option">
-										<input type="checkbox" id="check_spoiler"
-											class="item_checking"><label for="check_spoiler"
-											class="input_label"></label><label for="check_spoiler"
-											style="font-size: 14px; margin-right: 5px; margin-top: 2px; color: #595e63;">
-											스포일러가 있습니다. </label>
-										<button type="submit" class="btn review_btn">리뷰 남기기</button>
-									</p>
-								</div>
-							</div>
-
-							<%-- 댓글남긴경우 --%>
-
-							<div class="book_review_write my_review_write">
-								<div class="star_box">
-									<p class="small_caption">이 책의 별점</p>
-									<p class="count_txt">4.8</p>
-									<span class="star_before"><span class="star_after"></span></span>
-								</div>
-								<div id="reviewStars-input">
-									<p class="caption">
-										내가 남긴 별점<span>5.0</span>
-									</p>
-									<input id="star-4" type="radio" name="reviewStars" /> <label
-										title="gorgeous" for="star-4"></label> <input id="star-3"
-										type="radio" name="reviewStars" /> <label title="good"
-										for="star-3"></label> <input id="star-2" type="radio"
-										name="reviewStars" /> <label title="regular" for="star-2"></label>
-
-									<input id="star-1" type="radio" name="reviewStars" /> <label
-										title="poor" for="star-1"></label> <input id="star-0"
-										type="radio" name="reviewStars" /> <label title="bad"
-										for="star-0"></label>
-								</div> 
-							</div>
-							<div class="review_list_box my_review_box">
-								<div class="review_list_box_content">
-									<div class="review_list_left">
-										<p>
-											<span class="review_date">2019.03.05</span>
-										</p>
-									</div>
-									<div class="review_list_right">
-										<p class="review_content">너무 재밌고 몰입하기 좋았어요.너무 재밌고 몰입하기
-											좋았어요너무 재밌고 몰입하기 좋았어요너무 재밌고 몰입하기 좋았어요너무 재밌고 몰입하기 좋았어요</p>
-										<p class="review_list_btn review_btn_left">
-											<span class="review_modi_btn"><a>수정</a></span> <span
-												class="review_del_btn"><a>삭제</a></span>
-										</p>
-										<p class="review_list_btn">
-											<span class="review_reply_btn"><i
-												class="fas fa-comment"></i> 댓글</span><span><i
-												class="fas fa-thumbs-up"></i>1</span>
-										</p>
-										<div class="add_reply" data-type="hide">
-											<ul>
-												<li class="review_content">
-													<p>너무 재밌고너무 재밌고너무 재밌고너무 재밌고너무 재밌고너무 재밌고너무 재밌</p>
-													<p class="add_reply_info">
-														<span>kerori</span><span>2019-02-33 23:11:44</span>
+								<%-- 리뷰 등록 --%>
+								<c:choose>
+									<c:when test="${review_vo == null }">
+										<form class="review_form" action="<c:url value='/review_insert'/>" method="post">
+											<div class="book_review_write">
+												<input hidden="hidden" name="product_num" value="${item_vo.product_num}">
+												<input hidden="hidden" name="members_num" value="${member_vo.members_num}">
+												<div class="star_box">
+													<p class="small_caption">이 책의 별점</p>
+													<p class="count_txt">4.8</p>
+													<span class="star_before review_item_star_before" style="width: 100px; height:15px">
+														<span class="star_after"></span>
+													</span> 
+												</div>
+												<div id="reviewStars-input">
+													<p class="caption">별점을 체크해주세요</p>
+													<input id="star-4" type="radio" value="5" name="review_grade" /> 
+													<label title="gorgeous" for="star-4"></label> 
+													<input id="star-3" type="radio" value="4" name="review_grade" /> 
+													<label title="good" for="star-3"></label> 
+													<input id="star-2" type="radio" value="3" name="review_grade" /> 
+													<label title="regular" for="star-2"></label> 
+													<input id="star-1" type="radio" value="2" name="review_grade" /> 
+													<label title="poor" for="star-1"></label> 
+													<input id="star-0" checked ="checked"  type="radio" value="1" name="review_grade" />
+													<label title="bad" for="star-0"></label>  
+												</div> 
+												<div class="textarea_wrap"> 
+													<textarea class="review_write" name="review_content"></textarea>
+													<p class="item_select_option">
+														<input type="checkbox" id="check_spoiler" name="review_spoiler" value="있음" class="item_checking">
+														<label for="check_spoiler" class="input_label"></label>
+														<label for="check_spoiler" style="font-size: 14px; margin-right: 5px; margin-top: 2px; color: #595e63;">
+															스포일러가 있습니다. 
+														</label>
+														<button type="submit" class="btn review_btn">리뷰 남기기</button>
 													</p>
-												</li>
-												<li class="review_content">
-													<p>읽을만 해요!!!</p>
-													<p class="add_reply_info">
-														<span>kerori2</span><span>2019-02-33 23:11:44</span>
+												</div>
+											</div>
+										</form> 
+									</c:when>
+									<c:otherwise>
+										<%-- 리뷰 남긴 경우 --%>
+										<div class="book_review_write my_review_write">
+											<div class="star_box">
+												<p class="small_caption">이 책의 별점</p>
+												<p class="count_txt">4.8</p>
+												<span class="star_before review_item_star_before"><span class="star_after"></span></span>
+											</div>
+											<div id="reviewStars-input">
+												<p class="caption">
+													<input hidden="hidden" class="review_grade_val" value="${review_vo.review_grade }">
+													내가 남긴 별점<span>5.0</span>
+												</p>
+												<span class="star_before review_star_before" >
+													<span class="star_after"></span>
+												</span>
+											</div> 
+										</div> 
+										<div class="review_list_box my_review_box">
+											<div class="review_list_box_content">
+												<div class="review_list_left">
+													<p>
+														<span class="review_date">2019.03.05</span>
 													</p>
-												</li>
-											</ul>
-											<textarea class="review_reply_write"></textarea>
-											<button type="submit" class="btn review_btn">댓글 달기</button>
+												</div>
+												<div class="review_list_right">
+													<p class="review_content">${review_vo.review_content}</p>
+													<p class="review_list_btn review_btn_left">
+														<span class="review_modi_btn">
+															<a>수정</a>
+														</span>  
+														<span class="review_del_btn">
+															<a href="<c:url value='/review_delete?review_num=${review_vo.review_num}&product_num=${item_vo.product_num}'/>">삭제</a>
+														</span> 
+													</p> 
+													<p class="review_list_btn">
+														<span class="review_reply_btn" list_num="${review_vo.review_num}" member_num="${member_vo.members_num}">
+															<i class="fas fa-comment"></i> 댓글 
+														</span> 
+														<span><i class="fas fa-thumbs-up"></i>1</span> 
+													</p>
+													<%-- 리뷰 댓글 추가 --%> 
+													<div class="add_reply" data-type="hide">
+														<form class="review_reply_insert_form">
+															<input hidden="hidden" name="product_num" value="${item_vo.product_num}">
+															<input hidden="hidden" name="members_num" value="${member_vo.members_num}">
+															<input hidden="hidden" name="review_num" value="${review_vo.review_num}">
+															<ul class="add_reply_list" url="badf"> 
+																<%-- ajax 삽입 --%> 
+															</ul>
+															<textarea name="review_reply_content" class="review_reply_write"></textarea>
+															<input type="button" class="btn review_btn" list_num="${review_vo.review_num}" member_num= "${member_vo.members_num}" value="댓글 달기">
+														</form>
+													</div>
+												</div> 
+											</div>
+											<div class="review_modify_box">
+												<form class="review_modify_form" action="<c:url value='/review_update'/>" method="post">
+												<input hidden="hidden" name="product_num" value="${item_vo.product_num}">
+												<input hidden="hidden" name="members_num" value="${member_vo.members_num}">
+												<input hidden="hidden" name="review_num" value="${review_vo.review_num}">
+												<div class="review_list_left">
+													<div id="reviewStars-input">
+														<input id="star-4" type="radio" value="5" name="review_grade" /> 
+														<label title="gorgeous" for="star-4"></label> 
+														<input id="star-3" type="radio" value="4" name="review_grade" />  
+														<label title="good" for="star-3"></label> 
+														<input id="star-2" type="radio" value="3" name="review_grade" />  
+														<label title="regular" for="star-2"></label>
+														<input id="star-1" type="radio" value="2" name="review_grade" />  
+														<label title="poor" for="star-1"></label> 
+														<input id="star-0" checked ="checked" type="radio" value="1" name="review_grade" />
+														<label title="bad" for="star-0"></label>  
+													</div>
+													<p>   
+														<span class="review_date">2019.03.05</span>
+													</p>
+												</div>  
+												<div class="review_list_right modify_review">
+													<p class="review_content">
+														<textarea rows="5" name="review_content"></textarea>
+													</p>
+													<p class="item_select_option">
+														<input type="checkbox" id="check_spoiler"
+															class="item_checking"><label for="check_spoiler"
+															class="input_label"></label><label for="check_spoiler"
+															style="font-size: 14px; margin-right: 5px; margin-top: 2px; color: #595e63;">
+															스포일러가 있습니다. </label>
+													</p>
+													<p class="review_list_btn ">
+														<span class="review_del_btn">
+															<a>취소</a>
+														</span> 
+														<span class="">	  
+															<input type="submit" value="수정완료">
+														</span>
+													</p> 
+												</div> 
+												</form>
+											</div>  
 										</div>
-									</div>
-								</div>
-								<div class="review_modify_box">
-									<div class="review_list_left">
-										<div class="review_star_box"></div>
-										<p>
-											<span class="review_date">2019.03.05</span>
-										</p>
-									</div>
-									<div class="review_list_right modify_review">
-										<p class="review_content">
-											<textarea rows="5"></textarea>
-										</p>
-										<p class="item_select_option">
-											<input type="checkbox" id="check_spoiler"
-												class="item_checking"><label for="check_spoiler"
-												class="input_label"></label><label for="check_spoiler"
-												style="font-size: 14px; margin-right: 5px; margin-top: 2px; color: #595e63;">
-												스포일러가 있습니다. </label>
-										</p>
-										<p class="review_list_btn ">
-											<span class="review_del_btn"><a>취소</a></span> <span
-												class="review_reply_btn"><a>수정완료</a></span>
-										</p>
-
-									</div>
-								</div>
-							</div>
-
-
-
+									</c:otherwise>
+								</c:choose>
 							<div class="review_list_top">
 								<p>
 									전체 <span>9개</span>의 댓글이 있습니다.
@@ -350,50 +319,57 @@
 									</ul>
 								</div>
 							</div>
-
+							<%-- 리뷰 댓글 리스트 --%>
 							<ul class="review_list">
-								<li class="review_list_box">
+								<c:forEach var="vo" items="${review_list}" varStatus="status">
+									<li class="review_list_box"> 
 									<div class="review_list_left">
 										<div class="star_box">
-											<span class="star_before"><span class="star_after"></span></span>
+											<input hidden="hidden" class="grade_list_val" value="${vo.review_grade}">
+											<span class="star_before review_list_star_before"><span class="star_after"></span></span>
 										</div>
-										<span class="review_id">kekerori</span>
-										<p>
-											<span class="review_date">2019.03.05</span><span
+										<span class="review_id">${member_list[status.index].members_id}</span>
+										<%--  수정 등록일 날짜,시간 표시  --%> 
+										<c:set var="date" value="${vo.review_date}"/>
+										<%  
+											Date date = (Date) pageContext.getAttribute("date");
+											SimpleDateFormat sdate = new SimpleDateFormat("yyyy-MM-dd");
+											String date_txt = sdate.format(date);
+											pageContext.setAttribute("date_txt", date_txt); 
+											
+										%> 
+										<p> 
+											<span class="review_date">${date_txt}</span><span
 												class="review_report">신고</span>
 										</p>
 									</div>
 									<div class="review_list_right">
-										<p class="review_content">너무 재밌고 몰입하기 좋았어요.너무 재밌고 몰입하기
-											좋았어요너무 재밌고 몰입하기 좋았어요너무 재밌고 몰입하기 좋았어요너무 재밌고 몰입하기 좋았어요</p>
+										<p class="review_content">${vo.review_content}</p>
 										<p class="review_list_btn">
-											<span class="review_reply_btn"><i
-												class="fas fa-comment"></i> 댓글</span><span><i
-												class="fas fa-thumbs-up"></i>1</span>
-										</p>
+											<span class="review_reply_btn" list_num="${vo.review_num}" member_num= "${member_vo.members_num}">
+												<i class="fas fa-comment"></i> 댓글
+											</span>  
+											<span><i class="fas fa-thumbs-up"></i>${vo.review_recommend}</span>
+										</p> 
 										<div class="add_reply" data-type="hide">
-											<ul>
-												<li class="review_content">
-													<p>너무 재밌고너무 재밌고너무 재밌고너무 재밌고너무 재밌고너무 재밌고너무 재밌</p>
-													<p class="add_reply_info">
-														<span>kerori</span><span>2019-02-33 23:11:44</span>
-													</p>
-												</li>
-												<li class="review_content">
-													<p>읽을만 해요!!!</p>
-													<p class="add_reply_info">
-														<span>kerori2</span><span>2019-02-33 23:11:44</span>
-													</p>
-												</li>
-											</ul>
-											<textarea class="review_reply_write"></textarea>
-											<button type="submit" class="btn review_btn">댓글 달기</button>
+											<form class="review_reply_insert_form"  method="post">
+												<input hidden="hidden" name="product_num" value="${item_vo.product_num}">
+												<input hidden="hidden" class="member_num" name="members_num" value="${member_vo.members_num}">
+												<input hidden="hidden" name="review_num" value="${vo.review_num}">
+												<ul class="add_reply_list" url="dddd">  
+													<%-- ajax 삽입 --%>  
+												</ul>
+												<textarea name="review_reply_content" class="review_reply_write"></textarea>
+												<input type="button" class="btn review_btn" list_num="${vo.review_num}" member_num= "${member_vo.members_num}" value="댓글 달기">
+											</form>  
 										</div>
-									</div>
-								</li>
+									</div>  
+								</li> 
+								</c:forEach> 
+								
 							</ul>
 						</div>
-					</form>
+					
 					<span></span>
 				</div>
 			</div>

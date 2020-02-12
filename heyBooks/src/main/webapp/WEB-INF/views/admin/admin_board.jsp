@@ -37,7 +37,7 @@
 					<c:forEach var="vo" begin="0" end="6" varStatus="status" items="${counsel_list}">
 						<tr class="list-row"> 
 							<td align="center" class="counsel_number board_number">${vo.counsel_num}</td>
-							<td align="center" class="counsel_name board_name">(${member_list[status.index].members_id})</td>
+							<td align="center" class="counsel_name board_name">${member_list[status.index].members_id}</td>
 							<td align="left"  class="counsel_title board_title" class="pdl10"> 
 								<span class="layer_board_view_btn counsel_btn" board_answer="${vo.counsel_answer}" board_id="counsel" board_seq="${vo.counsel_num}"> 
 									<span class="cat">[${vo.counsel_type }]</span> 
@@ -137,7 +137,7 @@
 					</tr>
 				</thead>
 				<tbody class="ltb otb" id="ajaxTable">
-				<c:forEach var="vo" begin="0" end="6" varStatus="status" items="${event_list}">
+					<c:forEach var="vo" begin="0" end="6" varStatus="status" items="${event_list}">
 						<tr class="list-row">  
 							<td align="center" class="counsel_number board_number">${vo.event_num}</td>
 							<td align="center" class="counsel_name board_name">${event_admin_list[status.index].admin_id}</td>
@@ -189,14 +189,26 @@
 					</tr>
 				</thead>
 				<tbody class="ltb otb" id="ajaxTable">
-					<tr class="list-row  ">
-						<td align="center" class="number">8</td>
-						<td align="left" class="name pdl10">배정훈 (비회원)</td>
-						<td align="left" class="pdl10">
-							<span class="hand  blue  goods_review_board_view_btn layer_board_view_btn">테스트</span> 
-						</td>
-						<td align="center" class="date">2019-03-11 18:05</td>
-					</tr>
+					<c:forEach var="vo" begin="0" end="6" varStatus="status" items="${review_list}">
+						<tr class="list-row">  
+							<td align="center" class="counsel_number board_number">${vo.review_num}</td>
+							<td align="center" class="counsel_name board_name">${rmember_list[status.index].members_id}</td>
+							<td align="left"  class="counsel_title board_title" class="pdl10">  
+								<span class="layer_board_view_btn" board_id="review" board_seq="${vo.review_num}"> 
+									${vo.review_content}   
+								</span>    
+							</td>  
+							<c:set var="date" value="${vo.review_date}" />
+							<%-- 수정 등록일 날짜,시간 표시 --%> 
+							<%
+									Date date = (Date) pageContext.getAttribute("date");
+									SimpleDateFormat sdate = new SimpleDateFormat("yyyy-MM-dd");
+									String date_txt = sdate.format(date);
+									pageContext.setAttribute("date_txt", date_txt);
+							%> 
+							<td align="center"  class="counsel_date board_date">${date_txt}</td> 
+						</tr>
+					</c:forEach>  
 				</tbody> 
 			</table>
 		</div>
@@ -256,15 +268,20 @@
 										</li>
 										<li>
 											<span class="btn small black">
+												<a type="button" name="board_delete_btn" class="board_delete_btn" href="<c:url value='/board_delete?board_seq=${vo.review_num}&board_id=${board_id}'/>">삭제</a>
+											</span> 
+										</li>
+										<li>
+											<span class="btn small black">
 												<button type="button" name="board_reply_btn" board_seq="${vo.counsel_num}" class="board_reply_btn counsel_reply_insert" >답변 등록</button>
 											</span>
 										</li>
 										<li> 
 											<span class="btn small black">
-												<a href="#" class="board_delete_btn">닫기</a>
+												<a class="board_close_btn">닫기</a>
 											</span>
 										</li> 
-									</ul>
+									</ul> 
 								</div>
 							</div>
 							<!-- 페이지 타이틀 바 : 끝 -->
@@ -315,11 +332,12 @@
 																					<span class="han ">조회</span> 
 																				</c:when>
 																			</c:choose> 
+																		
 																			<span class="num board_another_info">0</span>
 																		</td>
 																		<td class="cell_bar">|</td>
 																		<td>
-																			<span class="han">날짜:</span> 
+																			<span class="han">등록일:</span> 
 																			<span class="num detail_board_date">게시글 상세 등록일</span>
 																		</td>
 																	</tr>
@@ -341,9 +359,9 @@
 							</div>
 							<textarea class="counsel_reply_content" name="counsel_reply_content"></textarea>
 						</form>
-					</div> 
+					</div>
 				</div>  
-				<form id="writeform" class="board_write_form" method="post" >
+				<form id="writeform" class="board_write_form" method="post" enctype="multipart/form-data" >
 					<div id="page-title-bar-area" style="margin-top: -20px;">
 						<div id="page-title-bar">
 							<div class="page-title"> 
@@ -381,8 +399,8 @@
 									<span class="btn large black">
 										<button id="board_add_btn" type="submit">저장하기</button>
 									</span> 
-									<span>
-										<a class="board_delete_btn">닫기</a> 
+									<span> 
+										<a class="board_close_btn">닫기</a> 
 									</span> 
 								</li>
 							</ul>
@@ -437,44 +455,29 @@
 										<input hidden="hidden" class="board_num" name="${board_id}_num" value="" >
 									</td>
 								</tr>
+								<c:if test="${board_id eq 'event'}">
+								<tr>
+									<th class="its-th-align center">이벤트 썸네일</th>
+									<td class="its-td"> 
+										<p class=""><input type="file" class="thumb_file" name="event_file" onchange="e_readURL(this);" ><input readonly="readonly" name="thumb_name" class="thumb_name"></p>
+										<p class="event_thumb_box"><img class="event_thumb" src="" ><i class="fas fa-times del_thumb"></i></p>
+									</td>   
+								</tr> 
+								</c:if> 
 								<tr>
 									<th class="its-th-align center">내용</th>
 									<td class="its-td">
 										<textarea id="summernote" class="board_content" name="${board_id}_content"></textarea>
 									</td>  
 								</tr> 
-							<%-- 	<tr class="hide" id="filelistlay">
-									<th class="its-th-align center">첨부파일</th>
+								<c:if test="${board_id eq 'event'}">
+								<tr>
+									<th class="its-th-align center">이벤트 종료일</th>
 									<td class="its-td">
-										<div> 
-											<table class="simplelist-table-style boardfileliststyle"
-												id="BoardFileTable" style="width: 100%">
-												<colgroup>
-													<col width="10%">
-													<col width="60%">
-													<col width="20%">
-												</colgroup>
-												<thead>
-													<tr>
-														<th>순서</th>
-														<th>파일</th>
-														<th><span class="btn-plus gray"><button
-																	type="button" id="boardfileadd"></button></span></th>
-													</tr>
-												</thead>
-												<tbody class="ui-sortable" style="">
-													<tr style="">
-														<td align="center">↕</td>
-														<td align="center"><input type="file"
-															name="file_info[]"></td>
-														<td align="center"><span class="btn-minus gray"><button
-																	type="button" class="etcDel"></button></span></td>
-													</tr>
-												</tbody>
-											</table>
-										</div>
-									</td>
-								</tr> --%>
+										<input type="text" id="event_period" name="event_period">
+									</td>   
+								</tr> 
+								</c:if>
 								<tr>
 									<th class="its-th-align center" colspan="2">
 										<div class="after">
@@ -492,3 +495,36 @@
 		</div>
 	</div>
 </div> 
+<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.15/dist/summernote-lite.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+	$("#event_period").datepicker({
+	    dayNamesMin:["일","월","화","수","목","금","토"], // 요일에 표시되는 형식 설정
+
+	    dateFormat:"yy-mm-dd", //날짜 형식 설정
+
+	    monthNames:["1월","2월","3월","4월","5월","6월","7월",
+
+	     "8월","9월","10월","11월","12월"], //월표시 형식 설정
+	 
+	    showAnim:"fold", //애니메이션효과
+
+		minDate: 0,
+	});  
+	
+	// summernote 플러그인 
+	$('#summernote').summernote({
+		height : 300, // set editor height
+		focus : true,
+		callbacks:{
+			onImageUpload: function(files, editor, welEditable) {
+				for (var i = files.length - 1; i >= 0; i--) {
+	            	sendFile(files[i], this);
+	            }
+	        }	
+		} 
+	}); 
+});
+
+
+</script>

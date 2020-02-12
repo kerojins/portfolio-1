@@ -181,10 +181,11 @@
 						<td class="its-th-align center">가격</td>
 						<td class="its-td">
 							<div id="item_price" class="">
-								<label class="item_radio">정가 <input type="text"
-									width="300" onkeyup="discount();"  name="product_price" id="origin_price"> 원
-								</label> - <label class="item_radio"> 판매가 <input type="text"
-									width="300" name="product_discount_price" id="discount_price"> 원
+								<label class="item_radio">정가 
+									<input type="text" width="300" onkeyup="discount();"  name="product_price" id="origin_price"> 원
+								</label> - 
+								<label class="item_radio"> 판매가 
+									<input type="text" width="300" name="product_discount_price" id="discount_price"> 원
 								</label> 
 							</div> 
 						</td> 
@@ -348,13 +349,13 @@
 					<tr>
 						<td class="center">
 							<div>
-								<select class="line" name="category1" size="7" id="select_cate1"
-									style="width: 100%"><option value="100">국내도서</option>
+								<select class="line" name="category1" size="7" id="select_cate1" style="width: 100%">
+									<option value="100">국내도서</option>
 									<option value="700">외국도서</option>
 								</select>
 							</div>
 						</td>
-						<td class="center">
+						<td class="center"> 
 							<div>
 								<select class="line" name="category2" size="7" id="select_cate2"
 									style="width: 100%">
@@ -390,7 +391,7 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr>
+					<tr> 
 						<td class="center">
 							<div>
 								<select class="line" name="category1" size="7" id="cate_editor"
@@ -430,9 +431,8 @@
 					<tr>
 						<td class="center">
 							<div>
-								<select class="line" id="cate_publish" size="7"
-									style="width: 100%">
-										<c:forEach var="list" items="${publishing_list}" >
+								<select class="line" id="cate_publish" size="7" style="width: 100%">
+									<c:forEach var="list" items="${publishing_list}" >
 										<option value='${list}'>${list}</option>
 									</c:forEach> 
 								</select> 

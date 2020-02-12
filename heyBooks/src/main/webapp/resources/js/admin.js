@@ -41,7 +41,7 @@ $(document)
 					});
 					$('#category_btn2').click(function() {
 						$('#category_select').show();
-					});
+					}); 
 
 					$('#editor_btn').click(function() {
 						$('#editor_select').show();
@@ -54,24 +54,32 @@ $(document)
 					// 카테고리 불러오기 AJAX 연결
 			 		$('#select_cate1').change(function(){
 			 			$("#select_cate2").html('');
+			 			$(".search-form-table #select_cate2").html('<option value="">= 2차 분류 =</option>');
 			 			var cate_code = $(this).val(); 
 			 			$.getJSON( getContextPath() +'/jackson/item_cate', 
 			 					{ cate_code : cate_code },   
 			 					function(data){
 			 					data.forEach(function(item,index){
 			 						$("#select_cate2").append("<option value='" + item.cate_ref1 +"'>"+ item.cate_name+"</option>");
+			 						     
 			 					});
-			 			});
+			 			});  
 			 		}); 
 					$('#select_cate2').change(function(){
 			 			$("#select_cate3").html('');
+			 			$(".search-form-table #select_cate3").html('<option value="">= 3차 분류 =</option>');
+			 			var type = $(this).attr("data-type");
 			 			var cate_code = $(this).val();
 			 			$.getJSON( getContextPath() + '/jackson/item_cate',
-			 					{ cate_code : cate_code },
+			 					{ cate_code : cate_code }, 
 			 					function(data){
 			 					data.forEach(function(item,index){
-			 						$("#select_cate3").append("<option value='" + item.cate_num +"'>"+ item.cate_name+"</option>");
-			 					});
+			 						if(type == 'search'){
+			 							$("#select_cate3").append("<option value='" + item.cate_ref1 +"'>"+ item.cate_name+"</option>");
+			 						}else{
+			 							$("#select_cate3").append("<option value='" + item.cate_num +"'>"+ item.cate_name+"</option>");
+			 						}
+			 					});  
 			 			}); 
 			 		});   
 					$('#category_select_btn').click(function(){
@@ -150,9 +158,6 @@ $(document)
 					$('.ui-dialog-titlebar-close').click(function() {
 						$('.order_detail_box').hide();
 					});
-					$('.order_btn').click(function() {
-						$('.order_detail_box').show();
-					}); 
 					$('.board_list .close_btn').click(function() {
 						$('.board_list_view').hide();
 					});
@@ -168,16 +173,59 @@ $(document)
 					$("#item_preview .select_btn").click(function(){
 						$("#item_preview").hide(); 
 					});  
+					var type = $("#list_type").val();
 					
+			  		 // 아이템 항목별,갯수별 리스트 불러오기 
+			 		$("#item_rowCount_list").change(function(){
+			 			var rowCount = $(this).val(); 
+			 			var list_arr = $("#item_list_arr_list").val();
+			 			var counsel_type = $("#counsel_type").val();
+			 			var counsel_answer = $("#counsel_answer").val();
+			 			var url = $(".url_val").val();
+			 			location.href =  getContextPath() + url + "&rowCount="+rowCount+"&list_arr="+list_arr+"&counsel_type="+counsel_type+"&counsel_answer="+counsel_answer+"";
+			 		});    
+			 		$("#item_list_arr_list").change(function(){ 
+			 			var list_arr = $(this).val();  
+			 			var rowCount = $("#item_rowCount_list").val(); 
+			 			var counsel_type = $("#counsel_type").val();
+			 			var counsel_answer = $("#counsel_answer").val();
+			 			var url = $(".url_val").val(); 
+			 			alert(url);
+			 			location.href =  getContextPath() + url + "&rowCount="+rowCount+"&list_arr="+list_arr+"&counsel_type="+counsel_type+"&counsel_answer="+counsel_answer+"";
+			 		});    
+			 		$("#counsel_type").change(function(){ 
+			 			var counsel_type = $(this).val(); 
+			 			var list_arr = $("#item_list_arr_list").val();
+			 			var rowCount = $("#item_rowCount_list").val(); 
+			 			var counsel_answer = $("#counsel_answer").val();
+			 			var url = $(".url_val").val();
+			 			location.href =  getContextPath() + url + "&rowCount="+rowCount+"&list_arr="+list_arr+"&counsel_type="+counsel_type+"&counsel_answer="+counsel_answer+"";
+			 		});
+			 		$("#counsel_answer").change(function(){ 
+			 			var counsel_answer = $(this).val();
+			 			var list_arr = $("#item_list_arr_list").val();
+			 			var rowCount = $("#item_rowCount_list").val(); 
+			 			var counsel_type = $("#counsel_type").val();
+			 			var url = $(".url_val").val();
+			 			location.href =  getContextPath() + url + "&rowCount="+rowCount+"&list_arr="+list_arr+"&counsel_type="+counsel_type+"&counsel_answer="+counsel_answer+"";
+			 		});
+			 		$("#review_grade").change(function(){ 
+			 			var review_grade = $(this).val();
+			 			var list_arr = $("#item_list_arr_list").val();
+			 			var rowCount = $("#item_rowCount_list").val(); 
+			 			var url = $(".url_val").val();
+			 			location.href =  getContextPath() + url + "&rowCount="+rowCount+"&list_arr="+list_arr+"&review_grade="+review_grade+"";
+			 		});
+			 		
+			 		
 					// 관리자 게시판 관리 
 					$(".layer_board_view_btn").click(function(){
 						$(".board_list_view").show(); 
 					});  
 					// 게시글 닫기 버튼 클릭시
-					$(".board_delete_btn").click(function(){
+					$(".board_close_btn").click(function(){
 						$(".board_list_view").hide();
-						location.reload();
-						  
+						    
 					});
 					
 					// 1:1문의 상세 클릭할 경우
@@ -185,7 +233,6 @@ $(document)
 						$(".board_reply_btn").show();
 						$(".board_modify_btn").hide();
 					});    
-					
 					$(".layer_board_view_btn").click(function(){
 						$(".board_list_view").show();
 						$('#boardview').show();
@@ -205,13 +252,18 @@ $(document)
 								$(".board_list_view .detail_board_content").html(data.content);
 								$(".board_list_view .board_another_info").text(data.another);
 								$(".board_list_view .detail_board_date").text(data.date);
+								$(".board_delete_btn").attr("href", getContextPath() +'/board_delete?board_seq='+ board_seq +'&board_id='+ board_id +'&board=admin_board');
 								if(board_answer == '답변대기'){    
 									$(".counsel_reply_content").show();  
 									$(".counsel_reply_insert").show();
 								}else if(board_answer == '답변완료'){
 									$("#counsel_reply_box").show();
 									$("#counsel_reply_box").text(data.reply_vo.counsel_reply_content);
-								}
+								}else if(board_id == 'review'){
+									$(".board_list_view .detail_board_title").text("");
+									$(".board_delete_btn").show();
+									$(".board_modify_btn").hide();
+								}  
 		 					});      
 					}); 
 					// 1:1 답변 등록
@@ -226,6 +278,7 @@ $(document)
 							contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
 							success: function(data){ 
 								$(".counsel_reply_content").hide();
+								$("#counsel_reply_box").show();
 								$("#counsel_reply_box").text(data.reply_vo.counsel_reply_content);
 								$(".board_reply_btn").hide();
 							},    
@@ -236,7 +289,6 @@ $(document)
 					});  
 					
 					// 게시판 글쓰기 버튼 클릭시
-					
 					$('.board_write_btn').click(function() {
 						$('#boardview').hide();
 						$(".board_list_view").show();
@@ -251,7 +303,7 @@ $(document)
 					$('.board_modify_btn').click(function() {
 						$(".board_list_view").show();
 						$("#writeform").show();
-						$('#boardview').hide();
+						$('#boardview').hide(); 
 						var board_id = $(this).attr("board_id");
 						var board_seq = $(this).attr("board_seq");
 						$.get( getContextPath() +'/ajax/board_detail', 
@@ -287,26 +339,110 @@ $(document)
 						$(".thumb_name").hide();   
 						$(this).hide();  
 					});  
-					// summernote 플러그인 
-					$('#summernote').summernote({
-						height : 300, // set editor height
-						focus : true,
-						callbacks:{
-							onImageUpload: function(files, editor, welEditable) {
-								for (var i = files.length - 1; i >= 0; i--) {
-					            	sendFile(files[i], this);
-					            }
-					        }	
-						} 
+			  
+					  
+					//주문 상세보기  
+					$(".admin_order_detail_btn").click(function(){
+						$('.order_detail_box').show();
+						var order_num = $(this).attr("order_num");
+						$.get( getContextPath() +'/ajax/order_detail', 
+			 					{ order_num : order_num},   
+				 				function(data){    
+			 						$(".order_item_list_row").remove();
+			 						var list = data.list; 
+			 		 				list.forEach(function(item,index){ 
+			 		 					var mile = Math.floor(Number(item.order_item_price.replace(/,/gi,"")) * item.order_item_quantity * 0.05);
+			 		 					var item_total = Number(item.order_item_price.replace(/,/gi,"")) * item.order_item_quantity;
+										$(".order_table_body").append('<tr class="order_item_list_row"><td class="order_item_info"><p class="order_item_img"><a href="#"><img width="80"src="/sh/resources/upload/'+data.item_list[index].product_picture+'"></a></p>'
+										+'<div class="order_item_title"><p class="order_item_title_txt"><a href="#">'+item.order_item_name+'</a></p><p><span class="order_item_editor">'+data.editor_list[index].editor_name+'</span><span class="order_item_publising">'+data.item_list[index].product_publish+'</span></p></div></td>'
+										+'<td class="order_item_price"><p class="order_item_price_txt"><span>'+item.order_item_price+'</span>원</p><p class="order_item_discount">(<span>'+data.item_list[index].product_discount+'%</span><i class="fas fa-long-arrow-alt-down"aria-hidden="true"></i>)</p></td>'
+										+'<td class="order_item_count"><p>'+item.order_item_quantity+'개</p></td>' 
+										+'<td class="order_item_mileage"><p>'+won_transform(String(mile))+'원</p></td>' 
+										+'<td class="order_item_allPrice"><p class="order_item_allPrice_txt">'+won_transform(String(item_total))+'원</p></td></tr>')
+			 		 				});    
+			 		 				$("#total_reserve").text(won_transform(String(Math.floor(Number(data.vo.total_price.replace(/,/gi,""))*0.05))));
+			 		 				$("#total_settle_price").text(data.vo.total_price);
+			 		 				$(".method_txt").text(data.vo.payment_methods);
+			 		 				$(".shipping_txt").text(data.vo.order_shipping_charge+'원');
+			 		 				$(".address_txt").text(data.vo.order_address+' '+data.vo.order_detail_address+' '+data.vo.order_extra_address);
+			 		 				$(".order_id").text(data.vo.order_name);
+			 		 				$(".order_phone").text(data.vo.order_phone_number +' / '+ data.vo.order_add_number);
+			 		 				$(".order_email").text(data.member_vo.members_email);
+			 					});  
+					});
+					
+					
+					// 달력 설정
+					$(".datepickers").datepicker({
+						 monthNamesShort:["1월","2월","3월","4월","5월","6월","7월",
+
+							     "8월","9월","10월","11월","12월"], //월표시 형식 설정
+							     
+					    dayNamesMin:["일","월","화","수","목","금","토"], // 요일에 표시되는 형식 설정
+
+					    dateFormat:"yy-mm-dd", //날짜 형식 설정
+
+					    showMonthAfterYear : true, // 년 뒤에 월 표시
+					     
+					    showAnim:"fold", //애니메이션효과
+					    
+					    changeMonth : true, // 월 변경가능
+					    
+					    changeYear : true, // 년 변경가능
+
+						maxDate: 0,
 					}); 
-				}); 
- 
+					
+					
+					var date = new Date();
+					// 관리자 상세 검색 달력기간 설정
+					$("#today").click(function(){
+						$(this).parent().siblings(".start_day").val(today());
+						$(this).parent().siblings(".end_day").val(today());
+					});
+					$("#1week").click(function(){
+						$(this).parent().siblings(".start_day").val(lastWeek()); 
+						$(this).parent().siblings(".end_day").val(today());
+					});
+					$("#1month").click(function(){
+						$(this).parent().siblings(".start_day").val(lastMonth());
+						$(this).parent().siblings(".end_day").val(today());
+					});
+					$("#3month").click(function(){
+						$(this).parent().siblings(".start_day").val(last3Month());
+						$(this).parent().siblings(".end_day").val(today()); 
+					});   
+					$("#all_day").click(function(){
+						$(this).parent().siblings(".start_day").val("");
+						$(this).parent().siblings(".end_day").val("");  
+					});
+					// 관리자 검색 체크유지
+					if($(".status_val").val() != null){
+						var status = $(".status_val").val().split(",");
+						var input = $("input[type='checkbox']");
+						for(var i= 0; i < input.length; i++){
+							for(var j=0; j < status.length; j++){
+								if($(input[i]).val() == status[j]){
+									$(input[i]).prop('checked', true);
+								}
+							}
+						} 
+					}   
+					// 리뷰 관리자 게시판 별출력
+					var grade = $(".review_grade").text();
+					var review_str = '';
+					for(var i = 0; i < grade; i++){
+						review_str += '★'; 
+					}  
+					$(".review_grade").text(review_str);
+				});     
+  
  
 
 // 관리자 회원 상세보기창
-function open_crm_summary(ent) {
-	var nth_tr;
-	var i;
+function open_summary(ent) {
+	var nth_tr; 
+	var i; 
 	var m_layer = document.getElementById("member_info_layers");
 	var table = document.getElementById("user_list_table");
 	var tr = ent.parentElement.parentElement.parentElement;
@@ -317,10 +453,24 @@ function open_crm_summary(ent) {
 			break;
 		}
 	}
-	var layer_top = 543 + (nth_tr * 53);
+	var layer_top = 460 + (nth_tr * 53);
 	m_layer.style.display = "block";
 	m_layer.style.top = "" + layer_top + "px";
  
+	var num = ent.getAttribute("num");
+	$.get( getContextPath() +'/ajax/user_detail', 
+		{num : num},   
+		function(data){  
+			$(".detail_review").text(data.review_cnt+"개");
+			$(".detail_counsel").text(data.counsel_cnt+"건");
+			$(".detail_order").text(data.order_cnt+"개");
+			$(".detail_job").text(data.vo.members_job);
+			if(data.vo.members_favorite == null){
+				$(".detail_favorite").text("없음");
+			}else{
+				$(".detail_favorite").text(data.vo.members_favorite);
+			}
+		});    
 }
 
 // 관리자 항목별 리스트 전체 선택 체크표시
@@ -367,7 +517,7 @@ var pv_bool = 'false';
 		success: function(data){
 			alert("result:" + data);
 			if(data != 1) document.getElementById("product_num").value = data;
-			document.getElementById("item_form").submit();
+			document.getElementById("item_form").submit(); 
 		},  
 		error: function(request,status,error){
 		}    
@@ -576,3 +726,80 @@ var pv_bool = 'false';
 		} 
 	}
 	
+	//금액 천단위 쉼표 변환 함수
+	function won_transform(won_txt){
+		var won_result = "";
+		var won_array = won_txt.split("");
+		won_array = won_array.reverse(); // 배열 순서 뒤집기 
+		for(var i = won_array.length - 1   ; i  >= 0 ; i--){
+				if(i % 3 == 0 && ( i!=0 ) ){
+					won_array.splice(i, 0, ",");
+				}			       
+		}    
+		won_array  =  won_array.reverse();
+		won_array.forEach(function(item,index){
+			won_result += item;  
+		}); 
+		return won_result;
+	} 
+ 
+
+	function getDateStr(myDate){
+		return (myDate.getFullYear() + '-' + ('00' + (myDate.getMonth() + 1)).slice(-2) + '-' + ('00' + (myDate.getDate())).slice(-2)); 
+	}
+
+	/* 오늘 날짜를 문자열로 반환 */
+	function today() { 
+	  var d = new Date();
+	  return getDateStr(d); 
+	}
+
+	/* 오늘로부터 1주일전 날짜 반환 */
+	function lastWeek() {
+	  var d = new Date();
+	  var dayOfMonth = d.getDate()
+	  d.setDate(dayOfMonth - 7);
+	  return getDateStr(d);
+	}
+
+	/* 오늘로부터 1개월전 날짜 반환 */
+	function lastMonth() {
+	  var d = new Date();
+	  var monthOfYear = d.getMonth();
+	  d.setMonth(monthOfYear - 1);
+	  return getDateStr(d);
+	}
+	
+	/* 오늘로부터 1개월전 날짜 반환 */
+	function last3Month() {
+	  var d = new Date();
+	  var monthOfYear = d.getMonth();
+	  d.setMonth(monthOfYear - 3);
+	  return getDateStr(d);
+	}
+	/* 금액 입력시 , 함수*/
+	function key_money(input){
+		var val = $(input).val().replace(/,/gi,""); 
+		input.value = won_transform(val);
+	} 
+	
+	// 관리자 페이지 내용 선택 삭제
+	  function ck_null(str){
+			 var form = document.getElementById(str);
+			 if(str == "order_list"){ 
+				 $(form).attr("action", getContextPath()+"/order_delete");
+				 $(form).attr("method", "get");
+			 }  
+			 var ck_list = document.getElementsByName("select_ck_num");
+			 var bool = false; 
+			 ck_list.forEach(function(item){ 
+				 if($(item).prop("checked")){
+					 bool = true; 
+				 }  
+			 }); 
+			 if(bool){ 
+				 form.submit();   
+			 }else{
+				 alert("하나의 항목 이상 체크하세요")
+			 }
+		  }

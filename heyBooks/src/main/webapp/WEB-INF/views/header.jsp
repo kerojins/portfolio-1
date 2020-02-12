@@ -60,10 +60,10 @@
 					</ul>
 				</nav>
 				<ul id="header_middle_right" class="right">
-					<li><a href="<c:url value='/order'/>">주문배송</a></li>
+					<li><a href="<c:url value='/order'/>">공지사항</a></li>
 					<li><a href="#">고객센터</a></li>
 				</ul>
-			</div>
+			</div> 
 			<div id="header_bottom">
 				<div class="row">
 					<div id="header_bottom_left" class="col-md-6">

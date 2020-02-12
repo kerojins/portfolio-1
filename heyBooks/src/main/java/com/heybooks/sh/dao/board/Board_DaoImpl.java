@@ -13,6 +13,8 @@ import com.heybooks.sh.vo.board.Counsel_Reply_Vo;
 import com.heybooks.sh.vo.board.Counsel_Vo;
 import com.heybooks.sh.vo.board.Event_Vo;
 import com.heybooks.sh.vo.board.Notice_Vo;
+import com.heybooks.sh.vo.board.Review_Reply_Vo;
+import com.heybooks.sh.vo.board.Review_Vo;
 
 @Repository
 public class Board_DaoImpl implements Board_Dao{
@@ -73,8 +75,8 @@ public class Board_DaoImpl implements Board_Dao{
 	
 	// °øÁö»çÇ× °¹¼ö
 	@Override
-	public int notice_count() {
-		return sqlSession.selectOne(NAMESPACE+".notice_count");
+	public int notice_count(HashMap<String, Object> map) {
+		return sqlSession.selectOne(NAMESPACE+".notice_count", map);
 	}
 	// °øÁö»çÇ× Ãß°¡
 	@Override
@@ -106,33 +108,112 @@ public class Board_DaoImpl implements Board_Dao{
 	// ====== ÀÌº¥Æ® =======
 	
 	// ÀÌº¥Æ® Ãß°¡  
+	@Override
 	public int event_insert(Event_Vo vo) {
 		return sqlSession.insert(NAMESPACE+".event_insert", vo);
 	}
 	
 	// ÀÌº¥Æ® °¹¼ö
-	public int event_count() {
-		return sqlSession.selectOne(NAMESPACE+".event_count");
+	@Override
+	public int event_count(HashMap<String, Object> map) {
+		return sqlSession.selectOne(NAMESPACE+".event_count",map);
 	}
 	
 	// ÀÌº¥Æ® »èÁ¦
+	@Override
 	public int event_delete(int num) {
 		return sqlSession.delete(NAMESPACE+".event_delete", num);
 	}
 	
 	// ÀÌº¥Æ® ¼öÁ¤
+	@Override
 	public int event_update(Event_Vo vo) {
 		return sqlSession.update(NAMESPACE+".event_update", vo);
 	}
 	
 	// ÀÌº¥Æ® ¸®½ºÆ® 
+	@Override
 	public List<Event_Vo> event_list(HashMap<String, Object> map){
 		return sqlSession.selectList(NAMESPACE+".event_list", map);
 	}
 	
 	// ÀÌº¥Æ® »ó¼¼Á¤º¸
+	@Override
 	public Event_Vo event_detail(int num) {  
 		return sqlSession.selectOne(NAMESPACE+".event_detail", num);
 	}
+	
+	// ========= ¸®ºä ´ñ±Û ==========
+	
+	
+	// ¸®ºä °¹¼ö
+	@Override
+	public int review_count(HashMap<String, Object> map) {
+		return sqlSession.selectOne(NAMESPACE+".review_count", map);
+	}
+	// ¸®ºä Ãß°¡
+	@Override
+	public int review_insert(Review_Vo vo) {
+		return sqlSession.insert(NAMESPACE+".review_insert", vo);
+	}
+	// ¸®ºä »èÁ¦
+	@Override
+	public int review_delete(int num) {
+		return sqlSession.delete(NAMESPACE+".review_delete", num);
+	}
+	// ¸®ºä ¼öÁ¤
+	@Override
+	public int review_update(Review_Vo vo) { 
+		return sqlSession.update(NAMESPACE+".review_update", vo);
+	}
+	// ¸®ºä ¸®½ºÆ®
+	@Override
+	public List<Review_Vo> review_list(HashMap<String, Object> map) {
+		return sqlSession.selectList(NAMESPACE+".review_list", map);
+	}
+	// ¸®ºä »ó¼¼
+	@Override
+	public Review_Vo review_detail(int num) {
+		return sqlSession.selectOne(NAMESPACE+".review_detail", num);
+	}
+	
+	// ======= ¸®ºä ´ñ±Û ========
+	
+	// ¸®ºä´ñ±Û °¹¼ö
+	@Override
+	public int review_reply_count(HashMap<String, Object> map) {
+		return sqlSession.selectOne(NAMESPACE+".review_reply_count", map);
+	}
+		
+	// ¸®ºä´ñ±Û Ãß°¡  
+	@Override
+	public int review_reply_insert(Review_Reply_Vo vo) {
+		return sqlSession.insert(NAMESPACE+".review_reply_insert", vo);
+	}
+	
+	// ¸®ºä´ñ±Û »èÁ¦
+	@Override
+	public int review_reply_delete(HashMap<String, Object> map) {
+		return sqlSession.delete(NAMESPACE+".review_reply_delete", map);
+	}
+	 
+	// ¸®ºä´ñ±Û ¼öÁ¤
+	@Override
+	public int review_reply_update(Review_Reply_Vo vo) {
+		return sqlSession.update(NAMESPACE+".review_reply_update", vo);
+	}
+	 
+	// ¸®ºä´ñ±Û ¸®½ºÆ®  
+	@Override
+	public List<Review_Reply_Vo> review_reply_list(HashMap<String, Object> map){
+		return sqlSession.selectList(NAMESPACE+".review_reply_list", map);
+	}
+	
+	// ¸®ºä´ñ±Û »ó¼¼Á¤º¸
+	@Override
+	public Review_Reply_Vo review_reply_detail(int num) {
+		return sqlSession.selectOne(NAMESPACE+".review_reply_detail", num);
+	}
+	 
 }    
  

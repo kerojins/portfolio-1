@@ -82,10 +82,10 @@
 												</c:if> 
 											</p> 
 											<h3 class="list_book_title"> 
-												<a>${vo.product_name}</a>
+												<a href="<c:url value='book_detail?product_num=${vo.product_num }'/>">${vo.product_name}</a>
 											</h3>
 											<p class="book_info">평점
-												<span class="star_before">
+												<span class="star_before"> 
 													<span class="star_after"></span>
 												</span> 
 												<span class="item_reviewCount">9명</span> 

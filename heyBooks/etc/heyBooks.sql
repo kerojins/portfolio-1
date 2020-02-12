@@ -1,6 +1,8 @@
 
 /* Drop Tables */
 
+DROP TABLE Admin_Alert CASCADE CONSTRAINTS;
+DROP TABLE Admin_Memo CASCADE CONSTRAINTS;
 DROP TABLE Counsel_reply CASCADE CONSTRAINTS;
 DROP TABLE Event CASCADE CONSTRAINTS;
 DROP TABLE Notice CASCADE CONSTRAINTS;
@@ -9,8 +11,9 @@ DROP TABLE Admins CASCADE CONSTRAINTS;
 DROP TABLE Cart_item CASCADE CONSTRAINTS;
 DROP TABLE Counsel CASCADE CONSTRAINTS;
 DROP TABLE New_item_notice CASCADE CONSTRAINTS;
-DROP TABLE Review CASCADE CONSTRAINTS;
 DROP TABLE Order_items CASCADE CONSTRAINTS;
+DROP TABLE Review_reply CASCADE CONSTRAINTS;
+DROP TABLE Review CASCADE CONSTRAINTS;
 DROP TABLE Today_view CASCADE CONSTRAINTS;
 DROP TABLE Wishlist CASCADE CONSTRAINTS;
 DROP TABLE Products CASCADE CONSTRAINTS;
@@ -32,6 +35,27 @@ CREATE TABLE Admins
 	admin_password varchar2(40),
 	admin_date date NOT NULL,
 	PRIMARY KEY (admin_num)
+);
+
+
+CREATE TABLE Admin_Alert
+(
+	admin_alert_num number NOT NULL,
+	admin_num number NOT NULL,
+	admin_alert_type number,
+	admin_alert_content varchar2(300) NOT NULL,
+	admin_alert_date date NOT NULL,
+	PRIMARY KEY (admin_alert_num)
+);
+
+
+CREATE TABLE Admin_Memo
+(
+	admin_memo_num number NOT NULL,
+	admin_num number NOT NULL,
+	admin_memo_content varchar2(600) NOT NULL,
+	admin_memo_date date NOT NULL,
+	PRIMARY KEY (admin_memo_num)
 );
 
 
@@ -115,6 +139,7 @@ CREATE TABLE Members
 	members_add_number varchar2(50),
 	members_job varchar2(50),
 	members_favorite varchar2(200),
+	members_status varchar2(30) NOT NULL,
 	members_regdate date NOT NULL,
 	PRIMARY KEY (members_num)
 );
@@ -160,6 +185,7 @@ CREATE TABLE Orders
 	members_num number NOT NULL,
 	total_price varchar2(200) NOT NULL,
 	total_count varchar2(100),
+	total_mailage varchar2(200),
 	order_name varchar2(100) NOT NULL,
 	order_phone_number varchar2(100) NOT NULL,
 	order_add_number varchar2(100),
@@ -176,7 +202,7 @@ CREATE TABLE Orders
 	-- 3. 배송 준비중
 	-- 4. 배송중
 	-- 5. 배송 완료
-	order_status number(2,0) NOT NULL,
+	order_status varchar2(50) NOT NULL,
 	order_date date NOT NULL,
 	PRIMARY KEY (order_num)
 );
@@ -185,8 +211,9 @@ CREATE TABLE Orders
 CREATE TABLE Order_items
 (
 	order_item_num number NOT NULL,
-	product_num number NOT NULL,
+	product_num number,
 	order_num number NOT NULL,
+	order_item_name varchar2(300) NOT NULL,
 	order_item_quantity varchar2(100) NOT NULL,
 	order_item_price varchar2(200) NOT NULL,
 	order_item_date date NOT NULL,
@@ -248,10 +275,8 @@ CREATE TABLE Push
 CREATE TABLE Review
 (
 	review_num number NOT NULL,
-	order_item_num number NOT NULL,
+	product_num number NOT NULL,
 	members_num number NOT NULL,
-	review_img varchar2(200) NOT NULL,
-	review_title varchar2(150) NOT NULL,
 	review_content varchar2(600) NOT NULL,
 	review_grade number(2,0) NOT NULL,
 	review_recommend number,
@@ -259,6 +284,17 @@ CREATE TABLE Review
 	review_spoiler varchar2(10),
 	review_date date NOT NULL,
 	PRIMARY KEY (review_num)
+);
+
+
+CREATE TABLE Review_reply
+(
+	review_reply_num number NOT NULL,
+	review_num number NOT NULL,
+	members_num number NOT NULL,
+	review_reply_content varchar2(500) NOT NULL,
+	review_reply_date date NOT NULL,
+	PRIMARY KEY (review_reply_num)
 );
 
 
@@ -284,6 +320,18 @@ CREATE TABLE Wishlist
 
 
 /* Create Foreign Keys */
+
+ALTER TABLE Admin_Alert
+	ADD FOREIGN KEY (admin_num)
+	REFERENCES Admins (admin_num)
+;
+
+
+ALTER TABLE Admin_Memo
+	ADD FOREIGN KEY (admin_num)
+	REFERENCES Admins (admin_num)
+;
+
 
 ALTER TABLE Counsel_reply
 	ADD FOREIGN KEY (admin_num)
@@ -369,6 +417,12 @@ ALTER TABLE Review
 ;
 
 
+ALTER TABLE Review_reply
+	ADD FOREIGN KEY (members_num)
+	REFERENCES Members (members_num)
+;
+
+
 ALTER TABLE Today_view
 	ADD FOREIGN KEY (members_num)
 	REFERENCES Members (members_num)
@@ -393,12 +447,6 @@ ALTER TABLE Order_items
 ;
 
 
-ALTER TABLE Review
-	ADD FOREIGN KEY (order_item_num)
-	REFERENCES Order_items (order_item_num)
-;
-
-
 ALTER TABLE Cart_item
 	ADD FOREIGN KEY (product_num)
 	REFERENCES Products (product_num)
@@ -406,6 +454,12 @@ ALTER TABLE Cart_item
 
 
 ALTER TABLE Order_items
+	ADD FOREIGN KEY (product_num)
+	REFERENCES Products (product_num)
+;
+
+
+ALTER TABLE Review
 	ADD FOREIGN KEY (product_num)
 	REFERENCES Products (product_num)
 ;
@@ -426,6 +480,12 @@ ALTER TABLE Wishlist
 ALTER TABLE Products
 	ADD FOREIGN KEY (product_cate_num)
 	REFERENCES Product_category (cate_num)
+;
+
+
+ALTER TABLE Review_reply
+	ADD FOREIGN KEY (review_num)
+	REFERENCES Review (review_num)
 ;
 
 
