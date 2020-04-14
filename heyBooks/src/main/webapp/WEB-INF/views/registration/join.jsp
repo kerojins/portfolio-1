@@ -85,7 +85,8 @@
 					</tr>
 					<tr>
 						<th>직업</th>
-						<td colspan="3"><select name="members_job">
+						<td colspan="3">
+							<select name="members_job">
 								<option value="없음">선택</option>
 								<option value="학생">학생</option>
 								<option value="회사원">회사원</option>
@@ -93,41 +94,24 @@
 								<option value="공무원">공무원</option>
 								<option value="주부">주부</option>
 								<option value="기타">기타</option>
-						</select></td>
-					</tr>
+							</select>
+						</td>
+					</tr>  
 					<tr>
 						<th>관심분야(최대5개)</th>
 						<td colspan="3">
-							<p class="item_select_option join_favorite">
-								<span><input type="checkbox" id="cate_1"
-									name="members_favorite" value="소설" class="item_checking"><label
-									for="cate_1" class="input_label"></label><label for="cate_1">소설</label>
-								</span> <span><input type="checkbox" id="cate_2"
-									name="members_favorite" value="시/에세이" class="item_checking"><label
-									for="cate_2" class="input_label"></label><label for="cate_2">시/에세이</label>
-								</span> <span><input type="checkbox" id="cate_3"
-									name="members_favorite" value="경제/경영" class="item_checking"><label
-									for="cate_3" class="input_label"></label><label for="cate_3">경제/경영</label>
-								</span> <span><input type="checkbox" id="cate_4"
-									name="members_favorite" value="자기계발" class="item_checking"><label
-									for="cate_4" class="input_label"></label><label for="cate_4">자기계발</label>
-								</span> <span><input type="checkbox" id="cate_5"
-									name="members_favorite" value="인문" class="item_checking"><label
-									for="cate_5" class="input_label"></label><label for="cate_5">인문</label>
-								</span> <span><input type="checkbox" id="cate_6"
-									name="members_favorite" value="정치/사회" class="item_checking"><label
-									for="cate_6" class="input_label"></label><label for="cate_6">정치/사회</label>
-								</span> <span><input type="checkbox" id="cate_7"
-									name="members_favorite" value="예술/대중문화" class="item_checking"><label
-									for="cate_7" class="input_label"></label><label for="cate_7">예술/대중문화</label>
-								</span> <span><input type="checkbox" id="cate_8"
-									name="members_favorite" value="어린이" class="item_checking"><label
-									for="cate_8" class="input_label"></label><label for="cate_8">어린이</label>
-								</span>
+							<p class="item_select_option join_favorite" style="display: block;">
+								<c:forEach var="list" items="${domestic_vo}" varStatus="status">
+									<span>
+										<input type="checkbox" id="cate_${status.count}" name="members_favorite" value="${list.cate_num}" class="item_checking">
+										<label for="cate_${status.count}" class="input_label"></label>
+										<label for="cate_${status.count}">${list.cate_name}</label>
+									</span> 
+								</c:forEach>
 							</p>
 						</td>
 					</tr>
-				</table>
+				</table> 
 			</div>
 			<button type="submit" class="btn join_btn">가입신청</button>
 		</form>

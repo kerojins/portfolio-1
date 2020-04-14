@@ -5,14 +5,15 @@
 <aside class="mypage_aside">
 	<h2>마이페이지</h2>
 	<div class="aside_content">
+		<input class="mypage_aside_area" value="ok" hidden="hidden">
 		<p>
-			<a>책/소식</a>
+			<a>책/소식</a>  
 		</p>
 		<ul class="aside_menu_list" id="collapseExample1">
 			<li><a href="<c:url value='/mypage_notice'/>">알림</a></li>
-			<li><a href="<c:url value='/mypage_book_notice'/>">신간알림</a></li>
+			<li><a href="<c:url value='/mypage_book_notice'/>">신간 알림</a></li>
 			<li><a href="<c:url value='/mypage_wishlist'/>">위시리스트</a></li>
-			<li><a href="<c:url value='/mypage_recent'/>">최근본 책</a></li>
+			<li><a href="<c:url value='/mypage_recent'/>">최근 본 책</a></li>
 		</ul>
 		<p>
 			<a>구매/혜택</a>
@@ -21,7 +22,7 @@
 			<li><a href="<c:url value='/mypage_order'/>">주문 내역</a></li>
 			<li><a href="<c:url value='/mypage_mileage'/>">포인트 적립</a></li>
 		</ul>
-		<p>
+		<p> 
 			<a>개인</a>
 		</p>
 		<ul class=" aside_menu_list" id="collapseExample3">
@@ -32,3 +33,4 @@
 		</ul>
 	</div>
 </aside>
+ 

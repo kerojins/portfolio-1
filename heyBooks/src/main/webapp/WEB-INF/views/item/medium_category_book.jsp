@@ -7,7 +7,17 @@
 		<nav aria-label="breadcrumb">
 			<ol class="breadcrumb">
 				<li class="breadcrumb-item"><a href="#">홈</a></li>
-				<li class="breadcrumb-item active" aria-current="page">국내 도서</li>
+				<li class="breadcrumb-item" aria-current="page">
+					<c:choose>
+						<c:when test="${medium_cate_vo[0].cate_ref2 eq '100'}">	
+							국내 도서
+						</c:when>
+						<c:otherwise>
+							외국 도서  
+						</c:otherwise>
+					</c:choose>
+				</li>
+				<li class="breadcrumb-item active" aria-current="page">${cate_name }</li>
 			</ol>
 		</nav>
 		<aside>
@@ -21,308 +31,106 @@
 		<div class="sub_right_box">
 			<div class="category_array_box">
 				<h4>새로나온 책</h4>
-				<div class="section on">
-					<h5>
-						<a>소설</a>
-					</h5>
-					<div class="section_content">
-						<ul>
-							<li><div class="vertical_item_box">
-									<p class="favorite_item_img">
-										<a><img
-											src="<c:url value='resources/images/favorite_item1.jpg' />"></a>
-									</p>
-									<div>
-										<h4 class="vertical_item_title">
-											<a href="#">네이비씰 승리의기술</a>
-										</h4>
-										<p class="vertical_item_editor">
-											<a href="#">조코 윌링크, 레이프바빈</a>
-										</p>
-										<p class="vertical_item_rate">
-											평점<span class="star_before"><span class="star_after"></span></span><span
-												class="item_reviewCount">9명</span>
-										</p>
-									</div>
-								</div></li>
-							<li><div class="vertical_item_box">
-									<p class="favorite_item_img">
-										<a><img
-											src="<c:url value='resources/images/favorite_item1.jpg' />"></a>
-									</p>
-									<div>
-										<h4 class="vertical_item_title">
-											<a href="#">네이비씰 승리의기술</a>
-										</h4>
-										<p class="vertical_item_editor">
-											<a href="#">조코 윌링크, 레이프바빈</a>
-										</p>
-										<p class="vertical_item_rate">
-											평점<span class="star_before"><span class="star_after"></span></span><span
-												class="item_reviewCount">9명</span>
-										</p>
-									</div>
-								</div></li>
-							<li><div class="vertical_item_box">
-									<p class="favorite_item_img">
-										<a><img
-											src="<c:url value='resources/images/favorite_item1.jpg' />"></a>
-									</p>
-									<div>
-										<h4 class="vertical_item_title">
-											<a href="#">네이비씰 승리의기술</a>
-										</h4>
-										<p class="vertical_item_editor">
-											<a href="#">조코 윌링크, 레이프바빈</a>
-										</p>
-										<p class="vertical_item_rate">
-											평점<span class="star_before"><span class="star_after"></span></span><span
-												class="item_reviewCount">9명</span>
-										</p>
-									</div>
-								</div></li>
-							<li><div class="vertical_item_box">
-									<p class="favorite_item_img">
-										<a><img
-											src="<c:url value='resources/images/favorite_item1.jpg' />"></a>
-									</p>
-									<div>
-										<h4 class="vertical_item_title">
-											<a href="#">네이비씰 승리의기술</a>
-										</h4>
-										<p class="vertical_item_editor">
-											<a href="#">조코 윌링크, 레이프바빈</a>
-										</p>
-										<p class="vertical_item_rate">
-											평점<span class="star_before"><span class="star_after"></span></span><span
-												class="item_reviewCount">9명</span>
-										</p>
-									</div>
-								</div></li>
-							<li><div class="vertical_item_box">
-									<p class="favorite_item_img">
-										<a><img
-											src="<c:url value='resources/images/favorite_item1.jpg' />"></a>
-									</p>
-									<div>
-										<h4 class="vertical_item_title">
-											<a href="#">네이비씰 승리의기술</a>
-										</h4>
-										<p class="vertical_item_editor">
-											<a href="#">조코 윌링크, 레이프바빈</a>
-										</p>
-										<p class="vertical_item_rate">
-											평점<span class="star_before"><span class="star_after"></span></span><span
-												class="item_reviewCount">9명</span>
-										</p>
-									</div>
-								</div></li>
-						</ul>
-					</div>
-				</div>
-				<div class="section">
-					<h5>
-						<a>시/에세이</a>
-					</h5>
-					<div class="section_content">
-						<ul>
-							<li>경제/인문 짜쟝</li>
-						</ul>
-					</div>
-				</div>
-				<div class="section">
-					<h5>
-						<a>경제/경영</a>
-					</h5>
-					<div class="section_content">
-						<ul>
-							<li>유아/인문 짜쟝</li>
-						</ul>
-					</div>
-				</div>
-				<div class="section">
-					<h5>
-						<a>자기계발</a>
-					</h5>
-					<div class="section_content">
-						<ul>
-							<li>유아/인문 짜쟝</li>
-						</ul>
-					</div>
-				</div>
-				<div class="section">
-					<h5>
-						<a>어린이</a>
-					</h5>
-					<div class="section_content">
-						<ul>
-							<li>유아/인문 짜쟝</li>
-						</ul>
-					</div>
-				</div>
-				<div class="section last_section">
-					<h5>
-						<a>종교</a>
-					</h5>
-					<div class="section_content">
-						<ul>
-							<li>유아/인문 짜쟝</li>
-						</ul>
-					</div>
-				</div>
+				<c:forEach var="i" begin="1" end="5" varStatus="status">
+					<div class="section <c:if test="${i == 1}">on</c:if>" >
+						<h5>  
+							<a>${medium_cate_vo[i-1].cate_name}</a>
+						</h5>
+						<div class="section_content">   
+							<ul> 
+								<c:set var="best" value="new_item_list${i}"/>
+								<c:forEach var="list" items="${requestScope[best]}" begin="0" end="4">
+									<li>   
+										<div class="vertical_item_box"> 
+												<p class="favorite_item_img"> 
+													<c:if test="${list.PRODUCT_PICTURE != null}">
+														<c:set var="img" value="${list.PRODUCT_PICTURE}"/>
+														<% 
+															String img_txt = (String)pageContext.getAttribute("img");
+															if(img_txt != null){
+																String img_name = img_txt.split(",")[1];
+																pageContext.setAttribute("img_name", img_name);
+															}
+														%>  
+													</c:if>
+													<a href="<c:url value='/book_detail?product_num=${list.PRODUCT_NUM}'/>">
+														<img src="<c:url value='/resources/upload/${img_name}'/>">
+													</a> 
+												</p> 
+												<div>
+													<h4 class="vertical_item_title">
+														<a href="<c:url value='/book_detail?product_num=${list.PRODUCT_NUM}'/>">${list.PRODUCT_NAME}</a>
+													</h4> 
+													<p class="vertical_item_editor">
+														<a href="#">${list.EDITOR_NAME }</a>
+													</p>
+													<p class="vertical_item_rate">
+														<span class="star_before item_list_star_before"> 
+															<input hidden="hidden" class="item_star_val" value="${list.PRODUCT_GRADE}" >
+															<span class="star_after"></span>
+														</span>  
+														<span class="item_reviewCount">${list.REVIEW_CNT}명</span>
+													</p>
+												</div>
+											</div>
+										</li>
+								</c:forEach> 
+							</ul>
+						</div>
+					</div> 
+				</c:forEach>
 				<span class="more_view"><a>+더보기</a></span>
 			</div>
 			<div class="category_array_box">
 				<h4>베스트 셀러</h4>
-				<div class="section on">
-					<h5>
-						<a>소설</a>
-					</h5>
-					<div class="section_content">
-						<ul>
-							<li><div class="vertical_item_box">
-									<p class="favorite_item_img">
-										<a><img
-											src="<c:url value='resources/images/favorite_item1.jpg' />"></a>
-									</p>
-									<div>
-										<h4 class="vertical_item_title">
-											<a href="#">네이비씰 승리의기술</a>
-										</h4>
-										<p class="vertical_item_editor">
-											<a href="#">조코 윌링크, 레이프바빈</a>
-										</p>
-										<p class="vertical_item_rate">
-											평점<span class="star_before"><span class="star_after"></span></span><span
-												class="item_reviewCount">9명</span>
-										</p>
-									</div>
-								</div></li>
-							<li><div class="vertical_item_box">
-									<p class="favorite_item_img">
-										<a><img
-											src="<c:url value='resources/images/favorite_item1.jpg' />"></a>
-									</p>
-									<div>
-										<h4 class="vertical_item_title">
-											<a href="#">네이비씰 승리의기술</a>
-										</h4>
-										<p class="vertical_item_editor">
-											<a href="#">조코 윌링크, 레이프바빈</a>
-										</p>
-										<p class="vertical_item_rate">
-											평점<span class="star_before"><span class="star_after"></span></span><span
-												class="item_reviewCount">9명</span>
-										</p>
-									</div>
-								</div></li>
-							<li><div class="vertical_item_box">
-									<p class="favorite_item_img">
-										<a><img
-											src="<c:url value='resources/images/favorite_item1.jpg' />"></a>
-									</p>
-									<div>
-										<h4 class="vertical_item_title">
-											<a href="#">네이비씰 승리의기술</a>
-										</h4>
-										<p class="vertical_item_editor">
-											<a href="#">조코 윌링크, 레이프바빈</a>
-										</p>
-										<p class="vertical_item_rate">
-											평점<span class="star_before"><span class="star_after"></span></span><span
-												class="item_reviewCount">9명</span>
-										</p>
-									</div>
-								</div></li>
-							<li><div class="vertical_item_box">
-									<p class="favorite_item_img">
-										<a><img
-											src="<c:url value='resources/images/favorite_item1.jpg' />"></a>
-									</p>
-									<div>
-										<h4 class="vertical_item_title">
-											<a href="#">네이비씰 승리의기술</a>
-										</h4>
-										<p class="vertical_item_editor">
-											<a href="#">조코 윌링크, 레이프바빈</a>
-										</p>
-										<p class="vertical_item_rate">
-											평점<span class="star_before"><span class="star_after"></span></span><span
-												class="item_reviewCount">9명</span>
-										</p>
-									</div>
-								</div></li>
-							<li><div class="vertical_item_box">
-									<p class="favorite_item_img">
-										<a><img
-											src="<c:url value='resources/images/favorite_item1.jpg' />"></a>
-									</p>
-									<div>
-										<h4 class="vertical_item_title">
-											<a href="#">네이비씰 승리의기술</a>
-										</h4>
-										<p class="vertical_item_editor">
-											<a href="#">조코 윌링크, 레이프바빈</a>
-										</p>
-										<p class="vertical_item_rate">
-											평점<span class="star_before"><span class="star_after"></span></span><span
-												class="item_reviewCount">9명</span>
-										</p>
-									</div>
-								</div></li>
-						</ul>
-					</div>
-				</div>
-				<div class="section">
-					<h5>
-						<a>시/에세이</a>
-					</h5>
-					<div class="section_content">
-						<ul>
-							<li>경제/인문 짜쟝</li>
-						</ul>
-					</div>
-				</div>
-				<div class="section">
-					<h5>
-						<a>경제/경영</a>
-					</h5>
-					<div class="section_content">
-						<ul>
-							<li>유아/인문 짜쟝</li>
-						</ul>
-					</div>
-				</div>
-				<div class="section">
-					<h5>
-						<a>자기계발</a>
-					</h5>
-					<div class="section_content">
-						<ul>
-							<li>유아/인문 짜쟝</li>
-						</ul>
-					</div>
-				</div>
-				<div class="section">
-					<h5>
-						<a>어린이</a>
-					</h5>
-					<div class="section_content">
-						<ul>
-							<li>유아/인문 짜쟝</li>
-						</ul>
-					</div>
-				</div>
-				<div class="section last_section">
-					<h5>
-						<a>종교</a>
-					</h5>
-					<div class="section_content">
-						<ul>
-							<li>유아/인문 짜쟝</li>
-						</ul>
-					</div>
-				</div>
+				<c:forEach var="i" begin="1" end="5" varStatus="status">
+					<div class="section <c:if test="${i == 1}">on</c:if>" >
+						<h5>  
+							<a>${medium_cate_vo[i-1].cate_name}</a>
+						</h5>
+						<div class="section_content">  
+							<ul> 
+								<c:set var="best" value="best_item_list${i}"/>
+								<c:forEach var="list" items="${requestScope[best]}" begin="0" end="4">
+									<li>   
+										<div class="vertical_item_box"> 
+												<p class="favorite_item_img"> 
+													<c:if test="${list.PRODUCT_PICTURE != null}">
+														<c:set var="img" value="${list.PRODUCT_PICTURE}"/>
+														<% 
+															String img_txt = (String)pageContext.getAttribute("img");
+															if(img_txt != null){
+																String img_name = img_txt.split(",")[1];
+																pageContext.setAttribute("img_name", img_name);
+															}
+														%>  
+													</c:if>
+													<a href="<c:url value='/book_detail?product_num=${list.PRODUCT_NUM}'/>">
+														<img src="<c:url value='/resources/upload/${img_name}'/>">
+													</a> 
+												</p> 
+												<div>
+													<h4 class="vertical_item_title">
+														<a href="<c:url value='/book_detail?product_num=${list.PRODUCT_NUM}'/>">${list.PRODUCT_NAME}</a>
+													</h4> 
+													<p class="vertical_item_editor">
+														<a href="#">${list.EDITOR_NAME}</a>
+													</p> 
+													<p class="vertical_item_rate">
+														<span class="star_before item_list_star_before"> 
+															<input hidden="hidden" class="item_star_val" value="${list.PRODUCT_GRADE}" >
+															<span class="star_after"></span>
+														</span>  
+														<span class="item_reviewCount">${list.REVIEW_CNT}명</span>
+													</p>
+												</div>
+											</div>
+										</li>
+								</c:forEach> 
+							</ul>
+						</div>
+					</div> 
+				</c:forEach>
 				<span class="more_view"><a>+더보기</a></span>
 			</div>
 		</div>

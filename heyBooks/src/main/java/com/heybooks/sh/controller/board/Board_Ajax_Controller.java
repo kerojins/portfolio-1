@@ -24,6 +24,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.heybooks.sh.service.admin.Admin_Service;
 import com.heybooks.sh.service.board.Board_Service;
+import com.heybooks.sh.service.item.Item_Main_Service;
 import com.heybooks.sh.service.member.Member_Service;
 import com.heybooks.sh.vo.admin.Admin_Vo;
 import com.heybooks.sh.vo.board.Counsel_Reply_Vo;
@@ -32,6 +33,7 @@ import com.heybooks.sh.vo.board.Event_Vo;
 import com.heybooks.sh.vo.board.Notice_Vo;
 import com.heybooks.sh.vo.board.Review_Reply_Vo;
 import com.heybooks.sh.vo.board.Review_Vo;
+import com.heybooks.sh.vo.item.Item_Vo;
 import com.heybooks.sh.vo.member.Member_Vo;
 
 @Controller
@@ -43,6 +45,8 @@ public class Board_Ajax_Controller {
 	private	Member_Service member_service; 
 	@Resource
 	private	Admin_Service admin_service; 
+	@Resource
+	private Item_Main_Service item_service;
 	
 	
 	// 게시판 - 목록별 리스트 
@@ -71,24 +75,36 @@ public class Board_Ajax_Controller {
 			Notice_Vo vo= service.notice_detail(board_seq);
 			String admin_id = admin_service.admin_detail(vo.getAdmin_num()).getAdmin_id();
 			String date_txt = sdate.format(vo.getNotice_date());
+			String[] period_txt = {};
+			if(vo.getNotice_official_date() != null) {
+				period_txt = vo.getNotice_official_date().split(",");
+			} 
+			int official = vo.getNotice_official();
+			int official_d = vo.getNotice_official_detail();
 			map.put("num", vo.getNotice_num());  
 			map.put("title", vo.getNotice_title());  
 			map.put("content", vo.getNotice_content().replaceAll("\r\n","<br>"));  
 			map.put("date", date_txt);  
 			map.put("another", vo.getNotice_hit());   
 			map.put("name", admin_id);   
-		}
+			map.put("official", official);   
+			map.put("official_d", official_d);   
+			map.put("period", period_txt);   
+		} 
 		else if(board_id.equals("event")) {
 			logger.info("ajax/get event-detail");
 			Event_Vo vo = service.event_detail(board_seq);
 			String admin_id = admin_service.admin_detail(vo.getAdmin_num()).getAdmin_id();
 			String date_txt = sdate.format(vo.getEvent_date());
-			String end_date_txt = sdate2.format(vo.getEvent_period());
+			String[] period_txt = {};
+			if(vo.getEvent_period() != null) {
+				period_txt = vo.getEvent_period().split(",");
+			} 
 			map.put("num", vo.getEvent_num());  
 			map.put("title", vo.getEvent_title());  
 			map.put("content", vo.getEvent_content());   
 			map.put("date", date_txt);  
-			map.put("period", end_date_txt);  
+			map.put("period", period_txt);  
 			map.put("thumbnail", vo.getEvent_thumbnail());  
 			map.put("another", vo.getEvent_hit());  
 			map.put("name", admin_id);   
@@ -97,15 +113,18 @@ public class Board_Ajax_Controller {
 			logger.info("ajax/get review-detail");
 			Review_Vo vo = service.review_detail(board_seq);
 			String member_id = member_service.getInfo(vo.getMembers_num()).getMembers_id();
+			String item_name = item_service.item_getinfo(vo.getProduct_num()).getProduct_name();
 			String date_txt = sdate.format(vo.getReview_date());
+			map.put("item_name", item_name);
 			map.put("num", vo.getReview_num());  
 			map.put("content", vo.getReview_content());   
+			map.put("grade", vo.getReview_grade());  
 			map.put("date", date_txt);  
 			map.put("another", vo.getReview_report());  
 			map.put("name", member_id);   
 		}
 		return map;       
-	} 
+	}  
 	
 	// 1:1답변등록 추가
 	@RequestMapping("/counsel_reply_insert")   
@@ -202,34 +221,58 @@ public class Board_Ajax_Controller {
 	}  
 	
 	// 리뷰 삭제
-		@RequestMapping(value ="/review_reply_delete")
-		@ResponseBody 
-		public HashMap<String, Object> review_reply_delete(int reply_num, int review_num, Model model, HttpServletRequest request) {
-			HashMap<String, Object> del_map = new HashMap<String, Object>();
-			del_map.put("review_reply_num", reply_num); 
-			service.review_reply_delete(del_map);
-			HashMap<String, Object> map = new HashMap<String, Object>();
-			SimpleDateFormat sdate = new SimpleDateFormat("yyyy-MM-dd");
-			map.put("review_num", review_num);
-			map.put("list_arr", "review_reply_date asc"); 
-			List<Review_Reply_Vo> review_reply_list = service.review_reply_list(map);
-			ArrayList<String> id_arr= new ArrayList<String>();
-			ArrayList<String> date_txt = new ArrayList<String>();
-			 
-			for(Review_Reply_Vo rp_vo : review_reply_list) {
-				id_arr.add(member_service.getInfo(rp_vo.getMembers_num()).getMembers_id());
-				date_txt.add(sdate.format(rp_vo.getReview_reply_date()));
-			}  
-			System.out.println(review_reply_list.toString());
-			map.put("list", review_reply_list);
-			map.put("id_arr", id_arr);
-			map.put("date_txt", date_txt);
+	@RequestMapping(value ="/review_reply_delete")
+	@ResponseBody 
+	public HashMap<String, Object> review_reply_delete(int reply_num, int review_num, Model model, HttpServletRequest request) {
+		HashMap<String, Object> del_map = new HashMap<String, Object>();
+		del_map.put("review_reply_num", reply_num); 
+		service.review_reply_delete(del_map);
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		SimpleDateFormat sdate = new SimpleDateFormat("yyyy-MM-dd");
+		map.put("review_num", review_num);
+		map.put("list_arr", "review_reply_date asc"); 
+		List<Review_Reply_Vo> review_reply_list = service.review_reply_list(map);
+		ArrayList<String> id_arr= new ArrayList<String>();
+		ArrayList<String> date_txt = new ArrayList<String>();
+		 
+		for(Review_Reply_Vo rp_vo : review_reply_list) {
+			id_arr.add(member_service.getInfo(rp_vo.getMembers_num()).getMembers_id());
+			date_txt.add(sdate.format(rp_vo.getReview_reply_date()));
+		}  
+		System.out.println(review_reply_list.toString());
+		map.put("list", review_reply_list);
+		map.put("id_arr", id_arr);
+		map.put("date_txt", date_txt);
 			return map;
 			
-		}  
+	}  
   
-	
-	
+	// 리뷰리스트
+	@RequestMapping("/ajax/review_list")  
+	@ResponseBody    
+	public HashMap<String,Object> review_list(int cnt, int product_num) {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		HashMap<String, Object> review_map = new HashMap<String, Object>();
+		SimpleDateFormat sdate = new SimpleDateFormat("yyyy-MM-dd");
+		ArrayList<String> date_txt = new ArrayList<String>();
+		review_map.put("list_arr", "review_date desc");
+		review_map.put("product_num", product_num);
+		review_map.put("startRow", cnt+1);
+		review_map.put("endRow", cnt+10); 
+		List<Review_Vo> review_list = service.review_list(review_map);
+		System.out.println(review_list.toString());
+		List<Member_Vo> member_list = new ArrayList<Member_Vo>();
+		for(Review_Vo vo : review_list) {
+			member_list.add(member_service.getInfo(vo.getMembers_num()));
+			date_txt.add(sdate.format(vo.getReview_date()));
+		} 
+		map.put("date_txt", date_txt);
+		map.put("review_list", review_list);
+		map.put("member_list", member_list);
+		
+		return map;
+	}
+
 	
 	
 	

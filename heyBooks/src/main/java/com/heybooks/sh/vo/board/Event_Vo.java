@@ -7,12 +7,12 @@ public class Event_Vo {
 	private int admin_num;
 	private String event_title;
 	private String event_content;
-	private Date event_period;
+	private String event_period;
 	private String event_thumbnail;
 	private int event_hit; 
 	private Date event_date;
 	public Event_Vo() {}
-	public Event_Vo(int event_num, int admin_num, String event_title, String event_content, Date event_period,
+	public Event_Vo(int event_num, int admin_num, String event_title, String event_content, String event_period,
 			String event_thumbnail, int event_hit, Date event_date) {
 		super();
 		this.event_num = event_num;
@@ -48,10 +48,10 @@ public class Event_Vo {
 	public void setEvent_content(String event_content) {
 		this.event_content = event_content;
 	}
-	public Date getEvent_period() {
+	public String getEvent_period() {
 		return event_period;
 	}
-	public void setEvent_period(Date event_period) {
+	public void setEvent_period(String event_period) {
 		this.event_period = event_period;
 	}
 	public String getEvent_thumbnail() {

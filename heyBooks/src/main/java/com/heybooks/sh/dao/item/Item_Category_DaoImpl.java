@@ -18,13 +18,17 @@ public class Item_Category_DaoImpl implements Item_Category_Dao{
 	private SqlSession sqlSession;
 	
 	private static final String NAMESPACE ="com.heybooks.sh.mybatis.Item_Mapper";
+	
 	// 아이템 카테고리 목록 리스트
-	
 	@Override  
-	public List<Item_Cate_Vo> cate_list(String cate_code) {
-		return sqlSession.selectList(NAMESPACE + ".cate_list", cate_code); 
+	public List<Item_Cate_Vo> cate_list(HashMap<String, Object> map) {
+		return sqlSession.selectList(NAMESPACE + ".cate_list", map); 
 	} 
-	
+	// 아이템 카테고리 정보
+	@Override
+	 public Item_Cate_Vo cate_info(int num){
+		 return sqlSession.selectOne(NAMESPACE + ".cate_info", num);
+	 }
 	 // 작가 리스트 수
 	@Override
  	public int editor_get_count(HashMap<String, Object> map) {

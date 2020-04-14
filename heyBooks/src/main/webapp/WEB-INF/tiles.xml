@@ -9,7 +9,6 @@
 		<put-attribute name="footer" value="/WEB-INF/views/footer.jsp"/>
 	</definition>
 	
-	
 	<definition name=".member" template="/WEB-INF/views/layout-mypage.jsp">
 		<put-attribute name="header" value="/WEB-INF/views/header.jsp"/>
 		<put-attribute name="mypage_aside" value="/WEB-INF/views/member/mypage_aside.jsp"/>
@@ -19,7 +18,6 @@
 	<definition name=".member.*" extends=".member">
 		<put-attribute name="content" value="/WEB-INF/views/member/{1}.jsp" />
 	</definition> 
-	
 	
 	<definition name=".admin" template="/WEB-INF/views/layout-admin.jsp">
 		<put-attribute name="admin_nav" value="/WEB-INF/views/admin/admin_nav.jsp"/>

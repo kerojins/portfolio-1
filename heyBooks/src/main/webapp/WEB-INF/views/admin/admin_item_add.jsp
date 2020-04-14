@@ -6,7 +6,7 @@
 		<div class="admin_page_head">
 			<h2>상품등록</h2> 
 		</div>
-		<%-- 카테고리 등록 --%>     
+		<%-- 카테고리 등록 --%>      
 		<div class="item_category">
 			<div class="col-md-4">
 				<div class="item_add_head">
@@ -80,7 +80,11 @@
 						<td class="its-td"><input type="text" name="product_page"
 							class="line cal-len" maxlength="50" style="width: 8%"placeholder="예) 230"
 							> P</td>
-					</tr>
+					</tr> 
+					<tr>
+						<th class="its-th-align center">발행일</th>
+						<td class="its-td"><input type="text" class="datepickers" name="product_issue_date"></td>
+					</tr>  
 					<tr>
 						<th class="its-th-align center">소개</th>
 						<td class="its-td"><textarea name="product_discription" rows="10"

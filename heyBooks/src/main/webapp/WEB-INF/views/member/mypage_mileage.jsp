@@ -1,3 +1,5 @@
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="java.util.Date"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -5,428 +7,133 @@
 
 		<div class="sub_right_box my_box_wrap mypage_order">
 			<div class="sub_right_content">
-				<form>
-					<h3 class="my_page_title">주문 내역</h3>
-					<div class="order_period">
+					<h3 class="my_page_title" style="float: none;">포인트 적립</h3>
+					<div class="order_period"> 
 						<p class="order_period_title">기간별 조회</p>
 						<div class="order_period_box">
-							<p class="order_period_btn">
-								<a>최근 15일</a><a>1개월</a><a>2개월</a><a>3개월</a>
-							</p>
-							<input type="text" id="order_pre_date" placeholder="2019-09-22">
-							~ <input type="text" id="order_ep_date" placeholder="2019-09-22">
-							<a class="order_period_detail_btn" href="">조회</a>
-						</div>
+							<form action="<c:url value='/mypage_mileage'/>" method="get">
+								<table class="sf-option-table">
+									<colgroup>
+										<col width="80">
+										<col width="230">
+										<col width="80">
+										<col>
+									</colgroup>
+									<tbody>
+										<tr>  
+											<td>
+											<span class="btn small">  
+												<input type="button" value="오늘" id="today" class="select_date"> 
+											</span> 
+											<span class="btn small">
+												<input type="button" value="일주일" id="1week" class="select_date">
+											</span> 
+											<span class="btn small">
+												<input type="button" value="1개월" id="1month" class="select_date">
+											</span> 
+											<span class="btn small">
+												<input type="button" value="3개월" id="3month" class="select_date">
+											</span>  
+											<span class="btn small">
+												<input type="button" value="전체" id="all_day" class="select_date">
+											</span>
+											</td>
+										</tr>
+										<tr>
+											<td colspan="5"> 
+												<input type="text" maxlength="10" size="10" value="" name="search_date" class="datepickers start_day" >
+												<img class="ui-datepicker-trigger" src="/sh/resources/images/icon_calendar.gif"> &nbsp;
+												<span class="gray">-</span>&nbsp;
+												<input type="text" maxlength="10" size="10" value="" name="search_end_date" class="datepickers end_day">
+												<img class="ui-datepicker-trigger" src="/sh/resources/images/icon_calendar.gif"> &nbsp;&nbsp; 
+												<input type="submit" class="order_period_btn" value="검색">
+											</td> 
+										</tr> 
+									</tbody> 
+								</table>
+							 </form> 
+						</div> 
 						<div class="my_mileage_count">
 							<span class="my_mileage_count_title">적립 포인트</span>
-							<p>0<span>원</span></p>
+							<input hidden="hidden" class="mileage_val" value="${mileage}">
+							<p class="mileage_val_txt">${mileage}</p>
 						</div>
-					</div>
+					</div>  
 					<div id="_listContentArea">
-					<div class="tit_month">
-						<h4>2019.09</h4>
-					</div>
-					<ul class="list_area">
-						<li class="list_item">
-							<div class="item sub _interlockNo156889351154217d03m4oyo">
-								<a href="/orderStatus/2019091931845781" class="item_content">
-									<div class="state_space point">
-										<span class="state _statusName">사용</span>
-									</div>
-									<div class="info_space">
-										<!--N=a:pnt.detail-->
-										<span class="date">2019.09.19</span> <strong
-											class="title _titleName">결제 시 사용</strong>
-										<p class="subtext">해맑음푸드</p>
-									</div>
-								</a>
-
-								<div class="amount_space">
-									<div class="amount_inner">
-										<span class="point">-788원</span>
-										<div class="func_area">
-											<a href="#"
-												class="func_button _click(nmp.front.order.timeline.home.list.removeEtc(20190919204511PNT20190919100680601)) _stopDefault">내역삭제</a>
-											<!--N=a:pnt.del-->
-										</div>
-									</div>
-								</div>
-							</div>
-						</li>
-						<li class="list_item">
-							<div class="item due _interlockNo156889351154217d03Seq6Y">
-								<a href="/orderStatus/2019091931845781" class="item_content">
-									<div class="state_space point">
-										<span class="state _statusName">적립</span>
-									</div>
-									<div class="info_space">
-										<!--N=a:pnt.detail-->
-										<span class="date">2019.09.19</span> <strong
-											class="title _titleName">구매 적립예정</strong>
-										<p class="subtext">해맑음푸드</p>
-									</div>
-								</a>
-								<div class="amount_space">
-									<div class="amount_inner">
-										<span class="point">+110원</span>
-										<div class="func_area">
-											<a href="#"
-												class="func_button _click(nmp.front.order.timeline.home.list.removeEtc(20190919204511PNT20190919100680599)) _stopDefault">내역삭제</a>
-											<!--N=a:pnt.del-->
-										</div>
-									</div>
-								</div>
-							</div>
-						</li>
-					</ul>
-					<div class="tit_month">
-						<h4>2019.07</h4>
-					</div>
-					<ul class="list_area">
-						<li class="list_item">
-							<div class="item due _interlockNo15642939474810980ekWeCc">
-								<a href="/orderStatus/2019072883337091" class="item_content">
-									<div class="state_space point">
-										<span class="state _statusName">취소</span>
-									</div>
-									<div class="info_space">
-										<!--N=a:pnt.detail-->
-										<span class="date">2019.07.28</span> <strong
-											class="title _titleName">구매 적립예정취소</strong>
-										<p class="subtext">oneline20</p>
-									</div>
-								</a>
-								<div class="amount_space">
-									<div class="amount_inner">
-										<span class="point">-330원</span>
-										<div class="func_area">
-											<a href="#"
-												class="func_button _click(nmp.front.order.timeline.home.list.removeEtc(20190728150547PNT201907287921412)) _stopDefault">내역삭제</a>
-											<!--N=a:pnt.del-->
-										</div>
-									</div>
-								</div>
-							</div>
-						</li>
-						<li class="list_item">
-							<div class="item add _interlockNo156429394670317d036B2JN">
-								<a href="/orderStatus/2019072883337091" class="item_content">
-									<div class="state_space point">
-										<span class="state _statusName">취소</span>
-									</div>
-									<div class="info_space">
-										<!--N=a:pnt.detail-->
-										<span class="date">2019.07.28</span> <strong
-											class="title _titleName">사용취소</strong>
-										<p class="subtext">oneline20</p>
-									</div>
-								</a>
-								<div class="amount_space">
-									<div class="amount_inner">
-										<span class="point">+788원</span>
-										<div class="func_area">
-											<a href="#"
-												class="func_button _click(nmp.front.order.timeline.home.list.removeEtc(20190728150546PNT201907287921389)) _stopDefault">내역삭제</a>
-											<!--N=a:pnt.del-->
-										</div>
-									</div>
-								</div>
-							</div>
-						</li>
-						<li class="list_item">
-							<div class="item sub _interlockNo156425865775917d03Ixl6V">
-								<a href="/orderStatus/2019072883337091" class="item_content">
-									<div class="state_space point">
-										<span class="state _statusName">사용</span>
-									</div>
-									<div class="info_space">
-										<!--N=a:pnt.detail-->
-										<span class="date">2019.07.28</span> <strong
-											class="title _titleName">결제 시 사용</strong>
-										<p class="subtext">oneline20</p>
-									</div>
-								</a>
-								<div class="amount_space">
-									<div class="amount_inner">
-										<span class="point">-788원</span>
-										<div class="func_area">
-											<a href="#"
-												class="func_button _click(nmp.front.order.timeline.home.list.removeEtc(20190728051737PNT201907286799351)) _stopDefault">내역삭제</a>
-											<!--N=a:pnt.del-->
-										</div>
-									</div>
-								</div>
-							</div>
-						</li>
-						<li class="list_item">
-							<div class="item due _interlockNo156425865775917d03mzyNU">
-								<a href="/orderStatus/2019072883337091" class="item_content">
-									<div class="state_space point">
-										<span class="state _statusName">적립</span>
-									</div>
-									<div class="info_space">
-										<!--N=a:pnt.detail-->
-										<span class="date">2019.07.28</span> <strong
-											class="title _titleName">구매 적립예정</strong>
-										<p class="subtext">oneline20</p>
-									</div>
-								</a>
-								<div class="amount_space">
-									<div class="amount_inner">
-										<span class="point">+330원</span>
-										<div class="func_area">
-											<a href="#"
-												class="func_button _click(nmp.front.order.timeline.home.list.removeEtc(20190728051737PNT201907286799350)) _stopDefault">내역삭제</a>
-											<!--N=a:pnt.del-->
-										</div>
-									</div>
-								</div>
-							</div>
-						</li>
-						<li class="list_item">
-							<div class="item _interlockNo156209272723617d03uviMa add">
-								<a href="/orderStatus/2019070377829051" class="item_content">
-									<div class="state_space point">
-										<span class="state _statusName">적립</span>
-									</div>
-									<div class="info_space">
-										<!--N=a:pnt.detail-->
-										<span class="date">2019.07.03</span> <strong
-											class="title _titleName">구매 적립</strong>
-										<p class="subtext">삼공주맘</p>
-									</div>
-								</a>
-								<div class="amount_space">
-									<div class="amount_inner">
-										<span class="point">+46원</span>
-										<div class="func_area">
-											<a href="#"
-												class="func_button _click(nmp.front.order.timeline.home.list.removeEtc(20190703033847PNT201907033074384)) _stopDefault">내역삭제</a>
-											<!--N=a:pnt.del-->
-										</div>
-									</div>
-								</div>
-							</div>
-						</li>
-						<li class="list_item">
-							<div class="item _interlockNo156201305942417d03SQ3ya add">
-								<a href="/orderStatus/2019070264547140" class="item_content">
-									<div class="state_space point">
-										<span class="state _statusName">적립</span>
-									</div>
-									<div class="info_space">
-										<!--N=a:pnt.detail-->
-										<span class="date">2019.07.02</span> <strong
-											class="title _titleName">구매 적립</strong>
-										<p class="subtext">비노브레드</p>
-									</div>
-								</a>
-								<div class="amount_space">
-									<div class="amount_inner">
-										<span class="point">+57원</span>
-										<div class="func_area">
-											<a href="#"
-												class="func_button _click(nmp.front.order.timeline.home.list.removeEtc(20190702053059PNT201907026867188)) _stopDefault">내역삭제</a>
-											<!--N=a:pnt.del-->
-										</div>
-									</div>
-								</div>
-							</div>
-						</li>
-					</ul>
-					<div class="tit_month">
-						<h4>2019.06</h4>
-					</div>
-					<ul class="list_area  ">
-						<li class="list_item">
-							<div class="item _interlockNo156149334061617d03Xonzw add">
-								<a href="/orderStatus/2019062686431221" class="item_content">
-									<div class="state_space point">
-										<span class="state _statusName">적립</span>
-									</div>
-									<div class="info_space">
-										<!--N=a:pnt.detail-->
-										<span class="date">2019.06.26</span> <strong
-											class="title _titleName">구매 적립</strong>
-										<p class="subtext">현대백화점</p>
-									</div>
-								</a>
-								<div class="amount_space">
-									<div class="amount_inner">
-										<span class="point">+50원</span>
-										<div class="func_area">
-											<a href="#"
-												class="func_button _click(nmp.front.order.timeline.home.list.removeEtc(20190626050900PNT201906262161281)) _stopDefault">내역삭제</a>
-											<!--N=a:pnt.del-->
-										</div>
-									</div>
-								</div>
-							</div>
-						</li>
-						<li class="list_item">
-							<div class="item _interlockNo156149314786917d03ZDtDm add">
-								<a href="/orderStatus/2019062686427241" class="item_content">
-									<div class="state_space point">
-										<span class="state _statusName">적립</span>
-									</div>
-									<div class="info_space">
-										<!--N=a:pnt.detail-->
-										<span class="date">2019.06.26</span> <strong
-											class="title _titleName">구매 적립</strong>
-										<p class="subtext">oneline20</p>
-									</div>
-								</a>
-								<div class="amount_space">
-									<div class="amount_inner">
-										<span class="point">+165원</span>
-										<div class="func_area">
-											<a href="#"
-												class="func_button _click(nmp.front.order.timeline.home.list.removeEtc(20190626050547PNT201906262159684)) _stopDefault">내역삭제</a>
-											<!--N=a:pnt.del-->
-										</div>
-									</div>
-								</div>
-							</div>
-						</li>
-						<li class="list_item">
-							<div class="item sub _interlockNo156139682131217d03sgoHM">
-								<a href="/orderStatus/2019062573248121" class="item_content">
-									<div class="state_space point">
-										<span class="state _statusName">사용</span>
-									</div>
-									<div class="info_space">
-										<!--N=a:pnt.detail-->
-										<span class="date">2019.06.25</span> <strong
-											class="title _titleName">결제 시 사용</strong>
-										<p class="subtext">라임모카</p>
-									</div>
-								</a>
-								<div class="amount_space">
-									<div class="amount_inner">
-										<span class="point">-753원</span>
-										<div class="func_area">
-											<a href="#"
-												class="func_button _click(nmp.front.order.timeline.home.list.removeEtc(20190625022021PNT201906257077426)) _stopDefault">내역삭제</a>
-											<!--N=a:pnt.del-->
-										</div>
-									</div>
-								</div>
-							</div>
-						</li>
-						<li class="list_item">
-							<div class="item _interlockNo156139682131217d03lTdZW add">
-								<a href="/orderStatus/2019062573248121" class="item_content">
-									<div class="state_space point">
-										<span class="state _statusName">적립</span>
-									</div>
-									<div class="info_space">
-										<!--N=a:pnt.detail-->
-										<span class="date">2019.06.25</span> <strong
-											class="title _titleName">구매 적립</strong>
-										<p class="subtext">라임모카</p>
-									</div>
-								</a>
-								<div class="amount_space">
-									<div class="amount_inner">
-										<span class="point">+470원</span>
-										<div class="func_area">
-											<a href="#"
-												class="func_button _click(nmp.front.order.timeline.home.list.removeEtc(20190625022021PNT201906257077425)) _stopDefault">내역삭제</a>
-											<!--N=a:pnt.del-->
-										</div>
-									</div>
-								</div>
-							</div>
-						</li>
-						<li class="list_item">
-							<div class="item _interlockNo156020671820917d03t1IJG add">
-								<a href="/orderStatus/2019061114113261" class="item_content">
-									<div class="state_space point">
-										<span class="state _statusName">적립</span>
-									</div>
-									<div class="info_space">
-										<!--N=a:pnt.detail-->
-										<span class="date">2019.06.11</span> <strong
-											class="title _titleName">구매 적립</strong>
-										<p class="subtext">오뚜기 다모아</p>
-									</div>
-								</a>
-								<div class="amount_space">
-									<div class="amount_inner">
-										<span class="point">+109원</span>
-										<div class="func_area">
-											<a href="#"
-												class="func_button _click(nmp.front.order.timeline.home.list.removeEtc(20190611074518PNT201906111977438)) _stopDefault">내역삭제</a>
-											<!--N=a:pnt.del-->
-										</div>
-									</div>
-								</div>
-							</div>
-						</li>
-					</ul>
-					<div class="tit_month">
-						<h4>2019.05</h4>
-					</div>
-					<ul class="list_area">
-						<li class="list_item">
-							<div class="item _interlockNo155920373030217d03w1APr add">
-								<a href="/orderStatus/2019053075532681" class="item_content">
-									<div class="state_space point">
-										<span class="state _statusName">적립</span>
-									</div>
-									<div class="info_space">
-										<!--N=a:pnt.detail-->
-										<span class="date">2019.05.30</span> <strong
-											class="title _titleName">구매 적립</strong>
-										<p class="subtext">oneline20</p>
-									</div>
-								</a>
-								<div class="amount_space">
-									<div class="amount_inner">
-										<span class="point">+165원</span>
-										<div class="func_area">
-											<a href="#"
-												class="func_button _click(nmp.front.order.timeline.home.list.removeEtc(20190530170850PNT201905306336492)) _stopDefault">내역삭제</a>
-											<!--N=a:pnt.del-->
-										</div>
-									</div>
-								</div>
-							</div>
-						</li>
-						<li class="list_item">
-							<div class="item _interlockNo155879196093417d03imPA3 add">
-								<a href="/orderStatus/2019052522952731" class="item_content">
-									<div class="state_space point">
-										<span class="state _statusName">적립</span>
-									</div>
-									<div class="info_space">
-										<!--N=a:pnt.detail-->
-										<span class="date">2019.05.25</span> <strong
-											class="title _titleName">구매 적립</strong>
-										<p class="subtext">마당클럽</p>
-									</div>
-								</a>
-
-								<div class="amount_space">
-									<div class="amount_inner">
-										<span class="point">+244원</span>
-										<div class="func_area">
-											<a href="#"
-												class="func_button _click(nmp.front.order.timeline.home.list.removeEtc(20190525224600PNT201905257060942)) _stopDefault">내역삭제</a>
-											<!--N=a:pnt.del-->
-										</div>
-									</div>
-								</div>
-							</div>
-						</li>
-					</ul>
-					<input type="hidden" id="_lastId0"
-						value="20190525224600PNT201905257060942"> <input
-						type="hidden" id="_hasMore0" value="true"> <input
-						type="hidden" id="_interlockNosForDeliveryTracking0"
-						value="156425865775917d03mzyNU,156201305942417d03SQ3ya,156149314786917d03ZDtDm,156209272723617d03uviMa,156149334061617d03Xonzw,155879196093417d03imPA3,156139682131217d03lTdZW,156889351154217d03Seq6Y,155920373030217d03w1APr,156020671820917d03t1IJG">
+						<c:forEach var="month_list" items="${monthly_mile_list}" varStatus="status">
+							<div class="tit_month">
+								<h4>${year}.0${month_val_list[status.index]}</h4>
+							</div>	  
+							<ul class="list_area">  
+								<c:forEach var="list" items="${month_list}" varStatus="status">
+									<li class="list_item">    
+										<div class="item
+											<c:choose>
+												<c:when test="${list.mileage_status eq '사용' }">sub</c:when>
+												<c:when test="${list.mileage_status eq '적립' or list.mileage_status eq '취소'}">add</c:when>
+												<c:when test="${list.mileage_status eq '적립예정' }">due</c:when>
+											</c:choose>   
+										 ">    
+											<a href="<c:url value='/mypage_order_detail?order_num=${list.order_num}'/>" class="item_content">
+												<div class="state_space point">
+													<c:choose>   
+														<c:when test="${list.mileage_status eq '사용' }">
+															<span class="state _statusName">사용</span>
+														</c:when>
+														<c:when test="${list.mileage_status eq '적립' }">
+															<span class="state _statusName">적립</span>
+														</c:when>
+														<c:when test="${list.mileage_status eq '취소' }">
+															<span class="state _statusName">취소</span>
+														</c:when>
+														<c:otherwise>
+													        <span class="state _statusName">적립예정</span>
+														</c:otherwise>
+													</c:choose> 
+												</div>
+												<div class="info_space">
+													<c:set var="date" value="${list.mileage_date}"/> 
+													<%--  수정 등록일 날짜,시간 표시  --%> 
+													<%   
+														Date date = (Date) pageContext.getAttribute("date");
+														SimpleDateFormat sdate = new SimpleDateFormat("yyyy.MM.dd");
+														String date_txt = sdate.format(date);
+														pageContext.setAttribute("date_txt", date_txt); 
+														
+													%> 
+													<span class="date">${date_txt}</span> 
+														<c:choose>
+															<c:when test="${list.mileage_status eq '사용' }">
+																<strong class="title _titleName">결제 시 사용</strong>
+															</c:when>
+															<c:when test="${list.mileage_status eq '적립' }">
+																<strong class="title _titleName">구매 적립</strong>
+															</c:when>
+															<c:when test="${list.mileage_status eq '취소' }">
+																<strong class="title _titleName">사용 취소</strong>
+															</c:when>
+															<c:otherwise>
+														       <strong class="title _titleName">구매 적립 예정</strong>
+															</c:otherwise>
+														</c:choose>
+													<p class="subtext">상세</p>
+												</div> 
+											</a>
+											<div class="amount_space">
+												<div class="amount_inner">
+													<input hidden="hidden" class="mileage_score_val" value="${list.mileage_score}">
+													<span class="point">${list.mileage_score}원</span>
+													<div class="func_area">
+														<a href="<c:url value='/mileage_delete?mileage_num=${list.mileage_num}'/>" class="" >내역삭제</a>
+													</div> 
+												</div>  
+											</div>
+										</div> 
+									</li>
+								</c:forEach>
+							</ul>
+						</c:forEach>
 				</div>
-				</form>
 			</div>
 		</div>
 

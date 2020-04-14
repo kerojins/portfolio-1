@@ -55,13 +55,22 @@ public class Item_Order_DaoImpl implements Item_Order_Dao{
 	public int order_count(HashMap<String, Object> map) {
 		return sqlSession.selectOne(NAMESPACE+".order_count", map);
 	}
-	
 	// 주문 상태 수
 	@Override
 	public List<HashMap<String,Object>> order_status(){
 		return sqlSession.selectList(NAMESPACE+".order_status");
 	}
-	 
+	// 오늘 주문 정보
+	@Override
+	public List<HashMap<String,Object>> order_today(){
+		return sqlSession.selectList(NAMESPACE+".order_today");
+	}
+	
+	// 날짜별 주문 판매 정보
+	@Override
+	public int order_sale(HashMap<String,Object> map){
+		return sqlSession.selectOne(NAMESPACE+".order_sale", map);
+	}
 	// 1. 주문 추가
 	@Override
 	public int order_insert(Order_Vo vo) {
@@ -105,7 +114,12 @@ public class Item_Order_DaoImpl implements Item_Order_Dao{
 	public int order_status_update(Order_Vo vo) {
 		return sqlSession.update(NAMESPACE+".order_status_update", vo);
 	}
-	
+	// 주문 배송지 수정 
+	@Override
+	public int order_update(Order_Vo vo) {
+		return sqlSession.update(NAMESPACE+".order_update", vo);
+		
+	}
 	// 5. 주문 삭제 
 	@Override
 	public int order_delete(int num) {

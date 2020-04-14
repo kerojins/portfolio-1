@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.heybooks.sh.service.item.Item_Category_Service;
 import com.heybooks.sh.service.item.Item_Main_Service;
+import com.heybooks.sh.service.member.Member_Service;
 import com.heybooks.sh.util.PageUtil;
 import com.heybooks.sh.vo.item.Item_Editor_Vo;
 import com.heybooks.sh.vo.item.Item_Vo;
@@ -29,6 +30,8 @@ public class Item_Catrgory_Controller {
 	private Item_Category_Service service;
 	@Resource
 	private Item_Main_Service item_service;
+	@Resource
+	private Member_Service member_service;
 	
 
 	// 1. 작가 등록
@@ -61,10 +64,10 @@ public class Item_Catrgory_Controller {
 		logger.info("get editor-list");
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		if(search_date != null && !(search_date.equals(""))) {
-			map.put("search_date", search_date);  
+			map.put("search_date", search_date.replaceAll("-", ""));  
 		}  
 		if(search_end_date != null && !(search_end_date.equals(""))) {
-			map.put("search_end_date", search_end_date); 
+			map.put("search_end_date", search_end_date.replaceAll("-", "")); 
 		}  
 		if(keyword != null && !(keyword.equals(""))) { 
 			map.put("keyword", keyword);    
@@ -73,7 +76,7 @@ public class Item_Catrgory_Controller {
 			map.put("item_start", item_start);    
 		}
 		if(item_end != null && !(item_end.equals(""))) {
-			map.put("item_end", item_end);    
+			map.put("item_end", item_end);     
 		}
 		if(sell_start != null && !(sell_start.equals(""))) {
 			map.put("sell_start", sell_start);    
@@ -89,22 +92,26 @@ public class Item_Catrgory_Controller {
 		map.put("endRow", util.getEndRow());
 		logger.info(list_arr);
 		List<HashMap<String,Object>> editor_list = service.editor_sell_list(map);
-		ArrayList<Integer> editr_item_count = new ArrayList<Integer>(); 
+		ArrayList<Integer> editor_item_count = new ArrayList<Integer>(); 
 		HashMap<String, Object> item_map = new HashMap<String, Object>(); 
 		item_map.put("list_arr", "product_date");
 		if(editor_list.size() > 0) {
+			for(HashMap<String,Object> list : editor_list) {
+				int editor_num = Integer.parseInt(list.get("EDITOR_NUM").toString());
+				list.put("S_CNT", service.editor_item_count(editor_num));
+			}
 			model.addAttribute("editor_admin_list", editor_list); 
 		}else {
 			List<Item_Editor_Vo> list = service.editor_list(map);
 			List<Item_Vo> item_list = item_service.item_list(item_map);
 			for(Item_Editor_Vo vo : list) {
 				if(item_list.size() > 0) {
-					editr_item_count.add(service.editor_item_count(vo.getEditor_num()));
+					editor_item_count.add(service.editor_item_count(vo.getEditor_num()));
 				}else {
-					editr_item_count.add(0);
-				}
+					editor_item_count.add(0);
+				} 
 			}  
-			model.addAttribute("editr_item_count", editr_item_count); 
+			model.addAttribute("editor_item_count", editor_item_count); 
 			model.addAttribute("editor_list", list);  
 		}  
 	 
@@ -128,26 +135,25 @@ public class Item_Catrgory_Controller {
 	public String editor_delete(String select_ck_num) {
 		logger.info("post editor-delete");
 		String[] select_arr = select_ck_num.split(",");
+		HashMap<String, Object> map = new HashMap<String, Object>();
 		for (String num : select_arr) {  
 			service.item_editor_null(Integer.parseInt(num));
+			map.put("editor_num", Integer.parseInt(num));
+			member_service.new_item_notice_delete(map);
 			service.editor_delete(Integer.parseInt(num));
-		}
+		} 
 		return "redirect:/editor_list";
-	}
+	} 
 	// 작가 선택 삭제 
 	@RequestMapping(value = "/editor_delete", method = RequestMethod.GET)
 	public String editor_delete(int editor_num) {
 		logger.info("get editor-delete");
+		HashMap<String, Object> map = new HashMap<String, Object>();
 		service.item_editor_null(editor_num);
+		map.put("editor_num", editor_num);
+		member_service.new_item_notice_delete(map);
 		service.editor_delete(editor_num);
 		return "redirect:/editor_list"; 
-		/*try { 
-			service.item_editor_null(editor_num);
-			service.editor_delete(editor_num);
-			return "redirect:/editor_list";
-		} catch (Exception e) {
-			return ".registration.alert";
-		}*/
 	}
 
 	// 4. 작가 정보

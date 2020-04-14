@@ -31,7 +31,6 @@
 											</table>
 										</td>
 										<td width="20">&nbsp;</td>
-
 									</tr>
 								</tbody>
 							</table>
@@ -311,33 +310,33 @@
 				</colgroup> 
 				<thead> 
 					<tr> 
-						<th colspan="4" style="padding-left:8px"> 고객CRM</th>
+						<th colspan="4" style="padding-left:8px">고객 상세정보
+							<input class="members_num" hidden="hidden">
+						</th>
 					</tr>
 				</thead>
 				<tbody>
-					<tr>
-						<th><a
-							href="/admincrm/member/member_coupon_list?member_seq=7" 
-							target="_blank">리뷰 수</a></th>
-						<td class="detail_review">0</td>
-						<th><a href="/admincrm/board/qna_catalog?member_seq=7" 
-							target="_blank">미처리 상담문의</a></th>
-						<td class="detail_counsel">0</td> 
-					</tr>
 					<tr> 
-						<th><a href="/admincrm/board/mbqna_catalog?member_seq=7"
-							target="_blank">구매 수</a></th>
+						<th>
+							<a class="member_detail_list" onclick="detail_list(this);" url="<c:url value='/admin_board_list?board_id=review&members_num='/>" target="_blank">리뷰 수</a>
+						</th> 
+						<td class="detail_review">0</td>
+						<th>
+							<a class="member_detail_list" onclick="detail_list(this);" url="<c:url value='/admin_board_list?board_id=counsel&counsel_answer=답변대기&members_num='/>" target="_blank">미처리 상담문의</a>
+						</th>
+						<td class="detail_counsel">0</td>  
+					</tr>
+					<tr>  
+						<th>
+							<a class="member_detail_list" onclick="detail_list(this);" url="<c:url value='/admin_order_list?&members_num='/>" target="_blank">구매 수</a>
+						</th>
 						<td class="detail_order">0</td>
-						<th><a
-							href="/admincrm/member/member_coupon_list?tab=3&amp;member_seq=7"
-							target="_blank">직업</a></th>
+						<th>직업</th>
 						<td class="detail_job"></td> 
 					</tr> 
-					<tr> 
-						<th><a
-							href="/admincrm/member/member_coupon_list?tab=3&amp;member_seq=7" 
-							target="_blank">관심사</a></th>
-						<td colspan="3" class="detail_favorite"></td>
+					<tr>  
+						<th>관심사</th>
+						<td colspan="3" class="detail_favorite" style="font-size:13px; "></td>
 					</tr>
 				</tbody>
 			</table>  

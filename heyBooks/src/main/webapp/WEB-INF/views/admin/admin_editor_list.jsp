@@ -194,9 +194,9 @@
 								<td class="ctd">${list.editor_num}</td>
 								<td class="ltd">${list.editor_name }</td>  
 								<td class="ltd">${list.editor_birth }</td>
-								<td class="ltd">${editr_item_count[status.index]}</td>
+								<td class="ltd">${editor_item_count[status.index]}</td>
 								<c:set var="date" value="${list.editor_date}"/>
-								<%    
+								<%     
 									Date date = (Date) pageContext.getAttribute("date");
 									SimpleDateFormat sdate = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 									String date_txt = sdate.format(date);

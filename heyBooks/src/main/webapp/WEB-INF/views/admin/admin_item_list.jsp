@@ -65,19 +65,44 @@
 											<input type="text" maxlength="10" size="10" value="${search_end_date}" name="search_end_date" class="datepickers end_day">
 											<img class="ui-datepicker-trigger" src="<c:url value='/resources/images/icon_calendar.gif'/>" alt="..." title="..."> &nbsp;&nbsp; 
 											<span class="btn small"> 
-												<input type="button" value="오늘" id="today" class="select_date"> 
+												<input type="button" value="오늘" class="select_date today"> 
 											</span> 
 											<span class="btn small">
-												<input type="button" value="일주일" id="1week" class="select_date">
+												<input type="button" value="일주일"  class="select_date 1week">
 											</span> 
 											<span class="btn small">
-												<input type="button" value="1개월" id="1month" class="select_date">
+												<input type="button" value="1개월" class="select_date 1month">
 											</span> 
 											<span class="btn small">
-												<input type="button" value="3개월" id="3month" class="select_date">
+												<input type="button" value="3개월"  class="select_date 3month">
 											</span>  
 											<span class="btn small">
-												<input type="button" value="전체" id="all_day" class="select_date">
+												<input type="button" value="전체" class="select_date all_day">
+											</span>
+										</td> 
+									</tr>
+									<tr>
+										<th>발행일</th>
+										<td colspan="5"> 
+											<input type="text"  maxlength="10" size="10" value="${issue_start_date}" name="issue_start_date" class="datepickers start_day">
+											<img class="ui-datepicker-trigger" src="<c:url value='/resources/images/icon_calendar.gif'/>" alt="..." title="..."> &nbsp;
+											<span class="gray">-</span>&nbsp;
+											<input type="text" maxlength="10" size="10" value="${issue_end_date}" name="issue_end_date" class="datepickers end_day">
+											<img class="ui-datepicker-trigger" src="<c:url value='/resources/images/icon_calendar.gif'/>" alt="..." title="..."> &nbsp;&nbsp; 
+											<span class="btn small"> 
+												<input type="button" value="오늘"  class="select_date today"> 
+											</span> 
+											<span class="btn small">
+												<input type="button" value="일주일" class="select_date 1week">
+											</span> 
+											<span class="btn small">
+												<input type="button" value="1개월"  class="select_date 1month">
+											</span> 
+											<span class="btn small">
+												<input type="button" value="3개월"  class="select_date 3month">
+											</span>   
+											<span class="btn small">
+												<input type="button" value="전체"  class="select_date all_day">
 											</span>
 										</td> 
 									</tr>
@@ -179,7 +204,7 @@
 			<div class="admin_select_list">
 				<input hidden="hidden" id="list_type" value="admin_item_list">
 				<select name = "item_list_arr_list" id="item_list_arr_list">
-					<option value="product_date" <c:if test="${list_arr eq 'product_date'}">selected="selected"</c:if>>최신순</option>
+					<option value="product_issue_date" <c:if test="${list_arr eq 'product_date'}">selected="selected"</c:if>>최신순</option>
 					<option value="product_stock"<c:if test="${list_arr eq 'product_stock'}">selected="selected"</c:if>>재고순</option>
 					<option value="cnt"<c:if test="${list_arr eq 'cnt'}">selected="selected"</c:if>>판매순</option>
 					<option value="product_name"<c:if test="${list_arr eq 'product_name'}">selected="selected"</c:if>>상품명순</option>
@@ -260,28 +285,30 @@
 										pageContext.setAttribute("img_name", img_name);
 									%>
 							</c:if>
-							<td align="right"><a href="/goods/view?no=62" target="_blank"><img
-									src="<c:url value='/resources/upload/${img_name}' />"
+							<td align="right">
+								<a href="<c:url value='/item_getinfo?product_num=${list.PRODUCT_NUM}'/>" target="_blank">
 									<%-- 상품 작은사진 --%>
-									width="50"></a></td>  
+									<img src="<c:url value='/resources/upload/${img_name}' />" width="50">
+								</a>
+							</td>  
 							<td align="left" style="padding-left: 10px;"> 
 								<div class="fx11 gray"></div>
 								<div>
-									<a href="../goods/regist?no=61" target="_blank">${list.PRODUCT_NAME }</a>
+									<a href="<c:url value='/item_getinfo?product_num=${list.PRODUCT_NUM}'/>" target="_blank">${list.PRODUCT_NAME }</a>
 									<%-- 상품 이름 --%>
 									<div></div>
 									<div style="padding-top: 3px;"></div>
 								</div>
 							</td>
-							<td align="center">${list.PRODUCT_PRICE }&nbsp;</td>
+							<td align="center">${list.PRODUCT_PRICE }원</td>
 							<%-- 상품 가격 --%>
 							<td align="center">
-								<div>${list.PRODUCT_DISCOUNT_PRICE }&nbsp;</div> <%-- 상품 판매가격 --%>
+								<div>${list.PRODUCT_DISCOUNT_PRICE }원</div> <%-- 상품 판매가격 --%>
 							</td>
-							<td align="center">${list.PRODUCT_STOCK}</td>
+							<td align="center">${list.PRODUCT_STOCK}개</td>
 							<%-- 상품 재고 --%>
 							<td align="center">
-								<div>${list.CNT }</div>
+								<div>${list.CNT}개</div>
 							</td>
 							<c:set var="update_date" value="${list.PRODUCT_UPDATE_DATE}" />
 							<c:set var="insert_date" value="${list.PRODUCT_DATE}" />
@@ -306,12 +333,12 @@
 							</td>
 							<td align="center"><span style="color: red">${list.PRODUCT_VIEW}</span></td>
 							
-							<td align="center">
+							<td align="center"> 
 								<div>
 									<span class="admin_detail_btn small valign-middle">
-										<a class="admin_list_btn" href="<c:url value='/item_getinfo?product_num=${list.product_num}'/>">상세</a>
-										<a class="admin_list_btn" href="<c:url value='/item_select_del?product_num=${list.product_num}'/>">삭제</a>
-									</span>
+										<a class="admin_list_btn" href="<c:url value='/item_getinfo?product_num=${list.PRODUCT_NUM}'/>">상세</a>
+										<a class="admin_list_btn" href="<c:url value='/item_select_del?product_num=${list.PRODUCT_NUM}'/>">삭제</a>
+									</span> 
 								</div> 
 							</td> 
 						</tr>

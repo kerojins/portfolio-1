@@ -1,6 +1,5 @@
 @charset "UTF-8";
 
-
 .form-control {
 	display: inline-block;
 }
@@ -26,6 +25,10 @@
 	border-radius: 0;
 }
 
+input.btn-primary {
+	font-size: 12px;
+}
+
 .sub_wrap {
 	padding-bottom: 50px;
 }
@@ -38,7 +41,26 @@ option {
 	z-index: 999 !important;
 	clip: auto !important;
 }
-
+.pagination{
+	justify-content: center; 
+}  
+.page-link{
+    padding: .45rem .6rem;
+}
+.content_box{
+	text-align: center;
+	border-top: 2px solid #0e7eda;
+}
+.content_box h4{
+	font-size: 17px;
+	font-weight: bold;
+	padding: 14px 0;
+	border-bottom: 1px solid #ddd;
+}
+.content_txt{
+	min-height: 400px;
+	padding: 10px;
+}
 /* sub 왼쪽 aside메뉴 */
 aside {
 	width: 20%;
@@ -130,11 +152,12 @@ aside li a {
 .itemList_array_menu {
 	overflow: hidden;
 	padding-bottom: 15px;
+	padding-top: 5px;
 	border-bottom: 1px solid #bbb;
 }
 
 .itemList_array_menu ul {
-	margin-top: 15px;
+	margin-top: 5px;
 	float: left;
 }
 
@@ -150,8 +173,26 @@ aside li a {
 	color: #0f7eda;
 }
 
-.array_select_list {
+.wishlist_form .array_select_list {
+	float: left;
+}
+
+.wishlist_form .itemList_top_menu, .wishlist_form .itemList_array_menu {
+	border: none;
+	padding: 0;
+}
+
+.array_select_list, .best_seller_info {
 	float: right;
+}
+
+.best_seller_info span {
+	font-size: 25px;
+	margin-right: 3px;
+	font-weight: bold;
+	color: #fd7500;
+	margin-left: 5px;
+	font-style: italic;
 }
 
 .array_select_list li {
@@ -185,17 +226,100 @@ aside li a {
 }
 
 .array_select_list li a {
-	font-size: 12px;
-	color: #888;
+	font-size: 13px;
+	color: #505050;
 	line-height: 24px;
 }
 
-form.best_seller_date_form select {
+.array_select_list li a.active {
+	color: #0064b7;
+	font-weight: 600;
+}
+
+.sub_right_content form select {
 	width: 26.5%;
-	font-size: 12px;
+	font-size: 13px;
 	height: 30px;
 	padding: 0;
 	padding-left: 13px;
+}
+
+#item_preview_box {
+	width: 100%;
+	height: 100%;
+	background: rgba(0, 0, 0, 0.4);
+	content: '';
+	position: fixed;
+	top: 0;
+	display: none;
+}
+
+#item_preview_box .bx-viewport {
+	height: 100% !important;
+}
+
+.preview_slide_item {
+	padding-top: 10px;
+    padding-bottom: 20px;
+	width: 100% !important;
+	position: static !important;
+	margin: 0 auto;
+	background: whitesmoke;
+}
+
+#item_preview_box .bx-wrapper {
+	background: none;
+	border: none;
+	box-shadow: none;
+}
+
+.item_preview_slide:after {
+	display: block;
+	content: '';
+	clear: both;
+}
+
+.preview_slide_head {
+	overflow: hidden;
+}
+
+.preview_slide_head span {
+	font-weight: 600;
+}
+
+.item_preview_content {
+	width: 45%;
+	margin: 0 auto;
+	position: relative;
+}
+
+.item_preview_slide {
+	text-align: center;
+	margin: 3px auto;
+	top: 0;
+	width: 100% !important;
+}
+
+.slide_cancle {
+	right: 0px;
+	top: 5px;
+	font-size: 25px;
+	margin: 0px 16px;
+	z-index: 99999;
+	position: absolute;
+}
+
+.item_preview_slide img {
+	margin: 0 auto;
+	width: 63%;
+}
+
+#item_preview_box .bx-prev {
+	left: 10%;
+}
+
+#item_preview_box .bx-next {
+	right: 10%;
 }
 
 form.best_seller_date_form button {
@@ -206,7 +330,7 @@ form.best_seller_date_form button {
 
 .item_select_option input[type="checkbox"] {
 	display: none;
-} 
+}
 
 .item_select_option input[type="checkbox"]+label.input_label {
 	display: inline-block;
@@ -252,21 +376,25 @@ form.best_seller_date_form button {
 	font-size: 12px;
 	background: #0e7eda;
 	border: none;
+	width: 120px;
 }
 
 .book_item_box {
 	overflow: hidden;
-    clear: both;
-    margin-top: 17px;
-    padding-bottom: 15px;
-    border-bottom: 1px solid #ccc;
+	clear: both;
+	margin-top: 17px;
+	padding-bottom: 15px;
+	border-bottom: 1px solid #ccc;
 }
-.small_cate_form .array_select_list{
+
+.small_cate_form .array_select_list {
 	float: left;
 }
-.small_cate_form .item_select_option{
-	margin-top:0 !important;
-} 
+
+.small_cate_form .item_select_option {
+	margin-top: 0 !important;
+}
+
 .book_item_box_left {
 	width: 79%;
 	float: left;
@@ -294,6 +422,7 @@ form.best_seller_date_form button {
 	top: 0;
 	left: 0;
 	top: 0;
+	z-index: 9999;
 }
 
 .book_item_box_left .book_item_content {
@@ -378,6 +507,7 @@ form.best_seller_date_form button {
 	background: #ddd;
 	right: -2px;
 	top: 2px;
+	margin-right: 3px;
 }
 
 #category_best .book_publising:after {
@@ -410,9 +540,11 @@ form.best_seller_date_form button {
 	width: 52px;
 	height: 12px;
 }
-.small_cate_form  .itemList_top_menu{
+
+.small_cate_form  .itemList_top_menu {
 	border-bottom: none;
 }
+
 .item_select_option .fa-check {
 	color: #0e7eda;
 	position: relative;
@@ -443,7 +575,7 @@ form.best_seller_date_form button {
 	height: 32px;
 	line-height: 32px;
 	font-weight: 600;
-	border:none;
+	border: none;
 }
 
 .book_item_box_right .buy_btn {
@@ -454,6 +586,12 @@ form.best_seller_date_form button {
 .book_item_box_right  .cart_btn {
 	background: #38a5ff;
 	color: white !important;
+}
+
+.book_item_box_right  .wishlist_btn {
+	border: 1px solid #ccc;
+	color: #555 !important;
+	line-height: 29px;
 }
 
 .book_item_box_right  .library_btn {
@@ -488,10 +626,10 @@ form.best_seller_date_form button {
 	color: #666;
 }
 
-#page_ck a{
-	background-color:#0e7eda;
+#page_ck a {
+	background-color: #0e7eda;
 	color: white;
-} 
+}
 /* 신간 도서 */
 .new_book_form .array_select_list {
 	float: left;
@@ -512,18 +650,52 @@ form.best_seller_date_form button {
 
 .sub_right_content .item_pagenum {
 	margin-top: 40px;
-	 justify-content: center;
+	justify-content: center;
 }
 
 .sub_right_content .item_pagenum .page-link {
 	font-size: 13px;
 }
-.sub_right_content  .small_cate_form .item_pagenum{
+
+.sub_right_content  .small_cate_form .item_pagenum {
 	margin-top: 0;
 }
 
+.favorite_item_img a, .book_item_imgBox a, .best_item_img a, .new_books_img a, .age_item_imgBox a, .item_detail_head_left p{
+	position: relative;
+	display: block;
+}
+ 
+.favorite_item_img a:after, .book_item_imgBox a:after, .best_item_img a:after, .new_books_img a:after, .age_item_imgBox a:after, .item_detail_head_left p:after{
+	display: block; 
+	box-sizing: border-box; 
+	position: absolute;
+	top: 0;
+	left: 0; 
+	width: 100%;
+	height: 100%;
+	background: linear-gradient(to right, rgba(0, 0, 0, .2) 0,
+		rgba(0, 0, 0, 0) 5%, rgba(0, 0, 0, 0) 95%, rgba(0, 0, 0, .2) 100%);
+	border: solid 1px rgba(0, 0, 0, .1);
+	content: '';
+}
 
+.book_item_imgBox a, .favorite_item_img a {
+	display: inline-block;
+}
 
+.book_item_imgBox img {
+	height: 160px;
+}
+
+#category_best .book_item_imgBox img {
+	height: 90px;
+}
+
+#category_new_books img {
+	width: 127px;
+	height: 191px;
+}
 /* 국내도서 */
 .category_array_box {
 	position: relative;
@@ -531,13 +703,20 @@ form.best_seller_date_form button {
 	width: 100%;
 	clear: both;
 	height: 340px;
-	margin-bottom: 30px;
+}
+ 
+.category_array_box img {
+	width: 111px;
+	height: 167px;
 }
 
-.category_array_box:after {
+.category_array_box:after,.national_category_box:after {
 	content: '';
 	clear: both;
 	display: block;
+}
+.national_category_box{
+	margin-bottom: 30px;
 }
 
 .category_array_box>h4 {
@@ -549,9 +728,9 @@ form.best_seller_date_form button {
 	margin-left: 3px;
 }
 
-.category_array_box h5 {
+.category_array_box .section {
 	float: left;
-}
+} 
 
 .category_array_box h5 a {
 	display: inline-block;
@@ -563,8 +742,9 @@ form.best_seller_date_form button {
 	background-color: white;
 	line-height: 20px;
 	font-weight: 600;
-}
+} 
 
+ 
 .category_array_box .on h5 a {
 	position: relative;
 	z-index: 10;
@@ -700,13 +880,14 @@ form.best_seller_date_form button {
 #category_best .book_item_list {
 	border: 1px solid #ddd;
 	padding: 15px;
-	height: 272px;
+	height: 295px;
 }
-
+ 
 #category_best .book_item_box {
 	padding: 0;
 	padding-bottom: 10px;
 	margin-top: 4px;
+	margin-bottom: 14px;
 }
 
 #category_best .item_other_list span {
@@ -735,7 +916,10 @@ form.best_seller_date_form button {
 
 #category_best .item_other_list p a {
 	font-size: 12px;
-	line-height: 20px;
+    line-height: 20px;
+    text-overflow: ellipsis;
+    width: 160px;
+    white-space: nowrap;
 }
 
 #category_best .item_other_list p a:hover {
@@ -746,7 +930,6 @@ form.best_seller_date_form button {
 .sub_full_box .item_all_choice {
 	float: right;
 	width: auto;
-	margin-top: 15px;
 }
 
 .sub_full_box .item_select_option {
@@ -828,6 +1011,7 @@ form.best_seller_date_form button {
 
 .item_detail_head_left img {
 	width: 100%;
+	height: 305px;
 }
 
 .item_detail_head_left span {
@@ -942,6 +1126,7 @@ form.best_seller_date_form button {
 
 .item_detail_table .item_select_option {
 	padding-left: 0;
+	margin-top: -5px;
 }
 
 .item_detail_table td:nth-of-type(1) {
@@ -1012,8 +1197,7 @@ form.best_seller_date_form button {
 	clear: both;
 }
 
-.item_detail_content .book_about>div
-	{
+.item_detail_content .book_about>div {
 	height: 232px;
 	overflow: hidden;
 }
@@ -1095,13 +1279,13 @@ form.best_seller_date_form button {
 /* 별점 */
 
 /*sprite with stars*/
-#reviewStars-input input:checked ~ label, #reviewStars-input label,
-	#reviewStars-input label:hover, #reviewStars-input label:hover ~ label
+.reviewStars-input input:checked ~ label, .reviewStars-input label,
+	.reviewStars-input label:hover, .reviewStars-input label:hover ~ label
 	{
 	background: url(../images/review_big_star.png) no-repeat;
 }
 
-#reviewStars-input {
+.reviewStars-input {
 	/*fix floating problems*/
 	overflow: hidden;
 	*zoom: 1;
@@ -1112,14 +1296,14 @@ form.best_seller_date_form button {
 	padding: 40px 70px;
 }
 
-#reviewStars-input .caption {
+.reviewStars-input .caption {
 	letter-spacing: 0.06em;
 	font-size: 20px;
 	color: #999;
 	margin-bottom: 10px;
 }
 
-#reviewStars-input input {
+.reviewStars-input input {
 	filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0);
 	opacity: 0;
 	width: 43px;
@@ -1129,13 +1313,13 @@ form.best_seller_date_form button {
 	z-index: 0;
 }
 
-#reviewStars-input input:checked ~ label {
+.reviewStars-input input:checked ~ label {
 	background-position: 0 -40px;
 	height: 40px;
 	width: 43px;
 }
 
-#reviewStars-input label {
+.reviewStars-input label {
 	background-position: 0 0;
 	height: 40px;
 	width: 43px;
@@ -1146,34 +1330,30 @@ form.best_seller_date_form button {
 	z-index: 1;
 }
 
-#reviewStars-input label:hover, #reviewStars-input label:hover ~ label {
+.reviewStars-input label:hover, .reviewStars-input label:hover ~ label {
 	background-position: 0 -40px;
 	height: 40px;
 	width: 43px;
 }
 
-#reviewStars-input #star-0 {
+.reviewStars-input input:nth-of-type(5) {
 	left: 0px;
 }
 
-#reviewStars-input #star-1 {
+.reviewStars-input input:nth-of-type(4) {
 	left: 53px;
 }
 
-#reviewStars-input #star-2 {
+.reviewStars-input input:nth-of-type(3) {
 	left: 106px;
 }
 
-#reviewStars-input #star-3 {
+.reviewStars-input input:nth-of-type(2) {
 	left: 159px;
 }
 
-#reviewStars-input #star-4 {
+.reviewStars-input input:nth-of-type(1) {
 	left: 212px;
-}
-
-#reviewStars-input #star-5 {
-	left: 265px;
 }
 
 .book_review_box {
@@ -1183,22 +1363,27 @@ form.best_seller_date_form button {
 .book_review_box .star_before {
 	margin-left: 11px;
 }
-.item_list_star_before, .item_list_star_before .star_after:after{
+
+/* 별점 CSS */
+.item_list_star_before, .item_list_star_before .star_after:after {
 	width: 44px;
 	height: 9px;
 }
-.review_item_star_before, .review_item_star_before .star_after:after{
-	width: 100px;
-	height: 15px;
+ 
+.review_item_star_before, .review_item_star_before .star_after:after {
+	width: 90px;
+	height: 18px;
 }
-.review_star_before, .review_star_before .star_after:after{
+
+.review_star_before, .review_star_before .star_after:after {
 	width: 260px;
 	height: 52px;
 }
+
 .book_review_box .textarea_wrap {
 	overflow: hidden;
 	clear: both;
-} 
+}
 
 .book_review_box textarea {
 	width: 100%;
@@ -1307,8 +1492,7 @@ form.best_seller_date_form button {
 }
 
 .review_list_right {
-	font-size: 13px;
-	padding:10px;
+	
 }
 
 .review_content {
@@ -1318,8 +1502,9 @@ form.best_seller_date_form button {
 .review_list_right {
 	float: left;
 	margin-left: 20px;
-	width: 500px;
-	padding-right:10px;
+	width: 75%;
+	padding: 12px;
+	font-size: 13px;
 }
 
 .review_list_right .review_list_btn {
@@ -1333,14 +1518,15 @@ form.best_seller_date_form button {
 	padding: 4px 10px;
 	margin-left: 5px;
 	border: 1px solid #ddd;
-	
 	border-radius: 5px;
 }
-.review_list_right .review_list_btn input, .review_list_right .review_list_btn a{
-	font-size: 13px;
-	color: #aaa;
+
+.review_list_right .review_list_btn input, .review_list_right .review_list_btn a
+	{
+	font-size: 12px;
+	color: #888;
 	font-weight: 600;
-	border:none;
+	border: none;
 }
 
 .review_list_right .review_list_btn span i {
@@ -1369,7 +1555,16 @@ form.best_seller_date_form button {
 	overflow: hidden;
 	padding-bottom: 15px;
 }
-
+.more_review{
+	background: none;
+    border: 1px solid #ccc;
+    width: 120px;
+    padding: 5px 10px;
+    font-size: 14px;
+    margin: 10px auto;
+    display: block;
+    font-weight: 600;
+}
 .add_reply .add_reply_info span {
 	font-size: 12px;
 	font-weight: 600;
@@ -1449,6 +1644,61 @@ form.best_seller_date_form button {
 	color: #0e7eda;
 }
 
+/* 작가 페이지 */
+#editor_box{
+	padding-top:20px;
+}
+#editor_box .item_detail_content{
+	padding: 20px 0;
+}
+#editor_box .item_detail_middle_box>div{
+	padding-top: 5px;
+}
+#editor_box .book_item_content h5{
+	font-size: 18px;
+	font-weight: 600;
+}
+#editor_box .item_detail_middle_box h3{
+    border-bottom: 1px solid #c1c1c1;
+}
+#editor_box .editor_info_content{
+	padding: 0 20px;
+    padding-bottom: 20px;
+    border: 7px solid #ccc;
+    position: relative;
+}
+#editor_box .item_detail_middle_box{
+	position: relative;
+}
+#editor_box .itemList_array_menu{
+	border:none;
+	position: absolute;
+	right:0;
+	top: -5px;
+	
+}
+#editor_box .editor_about{
+	margin-top: 20px;
+	padding: 10px 0;
+	border-top: 1px solid #ccc;
+}
+
+#editor_box .editor_alert_btn i{
+	color: white;
+	font-size: 13px;
+}  
+#editor_box .editor_alert_btn{
+	background: #0e7eda;
+    padding: 5px 10px; 
+    border-radius: 3px;
+    color: white;
+    font-size: 14px;
+    font-weight: 600;
+    position: absolute; 
+    right:10px;
+    top:10px;
+    margin-left:2px;
+}
 /* 장바구니 */
 #cart_box {
 	padding: 20px 0 40px;
@@ -1613,18 +1863,19 @@ td.order_item_info>p, td.order_item_info .order_item_title {
 	text-align: center;
 }
 
-
- .order_item_allPrice .order_item_allPrice_txt,.allPrice_txt {
+.order_item_allPrice .order_item_allPrice_txt, .allPrice_txt {
 	text-align: center;
 	font-weight: 600;
 	font-size: 15px;
 	color: #444;
-} 
-.cart_order_box{
-	display:none;
+}
+
+.cart_order_box {
+	display: none;
 	border-bottom: 1px solid #ddd;
 	padding-bottom: 10px;
 }
+
 .order_item_choice {
 	padding: 0 10px;
 }
@@ -1700,9 +1951,11 @@ td.order_total_price {
 td.order_total_price span {
 	color: #ff4141;
 }
-.order_total_count i{
+
+.order_total_count i {
 	font-style: normal;
 }
+
 .order_total_wrap>span {
 	position: absolute;
 	top: 69px;
@@ -1740,34 +1993,36 @@ td.order_total_price span {
 	padding-right: 15px;
 	margin-top: 10px;
 }
-.del_btn{
+
+.del_btn {
 	color: #444;
 	font-size: 13px;
 	background: #ddd;
 	border-color: #ccc;
-	margin-top:10px;
-	margin-left:10px;
+	margin-top: 10px;
+	margin-left: 10px;
 	width: 100px;
-	
 }
+
 .order_mileage span {
 	color: #457CAB;
 	font-weight: 600;
 	font-size: 17px;
 }
-.order_all_item{
+
+.order_all_item {
 	float: right;
-	
 }
-.order_all_item a{
+
+.order_all_item a {
 	color: white !important;
 	font-size: 13px;
 	margin-top: 4px;
 }
- 
+
 .twin_btn {
-	width: 410px;
 	margin: 50px auto 40px;
+	display: table;
 }
 
 .twin_btn .twin_home_btn {
@@ -1783,7 +2038,7 @@ td.order_total_price span {
 	border: none;
 }
 
-.twin_btn a,.twin_btn input {
+.twin_btn a, .twin_btn input {
 	text-align: center;
 	display: inline-block;
 	width: 200px;
@@ -1793,10 +2048,12 @@ td.order_total_price span {
 	font-weight: 600;
 	font-size: 17px;
 }
-.order_item_shipping{
+
+.order_item_shipping {
 	text-align: center;
 	font-size: 14px;
 }
+
 .order_item_mileage {
 	text-align: center;
 	font-size: 14px;
@@ -1929,12 +2186,12 @@ td.order_total_price span {
 	margin-right: 5px;
 }
 
-.order_location_choice a:last-child {
+/* .order_location_choice a:last-child {
 	border: none;
 	font-weight: bold;
 	color: #2a97f1;
 	margin-left: -5px;
-}
+} */
 
 .shipping_table tr.shipping_table_row>td:nth-child(2) {
 	width: 600px;
@@ -1952,6 +2209,10 @@ td.order_total_price span {
 
 #extend_area .recent_list li {
 	margin-top: 10px;
+}
+
+.order_period .select_date {
+	width: 60px;
 }
 
 .order_location input {
@@ -2015,12 +2276,14 @@ td.order_total_price span {
 	position: relative;
 	top: 1px;
 }
-.mileage_btn{
+
+.mileage_btn {
 	border: 1px solid #ccc;
 	font-size: 13px;
 	padding: 4px 5px;
 	margin-left: 5px;
 }
+
 .payment_box .pi_select {
 	border-top: 2px solid #087ddc;
 	padding: 15px;
@@ -2079,7 +2342,7 @@ td.order_total_price span {
 }
 
 #event_box h3 {
-	margin: 20px 0;
+	margin: 20px 0 10px;
 }
 
 .event_tabs {
@@ -2117,11 +2380,16 @@ td.order_total_price span {
 }
 
 .list_layout .list_img_box {
-	width: 40%;
+	width: 37%;
 }
 
 .list_layout .list_layout_left img {
 	width: 100%;
+}
+
+.event_list img{
+	width: 373px;
+	height: 210px;
 }
 
 .list_layout .list_layout_right {
@@ -2153,7 +2421,25 @@ td.order_total_price span {
 	padding-left: 10px;
 }
 
-/* 로그인 */
+.board_detail_paging{
+	overflow: hidden;
+	margin-top: 20px;
+	
+}.board_detail_paging a{
+	font-size: 14px;
+	font-weight: 600;
+}
+.board_detail_paging .prev{
+	float: left;
+}
+.board_detail_paging .next{
+	float: right;
+}
+.board_detail_paging i{
+	color:#0e7eda;
+	margin: 0 3px;
+}
+/* 로그인 */ 
 .login_box p {
 	font-size: 14px;
 	font-weight: 100;
@@ -2372,29 +2658,30 @@ td.order_total_price span {
 }
 
 .join_essential_info input, .join_essential_info select {
-    border: 1px solid #ccc;
-    height: 27px;
-    padding: 0 5px;
-    font-size: 13px;
+	border: 1px solid #ccc;
+	height: 27px;
+	padding: 0 5px;
+	font-size: 13px;
 }
 
 .join_classic_input {
 	width: 160px;
 }
 
-#id_check{
+#id_check {
 	margin-left: 8px;
 }
-.join_msg{
+
+.join_msg {
 	margin-left: 8px;
 	font-size: 14px;
 	font-weight: 600;
-	   
 }
-.join_msg i.fa-check{
-	color:#00b92a !important;
-}   
- 
+
+.join_msg i.fa-check {
+	color: #00b92a !important;
+}
+
 .join_years_td {
 	width: 100px;
 }
@@ -2502,15 +2789,15 @@ td.order_total_price span {
 	font-size: 13px;
 }
 
-.my_info li a {
+/* .my_info li a {
 	width: 100%;
 	height: 100%;
 	display: inline-block;
 	position: absolute;
 	top: 0;
 	left: 0;
-}
-
+} */ 
+ 
 .my_info_icon {
 	display: inline-block;
 	width: 100%;
@@ -2575,6 +2862,15 @@ td.order_total_price span {
 	clear: both;
 }
 
+.join_recent_list .vertical_item_box{
+	height: 246px;
+}
+
+.join_recent_list img{
+	width: 115px;
+	height: 174px;
+	
+}
 .join_recent_list li {
 	width: 20%;
 	float: left;
@@ -2584,10 +2880,11 @@ td.order_total_price span {
 	font-size: 22px;
 	font-weight: 600;
 	margin-bottom: 8px;
+	float: left;
 }
 
 .mypage_order_detail {
-	margin-top: 30px;
+	margin-top: 20px;
 }
 
 .recent_delete {
@@ -2641,6 +2938,26 @@ td.order_total_price span {
 .notice_content {
 	padding: 10px 0;
 }
+.notice_search{
+	margin: 20px auto;
+    width: 300px;
+    overflow: hidden;
+}
+.notice_search input{
+	height: 29px;
+    width: 260px;
+    padding: 5px;
+    font-size: 13px;
+    border: 1px solid #ccc;
+    float: left;
+}
+.notice_search button{
+	background: #e8e8e8;
+    padding: 6px;
+    border: none;
+    font-size: 13px;
+    float: left;
+}
 
 .notice_content span {
 	font-size: 13px;
@@ -2650,13 +2967,10 @@ td.order_total_price span {
 .notice_layout {
 	position: relative;
 }
-
-.notice_layout a {
-	position: absolute;
-	width: 100%;
-	height: 100%;
-	top: 0;
-	left: 0;
+.notice_layout li{
+	margin-top: 20px;
+	padding-bottom: 20px;
+	border-bottom: 1px solid #ddd;
 }
 
 .wish_form {
@@ -2716,8 +3030,9 @@ td.order_total_price span {
 	font-size: 16px;
 	font-weight: 600;
 	color: #484a4b;
+	padding-left: 15px;
 }
-
+ 
 .notice_editor_list .notice_editor span {
 	font-size: 14px;
 	color: #999;
@@ -2740,6 +3055,7 @@ td.order_total_price span {
 	width: 60%;
 	padding: 15px 0;
 	padding-left: 10px;
+	position: relative;
 }
 
 .notice_editor_title {
@@ -2769,14 +3085,56 @@ td.order_total_price span {
 	text-align: center;
 	color: #888;
 }
+.notice_content{
+	padding:15px;
+	min-height: 300px;
+}
+.official_content{
+	
+} 
+.official_content .tag{
+	background: #f7981f;
+	color: white;
+	font-size: 13px;
+	font-weight: 600;
+	padding: 4px;
+	
+}
+.official_content a{
+	color: #e42727;
+	font-weight: 600;
+}
+.board_title{
+	overflow: hidden;
+}
+.board_title h3{
+	float: left;
+}
+.board_title a{
+	float: right;
+	padding: 3px 6px;
+	color: white;
+	font-size : 13px;
+	font-weight: 600;
+	margin-top: 30px;
+	background: #0e7eda;
+}
+.new_item_mark{
+	font-size: 12px !important;
+	font-weight: 600 !important;
+	color: #f59500 !important;
+	position:absolute;
+	top:-3px;
+}
+
 /* 마이페이지 - 주문배송 */
 .mypage_order table td {
-	font-size: 14px;
+	font-size: 13px;
 }
 
 .mypage_order .order_item_title {
-	padding-top: 20px;
-	padding-left: 13px;
+	margin-top: 42px;
+    margin-left: 12px;
 }
 
 .order_period input {
@@ -2801,9 +3159,9 @@ td.order_total_price span {
 
 .order_period {
 	margin-top: 20px;
-	padding: 17px 20px;
+	padding: 12px 20px;
 	/* border: 1px solid #ccc; */
-	background: #e1f0fd;
+	background:#eaeaea;
 }
 
 .order_period:after {
@@ -2821,12 +3179,46 @@ td.order_total_price span {
 	float: left;
 	width: 20%;
 	padding-top: 15px;
+	padding-left: 10px;
 	font-size: 14px;
 	font-weight: 600;
 }
 
 .order_period_box {
 	float: left;
+	width: 49%;
+}
+.order_item_origin{
+	text-decoration: line-through;
+}
+.order_period_box .datepickers {
+	width: 90px;
+}
+
+.order_period_box .order_period_btn {
+	width: 65px;
+	background: #0e7eda;
+	color: white;
+	text-align: center;
+	border: none;
+	padding: 0;
+}
+
+.order_item_img img {
+	width: 80px;
+	height: 118px;
+}
+
+.order_period_box table {
+	width: 100%;
+}
+
+.order_period_box table span {
+	padding: 6px 0px;
+}
+
+.order_period_box table span input {
+	background: white;
 }
 
 .order_period_detail_btn {
@@ -2852,14 +3244,32 @@ td.order_total_price span {
 	margin-bottom: 10px;
 }
 
-.change_shipping a, .change_shipping_ok a {
+.change_shipping a, .change_shipping_ok input {
 	font-size: 13px;
 	padding: 5px 10px;
 	background-color: #0e7eda;
 	margin-left: 2px;
-	color: white;
-	height: 25px;
+	color: white !important;
+	height: 30px;
+	display: inline-block;
+	border:none;
 }
+.order_item_status p{
+	text-align: center;
+    font-weight: 600;
+    font-size: 14px; 
+    color: #0068bd;
+} 
+.order_item_status a{
+	display: inline-block;
+    width: 100%;
+    text-align: center;
+    padding: 4px 0;
+    margin-top: 4px;
+    font-size: 12px;
+    border: 1px solid #ccc;
+    
+} 
 
 .my_order_shipping, .change_order_shipping {
 	margin-top: 50px
@@ -3827,6 +4237,51 @@ tb_list2 td.amount li.bld strong {
 		url(../../../../img/service/front/order/point/dot_square.png?20190314)
 		no-repeat;
 }
+/* 검색결과 창 */
+#search_page{
+	padding-top: 15px;
+}
+#search_content_box {
+	overflow: hidden;
+}
+#search_content_box h4{
+	padding: 10px 0;
+	font-size: 20px;
+}
+.search_content{
+	width: 77%;
+	float: left; 
+}
+.editor_search_content ul{
+	border-top : 1px solid #ddd;
+	border-bottom : 1px solid #ddd;
+	padding: 10px 0;
+} 
+.editor_search_content li span{
+	font-size: 14px;
+}
+.item_search_content {
+	margin-top: 20px;
+}
+.search_aside{
+	float: right;
+	width: 20%;
+	margin-top: 20px;
+	min-height: 400px;
+}
+.search_aside h5{
+	border-bottom: 1px solid #ddd;
+	padding: 20px;
+	font-size: 15px;
+	font-size: 600;
+	color: #555;
+}  
+.search_aside ul{
+	padding: 10px 20px;
+}
+.search_aside ul a{
+	padding: 0;
+}
 /* Content_적립·충전 */
 .tit_month {
 	width: 100%;
@@ -3856,7 +4311,7 @@ tb_list2 td.amount li.bld strong {
 	float: left;
 	margin-left: 55px;
 	text-align: center;
-	padding-left: 55px;
+	padding-left: 35px;
 	border-left: 1px solid #ccc;
 }
 
@@ -3879,29 +4334,31 @@ tb_list2 td.amount li.bld strong {
 /* 마이페이지 - 1:1문의 */
 .my_qna_table th, .my_qna_table td {
 	font-size: 14px;
+	text-align: center;
 }
 
 a.qna_btn {
 	text-align: center;
-	display: block;
-	width: 170px;
-	height: 50px;
-	margin: 20px auto;
-	line-height: 50px;
-	border-radius: 5px;
-	font-weight: 600;
-	font-size: 16px;
-	background: #0e7eda;
-	color: white !important;
+    display: block;
+    float: right;
+    padding: 4px 10px;
+    font-weight: 600;
+    font-size: 13px;
+    background: #0e7eda;
+    color: white !important;
 }
 
 .my_qna_form {
-	margin-top: 30px;
+	margin-top: 10px;
+	clear: both;
+    border-top: 2px solid #0e7eda;
+    padding-top: 20px;
 }
 
 .my_qna_form label {
 	font-weight: 600;
 	margin-bottom: 5px;
+	margin-right: 10px;
 }
 
 .qna_detail_box span {
@@ -3938,15 +4395,14 @@ a.qna_btn {
 }
 
 .my_qna_table th {
-	background: #f0f8ff;
+	background: #f5f5f5;
 	border-bottom: 1px solid #dee2e6 !important;
+	padding: 10px 10px;
+	text-align: center;
 }
 
-.qna_btn {
-	margin: 40px auto 40px;
-}
 
-.qna_btn .twin_home_btn { 
+.qna_btn .twin_home_btn {
 	/* background: #eee; */
 	border: 1px solid #0e7eda;
 	color: #0e7eda !important;
@@ -3972,10 +4428,12 @@ a.qna_btn {
 /* 리뷰관리 */
 .review_item {
 	font-size: 14px;
-} 
-.review_list_box{
+}
+
+.review_list_box {
 	overflow: hidden;
 }
+
 .review_modify_box {
 	display: none;
 }
@@ -3986,80 +4444,89 @@ a.qna_btn {
 	padding: 8px;
 }
 
-.review_modify_box #reviewStars-input {
+.review_modify_box .reviewStars-input {
 	padding: 0;
 	margin: 5px 0;
 }
 
-.review_modify_box #reviewStars-input label {
+.review_modify_box .reviewStars-input label {
 	width: 22px;
 	height: 20px;
-	margin-right: 4px;
+	margin-right: 1px;
 }
 
-.review_modify_box #reviewStars-input input:checked ~ label,
-	.review_modify_box #reviewStars-input label, .review_modify_box #reviewStars-input label:hover,
-	.review_modify_box #reviewStars-input label:hover ~ label {
+.review_modify_box .reviewStars-input input:checked ~ label,
+	.review_modify_box .reviewStars-input label, .review_modify_box .reviewStars-input label:hover,
+	.review_modify_box .reviewStars-input label:hover ~ label {
 	background: url(../images/review_small_star.png) no-repeat;
 }
 
-.review_modify_box #reviewStars-input label:hover, .review_modify_box #reviewStars-input label:hover 
-	~ label {
+.review_modify_box .reviewStars-input label:hover, .review_modify_box .reviewStars-input label:hover 
+	 ~ label {
 	background-position: 0 -20px !important;
 	height: 20px;
 	width: 22px;
 }
 
-.review_modify_box #reviewStars-input input:checked ~ label {
-	background-position: 0 -20px !important;
+.review_modify_box .reviewStars-input input[checked='checked'] ~ label {
+	background-position: 0 -20px;
 	height: 20px;
 	width: 22px;
 }
 
-.review_modify_box #reviewStars-input input {
+.review_modify_box .reviewStars-input input {
 	width: 22px;
 	height: 20px;
 	display: none;
-} 
- 
+}
+
 .review_modify_box .item_select_option {
 	float: left;
-} 
-.review_modify_box .review_list_btn{
-	float:right;
-	margin-top: 5px; 
-} 
+}
 
-.my_review_box{
+.review_modify_box .review_list_btn {
+	float: right;
+	margin-top: 5px;
+}
+
+.my_review_box {
 	background: #ebf2f9;
 }
-.my_review_box .star_before{
+
+.my_review_box .star_before {
 	margin-left: 0;
-} 
-.review_form .my_review_box{
-	padding: 20px 0 15px 15px; 
-} 
+}
+
+.review_form .my_review_box {
+	padding: 20px 0 15px 15px;
+}
+
 .book_review_write .big_star_box {
 	width: auto;
-    padding: 0;
-} 
-.big_star_box .star_before, .big_star_box .star_after, .big_star_box .star_after:after{
+	padding: 0;
+}
+
+.big_star_box .star_before, .big_star_box .star_after, .big_star_box .star_after:after
+	{
 	width: 200px;
 	height: 40px;
-}	
-#reviewStars-input .caption span{
+}
+
+.reviewStars-input .caption span {
 	margin-left: 3px;
-	font-size: 27px; 
-	color:#fa722e; 
-	font-weight: 600; 
+	font-size: 27px;
+	color: #fa722e;
+	font-weight: 600;
 	font-style: italic;
 }
-.my_review_write #reviewStars-input .caption{
+
+.my_review_write .reviewStars-input .caption {
 	letter-spacing: 0;
-    font-size: 17px;
-    color: #5f5e5e;
-    font-weight: bold; 
+	font-size: 17px;
+	color: #5f5e5e;
+	font-weight: bold;
 }
-.my_review_box .review_btn_left{
+
+.my_review_box .review_btn_left {
 	float: left;
-} 
+}

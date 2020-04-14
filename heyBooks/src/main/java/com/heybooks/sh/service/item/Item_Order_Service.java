@@ -31,6 +31,12 @@ public interface Item_Order_Service {
 	// 주문 전체 수 얻기
 	public int order_count(HashMap<String, Object> map);
 	
+	// 오늘 주문 정보
+	public List<HashMap<String,Object>> order_today();
+	
+	// 날짜별 주문 판매 정보
+	public int order_sale(HashMap<String,Object> map);
+	 
 	// 1. 주문 추가
 	public int order_insert(Order_Vo vo);
 	
@@ -57,6 +63,10 @@ public interface Item_Order_Service {
 	
 	// 4. 주문 상태 수정
 	public int order_status_update(Order_Vo vo);
+	
+	// 주문 배송지 수정 
+	public int order_update(Order_Vo vo);
+		
 	
 	// 5. 주문 삭제 
 	public int order_delete(int num);

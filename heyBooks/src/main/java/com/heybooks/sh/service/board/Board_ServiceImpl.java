@@ -104,7 +104,11 @@ public class Board_ServiceImpl implements Board_Service{
 		return dao.notice_detail(num);
 	}
 	
-	
+	// 공지사항 이전글 다음글
+	@Override
+	public List<HashMap<String, Object>> notice_page(HashMap<String, Object> map){
+		return dao.notice_page(map);
+	}
 	// ====== 이벤트 =======
 	
 	// 이벤트 갯수

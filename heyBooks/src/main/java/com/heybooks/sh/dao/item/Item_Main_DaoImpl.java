@@ -79,4 +79,10 @@ public class Item_Main_DaoImpl implements Item_Main_Dao {
 	public int item_img_update(Item_Vo vo) {
 		return sqlSession.update(NAMESPACE + ".item_img_update", vo);
 	}
+	// 6. 상품 별점 동기화
+	@Override
+	public int item_grade_update(HashMap<String, Object> map) {
+		return sqlSession.update(NAMESPACE+".item_grade_update",map);
+	} 
+	
 }

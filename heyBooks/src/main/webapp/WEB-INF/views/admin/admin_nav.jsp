@@ -10,17 +10,26 @@
 						<h1>
 							<a href="<c:url value='/admin_main'/>"> HEYBOOKS</a>
 						</h1>
-					</div>
+					</div> 
 					<div id="search_box">
-						<form id="search_form">
+						<form id="search_form" action="<c:url value='/admin_order_list'/>" method="get">
 							<fieldset class="search_feild">
-								<legend>헤이북스 검색 </legend>
-								<span><i class="fas fa-search" aria-hidden="true"></i></span> <input
-									id="book_search_input" class="del_focus" type="search"
-									role="search" placeholder="주문, 상품, 회원 검색" title="서점 전체 검색어 입력">
+								<legend>헤이북스 검색 </legend> 
+								<span class="search_icon">
+									<button><i class="fas fa-search" aria-hidden="true"></i></button>
+								</span> 
+								<input id="search_input" class="search_input" autocomplete=off onkeyup="keyword_keyup(this)" name="keyword" type="search" role="search" placeholder="주문, 상품, 회원, 작가 검색" title="서점 전체 검색어 입력">
 							</fieldset>
-						</form>
-					</div>
+						</form>  
+						<div class="search_layer"> 
+							<ul>
+								<li id="admin_order"><span class="search_layer_left">주문검색:</span><span class="search_layer_keyword"></span><span class="search_layer_right">- 주문찾기</span></li>
+								<li id="admin_item"><span class="search_layer_left">상품검색:</span><span class="search_layer_keyword"></span><span class="search_layer_right">- 상품찾기</span></li>
+								<li id="admin_user"><span class="search_layer_left">회원검색:</span><span class="search_layer_keyword"></span><span class="search_layer_right">- 회원찾기</span></li>
+								<li id="editor"><span class="search_layer_left">작가검색:</span><span class="search_layer_keyword"></span><span class="search_layer_right">- 작가찾기</span></li>
+							</ul> 
+						</div> 
+					</div> 
 					<div id="header_right" class="right">
 						<c:choose>
 							<c:when test="${empty sessionScope.admin_id }">
@@ -50,7 +59,7 @@
 						<li><a href="<c:url value='/admin_item_list'/>">상품</a></li>
 						<li><a href="<c:url value='/admin_user_list'/>">회원</a></li>
 						<li><a href="<c:url value='/admin_board'/>">게시판</a></li>
-						<li><a href="/sh/event_proceed">매출</a></li>
+						<li><a href="<c:url value='/admin_chart'/>">매출</a></li>
 					</ul>
 					<ul id="header_middle_right">
 						<li><a href="<c:url value='/editor_list'/>">작가관리</a></li>

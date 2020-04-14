@@ -74,13 +74,7 @@ li {
 	background-color: #0daf91; 
 }
 
-#header_content {
-	overflow: hidden;
-}
 
-#header_content_box {
-	overflow: hidden;
-}
 
 #header_content_box #header_left {
 	margin-top: -14px;
@@ -103,17 +97,17 @@ header h1 a {
 	margin-left: 31.3%;
 	background-color: white;
 	height: 33px;
-	padding: 1px 0px 0px 15px;
+	padding: 1px 0px 0px 5px;
 	width: 300px;
 	float: left;
 	margin-top: 13px;
+	position: relative;
 }
 
 #header_content #search_box input {
 	display: inline-block;
 	height: 30px;
 	border: none;
-	margin-left: 5px;
 	width: 250px;
 	font-size: 14px;
 	font-weight: 700;
@@ -134,14 +128,48 @@ header h1 a {
 	color: #add1ef;
 }
 
-#header_content #search_box span {
+#header_content #search_box span.search_icon {
 	position: relative;
-	top: 2px;
+	top: 2px; 
+	left: 255px; 
+} 
+#header_content #search_box button{
+	border: none;
+	background: transparent;
+}   
+.search_layer{
+	width: 100%;
+	box-sizing:padding;
+	background-color:  white;
+	position: absolute;
+	left: 0;
+	z-index: 999;
+	border: 1px solid #bbb;
+	display: none;
+	 
+} 
+.search_layer span{
+	margin-right: 10px;
 }
-
+.search_layer ul{
+	margin: 0;
+} 
+.search_layer li{
+	padding: 2px 10px;
+}
+.search_layer li:hover{
+	background: #eee;
+}
+.search_layer .search_layer_keyword{
+	 color: #f16f00;
+}.search_layer .search_layer_right{
+	font-size: 12px;
+	color: #aaa;
+}
 #header_content #search_box i {
 	color: #0daf91;
 	display: inline-block;
+	font-size: 17px;
 }
 
 #header_content #header_right {
@@ -245,6 +273,7 @@ header h1 a {
 	padding-left: 8px;
 	color: #555;
 }
+
 
 .admin_brief {
 	overflow: hidden;
@@ -381,7 +410,13 @@ header h1 a {
 .board_delete_btn{
 	display: none;
 }
-
+.board_push{
+	padding: 5px 0 8px;
+	font-size: 13px;
+}
+.event_period{
+	width: 110px;
+} 
 .admin_preview table.shipping_preview_table a, .admin_preview table.item_preview_table a
 	{
 	margin-right: 2px;
@@ -422,6 +457,24 @@ header h1 a {
 	padding-bottom: 20px;
 	border-bottom: 1px solid #ddd;
 }
+.qna_preview_table .layer_board_view_btn{
+    width: 120px;
+    display: inline-block;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+.review_preview_table .layer_board_view_btn{
+	width:180px
+}
+.board_privew_content .layer_board_view_btn{
+    width: 300px;
+    display: inline-block;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
 
 .board_preview>div:last-child {
 	margin-right: 0;
@@ -579,7 +632,7 @@ a.list-group-item, button.list-group-item {
 	position: relative;
 }
 
-.memo_write a {
+.memo_write input {
 	width: 15%;
 	float: right;
 	padding: 8px;
@@ -589,6 +642,9 @@ a.list-group-item, button.list-group-item {
 	font-size: 13px;
 }
 
+.admin_memo_title{
+	text-overflow: ellipsis;
+}
 .memo_write i {
 	position: absolute;
 	right: 7px;
@@ -620,7 +676,97 @@ a.list-group-item, button.list-group-item {
 .admin_memo .panel-group {
 	margin-bottom: 0;
 }
+.content_btn{
+	padding: 10px 10px;
+	overflow: hidden;
+}
+.content_btn p{
+	width: 93.5px;
+    text-align: center;
+    margin: 8px;
+    float: left;
+    border: 1px solid #ddd;
+} 
+.content_btn p > span{
+	padding: 5px;
+    display: inline-block;
+    background: #d8d8d8;
+    width: 100%;
+    font-size: 13px;
+    font-weight: 600;
+} 
+.content_btn p a{  
+	display: block;
+    text-align: center;
+    width: 100%;
+    padding: 10px;
+} 
+.push_layer{
+	position: absolute;
+    width: 45%;
+    height: 400px;
+    left: 27%;
+    top: 20%;
+    background: white;
+    border: 1px solid #c5c5c5;
+    outline: 0px;
+    padding: 2px;
+    display: none;
+}
+.push_delete_val{
+	display: none;
+} 
+.push_layer h4{
+	text-align: center;
+}
+.push_write{
+	display: none;
+}
+.push_insert_form{
+	padding: 20px 40px;
+	text-align: center;
+}
+.push_layer textarea{
+	width: 100%;
+    height: 100px;
+    padding: 10px;
+}
+.push_layer_top{
+	overflow: hidden;
+	background: #484848;
+	padding: 10px 15px;
+} 
+.push_layer_top span{
+	float: left; 
+	color: white;
+}
 
+.push_list_box{
+	padding: 10px;
+	display: none;
+}
+.push_list_box table{
+	width: 100%;
+	margin-top: 15px;
+}
+.push_list_box table th{
+	text-align: center;
+	background: #eee;
+	padding: 8px;
+}
+.push_list_box table td{
+	border-bottom:  1px solid #eee;
+	text-align: center;
+	padding: 12px 0;
+}
+.push_layer_top button{
+	float: right;
+	background: none;
+	border: none;
+}
+.push_layer_top button i{
+	color: white;
+}
 /* 아이템 리스트 */
 .admin_btn {
 	margin-top: 12px;
@@ -635,13 +781,13 @@ a.list-group-item, button.list-group-item {
 
 .admin_page_head {
 	overflow: hidden;
-	background: url(../images/tit_bg.gif) repeat-x;
-	padding-bottom: 5px;
+    background: url(../images/tit_bg.gif) repeat-x;
+    padding-bottom: 5px;
+    text-align: center;
+    position: relative;
 }
 
 .admin_page_head h2 {
-	float: left;
-	margin-left: 45.5%;
 	font-size: 23px;
 	margin-top: 10px;
 	font-weight: 600;
@@ -658,8 +804,10 @@ a.list-group-item, button.list-group-item {
 }
 
 .admin_page_head a {
-	float: right;
-	margin-right: 10px;
+    position: absolute;
+    right: 10px;
+    top: -3px;
+	
 }
 
 .admin_item_list table {
@@ -827,6 +975,7 @@ div.skin-add-form table.sf-option-table  li:first-child {
 }
 
 .admin_select_list {
+	margin-top: 10px;
 	float: right;
 }
 
@@ -944,6 +1093,7 @@ div.skin-add-form table.sf-option-table  li:first-child {
 #preview_box img {
 	width: 130px;
 	height: 180px;
+	border: 1px solid #ddd;
 }
 
 .category_select {
@@ -1075,13 +1225,14 @@ div.skin-add-form table.sf-option-table  li:first-child {
 .file_box {
 	position: relative;
 	width: 100%;
+	left: 20px;
 }
 
 .file_box .hide_pic_name {
 	position: absolute;
 	top: 6px;
 	left: 90px;
-	width: 290px;
+	width: 260px;
 	border: transparent !important;
 }
 
@@ -1202,7 +1353,7 @@ a.admin_list_btn {
 	font-size: 13px;
 	font-weight: bold;
 	color: #ffffff;
-	line-height: 30px;
+	line-height: 25px;
 }
 
 .memberInfoTable th {
@@ -1345,10 +1496,9 @@ td.order_item_info>p, td.order_item_info .order_item_title {
 }
 
 .ui-dialog a.ui-dialog-titlebar-close {
-	right: 10px;
-	top : 18px;
+	top: 10px;
 	padding: 0px; 
-	font-size: 18px;
+	font-size: 20px;
 	color: white !important;
 	position: absolute; 
 }
@@ -1383,6 +1533,7 @@ td.order_item_info>p, td.order_item_info .order_item_title {
 	background-color: #484848 !important;
 	line-height: 40px;
 	vertical-align: middle;
+	padding:0;
 	padding-left: 15px;
 }
 
@@ -1552,11 +1703,13 @@ table.bbsview_table_style tbody td.cell {
 	z-index: 500;
 	outline: 0px;
 	height: auto;
-	width: 90%;
+	width: 80%;
 	top: 40px;
-	left: 97px;
+	left: 10%;
 }
-
+.ui-dialog-content{
+	min-height: 450px !important;
+}
 .board_list_view button {
 	font-size: 12px;
 	padding: 3px 5px;
@@ -1667,8 +1820,12 @@ table.bbsview_table_style tbody td.cell {
 
 .event_thumb_box .del_thumb {
 	display: none;
+	position: relative;
 }
- 
+.event_thumb_box .fa-times{
+	position: absolute;
+    margin-left: 3px;
+}
 #writeform #page-title-bar-area .page-buttons-left li {
 	float: left;
 }
@@ -1852,4 +2009,50 @@ table.bbsview_table_style tbody td.cell {
 
 .split_pager {
 	border: 5px solid #CCC;
+}
+.admin_chart{
+	width: 800px;
+	position: relative;
+}
+.chart_box{
+	margin-top: 100px;
+}
+.admin_chart .left{
+float:left;
+width:100%;
+}
+.admin_chart #grafico{
+position:relative; 
+height:400px;
+border-left:2px solid #000000;
+border-bottom: 2px solid #000000;
+width:100%;
+margin-top:20px;
+}
+.admin_chart .riga{
+position:absolute;
+left:0;
+height: 1px;
+background-color:gray; 
+width: 100%;
+}
+.admin_chart .riga div{
+float:left;
+margin: -8px 0 0 -80px;
+}
+.admin_chart .canc{
+clear:both;
+}
+
+.admin_chart .column{
+position:absolute;
+width: 16%;
+bottom: 0;
+background-color: #003366;
+margin-left:5%;
+}
+
+.admin_chart .column div{
+margin-top:-20px;
+height:20px;
 }

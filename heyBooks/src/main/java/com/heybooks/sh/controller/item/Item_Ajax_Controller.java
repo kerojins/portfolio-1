@@ -4,9 +4,13 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -16,6 +20,7 @@ import org.apache.tiles.request.Request;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -56,11 +61,13 @@ public class Item_Ajax_Controller {
 	@ResponseBody
 	public List<Item_Cate_Vo> cate_list(String cate_code) {
 		logger.info("json/get Item-cate-list");
-		List<Item_Cate_Vo> clist = cate_service.cate_list(cate_code);
+		HashMap<String, Object> cate_map = new HashMap<String, Object>(); 
+		cate_map.put("cate_code", cate_code);
+		List<Item_Cate_Vo> clist = cate_service.cate_list(cate_map);
 		logger.info(String.valueOf(clist.size()));
 		return clist;
 	}
-
+ 
 	// 상품 이미지 업로드
 	@RequestMapping("/file_upload")
 	@ResponseBody
@@ -240,7 +247,7 @@ public class Item_Ajax_Controller {
 			 return "cart_add_ok"; 
 		 }   
 		}
-	 
+	// 주문 상세 정보
 	@RequestMapping("/ajax/order_detail")
 	@ResponseBody
 	public HashMap<String, Object> order_detail(int order_num){
@@ -265,4 +272,152 @@ public class Item_Ajax_Controller {
 		map.put("vo", vo); 
 		return map; 
 	}
+	
+	// 주문 상태 업데이트 
+	@RequestMapping("/order_status_update")
+	@ResponseBody
+	public String order_status_update(String[] select_ck_num, String order_status, Model model) {
+		logger.info("post order-status-update");
+		if(select_ck_num != null){
+			for(String list_order_num : select_ck_num) { 
+				Order_Vo vo = new Order_Vo(); 
+				vo.setOrder_num(Integer.parseInt(list_order_num));  
+				vo.setOrder_status(order_status);
+				order_service.order_status_update(vo);
+			}  
+		}
+		return "ok";   
+	}
+	
+	// 주문 상태 업데이트 
+	@RequestMapping("/best_get_week")
+	@ResponseBody
+	public String best_get_week(String year, String month, Model model) {
+		logger.info("post order-status-update");
+		Calendar cal = Calendar.getInstance();
+		Calendar now = Calendar.getInstance();
+		cal.set(Calendar.YEAR, Integer.parseInt(year));
+		cal.set(Calendar.MONTH, Integer.parseInt(month)-1);
+		int date = cal.getActualMaximum(Calendar.DATE);
+		int week = 1;
+		System.out.println("마지막 날 "+ date);   
+		for(int i= 1; i <= date; i++) {
+			cal.set(Calendar.DATE, i); 
+			int dayOfWeek = cal.get(Calendar.DAY_OF_WEEK);
+			if( (i==1 && dayOfWeek == 1) || (i==1 && dayOfWeek == 6) || (i==1 && dayOfWeek == 7)) {
+				week = 0; 
+			}
+			if(dayOfWeek==2) {
+				if(i==1) week--;
+				week++;   
+			}  
+			if(now.get(Calendar.YEAR) == Integer.parseInt(year) && now.get(Calendar.MONTH) == Integer.parseInt(month) -1 && now.get(Calendar.DATE) == i ) {
+			   return String.valueOf(week);
+			}
+		} 
+		return String.valueOf(week);
+	} 
+	
+	//검색 바로보기
+	@RequestMapping("/search_preview")
+	@ResponseBody
+	public HashMap<String,List<HashMap<String, Object>>> search_preview(String keyword){
+		HashMap<String,List<HashMap<String, Object>>> search_map = new HashMap<String, List<HashMap<String,Object>>>();
+		//키워드 작가명 - 작가리스트 프리뷰 
+		HashMap<String,Object> editor_map = new HashMap<String, Object>();
+		List<HashMap<String,Object>> search_editor_list = new ArrayList<HashMap<String,Object>>();
+		editor_map.put("keyword", keyword);
+		List<Item_Editor_Vo> editor_list = cate_service.editor_list(editor_map);
+		if(editor_list.size()>0) {
+			editor_map.remove("keyword");
+			editor_map.put("list_arr", "cnt"); //판매순으로
+			editor_map.put("startRow", 1); 
+			editor_map.put("endRow", 10); 
+			for(Item_Editor_Vo editor_vo : editor_list) {
+				HashMap<String,Object> editor_add_map = new HashMap<String, Object>();
+				editor_map.put("product_editor_num", editor_vo.getEditor_num());
+				editor_add_map.put("editor_num", editor_vo.getEditor_num());
+				editor_add_map.put("editor_name", editor_vo.getEditor_name());  
+				editor_add_map.put("editor_item_count", cate_service.editor_item_count(editor_vo.getEditor_num()));
+				List<HashMap<String, Object>> item_list = service.sell_list(editor_map);
+				String item_name = "";
+				if(item_list.size()>0) {
+					item_name = item_list.get(0).get("PRODUCT_NAME").toString();
+				}
+				editor_add_map.put("editor_item_name", item_name);
+				search_editor_list.add(editor_add_map);
+				if(editor_list.indexOf(editor_vo) == 2) {
+					break;
+				}
+			}
+		}
+		if(search_editor_list.size()>0) {
+			search_map.put("editor_list", search_editor_list);
+		}else {
+			search_map.put("editor_list", null);
+		}
+		
+	   //키워드가 상품명 or 작가명 or 출판사명 - 아이템 프리뷰
+		List<HashMap<String,Object>> search_item_list = new ArrayList<HashMap<String,Object>>();
+		HashMap<String,Object> item_map = new HashMap<String, Object>();
+		item_map.put("startRow", 1);
+		item_map.put("endRow", 3);
+		item_map.put("list_arr", "cnt"); 
+		item_map.put("product_name", keyword);
+		List<HashMap<String,Object>> item_list = service.sell_list(item_map); // 키워드 상품명으로 검색해 리스트 넣기
+		for(HashMap<String,Object> item_add_map : item_list) {
+			if(item_add_map.get("PRODUCT_PICTURE") != null) {
+				item_add_map.put("PRODUCT_PICTURE", item_add_map.get("PRODUCT_PICTURE").toString().split(",")[0]);
+			}
+			item_add_map.put("editor_name", cate_service.editor_getinfo(Integer.parseInt(item_add_map.get("PRODUCT_EDITOR_NUM").toString())).getEditor_name()); //작가이름 추가
+			search_item_list.add(item_add_map); 
+		}
+		item_map.remove("product_name");
+		if(editor_list.size()>0) {
+			for(Item_Editor_Vo editor_vo : editor_list) {
+				item_map.put("product_editor_num", editor_vo.getEditor_num()); // 키워드 작가명으로 검색해 리스트 넣기
+				item_list = service.sell_list(item_map);
+				for(HashMap<String,Object> item_add_map : item_list) {
+					if(item_add_map.get("PRODUCT_PICTURE") != null) {
+						item_add_map.put("PRODUCT_PICTURE", item_add_map.get("PRODUCT_PICTURE").toString().split(",")[0]);
+					}
+					item_add_map.put("editor_name", cate_service.editor_getinfo(editor_vo.getEditor_num()).getEditor_name()); //작가이름 추가
+					search_item_list.add(item_add_map);
+				}
+			} 
+		}
+		item_map.remove("product_editor_num"); 
+		item_map.put("product_publish", keyword);
+		item_list = service.sell_list(item_map);
+		for(HashMap<String,Object> item_add_map : item_list) { // 키워드 출판사명으로 검색해 리스트 넣기
+			if(item_add_map.get("PRODUCT_PICTURE") != null) {
+				item_add_map.put("PRODUCT_PICTURE", item_add_map.get("PRODUCT_PICTURE").toString().split(",")[0]);
+			}
+			item_add_map.put("editor_name", cate_service.editor_getinfo(Integer.parseInt(item_add_map.get("PRODUCT_EDITOR_NUM").toString())).getEditor_name()); //작가이름 추가
+			search_item_list.add(item_add_map);
+		}
+		if(search_item_list.size()>0) { 
+			//넣어준 리스트 중복제거하기
+			String pn1 = "";
+			String pn2 = "";
+			for(int i = 0; i < search_item_list.size(); i++) {
+				pn1 = search_item_list.get(i).get("PRODUCT_NAME").toString();
+				for(int j = search_item_list.size()-1; j>i; j--) {
+					pn2 = search_item_list.get(j).get("PRODUCT_NAME").toString();
+					if(pn1.equals(pn2)) {
+						search_item_list.remove(j);
+					}
+				} 
+			}
+			Collections.reverse(search_item_list); // 순서 판매순으로 다시 뒤집기
+			search_map.put("item_list", search_item_list);
+			
+		}else { 
+			search_map.put("item_list", null);
+		}
+		
+		return search_map;
+	}
+	
+
 }

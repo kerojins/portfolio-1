@@ -69,7 +69,13 @@ public class Item_Main_ServiceImpl implements Item_Main_Service{
 		return dao.item_getinfo(product_num);
 	}
 	// 5. 상품 이미지 수정
+	@Override
 	public int item_img_update(Item_Vo vo) {
 		return dao.item_img_update(vo);
 	}
+	// 6. 상품 별점 동기화
+	@Override 
+	public int item_grade_update(HashMap<String, Object> map) {
+		return dao.item_grade_update(map);
+	} 
 } 

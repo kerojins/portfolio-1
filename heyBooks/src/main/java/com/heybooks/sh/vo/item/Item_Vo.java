@@ -2,7 +2,7 @@ package com.heybooks.sh.vo.item;
 
 import java.util.Date;
 
-public class Item_Vo {
+public class Item_Vo { 
 	private int product_num;
 	private int product_cate_num;
 	private int product_editor_num;
@@ -21,14 +21,17 @@ public class Item_Vo {
 	private int product_stock;
 	private String product_picture;
 	private String product_preview;
+	private Float product_grade;
+	private String product_issue_date; 
 	private Date product_update_date; 
-	private Date product_date;
+	private Date product_date; 
 	public Item_Vo() {}
 	public Item_Vo(int product_num, int product_cate_num, int product_editor_num, String product_publish,
 			String product_name, int product_page, String product_discription, String product_index,
 			String product_status, String product_view, String product_shipping_charge, String product_discount,
 			String product_price, String product_discount_price, int product_supplement, int product_stock,
-			String product_picture, String product_preview, Date product_update_date, Date product_date) {
+			String product_picture, String product_preview, Float product_grade, String product_issue_date,
+			Date product_update_date, Date product_date) {
 		super();
 		this.product_num = product_num;
 		this.product_cate_num = product_cate_num;
@@ -48,6 +51,8 @@ public class Item_Vo {
 		this.product_stock = product_stock;
 		this.product_picture = product_picture;
 		this.product_preview = product_preview;
+		this.product_grade = product_grade;
+		this.product_issue_date = product_issue_date;
 		this.product_update_date = product_update_date;
 		this.product_date = product_date;
 	}
@@ -159,6 +164,18 @@ public class Item_Vo {
 	public void setProduct_preview(String product_preview) {
 		this.product_preview = product_preview;
 	}
+	public Float getProduct_grade() {
+		return product_grade;
+	}
+	public void setProduct_grade(Float product_grade) {
+		this.product_grade = product_grade;
+	}
+	public String getProduct_issue_date() {
+		return product_issue_date;
+	}
+	public void setProduct_issue_date(String product_issue_date) {
+		this.product_issue_date = product_issue_date;
+	}
 	public Date getProduct_update_date() {
 		return product_update_date;
 	}
@@ -181,8 +198,8 @@ public class Item_Vo {
 				+ ", product_discount=" + product_discount + ", product_price=" + product_price
 				+ ", product_discount_price=" + product_discount_price + ", product_supplement=" + product_supplement
 				+ ", product_stock=" + product_stock + ", product_picture=" + product_picture + ", product_preview="
-				+ product_preview + ", product_update_date=" + product_update_date + ", product_date=" + product_date
-				+ "]";
-	} 
-	 
+				+ product_preview + ", product_grade=" + product_grade + ", product_issue_date=" + product_issue_date
+				+ ", product_update_date=" + product_update_date + ", product_date=" + product_date + "]";
+	}
+	
 }

@@ -9,24 +9,36 @@
 	</div>
 	<div id="header_content">
 		<div class="container">
-			<div id="header_content_box" class="wrapping">
+			<div id="header_content_box" >
 				<div id="header_left" class="left">
 					<h1>
 						<a href="<c:url value='/'/>"> HEYBOOKS</a>
 					</h1>
 				</div>
-				<div id="search_box">
+				<div id="search_box"> 
 					<form id="search_form">
 						<fieldset class="search_feild">
 							<legend>헤이북스 검색 </legend>
-							<span><i class="fas fa-search"></i></span> <input
-								id="book_search_input" class="del_focus" type="search"
-								role="search" placeholder="제목, 저자, 출판사 검색" title="서점 전체 검색어 입력">
+							<a class="search_btn">
+								<i class="fas fa-search"></i>
+							</a> 
+							<input id="book_search_input" autocomplete="off" class="del_focus" type="search" role="search" onkeyup="search_preview(this)" placeholder="제목, 저자, 출판사 검색" value="${keyword}" title="서점 전체 검색어 입력">
 						</fieldset>
 					</form>
+					<div class="search_preview">  
+						<div class="search_editor_preview">
+							<ul class="search_editor_preview_list">
+								<!-- 검색 작가 리스트 ajax -->
+							</ul>
+						</div>
+						<div class="search_item_preview">
+							<ul class="search_item_preview_list">
+								<!-- 검색 상품 리스트 ajax -->	
+							</ul>
+						</div>
+					</div>
 				</div>
 				<div id="header_right" class="right">
-
 					<c:choose>
 						<c:when test="${sessionScope.member != null }">
 							<span><a href="<c:url value='/mypage'/>">마이페이지</a></span>
@@ -60,7 +72,7 @@
 					</ul>
 				</nav>
 				<ul id="header_middle_right" class="right">
-					<li><a href="<c:url value='/order'/>">공지사항</a></li>
+					<li><a href="<c:url value='/notice'/>">공지사항</a></li>
 					<li><a href="#">고객센터</a></li>
 				</ul>
 			</div> 
@@ -71,38 +83,19 @@
 						<a href="#" class="all_view_rink"><i
 							class="fas fa-angle-right"></i> 전체보기</a>
 						<ul>
-							<li><a href="#">소설</a></li>
-							<li><a href="#">에세이</a></li>
-							<li><a href="#">국내소설</a></li>
-							<li><a href="#">시</a></li>
-							<li><a href="#">어린이</a></li>
-							<li><a href="#">가정생활</a></li>
-							<li><a href="#">정치사회</a></li>
-							<li><a href="#">경제경영</a></li>
-							<li><a href="#">건강</a></li>
-							<li><a href="#">유아</a></li>
-							<li><a href="#">종교</a></li>
-							<li><a href="#">아동만화</a></li>
-							<li><a href="#">역사문화</a></li>
-							<li><a href="#">자기계발</a></li>
-							<li><a href="#">여행</a></li>
-							<li><a href="#">만화</a></li>
-						</ul>
+							<c:forEach var="list" items="${domestic_cate_list}">
+								<li><a href="#">${list.cate_name}</a></li>
+							</c:forEach>
+						</ul>  
 					</div>
 					<div id="header_bottom_right" class="col-md-6">
 						<h3>외국도서</h3>
 						<a href="#" class="all_view_rink"><i
 							class="fas fa-angle-right"></i> 전체보기</a>
 						<ul>
-							<li><a href="#">문학</a></li>
-							<li><a href="#">인문사회</a></li>
-							<li><a href="#">유아/아동/청소년</a></li>
-							<li><a href="#">경제경영</a></li>
-							<li><a href="#">과학/기술</a></li>
-							<li><a href="#">취미/실용/여행</a></li>
-							<li><a href="#">교재</a></li>
-							<li><a href="#">생활/요리/건강</a></li>
-							<li><a href="#">예술/건축</a></li>
+							<c:forEach var="list" items="${oversea_cate_list}">
+								<li><a href="#">${list.cate_name}</a></li>
+							</c:forEach>
 						</ul>
 					</div>
 				</div>

@@ -1,7 +1,7 @@
 @charset "utf-8";
 
 @import url(http://fonts.googleapis.com/earlyaccess/nanumgothic.css);
-
+@import url('https://fonts.googleapis.com/css?family=Merriweather&display=swap');
 @import
 	url('https://fonts.googleapis.com/css?family=Nanum+Pen+Script&display=swap')
 	;
@@ -112,9 +112,12 @@ header h1 a:hover {
 
 #header_content {
 	padding: 25px 0 25px;
-	overflow: hidden;
 }
-
+#header_content:after{
+	display: block;
+	content: '';
+	clear:both;
+}
 #header_content_box #header_left {
 	margin-top: -14px;
 }
@@ -125,7 +128,7 @@ header h1 a:hover {
 	height: 33px;
 	padding: 1px 0px 0px 15px;
 	border-radius: 0.25em;
-	width: 260px;
+	width: 300px;
 	float: left;
 }
 
@@ -153,11 +156,14 @@ header h1 a:hover {
 #header_content #search_box  #book_search_input:focus::placeholder {
 	color: #add1ef;
 }
-
-#header_content #search_box span {
+#header_content #search_box .search_feild{
 	position: relative;
-	top: 2px;
 }
+#header_content #search_box a {
+	position: absolute;
+	top: 4px;
+	right: 15px;
+} 
 
 #header_content #search_box i {
 	color: #0e7eda;
@@ -250,27 +256,27 @@ header h1 a:hover {
 
 #header_bottom {
 	display: none;
-	clear: both;
-	position: absolute;
-	top: 52px;
-	padding: 1.5%;
-	padding-top: 1%;
-	width: 970px;
-	border: 2px solid #c4dff1;
-	border-top: none;
-	background-color: #e2f2ff;
-	z-index: 99999999;
-	width: 970px;
+    clear: both;
+    position: absolute;
+    top: 52px;
+    padding: 0.5% 2% 2.5%;
+    width: 970px;
+    border: 1px solid #dce2e6;
+    background-color: white;
+    z-index: 99999999;
+    width: 970px;
 }
 
 #header_bottom h3 {
-	font-size: 15px;
-	padding: 10px 13px;
-	float: left;
-	background-color: #0e7eda;
-	color: white;
-	font-weight: 600;
-	border-radius: 8px;
+	    font-size: 16px;
+    margin-top: 15px;
+    margin-left: 160px;
+    float: left;
+    color: #0860a9;
+    font-weight: 600;
+    padding-left: 5px;
+    border-radius: 8px;
+    letter-spacing: 0.05em;
 }
 
 #header_bottom .all_view_rink {
@@ -283,18 +289,18 @@ header h1 a:hover {
 
 #header_bottom ul {
 	width: 100%;
-	position: relative;
-	top: 6px;
-	clear: both;
-	overflow: hidden;
-	padding: 3%;
-	background-color: white;
-	border-radius: 10px;
+    position: relative;
+    top: 8px;
+    clear: both;
+    overflow: hidden;
+    padding: 1% 3%;
+    background-color: #f9f8f8;
+    border: 1px solid #d8d8d8;
 }
 
 #header_bottom li {
 	width: 25%;
-	float: left;
+	float: left; 
 	margin-top: 5px;
 	margin-bottom: 8px;
 }
@@ -304,6 +310,76 @@ header h1 a:hover {
 	font-size: 13px;
 	padding-left: 7px;
 	font-weight: 500;
+}
+#search_box{
+	position: relative;
+}
+#searc_box:after{
+	display: block;
+	content: '';
+	clear:both;
+}
+.search_preview{
+	position: absolute;
+	width: 400px;
+	z-index: 99999999;
+	top:35px;
+	left:0;
+	background: white;
+	padding: 16px 18px;
+	border-radius: 5px;
+	display: none;
+}
+.search_editor_preview{
+	border-bottom: 1px solid #ddd;
+	margin-bottom: 15px;
+	padding-bottom: 5px;
+}
+.search_editor_preview span{
+	float: left;
+	margin-right: 5px;
+	font-size: 14px;
+} 
+.search_preview button{
+	width: 100%;
+	background: none;
+	border:none;
+	overflow: hidden;
+}
+.search_item_preview_content{
+	overflow: hidden;
+	font-size: 14px;
+	
+}
+.search_item_preview_content>div{
+	padding-left: 10px;
+	text-align: left;
+	float: left;
+	padding-top: 10px;
+}
+.search_item_preview_content img{
+	float: left;
+	width: 50px;
+	height:70px;
+}
+.search_item_preview_title{
+	font-weight: 600;
+}
+.search_item_editor{
+	position:relative;
+	margin-right: 13px;
+}
+.search_item_editor:after{
+    display: inline-block;
+    content: '';
+    position: absolute;
+    width: 1px;
+    height: 13px;
+    background: #ddd;
+    right: -10px; 
+    top: 2px;
+    margin-right: 3px;
+
 }
 /* MAIN BANNER */
 #main_banner .carousel-item img {
@@ -409,9 +485,22 @@ header h1 a:hover {
 	float: left;
 	margin-left: 5px;
 }
+#news_event #news_event_img{
+	clear: both;
+	height:200px;
+} 
+#news_event_img a{
+	display: none;
+}
+#news_event_img a:first-child{
+	display: block;
+	width: 100%;
+	height: 100%;
+}
 
 #news_event #news_event_img img {
 	width: 100%;
+	height: 100%;
 }
 
 #news_event #news_event_btn span {
@@ -492,12 +581,13 @@ header h1 a:hover {
 #best_item .best_item_menu li {
 	float: left;
 	margin-right: 10px;
-	font-size: 13px;
+	font-size: 14px;
 	color: #40474d;
 }
 
 #best_item .best_item_menu li:first-child {
-	font-weight: 600
+	font-weight: 600;
+	color: #0072d0;
 }
 
 #best_item .best_item_list {
@@ -513,6 +603,7 @@ header h1 a:hover {
 #best_item .best_item_list .best_item_box {
 	width: 14%;
 	float: left;
+	height: 255px;
 	padding: 11px 21px;
 	animation: animatezoom 0.6s;
 }
@@ -520,13 +611,19 @@ header h1 a:hover {
 #best_item .best_item_list .best_item_box:first-child {
 	width: 25%;
 	margin-right: 40px;
-	margin-top: 50px;
+	margin-top: 45px;
 	padding-left: 35px;
 }
-
 #best_item .best_item_list img {
-	width: 100%;
+	width: 88px;
+	height: 130px;
 }
+
+#best_item .best_item_list .best_item_box:first-child img{
+	width: 177px;
+	height: 261px;
+}
+
 
 #best_item .best_item_box .best_item_rank {
 	display: inline-block;
@@ -534,11 +631,15 @@ header h1 a:hover {
 	text-align: center;
 	font-size: 16px;
 	margin-bottom: 4px;
-}
+	font-family: 'Merriweather', serif;
+	font-style: italic;
+	color: #6f6f6f;
+} 
 
 #best_item .best_item_list .best_item_box:first-child .best_item_rank {
-	font-size: 21px;
+	font-size: 29px;
 	margin-bottom: 4px;
+	
 }
 
 #best_item .best_item_box .best_item_title {
@@ -682,13 +783,30 @@ header h1 a:hover {
 }
 
 /* MY 관심있는 책 */
+.cate_item_menu{
+	margin-top:10px;
+	overflow: hidden;
+}
+.cate_item_menu li{
+	float: left;
+	margin-right: 10px;
+	font-size: 14px;
+}
+.favorite_item_list{display: none;}
+.tap_item1 {
+	display: block;
+}
 #favorite_item {
 	position: relative;
 }
-
-#favorite_item_list {
-	overflow: hidden;
+.cate_tap1{
+	font-weight: 600;
+	color: #0072d0;
+}
+.favorite_item_list {
+	overflow: hidden; 
 	margin-top: 10px;
+	height: 550px;
 }
 
 #favorite_item .allView_btn {
@@ -701,11 +819,15 @@ header h1 a:hover {
 
 #favorite_item .vertical_item_box {
 	width: 16.6666%;
+    height: 274px;
 }
-
+#favorite_item img{
+	width: 115px;
+	height: 174px;
+}
 .vertical_item_box {
 	float: left;
-	padding: 15px 20px;
+	padding: 10px 20px 0px;
 }
 
 .vertical_item_box  img {
@@ -714,8 +836,8 @@ header h1 a:hover {
 
 .vertical_item_box .vertical_item_title {
 	line-height: 17px;
-	margin-bottom: 3px;
-	margin-top: 5px;
+    margin-bottom: 2px;
+    margin-top: 3px;
 }
 
 .vertical_item_box .vertical_item_title a {
@@ -751,7 +873,7 @@ header h1 a:hover {
 	display: none;
 	right: 2px;
 	top: 30px;
-	height: 400px;
+	height: 370px;
 	width: 600px;
 	z-index: 3;
 	background: white;
@@ -789,9 +911,9 @@ header h1 a:hover {
 
 #favorite_item .cate_select_list li {
 	float: left;
-	padding: 8px 12px;
+	padding: 4px 12px;
 	width: 22.5%;
-	margin: 10px 7px;
+	margin: 5px 7px;
 	border: 1px solid #ddd;
 	position: relative;
 }
@@ -810,7 +932,7 @@ header h1 a:hover {
 	margin-right: 7px;
 	outline: none;
 	box-shadow: none;
-	border: 1px solid #ddd;
+	border: 1px solid #ccc;
 }
 
 #favorite_item .cate_select_list li label:last-child {
@@ -820,18 +942,19 @@ header h1 a:hover {
 	left: 0;
 	padding-left: 40px;
 	top: 0;
-	padding-top: 8px;
+	padding-top: 7px;
 	cursor: pointer;
-	font-size: 15px;
+	font-size: 13.5px;
 }
 
 #favorite_item .fa-check {
 	font-size: 15px;
 	position: absolute;
 	top: 0;
+	color: #0069bf; 
 }
-
-#favorite_item .cate_select_modal button {
+ 
+#favorite_item .cete_bnt_box input {
 	color: white;
 	padding: 5px 10px;
 	background-color: #0e7eda;
@@ -851,7 +974,10 @@ header h1 a:hover {
 .vertical_item_rate{
 	font-size: 12px;
 }
-
+.cete_bnt_box{
+	overflow: hidden;
+	margin-top: 10px;
+}
 
 /* 헤이북스 뉴스 */
 #notice_box {
@@ -917,11 +1043,21 @@ header h1 a:hover {
 	font-size: 13px;
 	color: #777;
 	margin-top: 5px;
+	overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: normal;
+    line-height: 1.2;
+    height: 3.6em;
+    text-align: left;
+    word-wrap: break-word;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
 }
 
 #notice_box .notice_content_bottom {
 	clear: both;
-	margin-top: 20px;
+	margin-top: 10px;
 	padding: 5px 10px;
 	background: #eee;
 }
@@ -992,10 +1128,15 @@ header h1 a:hover {
 }
 
 #qna_box .qna_search_form input {
-	width: 87.5%
+	width: 82.5%;
+	height: 28px;
+	
 }
-
-#qna_box .qna_content {
+#qna_box .qna_search_form button{
+	width: 12.5%;
+	height: 28px;
+}
+#qna_box .qna_content { 
 	margin-top: 15px;
 }
 
@@ -1017,18 +1158,29 @@ header h1 a:hover {
 }
 
 #qna_box .qna_content_bottom {
-	width: 74%;
+	width: 77%;
 	float: right;
 }
 
 #qna_box .qna_content_bottom li {
 	margin-bottom: 3px;
+    width: 48%;
+    float: left;
+    text-align: center;
+    margin-top: 7px; 
+    padding: 3px 5px;
 }
 
 #qna_box .qna_content_bottom li a {
 	font-size: 13px;
+    padding: 4px 0;
+    background: #EEEEED;
+    width: 100%;
+    height: 100%;
+    display: inline-block;
+    border: 1px solid #e0e0e0;
+	
 }
-
 /* FOOTER */
 footer {
 	height: 300px;

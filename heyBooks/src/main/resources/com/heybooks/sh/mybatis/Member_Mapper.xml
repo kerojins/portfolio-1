@@ -19,19 +19,19 @@
 	     			and to_date(members_years) between to_date('${birth_date}') and sysdate 
 	     		</if> 
 	     		<if test="birth_date == null and birth_end_date != null"> 
-    	    	 <![CDATA[	and to_date(members_years) <= to_date(#{birth_end_date}) + 1 ]]> 
-	    		</if>
+    	    	 <![CDATA[	and to_char(to_date(members_years), 'yyyymmdd') <= to_char(#{birth_end_date}) ]]> 
+	    		</if> 
 	    		<if test="birth_date != null and birth_end_date != null"> 
-	    	     	and to_date(members_years) between to_date(#{birth_date}) and to_date(#{birth_end_date}) + 1
+	    	     	and to_date(members_years) between to_char(#{birth_date}) and to_char(#{birth_end_date})
 	    		</if>  
 	    		<if test="join_date != null and join_end_date == null">
 	     			and members_regdate between to_date('${join_date}') and sysdate 
 	     		</if> 
 	     		<if test="join_date == null and join_end_date != null"> 
-    	    	 	<![CDATA[ and members_regdate <= to_date(#{join_end_date}) + 1 ]]> 
+    	    	 	<![CDATA[ and to_char(members_regdate,'yyyymmdd') <= to_char(#{join_end_date}) ]]> 
 	    		</if> 
 	    		<if test="join_date != null and join_end_date != null"> 
-	    	     	and members_regdate between to_date(#{join_date}) and to_date(#{join_end_date}) + 1
+	    	     	and to_char(members_regdate,'yyyymmdd') between to_char(#{join_date}) and to_char(#{join_end_date}) 
 	    		</if>     
 	    		<if test="mile_start != null and mile_end == null">
 	    			<![CDATA[ and members_num in ( select members_num from mileage where mileage_num in ( select max(mileage_num) from mileage group by members_num ) and round(replace(mileage_total, ',', '')) >= round(replace(#{mile_start}, ',', ''))) ]]>
@@ -55,8 +55,15 @@
 	    		<if test= "members_gender != null">
 	    		 	and members_gender = #{members_gender}
 	    		</if> 
+	    		<if test="member_today != null">
+	    			and to_char(to_date(members_years), 'yyyymmdd') = (SELECT TO_CHAR(SYSDATE, 'YYYYMMDD') FROM DUAL)
+	    			
+	    		</if> 
 	    	</where> 
 	</select>  
+	<select id="total_mile" resultType="int">
+		select NVL(sum(mileage_total),0) from mileage where rowid in (select max(rowid) from mileage group by members_num)
+	</select> 
 	<!-- 1. 회원 가입 -->
 	<insert id="join" parameterType="com.heybooks.sh.vo.member.Member_Vo">
 		insert into members values(seq_member_num.nextval, #{members_id},#{members_password},#{members_name},#{members_years},#{members_phone_number},#{members_email},#{members_gender},#{members_post},#{members_address},#{members_detail_address},#{members_extra_address},#{members_add_number},#{members_job},#{members_favorite},'정상',sysdate)
@@ -88,74 +95,300 @@
 		 	 ( 
 			   select aa.*, rownum rnum from(
 			     select * from members 
-			    	 <where>
-			     		<if test="keyword != null">
-			     			 members_name like '%'||#{keyword}||'%' or members_id like '%'||#{keyword}||'%' or members_phone_number like '%'||#{keyword} or members_address like '%'||#{keyword}||'%' or members_detail_address like '%'||#{keyword}||'%' or members_extra_address like '%'||#{keyword}||'%'
-			     		</if> 
-			     		<if test="members_status !=null">
-			     			and members_status = #{members_status}
-			     		</if> 
-			     		<if test="birth_date != null and birth_end_date == null">
-			     			and to_date(members_years) between to_date('${birth_date}') and sysdate 
-			     		</if> 
-			     		<if test="birth_date == null and birth_end_date != null"> 
-		    	    	 <![CDATA[	and to_date(members_years) <= to_date(#{birth_end_date}) + 1 ]]> 
-			    		</if>
-			    		<if test="birth_date != null and birth_end_date != null"> 
-			    	     	and to_date(members_years) between to_date(#{birth_date}) and to_date(#{birth_end_date}) + 1
-			    		</if>  
-			    		<if test="join_date != null and join_end_date == null">
-			     			and members_regdate between to_date('${join_date}') and sysdate 
-			     		</if> 
-			     		<if test="join_date == null and join_end_date != null"> 
-		    	    	 	<![CDATA[ and members_regdate <= to_date(#{join_end_date}) + 1 ]]> 
-			    		</if> 
-			    		<if test="join_date != null and join_end_date != null"> 
-			    	     	and members_regdate between to_date(#{join_date}) and to_date(#{join_end_date}) + 1
-			    		</if>     
-			    		<if test="mile_start != null and mile_end == null">
-			    			<![CDATA[ and members_num in ( select members_num from mileage where mileage_num in ( select max(mileage_num) from mileage group by members_num ) and round(replace(mileage_total, ',', '')) >= round(replace(#{mile_start}, ',', ''))) ]]>
-			    		</if>
-			    		<if test ="mile_start == null and mile_end != null">
-			    			<![CDATA[ and members_num in ( select members_num from mileage where mileage_num in ( select max(mileage_num) from mileage group by members_num ) and round(replace(mileage_total, ',', '')) <= round(replace(#{mile_end}, ',', ''))) ]]>
-			    		</if> 
-			    		<if test ="mile_start != null and mile_end != null">
-			    			<![CDATA[ and members_num in ( select members_num from mileage where mileage_num in ( select max(mileage_num) from mileage group by members_num ) and round(replace(mileage_total, ',', '')) >= round(replace(#{mile_start}, ',', ''))
-			    					  and round(replace(mileage_total, ',', '')) <= round(replace(#{mile_end}, ',', ''))) ]]>
-			    		</if>
-			    		<if test ="order_start != null and order_end == null">  
-			    			<![CDATA[ and members_num in (select members_num from orders group by members_num having count(*) >= #{order_start} ) ]]>
-			    		</if>
-			    		<if test ="order_start == null and order_end != null">  
-			    			<![CDATA[ and members_num in (select members_num from orders group by members_num having count(*) <= #{order_end}) ]]>
-			    		</if> 
-			    		<if test ="order_start != null and order_end != null">
-			    			<![CDATA[ and members_num in (select members_num from orders group by members_num having count(*) >= #{order_start} and count(*) <= #{order_end}) ]]>
-			    		</if> 
-			    		<if test= "members_gender != null">
-			    		 	and members_gender = #{members_gender}
-			    		</if> 
-			    	</where>
-			     order by #{list_arr}
+			     <where> 
+		     		<if test="keyword != null">
+		     			and members_name like '%'||#{keyword}||'%' or members_id like '%'||#{keyword}||'%' or members_phone_number like '%'||#{keyword} or members_address like '%'||#{keyword}||'%' or members_detail_address like '%'||#{keyword}||'%' or members_extra_address like '%'||#{keyword}||'%'
+		     		</if> 
+		     		<if test="members_status !=null">
+				     	and members_status = #{members_status}
+				     </if> 
+		     		<if test="birth_date != null and birth_end_date == null">
+		     			and to_date(members_years) between to_date('${birth_date}') and sysdate 
+		     		</if> 
+		     		<if test="birth_date == null and birth_end_date != null"> 
+	    	    	 <![CDATA[	and to_char(to_date(members_years), 'yyyymmdd') <= to_char(#{birth_end_date}) ]]> 
+		    		</if> 
+		    		<if test="birth_date != null and birth_end_date != null"> 
+		    	     	and to_date(members_years) between to_char(#{birth_date}) and to_char(#{birth_end_date})
+		    		</if>  
+		    		<if test="join_date != null and join_end_date == null">
+		     			and members_regdate between to_date('${join_date}') and sysdate 
+		     		</if> 
+		     		<if test="join_date == null and join_end_date != null"> 
+	    	    	 	<![CDATA[ and to_char(members_regdate,'yyyymmdd') <= to_char(#{join_end_date}) ]]> 
+		    		</if> 
+		    		<if test="join_date != null and join_end_date != null"> 
+		    	     	and to_char(members_regdate,'yyyymmdd') between to_char(#{join_date}) and to_char(#{join_end_date}) 
+		    		</if>     
+		    		<if test="mile_start != null and mile_end == null">
+		    			<![CDATA[ and members_num in ( select members_num from mileage where mileage_num in ( select max(mileage_num) from mileage group by members_num ) and round(replace(mileage_total, ',', '')) >= round(replace(#{mile_start}, ',', ''))) ]]>
+		    		</if>
+		    		<if test ="mile_start == null and mile_end != null">
+		    			<![CDATA[ and members_num in ( select members_num from mileage where mileage_num in ( select max(mileage_num) from mileage group by members_num ) and round(replace(mileage_total, ',', '')) <= round(replace(#{mile_end}, ',', ''))) ]]>
+		    		</if> 
+		    		<if test ="mile_start != null and mile_end != null">
+		    			<![CDATA[ and members_num in ( select members_num from mileage where mileage_num in ( select max(mileage_num) from mileage group by members_num ) and round(replace(mileage_total, ',', '')) >= round(replace(#{mile_start}, ',', ''))
+		    					  and round(replace(mileage_total, ',', '')) <= round(replace(#{mile_end}, ',', ''))) ]]>
+		    		</if>
+		    		<if test ="order_start != null and order_end == null">  
+		    			<![CDATA[ and members_num in (select members_num from orders group by members_num having count(*) >= #{order_start} ) ]]>
+		    		</if>
+		    		<if test ="order_start == null and order_end != null">  
+		    			<![CDATA[ and members_num in (select members_num from orders group by members_num having count(*) <= #{order_end}) ]]>
+		    		</if> 
+		    		<if test ="order_start != null and order_end != null">
+		    			<![CDATA[ and members_num in (select members_num from orders group by members_num having count(*) >= #{order_start} and count(*) <= #{order_end}) ]]>
+		    		</if> 
+		    		<if test= "members_gender != null">
+		    		 	and members_gender = #{members_gender}
+		    		</if> 
+		    		<if test="member_today != null">
+		    			and to_char(to_date(members_years), 'yyyymmdd') = (SELECT TO_CHAR(SYSDATE, 'YYYYMMDD') FROM DUAL)
+		    			
+		    		</if> 
+	    	     </where> 
+			     order by #{list_arr} desc
 			   )aa  
 	    	  )  
 	      <![CDATA[ where rnum >= #{startRow} and rnum <= #{endRow} ]]> 
 	</select>  
 	
-	<!-- 마일리지 -->
+	<!-- ===== 마일리지 ===== -->
+	
+	<!-- 마일리지 추가-->
 	<insert id="mileage_insert" parameterType="com.heybooks.sh.vo.member.Mileage_Vo">
-		insert into mileage values(mileage_num_seq.nextVal, #{order_num}, #{members_num}, #{mileage_score}, #{mileage_total}, sysdate)
-	</insert>  
+		insert into mileage values(mileage_num_seq.nextVal, #{order_num}, #{members_num}, #{mileage_score}, #{mileage_total}, #{mileage_status},sysdate)
+	</insert>    
 	<!-- 마일리지 정보 -->
-	<select id="mileage_getinfo" parameterType="int" resultType="com.heybooks.sh.vo.member.Mileage_Vo">
-		select * from mileage where members_num = #{members_num}  order by mileage_num desc
-	</select>
+	<select id="mileage_getinfo" parameterType="HashMap" resultType="com.heybooks.sh.vo.member.Mileage_Vo">
+		select * from mileage 
+			<where>
+				<if test="members_num != null">
+					members_num = #{members_num}  
+				</if>	
+				<if test="order_num != null">
+					and order_num = #{order_num}
+				</if>  
+				<if test="monthly != null">
+					and to_char(mileage_date,'yyyymm') = to_char(#{monthly})
+				</if>  
+				<if test="search_date != null and search_end_date == null"> 
+		    	    and order_date between to_date(#{search_date}) and sysdate 
+	    		</if> 
+	    		<if test="search_date == null and search_end_date != null"> 
+	    	    	<![CDATA[  and to_char(mileage_date,'yyyymmdd') <= to_char(#{search_end_date})]]> 
+	    		</if> 
+	    		<if test="search_date != null and search_end_date != null"> 
+	    	     	and to_char(mileage_date, 'yyyymmdd') between to_char(#{search_date}) and to_char(#{search_end_date})
+	    		</if>   
+			</where>   
+			order by mileage_num desc
+	</select> 
 	<!-- 마일리지 삭제 -->
-	<delete id="mileage_delete" parameterType="int" >
-		delete from mileage where order_num = #{order_num}  
+	<delete id="mileage_delete" parameterType="HashMap" >
+		delete from mileage
+			<where>
+				<if test="order_num != null">
+				    order_num = #{order_num}  
+				</if>
+				<if test="mileage_num != null">
+					and mileage_num = #{mileage_num}
+				</if> 
+			</where>
 	</delete> 
 	 
-</mapper>  
+	 <!-- ===== 위시리스트 ====== -->
+	 <select id="wishlist_count" parameterType="HashMap" resultType="int">
+	 	select NVL(count(*),0) from wishlist 
+	 		<where>
+	 			<if test="members_num != null">
+		 			members_num = #{members_num}
+	 			</if> 
+	 		</where>
+	 </select>
+	 <!-- 위시리스트 추가 -->
+	 <insert id="wishlist_insert" parameterType="com.heybooks.sh.vo.member.Wishlist_Vo">
+		insert into wishlist values(wishlist_num_seq.nextVal, #{members_num}, #{product_num}, sysdate)
+	 </insert> 
+	 <!-- 위시리스트 목록 -->
+	 <select id="wishlist_list" parameterType="HashMap" resultType="com.heybooks.sh.vo.member.Wishlist_Vo">
+	 	 select * from( 
+	 		  select aa.*, rownum rnum from(
+			 	select * from wishlist 
+			 		<where>
+			 			<if test="members_num != null">
+				 			members_num = #{members_num}
+			 			</if>
+			 		</where>
+			 		 order by #{list_arr} <if test="list_arr != product_name">desc</if>
+				 )aa   
+			  )    
+		<if test="startRow != null and endRow != null">
+			<![CDATA[ where rnum >= #{startRow} and rnum <= #{endRow} ]]> 
+		</if>
+	</select>  
+	 <!-- 위시리스트 삭제 -->
+	 <delete id="wishlist_delete" parameterType="HashMap">
+	 	delete from wishlist 
+	 		<where>
+	 			<if test="product_num != null">
+		 			product_num = #{product_num}
+	 			</if> 
+	 			<if test="members_num != null">
+		 			and members_num = #{members_num}
+	 			</if>  
+	 		</where>
+	 </delete>
+	 
+	 <!-- ===== 오늘 본 책 ===== -->
+	 
+	 <!-- 오늘 본 책 갯수 -->
+	  <select id="today_view_count" parameterType="HashMap" resultType="int">
+	 	select NVL(count(distinct product_num),0) from today_view 
+	 			<where>
+		 			<if test="members_num != null">
+			 			members_num = #{members_num}
+		 			</if>  
+		 			<if test="today != null">
+		 				and today_view_date > sysdate - 1 
+		 			</if> 
+		 		</where>
+	 </select>  
+	 <!-- 오늘 본 책 추가 -->
+	 <insert id="today_view_insert" parameterType="com.heybooks.sh.vo.member.Today_View_Vo">
+	 	insert into today_view values(today_view_num_seq.nextVal, #{members_num}, #{product_num}, sysdate)
+	 </insert> 
+	 <!-- 오늘 본 책 목록 -->
+	  <select id="today_view_list" parameterType="HashMap" resultType="com.heybooks.sh.vo.member.Today_View_Vo">
+	 	 select * from( 
+	 		  select aa.*, rownum rnum from(
+			 	select product_num from today_view
+			 		<where>
+			 			<if test="members_num != null">
+				 			members_num = #{members_num}
+			 			</if>  
+			 			<if test="today != null">
+			 				and today_view_date > sysdate - 1 
+			 			</if> 
+			 		</where>
+			 		 group by product_num 
+			 		 order by #{list_arr} desc
+				 )aa   
+			  )   
+		<if test="startRow != null and endRow != null"> 
+			<![CDATA[ where rnum >= #{startRow} and rnum <= #{endRow} ]]> 
+		</if>
+	 </select>  
+	 <delete id="today_view_delete" parameterType="HashMap">
+	 	delete from today_view 
+		 	<where>
+		 		<if test="product_num != null">
+		 			product_num = #{product_num}
+		 		</if>
+		 	</where>
+	 </delete>
+	  <!-- ==== 회원 알림 ==== -->
+	  
+	  <!-- 회원 알림 갯수 -->
+	  <select id="push_count" parameterType="HashMap" resultType="int">
+	  	select NVL(count(*),0) from push
+	  		<where>
+	  			<if test="push_category != null">
+	  				push_category = #{push_category}
+	  			</if>
+	  		</where>
+	  </select>
+	  
+	  <!-- 회원 알림 추가 -->
+	  <insert id="push_insert" parameterType="com.heybooks.sh.vo.member.Push_Vo">
+	 	insert into push values(push_num_seq.nextVal, #{admin_num}, #{push_ref}, #{push_category}, #{push_content}, sysdate)
+	  </insert> 
+	  <!-- 회원 알림 리스트 -->
+	  <select id="push_list" parameterType="HashMap" resultType="com.heybooks.sh.vo.member.Push_Vo">
+	 	 select * from( 
+	 		  select aa.*, rownum rnum from(
+			 	select * from push
+			 	<where>
+		  			<if test="push_category != null">
+		  				push_category = #{push_category}
+		  			</if>
+		  		</where>
+			 	order by push_date desc 
+			 )aa    
+		)  
+	 	<if test="startRow != null">
+	 		<![CDATA[ where rnum >= #{startRow} and rnum <= #{endRow} ]]> 
+	 	</if> 
+	  </select>     
+	  <!-- 회원 알림 삭제 -->
+	  <delete id="push_delete" parameterType="HashMap">
+	  	 delete from push 
+	  	 	<where>
+	  	 		<if test="push_ref != null">
+	  	 			 push_ref = #{push_ref} 
+	  	 		</if>
+	  	 		<if test="push_num != null">
+	  	 			 push_num = #{push_num} 
+	  	 		</if>
+	  	 	</where> 
+	  </delete> 
+	  
+	  <!-- ===== 신간 알림 ===== -->
+	  
+	  <!-- 신간 알림 갯수 -->
+	  <select id="new_item_notice_count" parameterType="HashMap" resultType="int">
+	  	 select NVL(count(*),0) from new_item_notice
+	  	 	<where>
+		 	  	<if test="members_num != null">
+		 	  		members_num = #{members_num}
+		 	  	</if>
+		 	  	<if test="editor_num != null">
+		 	  		editor_num = #{editor_num}
+		 	  	</if>
+		 	</where> 
+	  </select>
+	  <!-- 신간 알림 추가 --> 
+	  <insert id="new_item_notice_insert" parameterType="com.heybooks.sh.vo.member.New_Item_Notice_Vo">
+	 	 insert into new_item_notice values(new_item_notice_num_seq.nextVal, #{members_num}, #{editor_num}, sysdate)
+	  </insert>  
+	  <select id="new_item_notice_info" parameterType="HashMap" resultType="com.heybooks.sh.vo.member.New_Item_Notice_Vo">
+	  	select * from new_item_notice where members_num = #{members_num} and editor_num = #{editor_num}
+	  </select> 
+	  <!-- 신간 알림 리스트 -->
+	  <select id="new_item_notice_list" parameterType="HashMap" resultType="com.heybooks.sh.vo.member.New_Item_Notice_Vo">
+	 	 select * from( 
+	 		  select aa.*, rownum rnum from(
+			 	  select * from new_item_notice
+			 	  <where>
+			 	  	<if test="members_num != null">
+			 	  		members_num = #{members_num}
+			 	  	</if>
+			 	  	<if test="editor_num != null">
+			 	  		editor_num = #{editor_num}
+			 	  	</if>
+			 	  </where>
+			 	  <if test="list_arr != null">
+				 	  order by ${list_arr}
+			 	  </if> 
+			 )aa      
+		)  
+	 	<if test="startRow != null">
+	 		<![CDATA[ where rnum >= #{startRow} and rnum <= #{endRow} ]]> 
+	 	</if> 
+	  </select>     
+	  <!-- 신간 알림 삭제 -->
+	  <delete id="new_item_notice_delete" parameterType="HashMap">
+	  	 delete from new_item_notice 
+	  	 	<where>
+	  	 		<if test="members_num != null">
+	  	 			members_num = #{members_num} 
+	  	 		</if>
+	  	 		<if test="editor_num != null">
+	  	 			and editor_num = #{editor_num} 
+	  	 		</if>   
+	  	 	</where> 
+	  </delete> 
+</mapper>   
  
 
  

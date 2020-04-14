@@ -28,6 +28,7 @@ import com.heybooks.sh.service.board.Board_Service;
 import com.heybooks.sh.service.item.Item_Category_Service;
 import com.heybooks.sh.service.item.Item_Main_Service;
 import com.heybooks.sh.service.item.Item_Order_Service;
+import com.heybooks.sh.service.member.Member_Service;
 import com.heybooks.sh.util.PageUtil;
 import com.heybooks.sh.vo.admin.Admin_Alert_Vo;
 import com.heybooks.sh.vo.admin.Admin_Vo;
@@ -51,6 +52,8 @@ public class Item_Main_Controller {
 	private Board_Service board_service;
 	@Resource
 	private Admin_Service admin_service;
+	@Resource
+	private Member_Service member_service;
 
 	// 1. 상품 - 추가
 	@RequestMapping(value = "/admin_item_add", method = RequestMethod.GET)
@@ -76,7 +79,6 @@ public class Item_Main_Controller {
 		int admin_num = admin.getAdmin_num();
 		String discription = vo.getProduct_discription().replaceAll("<br>","\r\n"); // 작가 소개 줄바꿈 표시
 		vo.setProduct_discription(discription); 
-		 
 		service.item_insert(vo); 
 		admin_service.admin_alert_insert(new Admin_Alert_Vo(0, admin_num, 1, "새로운 상품을 등록했습니다.", null));
 		return "redirect:/admin_item_list";  
@@ -89,22 +91,28 @@ public class Item_Main_Controller {
 	public String admin_item_list(@RequestParam(value = "pageNum", defaultValue = "1") int pageNum,
 								  @RequestParam(value = "rowCount", defaultValue = "10") int rowCount,
 								  @RequestParam(value = "list_arr", defaultValue = "product_date") String list_arr, Model model, HttpServletRequest request,
-								  String keyword, String search_date, String search_end_date, String product_publish, String product_editor_num , String category1, String category2,  String category3, 
-								  String start_price, String end_price, String start_stock, String end_stock, String product_status, String product_view) {
+								  String keyword, String search_date, String search_end_date, String issue_start_date,String issue_end_date, String product_publish, String product_editor_num , String category1, String category2,  String category3, 
+								  String start_price, String end_price, String start_stock, String end_stock, String product_status, String product_view, String admin_date) {
 		logger.info("get item-list"); 
 		HashMap<String, Object> map = new HashMap<String, Object>();
-		if(keyword != null && !(keyword.equals(""))) { 
+		if(keyword != null && !(keyword.equals(""))) {  
 			map.put("keyword", keyword);
-		}
+		} 
 		if(search_date != null && !(search_date.equals(""))) {
-			map.put("search_date", search_date);
+			map.put("search_date", search_date.replaceAll("-", ""));
 		}
 		if(search_end_date != null && !(search_end_date.equals(""))) {
-			map.put("search_end_date", search_end_date);
+			map.put("search_end_date", search_end_date.replaceAll("-", ""));
 		} 
+		if(issue_start_date != null && !(issue_start_date.equals(""))) {
+			map.put("issue_start_date", issue_start_date);
+		}
+		if(issue_end_date != null && !(issue_end_date.equals(""))) {
+			map.put("issue_end_date", issue_end_date);
+		}  
 		if(product_publish != null && !(product_publish.equals(""))) {
 			map.put("product_publish",product_publish);
-		}
+		} 
 		if(product_editor_num != null  && !(product_editor_num.equals(""))) {
 			map.put("product_editor_num", product_editor_num);
 		}
@@ -141,6 +149,9 @@ public class Item_Main_Controller {
 		if(product_view != null && !(product_view.equals(""))) { 
 			map.put("product_view", product_view);
 		} 
+		if(admin_date != null && !(admin_date.equals(""))) { 
+			map.put("admin_date", admin_date);
+		}  
 		int totalRowCount = service.get_count(map); // 전체 글 수 얻기
 		System.out.println(totalRowCount);
 		if(pageNum<1) pageNum = 1; 
@@ -163,6 +174,7 @@ public class Item_Main_Controller {
 		 
 		model.addAttribute("keyword", keyword);
 		model.addAttribute("search_date", search_date);
+		model.addAttribute("search_end_date", search_end_date);
 		model.addAttribute("product_publish",product_publish);
 		model.addAttribute("category1", category1);
 		model.addAttribute("category2", category2); 
@@ -198,12 +210,15 @@ public class Item_Main_Controller {
 			map.put("product_num", Integer.parseInt(num));
 			order_service.order_item_null(Integer.parseInt(num)); // 주문 아이템 null 입력
 			order_service.cart_delete(map); 
+			member_service.today_view_delete(map); // 오늘 본 책 목록 삭제
+			member_service.wishlist_delete(map); // 위시리스트 목록 삭제
 			List<Review_Vo> review_list = board_service.review_list(map);
 			for(Review_Vo re_vo : review_list) { // 상품 리뷰 삭제 
 				map.put("review_num", re_vo.getReview_num()); 
 				board_service.review_reply_delete(map);
 				board_service.review_delete(re_vo.getReview_num());
 			} 
+			
 			Item_Vo vo = service.item_getinfo(Integer.parseInt(num));
 			if (vo.getProduct_preview() != null ) {
 				String[] pr_img = vo.getProduct_preview().split(",");
@@ -224,7 +239,6 @@ public class Item_Main_Controller {
 		return "redirect:/admin_item_list";
 	}
 
-
 	
 	// 상품 선택(한개) 삭제
 	@RequestMapping(value = "/item_select_del", method = RequestMethod.GET)
@@ -233,6 +247,10 @@ public class Item_Main_Controller {
 		String ROOT_PATH = request.getSession().getServletContext().getRealPath("/resources/upload/");
 		ArrayList<String> img_list = new ArrayList<String>();
 		Item_Vo vo = service.item_getinfo(product_num);
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("product_num", product_num);
+		member_service.today_view_delete(map); // 오늘 본 책 목록 삭제
+		member_service.wishlist_delete(map); // 위시리스트 목록 삭제
 		if (vo.getProduct_preview() != null || vo.getProduct_picture() != null) {
 			String[] pr_img = vo.getProduct_preview().split(",");
 			for (String pr_img_name : pr_img) {
@@ -257,13 +275,11 @@ public class Item_Main_Controller {
 		Item_Vo vo = service.item_getinfo(product_num);
 		String cate_name = "";
 		HashMap<String, Integer> map = new HashMap<String, Integer>();
-		map.put("cate_num1", vo.getProduct_cate_num());
-		map.put("cate_num2", vo.getProduct_cate_num());
-		map.put("cate_num3", vo.getProduct_cate_num());
+		map.put("cate_num", vo.getProduct_cate_num());
 		List<Item_Cate_Vo> list = cate_service.get_category(map);
 		Item_Editor_Vo editor_vo = cate_service.editor_getinfo(vo.getProduct_editor_num());
 		// 카테고리 표시 서식
-		for (Item_Cate_Vo cate_vo : list) {
+		for (Item_Cate_Vo cate_vo : list) { 
 			cate_name += cate_vo.getCate_name() + " > ";
 		}
 		cate_name = cate_name.substring(0, cate_name.length() - 3);
@@ -272,7 +288,10 @@ public class Item_Main_Controller {
 		if(editor_vo != null) {
 			 editor_info = editor_vo.getEditor_name() + " / " + editor_vo.getEditor_birth();
 		}
-		String[] product_index = vo.getProduct_index().split(",");
+		String[] product_index = {};
+		if(vo.getProduct_index() != null) {
+			product_index = vo.getProduct_index().split(",");
+		}
 
 		// 상품 프리뷰 배열
 		if (vo.getProduct_picture() != null) {
@@ -291,8 +310,18 @@ public class Item_Main_Controller {
 			model.addAttribute("preview_full", preview_full);
 			model.addAttribute("preview_file", preview_file);
 		}
+		
+		//에디터 리스트
+		HashMap<String, Object> editor_map = new HashMap<String, Object>();
+		editor_map.put("list_arr", "editor_name");
+		List<Item_Editor_Vo> editor_list = cate_service.editor_list(editor_map);
+		model.addAttribute("editor_list", editor_list);
+
+		// 출판사 리스트 연결
+		List<String> publishing_list = cate_service.publishing_list();
+		model.addAttribute("publishing_list", publishing_list);
 		model.addAttribute("vo", vo);
-		model.addAttribute("cate_name", cate_name);
+		model.addAttribute("cate_name", cate_name); 
 		model.addAttribute("editor_info", editor_info);
 		model.addAttribute("product_index", product_index);
 		return ".admin.admin_item_update";

@@ -8,16 +8,18 @@ public class Mileage_Vo {
 	private int members_num;
 	private int mileage_score;
 	private int mileage_total;
+	private String mileage_status;
 	private Date mileage_date;
 	public Mileage_Vo() {}
 	public Mileage_Vo(int mileage_num, int order_num, int members_num, int mileage_score, int mileage_total,
-			Date mileage_date) {
+			String mileage_status, Date mileage_date) {
 		super();
 		this.mileage_num = mileage_num;
 		this.order_num = order_num;
 		this.members_num = members_num;
 		this.mileage_score = mileage_score;
 		this.mileage_total = mileage_total;
+		this.mileage_status = mileage_status;
 		this.mileage_date = mileage_date;
 	}
 	public int getMileage_num() {
@@ -50,6 +52,12 @@ public class Mileage_Vo {
 	public void setMileage_total(int mileage_total) {
 		this.mileage_total = mileage_total;
 	}
+	public String getMileage_status() {
+		return mileage_status;
+	}
+	public void setMileage_status(String mileage_status) {
+		this.mileage_status = mileage_status;
+	}
 	public Date getMileage_date() {
 		return mileage_date;
 	}
@@ -59,8 +67,8 @@ public class Mileage_Vo {
 	@Override
 	public String toString() {
 		return "Mileage_Vo [mileage_num=" + mileage_num + ", order_num=" + order_num + ", members_num=" + members_num
-				+ ", mileage_score=" + mileage_score + ", mileage_total=" + mileage_total + ", mileage_date="
-				+ mileage_date + "]";
+				+ ", mileage_score=" + mileage_score + ", mileage_total=" + mileage_total + ", mileage_status="
+				+ mileage_status + ", mileage_date=" + mileage_date + "]";
 	}
 	
 }

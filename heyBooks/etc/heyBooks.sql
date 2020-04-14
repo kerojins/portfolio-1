@@ -114,7 +114,7 @@ CREATE TABLE Event
 	admin_num number NOT NULL,
 	event_title varchar2(200) NOT NULL,
 	event_content clob NOT NULL,
-	event_period date,
+	event_period varchar2(100),
 	event_thumbnail varchar2(200),
 	event_hit number NOT NULL,
 	event_date date NOT NULL,
@@ -152,6 +152,7 @@ CREATE TABLE Mileage
 	members_num number NOT NULL,
 	mileage_score number NOT NULL,
 	mileage_total number NOT NULL,
+	mileage_status varchar2(50),
 	mileage_date date NOT NULL,
 	PRIMARY KEY (mileage_num)
 );
@@ -162,7 +163,7 @@ CREATE TABLE New_item_notice
 	new_item_notice_num number NOT NULL,
 	members_num number NOT NULL,
 	editor_num number NOT NULL,
-	New_item_notice_date date NOT NULL,
+	new_item_notice_date date NOT NULL,
 	PRIMARY KEY (new_item_notice_num)
 );
 
@@ -173,6 +174,9 @@ CREATE TABLE Notice
 	admin_num number NOT NULL,
 	notice_title varchar2(150) NOT NULL,
 	notice_content clob NOT NULL,
+	notice_official number NOT NULL,
+	notice_official_detail number,
+	notice_official_date varchar2(100),
 	notice_hit number,
 	notice_date date NOT NULL,
 	PRIMARY KEY (notice_num)
@@ -184,8 +188,9 @@ CREATE TABLE Orders
 	order_num number NOT NULL,
 	members_num number NOT NULL,
 	total_price varchar2(200) NOT NULL,
+	total_discount_price varchar2(200) NOT NULL,
 	total_count varchar2(100),
-	total_mailage varchar2(200),
+	total_mileage varchar2(200),
 	order_name varchar2(100) NOT NULL,
 	order_phone_number varchar2(100) NOT NULL,
 	order_add_number varchar2(100),
@@ -241,6 +246,8 @@ CREATE TABLE Products
 	product_stock  number NOT NULL,
 	product_picture varchar2(1000),
 	product_preview varchar2(1000),
+	product_grade number NOT NULL,
+	product_issue_date varchar2(50) NOT NULL,
 	product_update_date date,
 	product_date date NOT NULL,
 	PRIMARY KEY (product_num)
@@ -263,8 +270,8 @@ CREATE TABLE Product_category
 CREATE TABLE Push
 (
 	push_num number NOT NULL,
-	members_num number NOT NULL,
 	admin_num number NOT NULL,
+	push_ref number NOT NULL,
 	push_category varchar2(20) NOT NULL,
 	push_content varchar2(600) NOT NULL,
 	push_date date NOT NULL,
@@ -278,7 +285,7 @@ CREATE TABLE Review
 	product_num number NOT NULL,
 	members_num number NOT NULL,
 	review_content varchar2(600) NOT NULL,
-	review_grade number(2,0) NOT NULL,
+	review_grade number NOT NULL,
 	review_recommend number,
 	reveiw_report number,
 	review_spoiler varchar2(10),
@@ -400,12 +407,6 @@ ALTER TABLE New_item_notice
 
 
 ALTER TABLE Orders
-	ADD FOREIGN KEY (members_num)
-	REFERENCES Members (members_num)
-;
-
-
-ALTER TABLE Push
 	ADD FOREIGN KEY (members_num)
 	REFERENCES Members (members_num)
 ;

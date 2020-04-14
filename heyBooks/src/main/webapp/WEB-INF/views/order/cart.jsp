@@ -39,7 +39,7 @@
 									<p class="order_item_img">
 										<a href="#"><img width="80"
 											src="<c:url value='/resources/upload/${img_name}'/>"></a>
-									</p>
+									</p> 
 									<div class="order_item_title"> 
 										<p>
 											<c:if test="${vo.product_discount != '0'}"> 
@@ -63,7 +63,7 @@
 									<input type="text" hidden="hidden" class="cart_item_num" value="${cart_list[status.index].cart_item_num}">
 									<input type="text" hidden="hidden" class="item_origin_price" value="${vo.product_price}">
 									<input type="text" hidden="hidden" class="item_shipping" value="${vo.product_shipping_charge}">
-									<p class="order_item_price_txt">${vo.product_discount_price}</p>
+									<p class="order_item_price_txt">${vo.product_discount_price}원</p>
 									<p class="order_item_discount">
 										(<span class="discount_txt">${vo.product_discount}</span>%<i class="fas fa-long-arrow-alt-down"></i>)
 									</p>
@@ -101,9 +101,9 @@
 					<input class="left del_btn btn-primary btn cart_sel_del" value="선택 삭제">
 					<p class="order_mileage">총 적립 가능액: 
 						<span class="total_mileage">상품적립금</span> P
-						<input class="mileage_val" name="mileage_val" hidden="hidden" value="">
+						<input class="mileage_val" name="mileage_val" hidden="hidden">
 					</p>
-				</div>
+				</div> 
 			</div>  
 			<div class="order_pay">
 				<h3>쇼핑카트 총 주문금액</h3>
@@ -123,8 +123,13 @@
 								<input class="count_num_val" name="count_num_val" hidden="hidden" value="">
 								<input class="count_subject_val" name="count_subject_val" hidden="hidden" value="">
 							</td>
-							<td class="order_total_originPrice"><span>상품정가</span>원</td>
-							<td class="order_total_dicount"><span>상품할인</span>원</td>
+							<td class="order_total_originPrice">
+								<span>상품정가</span>원
+							</td>
+							<td class="order_total_dicount">
+								<input class="total_discount_price_val" name="total_discount_price" hidden="hidden" value="">
+								<span>상품할인</span>원
+							</td>  
 							<td class="order_total_parcel">
 								<span class="parcel_txt">배송비</span>원
 								<input class="parcel_val" name="parcel_val" hidden="hidden" value="">
@@ -135,7 +140,7 @@
 								<input class="item_total_price_val" name="item_total_price_val"  hidden="hidden" value="">
 							</td>
 						</tr> 
-					</table> 
+					</table>  
 					<span class="order_total_minus"><i
 						class="fas fa-minus"></i></span> <span class="order_total_plus"><i
 						class="fas fa-plus"></i></span> <span class="order_total_equals"><i

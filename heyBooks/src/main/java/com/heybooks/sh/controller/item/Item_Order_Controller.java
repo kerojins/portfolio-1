@@ -60,14 +60,14 @@ public class Item_Order_Controller {
 			for(Item_Vo vo : item_list) { //작가 이름 리스트 추가
 				editor_name.add(cate_service.editor_getinfo(vo.getProduct_editor_num()).getEditor_name()); 
 			} 
-			logger.info(cart_list.toString());
 			model.addAttribute("item_list", item_list); 
 			model.addAttribute("cart_list", cart_list); 
 			model.addAttribute("editor_name", editor_name);
 		}
 		return ".order.cart"; 
 	}
-	@RequestMapping(value = "/cart_update", method = RequestMethod.GET)
+	//장바구니 수량 변경
+	@RequestMapping(value = "/cart_update", method = RequestMethod.GET) 
 	public String cart_update(int cart_item_num , int cart_item_quantity) {
 		logger.info("get cart-update");
 		HashMap<String, Integer> map = new HashMap<String, Integer>();
@@ -76,7 +76,8 @@ public class Item_Order_Controller {
 		order_service.cart_update(map);
 		return "redirect:/cart";
 	} 
-	@RequestMapping(value = "/cart_delete", method = RequestMethod.GET)
+	//장바구니 삭제
+	@RequestMapping(value = "/cart_delete", method = RequestMethod.GET) 
 	public String cart_delete(int cart_item_num) {
 		logger.info("get cart-delete");
 		HashMap<String, Object> map = new HashMap<String, Object>();
@@ -87,7 +88,7 @@ public class Item_Order_Controller {
 	@RequestMapping(value = "/cart_delete", method = RequestMethod.POST)
 	public String cart_delete(String cart_ck_list) {
 		logger.info("post cart-list");
-			if(cart_ck_list != null) {
+			if(cart_ck_list != null) { 
 			String[] del_arr = cart_ck_list.split(",");
 			for(String cart_item_num : del_arr) {
 				HashMap<String, Object> map = new HashMap<String, Object>();
@@ -112,17 +113,19 @@ public class Item_Order_Controller {
 		HttpSession session = request.getSession();
 		Member_Vo mem_vo = (Member_Vo)session.getAttribute("member");
 		Member_Vo member_vo = member_service.getInfo(mem_vo.getMembers_num()); //주문자 정보 담기
-		List<Mileage_Vo> mile_list = member_service.mileage_getinfo(mem_vo.getMembers_num()); // 마일리지 정보 담기
+		HashMap<String, Object> mile_map = new HashMap<String, Object>();
+		mile_map.put("members_num", mem_vo.getMembers_num());
+		List<Mileage_Vo> mile_list = member_service.mileage_getinfo(mile_map); // 마일리지 정보 담기
 		if(mile_list != null && mile_list.size() > 0){
 			Mileage_Vo mileage_vo = mile_list.get(0);
 			model.addAttribute("mileage_vo", mileage_vo); //주문자 적립 정보
 		}   
 		String[] phone = member_vo.getMembers_phone_number().split("-"); // 휴대폰 번호 배열생성
-		model.addAttribute("phone", phone); 
 		if (member_vo.getMembers_add_number() != null) { // 전화번호 배열생성
 			String[] add_number = member_vo.getMembers_add_number().split("-");
 			model.addAttribute("add_number", add_number); 
 		} 
+		model.addAttribute("phone", phone); 
 		model.addAttribute("one_info", vo);
 		model.addAttribute("item_count", item_count); 
 		model.addAttribute("editor", editor); 
@@ -132,7 +135,7 @@ public class Item_Order_Controller {
 	} 
 	
 	@RequestMapping(value = "/order", method = RequestMethod.POST)
-	public String order(String cart_ck_list, String qnt, int count_subject_val, int count_num_val, String total_count_val, String item_total_price_val,String parcel_val , String total_price_val, String mileage_val, Model model , HttpServletRequest request) {
+	public String order(String cart_ck_list, String qnt, int count_subject_val, int count_num_val, String total_count_val, String item_total_price_val, String total_discount_price, String parcel_val , String total_price_val, String mileage_val,  Model model , HttpServletRequest request) {
 		logger.info("post order-page");
 		String[] qnt_arr = qnt.split(",");
 		String[] cart_arr = cart_ck_list.split(",");
@@ -140,8 +143,13 @@ public class Item_Order_Controller {
 		HttpSession session = request.getSession();
 		Member_Vo mem_vo = (Member_Vo)session.getAttribute("member");
 		Member_Vo member_vo = member_service.getInfo(mem_vo.getMembers_num()); //주문자 정보 담기
-		List<Mileage_Vo> mile_list = member_service.mileage_getinfo(mem_vo.getMembers_num()); // 마일리지 정보 담기
-		Mileage_Vo mileage_vo = mile_list.get(0);
+		HashMap<String, Object> mile_map = new HashMap<String, Object>();
+		mile_map.put("members_num", mem_vo.getMembers_num());
+		List<Mileage_Vo> mile_list = member_service.mileage_getinfo(mile_map); // 마일리지 정보 담기
+		Mileage_Vo mileage_vo = null;
+		if(mile_list.size()>0) {
+			 mileage_vo = mile_list.get(0);
+		}
 		logger.info (mile_list.toString());
 		String[] phone = member_vo.getMembers_phone_number().split("-"); // 휴대폰 번호 배열생성
 		model.addAttribute("phone", phone);
@@ -171,6 +179,7 @@ public class Item_Order_Controller {
 		model.addAttribute("total_count_val", total_count_val); // 총수량
 		model.addAttribute("parcel_val", parcel_val); // 배송비 
 		model.addAttribute("item_total_price_val", item_total_price_val); // 총아이템 금액
+		model.addAttribute("total_discount_price", total_discount_price); // 총아이템 금액
 		model.addAttribute("total_price_val", total_price_val); // 총금액
 		model.addAttribute("mileage_val", mileage_val); //총적립금
 		model.addAttribute("member_vo", member_vo); //주문자 정보
@@ -181,26 +190,30 @@ public class Item_Order_Controller {
 	
 	// 주문 추가
 	@RequestMapping(value= "/order_insert", method=RequestMethod.POST)
-	public String order_add(Order_Vo order_vo, Order_Item_Vo order_item_vo, String product_num,  String use_mileage) {
+	public String order_add(Order_Vo order_vo, Order_Item_Vo order_item_vo, String product_num,  String use_mileage, String get_mileage) {
 		logger.info("post order-insert");
 		int order_num = (int) (Math.random() * 1000000000) + 1;
 		order_vo.setOrder_num(order_num); // 주문번호 랜덤값 생성 
 		order_vo.setOrder_phone_number(order_vo.getOrder_phone_number().replace(",", "-"));
 		order_vo.setOrder_add_number(order_vo.getOrder_add_number().replace(",", "-"));
-		order_vo.getOrder_message().replaceAll("<br>","\r\n");
 		order_service.order_insert(order_vo);
-		logger.info(order_vo.toString()); 
-		int use_mile = Integer.parseInt(use_mileage) * -1; 
-		List<Mileage_Vo> mile_list = member_service.mileage_getinfo(order_vo.getMembers_num()); // 마일리지 정보 담기
+		logger.info(order_vo.toString());  
+		int use_mile = Integer.parseInt(use_mileage);
+		int get_mile = Integer.parseInt(get_mileage);
+		HashMap<String, Object> mile_map = new HashMap<String, Object>();
+		mile_map.put("members_num", order_vo.getMembers_num());
+		List<Mileage_Vo> mile_list = member_service.mileage_getinfo(mile_map); // 마일리지 정보 담기
 		int total_mile = 0; 
 		if(mile_list != null && mile_list.size() > 0) {
 			Mileage_Vo mileage_vo = mile_list.get(0);
-			total_mile = mileage_vo.getMileage_total();
+			total_mile = mileage_vo.getMileage_total(); 
 		}
-		total_mile = total_mile + use_mile;
-		member_service.mileage_insert(new Mileage_Vo(0,order_num, order_vo.getMembers_num(), use_mile, total_mile, null));
-		/*total_mile = total_mile + get_mile; 
-		member_service.mileage_insert(new Mileage_Vo(0,order_num, order_vo.getMembers_num(), get_mile, total_mile, null));*/
+		if(use_mile > 0) {
+			use_mile *= -1; 
+			total_mile = total_mile + use_mile; 
+			member_service.mileage_insert(new Mileage_Vo(0,order_num, order_vo.getMembers_num(), use_mile, total_mile,"사용", null));
+		}   
+		member_service.mileage_insert(new Mileage_Vo(0,order_num, order_vo.getMembers_num(), get_mile, total_mile,"적립예정", null));
 		  
 		  
 		//주문 아이템 항목 추가 
@@ -228,16 +241,16 @@ public class Item_Order_Controller {
 	@RequestMapping(value = "/admin_order_list", method = RequestMethod.GET)
 	public String admin_order_list(@RequestParam(value = "pageNum", defaultValue = "1") int pageNum,
 								   @RequestParam(value = "rowCount", defaultValue = "10") int rowCount,
-								   @RequestParam(value = "list_arr", defaultValue = "order_date") String list_arr, String keyword, String search_date, String search_end_date, String order_status, String payment_methods, String start_price, String end_price , Model model,HttpServletRequest request) {
+								   @RequestParam(value = "list_arr", defaultValue = "order_date") String list_arr, String keyword, String search_date, String search_end_date, String order_status, String payment_methods, String start_price, String end_price, String admin_date, Model model,HttpServletRequest request) {
 		
 		logger.info("get order-list");
 		HashMap<String, Object> map = new HashMap<String, Object>(); 
 		if(pageNum<1) pageNum = 1; 
 		if(search_date != null && !(search_date.equals(""))) {
-			map.put("search_date", search_date);  
+			map.put("search_date", search_date.replaceAll("-", ""));  
 		}  
 		if(search_end_date != null && !(search_end_date.equals(""))) {
-			map.put("search_end_date", search_end_date); 
+			map.put("search_end_date", search_end_date.replaceAll("-", "")); 
 		}  
 		if(keyword != null && !(keyword.equals(""))) { 
 			map.put("keyword", keyword);    
@@ -260,6 +273,9 @@ public class Item_Order_Controller {
 			order = order.substring(0,order.length()-1);
 			map.put("order_status", order); 
 		} 
+		if(admin_date != null && !(admin_date.equals(""))) { 
+			map.put("admin_date", admin_date);     
+		} 
 		int totalRowCount = order_service.order_count(map); // 전체 글 수 얻기
 		if(pageNum<1) pageNum = 1;
 		PageUtil util = new PageUtil(pageNum, totalRowCount, rowCount, 5); // 페이징처리
@@ -276,7 +292,7 @@ public class Item_Order_Controller {
 		  Object obj = order_map.get("ORDER_ITEM_NUM");
 		  Order_Item_Vo order_item_vo = order_service.order_item_detail(obj);
 		  Item_Vo item_vo = service.item_getinfo(order_item_vo.getProduct_num());
-		  if(item_vo != null) {
+		  if(item_vo != null && item_vo.getProduct_picture() != null) {
 			  System.out.println(item_vo.toString());
 			  img_name_list.add(service.item_getinfo(order_item_vo.getProduct_num()).getProduct_picture().split(",")[0]);
 		  }else {
@@ -300,35 +316,27 @@ public class Item_Order_Controller {
 		return ".admin.admin_order_list";    
 	}  
 	 
-	// 주문 상태 업데이트 
-	@RequestMapping(value= "/order_status_update", method= RequestMethod.POST)
-	public String order_status_update(String[] select_ck_num, String order_status, Model model) {
-		logger.info("post order-status-update");
-		for(String order_num : select_ck_num) {
-			Order_Vo vo = new Order_Vo();
-			vo.setOrder_num(Integer.parseInt(order_num));
-			vo.setOrder_status(order_status);
-			order_service.order_status_update(vo);
-		} 
-		return "redirect:/admin_order_list";  
-	}
+
 	// 주문 삭제
 	@RequestMapping(value= "/order_delete", method= RequestMethod.GET)
 	public String order_delete(String[] select_ck_num, String order_num) {
-		logger.info("get order-delete");
+		logger.info("get order-delete"); 
+		HashMap<String, Object> map = new HashMap<String, Object>();
 		if(select_ck_num !=null) {
 			for(String list_num : select_ck_num) {
-				member_service.milage_delete(Integer.parseInt(list_num));
+				map.put("order_num", list_num);
+				member_service.milage_delete(map);
 			    order_service.order_item_delete(Integer.parseInt(list_num));
 			    order_service.order_delete(Integer.parseInt(list_num)); 
 			} 
 		}
 		if(order_num !=null) {
 			int orders_num = Integer.parseInt(order_num); 
-			member_service.milage_delete(orders_num);
+			map.put("order_num", orders_num);
+			member_service.milage_delete(map);
 		    order_service.order_item_delete(orders_num);
 		    order_service.order_delete(orders_num); 
-		} 
+		}  
 		return "redirect:/admin_order_list";  
 	}
 } 

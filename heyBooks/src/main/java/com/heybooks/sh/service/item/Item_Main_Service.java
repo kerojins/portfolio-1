@@ -42,4 +42,7 @@ public interface Item_Main_Service {
 	 
 	// 5. 상품 이미지 수정
 	public int item_img_update(Item_Vo vo);
+	
+	// 6. 상품 별점 동기화
+	public int item_grade_update(HashMap<String, Object> map);
 } 

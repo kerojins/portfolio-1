@@ -5,8 +5,6 @@
 <mapper namespace="com.heybooks.sh.mybatis.Board_Mapper">
 
 	
-
-	
 	<!-- 1:1문의글 전체 갯수 -->   
 	<select id="counsel_count" parameterType="HashMap" resultType="int">
 		select NVL(count(*),0) cnt from counsel  
@@ -16,7 +14,7 @@
 			</if>  
 			<if test="counsel_type != null">
 				and counsel_type = #{counsel_type} 
-			</if> 
+			</if>  
 			<if test="counsel_answer != null"> 
 				and counsel_answer = #{counsel_answer}  
 			</if> 
@@ -27,10 +25,10 @@
     	     	and counsel_date between to_date(#{search_date}) and sysdate 
     		</if> 
     		<if test="search_date == null and search_end_date != null"> 
-    	    	 <![CDATA[	and counsel_date <= to_date(#{search_end_date}) + 1 ]]> 
+    	    	 <![CDATA[	and to_char(counsel_date,'yyyymmdd') <= to_char(#{search_end_date}) ]]> 
     		</if>
     		<if test="search_date != null and search_end_date != null"> 
-    	     	and counsel_date between to_date(#{search_date}) and to_date(#{search_end_date}) + 1
+    	     	and to_char(counsel_date,'yyyymmdd') between to_char(#{search_date}) and to_char(#{search_end_date})
     		</if>    
 		</where> 
 	</select>  
@@ -68,12 +66,12 @@
 	    	     	and counsel_date between to_date(#{search_date}) and sysdate  
 	    		</if> 
 	    		<if test="search_date == null and search_end_date != null"> 
-	    	    	 <![CDATA[	and counsel_date <= to_date(#{search_end_date}) + 1 ]]> 
+	    	    	 <![CDATA[	and to_char(counsel_date,'yyyymmdd') <= to_char(#{search_end_date}) ]]> 
 	    		</if>
 	    		<if test="search_date != null and search_end_date != null"> 
-	    	     	and counsel_date between to_date(#{search_date}) and to_date(#{search_end_date}) + 1
-	    		</if>     
-		    </where> 
+	    	     	and to_char(counsel_date,'yyyymmdd') between to_char(#{search_date}) and to_char(#{search_end_date})
+	    		</if>      
+		    </where>  
 				order by ${list_arr}  
 			)aa      
 		)    
@@ -114,59 +112,78 @@
 	<select id="notice_count" parameterType="HashMap" resultType="int">
 		select NVL(count(*),0) cnt from notice 
 		<where>
+			<if test="board_keyword != null"> 
+		    	notice_title like '%'||#{board_keyword}||'%' 
+		    </if> 
 			<if test="keyword != null"> 
-    	     	admin_num in ( select admin_num from admins where admin_id like '%'||#{keyword}||'%') or notice_title like '%'||#{keyword}||'%' 
+    	     	and admin_num in ( select admin_num from admins where admin_id like '%'||#{keyword}||'%') or notice_title like '%'||#{keyword}||'%' 
     		</if> 
     		<if test="search_date != null and search_end_date == null"> 
     	     	and notice_date between to_date(#{search_date}) and sysdate  
     		</if> 
     		<if test="search_date == null and search_end_date != null"> 
-    	    	 <![CDATA[	and notice_date <= to_date(#{search_end_date}) + 1 ]]> 
+    	    	 <![CDATA[	and to_char(notice_date,'yyyymmdd') <= to_char(#{search_end_date}) ]]> 
     		</if>
     		<if test="search_date != null and search_end_date != null"> 
-    	     	and notice_date between to_date(#{search_date}) and to_date(#{search_end_date}) + 1
-    		</if>     
-		</where>
+    	     	and to_char(notice_date,'yyyymmdd') between to_char(#{search_date}) and to_char(#{search_end_date})
+    		</if>   
+			<if test="official != null">
+    			and (notice_official_detail = 1 and to_char(sysdate,'yyyy-mm-dd') between to_char(SUBSTR(notice_official_date, 0, INSTR(notice_official_date,',',1,1)-1)) and to_char(SUBSTR(notice_official_date,  INSTR(notice_official_date,',', 1, 1)+1, length(notice_official_date)))) or
+    			    (notice_official = 1 and notice_official_detail = 0)
+    		</if>
+    		<if test="content != null">
+    			and notice_official = 0 or notice_official_detail = 0
+    		</if>  
+		</where> 
 	</select>  
 	 
 	<!-- 공지사항 추가 -->
 	<insert id="notice_insert" parameterType="com.heybooks.sh.vo.board.Notice_Vo">
-		insert into notice values(notice_num_seq.nextVal, #{admin_num}, #{notice_title}, #{notice_content:CLOB}, 0, sysdate)
+		insert into notice values(notice_num_seq.nextVal, #{admin_num}, #{notice_title}, #{notice_content:CLOB}, #{notice_official}, #{notice_official_detail}, #{notice_official_date}, 0, sysdate)
 	</insert> 
 	<!-- 공지사항 수정 -->
 	<update id="notice_update" parameterType="com.heybooks.sh.vo.board.Notice_Vo">
-		update notice set notice_title = #{notice_title}, notice_content = #{notice_content} where notice_num = #{notice_num}
+		update notice set notice_title = #{notice_title}, notice_content = #{notice_content}, notice_official= #{notice_official}, notice_official_detail = #{notice_official_detail}, notice_official_date = #{notice_official_date}  where notice_num = #{notice_num}
 	</update>  
-	
+	  
 	<!-- 공지사항 삭제 -->
 	<delete id="notice_delete" parameterType="int">
 		delete from notice where notice_num = #{notice_num}
 	</delete>   
 	
-	     
 	<!-- 공지사항 리스트 --> 
 	<select id="notice_list" parameterType="HashMap" resultMap="notice_map">
 	 	select * from 
 		( 
 			select aa.*, rownum rnum from
 			(
-				select * from notice
-				<where>
+				<![CDATA[select notice_num, admin_num, notice_title, REGEXP_REPLACE(notice_content, '<[^>]*>|\&([^;])*;', '' ) notice_content, notice_official, notice_official_detail, notice_official_date, notice_hit, notice_date from notice]]>
+				<where>  
+					<if test="board_keyword != null"> 
+		    	     	notice_title like '%'||#{board_keyword}||'%' 
+		    		</if> 				
 					<if test="keyword != null"> 
-		    	     	admin_num in ( select admin_num from admins where admin_id like '%'||#{keyword}||'%') or notice_title like '%'||#{keyword}||'%' 
+		    	     	and admin_num in ( select admin_num from admins where admin_id like '%'||#{keyword}||'%') or notice_title like '%'||#{keyword}||'%' 
 		    		</if> 
 		    		<if test="search_date != null and search_end_date == null"> 
 		    	     	and notice_date between to_date(#{search_date}) and sysdate  
 		    		</if> 
 		    		<if test="search_date == null and search_end_date != null"> 
-		    	    	 <![CDATA[	and notice_date <= to_date(#{search_end_date}) + 1 ]]> 
+		    	    	 <![CDATA[	and to_char(notice_date,'yyyymmdd') <= to_char(#{search_end_date})]]> 
 		    		</if>
 		    		<if test="search_date != null and search_end_date != null"> 
-		    	     	and notice_date between to_date(#{search_date}) and to_date(#{search_end_date}) + 1
+		    	     	and to_char(notice_date,'yyyymmdd') between to_char(#{search_date}) and to_char(#{search_end_date})
 		    		</if>     
+		    		<if test="official != null">
+		    			and (notice_official_detail = 1 and to_char(sysdate,'yyyy-mm-dd') between to_char(SUBSTR(notice_official_date, 0, INSTR(notice_official_date,',',1,1)-1)) and to_char(SUBSTR(notice_official_date,  INSTR(notice_official_date,',', 1, 1)+1, length(notice_official_date)))) or
+    			   		(notice_official = 1 and notice_official_detail = 0)
+		    		</if>
+		    		<if test="content != null">
+		    			and (notice_official = 0 or notice_official_detail = 0)
+		    		</if>
 				</where>
-				order by ${list_arr}  
-			)aa      
+				order by ${list_arr}   
+			)aa       
 		)    
 		<if test = "startRow != null">
 			<![CDATA[ where rnum >= #{startRow} and rnum <= #{endRow} ]]>
@@ -175,6 +192,38 @@
 	<!-- 공지사항 상세정보 -->
 	<select id="notice_detail" parameterType="int" resultMap="notice_map">
 		select * from notice where notice_num = #{notice_num}
+	</select>
+	
+	<select id="notice_page" parameterType="HashMap" resultType="HashMap">
+		select * from
+		(
+		    select 
+		    lag(notice_num,1) over (order by notice_date desc) pre_num,
+		    notice_num,
+		    lead(notice_num,1) over (order by notice_date desc) next_num
+		    from notice
+		    <where>
+				<if test="keyword != null"> 
+	    	     	admin_num in ( select admin_num from admins where admin_id like '%'||#{keyword}||'%') or notice_title like '%'||#{keyword}||'%' 
+	    		</if> 
+	    		<if test="search_date != null and search_end_date == null"> 
+	    	     	and notice_date between to_date(#{search_date}) and sysdate  
+	    		</if> 
+	    		<if test="search_date == null and search_end_date != null"> 
+	    	    	 <![CDATA[	and to_char(notice_date,'yyyymmdd') <= to_char(#{search_end_date})]]> 
+	    		</if>
+	    		<if test="search_date != null and search_end_date != null"> 
+	    	     	and to_char(notice_date,'yyyymmdd') between to_char(#{search_date}) and to_char(#{search_end_date})
+	    		</if>     
+	    		<if test="official != null">
+	    			and notice_official_detail = 1 and to_char(sysdate,'yyyy-mm-dd') between to_char(SUBSTR(notice_official_date, 0, INSTR(notice_official_date,',',1,1)-1)) and to_char(SUBSTR(notice_official_date,  INSTR(notice_official_date,',', 1, 1)+1, length(notice_official_date))) or notice_official_detail = 0
+	    		</if>
+	    		<if test="content != null">
+	    			and notice_official = 0 or notice_official_detail = 0
+	    		</if>
+			</where>
+		)  
+		where notice_num = #{notice_num}
 	</select>
 	
 	<!-- ======= 이벤트 ======== -->
@@ -195,10 +244,10 @@
     	     	and event_date between to_date(#{search_date}) and sysdate  
     		</if> 
     		<if test="search_date == null and search_end_date != null"> 
-    	    	 <![CDATA[	and event_date <= to_date(#{search_end_date}) + 1 ]]> 
+    	    	 <![CDATA[	and to_char(event_date,'yyyymmdd') <= to_char(#{search_end_date})]]> 
     		</if>
     		<if test="search_date != null and search_end_date != null"> 
-    	     	and event_date between to_date(#{search_date}) and to_date(#{search_end_date}) + 1
+    	     	and to_char(event_date,'yyyymmdd') between to_char(#{search_date}) and to_char(#{search_end_date})
     		</if>     
 		</where> 
 	</select>  
@@ -224,7 +273,7 @@
 		( 
 			select aa.*, rownum rnum from
 			(
-				select * from event
+			<![CDATA[ select event_num, admin_num, event_title, REGEXP_REPLACE(event_content, '<[^>]*>|\&([^;])*;', '' ) event_content, event_period, event_thumbnail, event_hit, event_date from event ]]>
 				<where>
 					<if test="keyword != null"> 
 		    	     	admin_num in ( select admin_num from admins where admin_id like '%'||#{keyword}||'%') or event_title like '%'||#{keyword}||'%' 
@@ -233,19 +282,26 @@
 		    	     	and event_date between to_date(#{search_date}) and sysdate  
 		    		</if> 
 		    		<if test="search_date == null and search_end_date != null"> 
-		    	    	 <![CDATA[	and event_date <= to_date(#{search_end_date}) + 1 ]]> 
+		    	    	 <![CDATA[	and to_char(event_date,'yyyymmdd') <= to_char(#{search_end_date}) ]]>  
 		    		</if>
 		    		<if test="search_date != null and search_end_date != null"> 
-		    	     	and event_date between to_date(#{search_date}) and to_date(#{search_end_date}) + 1
+		    	     	and to_char(event_date,'yyyymmdd') between to_char(#{search_date}) and to_char(#{search_end_date})
 		    		</if>     
+		    		<if test ="event_now != null">
+		    			and to_char(sysdate,'yyyy-mm-dd') between to_char(SUBSTR(event_period, 0, INSTR(event_period,',',1,1)-1)) 
+		    			and to_char(SUBSTR(event_period,  INSTR(event_period,',', 1, 1)+1, length(event_period)))
+		    		</if>
+		    		<if test="event_end != null">
+		    			and to_char(sysdate,'yyyy-mm-dd') > to_char(SUBSTR(event_period,  INSTR(event_period,',', 1, 1)+1, length(event_period)))
+		    		</if>  
 				</where> 
-				order by ${list_arr}  
+				order by ${list_arr}
 			)aa       
 		)    
 		<if test = "startRow != null">
 			<![CDATA[ where rnum >= #{startRow} and rnum <= #{endRow} ]]>
 		</if> 
-	</select>
+	</select> 
 	<!-- 이벤트 상세정보 -->
 	<select id="event_detail" parameterType="int" resultMap="event_map">
 		select * from event where event_num = #{event_num}
@@ -278,11 +334,14 @@
     	     	and review_date between to_date(#{search_date}) and sysdate  
     		</if> 
     		<if test="search_date == null and search_end_date != null"> 
-    	    	 <![CDATA[	and review_date <= to_date(#{search_end_date}) + 1 ]]> 
+    	    	 <![CDATA[	and to_char(review_date,'yyyymmdd') <= to_char(#{search_end_date}) ]]> 
     		</if>
     		<if test="search_date != null and search_end_date != null"> 
-    	     	and review_date between to_date(#{search_date}) and to_date(#{search_end_date}) + 1
-    		</if>    
+    	     	and to_char(review_date,'yyyymmdd') between to_char(#{search_date}) and to_char(#{search_end_date})
+    		</if>
+    		<if test="admin_date != null">
+				and review_date >= sysdate - 21 
+			</if>    
 		</where>
 	</select>
 	<!-- 리뷰 추가 -->
@@ -290,7 +349,7 @@
 		insert into review values(review_num_seq.nextVal, #{product_num}, #{members_num}, #{review_content}, #{review_grade}, 0, 0, #{review_spoiler}, sysdate)
 	</insert>
 	<!-- 리뷰 상세 --> 
-	<select id="review_detail" resultType="com.heybooks.sh.vo.board.Review_Vo">
+	<select id="review_detail" parameterType="int" resultType="com.heybooks.sh.vo.board.Review_Vo">
 		select * from review where review_num = #{review_num}
 	</select> 
 	<!-- 리뷰 수정 -->
@@ -328,10 +387,10 @@
 		    	     	and review_date between to_date(#{search_date}) and sysdate  
 		    		</if> 
 		    		<if test="search_date == null and search_end_date != null"> 
-		    	    	 <![CDATA[	and review_date <= to_date(#{search_end_date}) + 1 ]]> 
+		    	    	 <![CDATA[	and to_char(review_date,'yyyymmdd') <= to_char(#{search_end_date}) ]]> 
 		    		</if>
 		    		<if test="search_date != null and search_end_date != null"> 
-		    	     	and review_date between to_date(#{search_date}) and to_date(#{search_end_date}) + 1
+		    	     	and to_char(review_date,'yyyymmdd') between to_char(#{search_date}) and to_char(#{search_end_date})
 		    		</if>         
 				</where>
 				<if test="list_arr != null">

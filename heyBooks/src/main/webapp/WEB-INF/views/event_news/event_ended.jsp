@@ -5,57 +5,84 @@
 	<div class="container">
 		<h3>이벤트</h3>
 		<ul class="nav nav-tabs event_tabs">
-			<li class="nav-item"><a class="nav-link"
-				href="<c:url value='event_proceed'/>">진행 중인 이벤트</a></li>
-			<li class="nav-item"><a class="nav-link active"
-				href="<c:url value='event_ended'/>">지난 이벤트</a></li>
+			<li class="nav-item">
+				<a class="nav-link" href="<c:url value='event_proceed'/>">진행 중인 이벤트</a>
+			</li> 
+			<li class="nav-item">
+				<a class="nav-link active" href="<c:url value='event_ended'/>">지난 이벤트</a>
+			</li>
 		</ul> 
 		<div class="list_layout event_list">
 			<ul>
+				<c:forEach var="list" items="${event_list}">
 				<li>
 					<div class="list_layout_left list_img_box">
-						<p class="">
-							<img src="<c:url value='/resources/images/event1.jpg'/>">
-						</p>
-					</div>
+						<a class="" href="<c:url value='/event_detail?event_num=${list.event_num}'/>">
+							<img src="<c:url value='/resources/upload/editor/${list.event_thumbnail}'/>">
+						</a>
+					</div> 
 					<div class="list_layout_right list_content event_content">
-						<h4>[EVENT] 더글라스 케네디 베스트 소설전 OPEN!</h4>
+						<h4>
+							<a href="<c:url value='/event_detail?event_num=${list.event_num}'/>">[EVENT] ${list.event_title}</a>
+						</h4> 
 						<div>
 							<p>
-								<span class="point_txt">기간</span><span class="event_content_txt">2019.08.30 ~ 2019.9.30</span>
+								<span class="point_txt">기간</span>
+								<span class="event_content_txt">${list.event_period}</span>
 							</p>
 							<p>
-								<span class="point_txt">내용</span><span class="event_content_txt"> 130주 베스트셀러 빅 픽처의 저자, 더글라스 케네디 작가전
-									OPEN <br> 1. 세트 4종 구매 10% 할인 <br> 2. 단행본 14종 구매 10%
-									할인
-								</span>
-							</p> 
-						</div>
-					</div>
-				</li>
-				<li>
-					<div class="list_layout_left list_img_box">
-						<p class="">
-							<img src="<c:url value='/resources/images/event1.jpg'/>">
-						</p>
-					</div>
-					<div class="list_layout_right list_content event_content">
-						<h4>[EVENT] 더글라스 케네디 베스트 소설전 OPEN!</h4>
-						<div>
-							<p>
-								<span class="point_txt">기간</span><span class="event_content_txt">2019.08.30 ~ 2019.9.30</span>
+								<span class="point_txt">내용</span>
+								<span class="event_content_txt">${list.event_content}</span>
 							</p>
-							<p>
-								<span class="point_txt">내용</span><span class="event_content_txt"> 130주 베스트셀러 빅 픽처의 저자, 더글라스 케네디 작가전
-									OPEN <br> 1. 세트 4종 구매 10% 할인 <br> 2. 단행본 14종 구매 10%
-									할인
-								</span>
-							</p>  
-						</div>
+						</div> 
 					</div>
 				</li> 
+				</c:forEach>
 			</ul>
-
 		</div>
+		<ul class="pagination item_pagenum">
+			<li class="page-item">  
+				<c:choose>
+					<c:when test="${(util.startPageNum%util.pageBlockCount==1) && (util.startPageNum>util.pageBlockCount)}">
+						<a class="page-link" aria-label="Previous" href="<c:url value='/event_proceed?pageNum=${util.startPageNum-1}'/>">
+							<span aria-hidden="true">«</span>
+						</a>
+					</c:when>     
+					<c:otherwise>
+						<a class="page-link" aria-label="Previous" href="<c:url value='/event_proceed?pageNum=${util.pageNum-1}'/>">
+						<span aria-hidden="true">«</span>
+						</a> 
+					</c:otherwise> 
+				</c:choose>   
+			</li> 
+			<c:forEach var="i" begin="${util.startPageNum }" end="${util.endPageNum }">
+				<c:choose> 
+					<c:when test="${util.pageNum==i }"> 
+						<li class="page-item" id="page_ck" >
+							<a class="page-link" href="<c:url value='/event_proceed?pageNum=${i}'/>">${i}</a>
+						</li>
+					</c:when> 
+					<c:otherwise>  
+						<li class="page-item">
+							<a class="page-link" href="<c:url value='/event_proceed?pageNum=${i}'/>">${i}</a>
+						</li>
+					</c:otherwise>
+				</c:choose>   
+			</c:forEach>    
+			<li class="page-item">
+				<c:choose>
+					<c:when test="${util.pageNum < util.totalPageCount}">
+						<a class="page-link"   href="<c:url value='/event_proceed?pageNum=${util.pageNum+1}&event_now=now'/>" aria-label="Next"> 
+							<span aria-hidden="true">»</span>
+						</a>
+					</c:when>   
+					<c:otherwise>
+						<a class="page-link" href=""> 
+							<span aria-hidden="true">»</span>
+						</a>   
+					</c:otherwise> 
+				</c:choose> 
+			</li>     
+		</ul> 
 	</div>
 </div>

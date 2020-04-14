@@ -104,7 +104,13 @@ public class Board_DaoImpl implements Board_Dao{
 	public Notice_Vo notice_detail(int num) {
 		return sqlSession.selectOne(NAMESPACE+".notice_detail", num);
 	}
-	 
+	
+	// 공지사항 이전글 다음글
+	@Override
+	public List<HashMap<String, Object>> notice_page(HashMap<String, Object> map){
+		return sqlSession.selectList(NAMESPACE+".notice_page", map);
+	}
+		 
 	// ====== 이벤트 =======
 	
 	// 이벤트 추가  

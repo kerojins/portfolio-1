@@ -7,7 +7,6 @@
 	<div class="search-form-container">
 		<div class=" admin_page_head">
 			<h2>주문리스트</h2>
-			<a class="admin_btn" href="<c:url value='/admin_item_add'/>">등록</a>
 		</div> 
 		<form class="search_form" action="<c:url value='/admin_order_list'/>" method="get">
 			<table class="search-form-table">
@@ -138,15 +137,15 @@
 		</form>
 	</div>
 	<div class="admin_list_box">
-		<form class="admin_order_list_form" action="<c:url value='/order_status_update'/>" id="order_list" method="get">
+		<form class="admin_order_list_form" action="<c:url value='/order_status_update'/>" id="order_list" method="post">
 			<div class="admin_list_top">
 				<p>
 					전체 <span>${totalRowCount}</span>개
-				</p>
-				<div class="admin_select_list"> 
+				</p> 
+				<div class="admin_select_list" style="margin-top: 0px;"> 
 					<input hidden="hidden" id="list_type" value="admin_order_list">
-					<select name="order_status">
-						<option>--주문상태 선택--</option>
+					<select name="order_status" class="order_status_val">
+						<option value="">--주문상태 선택--</option>
 						<option value="결제대기" <c:if test="${list_arr eq '결제대기'}">selected="selected"</c:if>>결제 대기</option>
 						<option value="결제완료"<c:if test="${list_arr eq '결제완료'}">selected="selected"</c:if>>결제 완료</option>
 						<option value="배송준비중"<c:if test="${list_arr eq '배송준비중'}">selected="selected"</c:if>>배송 준비중</option>
@@ -154,7 +153,7 @@
 						<option value="배송완료"<c:if test="${list_arr eq '배송완료'}">selected="selected"</c:if>>배송 완료</option>
 						<option value="구매확정"<c:if test="${list_arr eq '구매확정'}">selected="selected"</c:if>>구매 확정</option>
 					</select>     
-					<input type="submit" class="order_status_btn admin_btn" value="주문 상태 변경" >
+					<input type="button" class="order_status_btn admin_btn" value="주문 상태 변경" >
 					<select name = "item_list_arr_list" id="item_list_arr_list">
 						<option value="order_date" <c:if test="${list_arr eq 'order_date'}">selected="selected"</c:if>>최신순</option>
 						<option value="order_name"<c:if test="${list_arr eq 'order_name'}">selected="selected"</c:if>>구매자명순</option>
@@ -176,14 +175,14 @@
 					<col width="80">
 					<col width="80">
 					<col width="230">
-					<col width="30">
+					<col width="40">
 					<col width="80">
 					<col width="80">
 					<col width="90">
 					<col width="60">
 					<col width="90"> 
 				</colgroup> 
-				<thead class="lth">
+				<thead class="lth"> 
 					<tr>
 						<th><input type="checkbox"  class="ckAll" onclick="ckAll(this);"></th>
 						<th>번호</th>
@@ -201,8 +200,9 @@
 				<tbody class="ltb order-ajax-list">
 					<c:forEach var="list" items="${order_view_list}" varStatus="status">
 						<tr class="list-row"> 
-							<td align="center"><input type="checkbox" class="select_ck_num"
-									name="select_ck_num" value="${list.ORDER_NUM}" data-provider_seq="1"></td>
+							<td align="center">
+								<input type="checkbox" class="select_ck_num" name="select_ck_num" value="${list.ORDER_NUM}" data-provider_seq="1">
+							</td>
 							<td align="center" class="page_no">${status.count}</td>
 							<%-- 수정 등록일 날짜,시간 표시 --%> 
 							<c:set var="date" value="${list.ORDER_DATE}"/>
@@ -221,18 +221,18 @@
 										<img width="50" src="<c:url value='/resources/upload/${img_name_list[status.index]}'/>">
 										<span>${list.ORDER_ITEM_NAME}</span> 
 									</a>     
-									<div></div>
+									<div></div> 
 									<div style="padding-top: 3px;"></div> 
 								</div> 
 							</td>
-							<td align="right">
+							<td align="center">
 								<div>${list.TOTAL_COUNT}</div>
 							</td> 
 							<td align="center">${list.ORDER_NAME}</td>
 							<td align="center">${list.PAYMENT_METHODS }<br>
 							</td>
 							<td align="center">${list.TOTAL_PRICE}원</td>
-							<td align="center">${list.ORDER_STATUS}</td>
+							<td align="center" class="order_status_cnt">${list.ORDER_STATUS}</td>
 							<td class="center">
 								<span class="admin_detail_btn small valign-middle">
 									<input type="button" class="admin_order_detail_btn" order_num="${list.ORDER_NUM}" value="상세">

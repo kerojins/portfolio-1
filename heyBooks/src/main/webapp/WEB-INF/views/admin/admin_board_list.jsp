@@ -6,6 +6,7 @@
 <div class="container admin_item_list">
 	<div class="search-form-container">
 		<div class=" admin_page_head">
+			<input hidden="hidden" class="board_id" value="${board_id}">
 			<h2>
 				<c:choose>
 					<c:when test="${board_id eq 'counsel'}">
@@ -128,6 +129,7 @@
 	<form action="<c:url value='/board_delete'/>" id="board_list">
 		<input hidden="hidden" name="board_id" value="${board_id}">
 		<c:choose> 
+			<%--  1:1 상담 --%>
 			<c:when test='${board_id eq "counsel"}'>
 			<table class="list-table-style counsel_table board_list_tables"cellspacing="0">
 				<thead class="lth">
@@ -136,8 +138,8 @@
 							<input type="checkbox"  class="ckAll" onclick="ckAll(this);">
 						</th>
 						<th>번호</th>
-						<th>작성자</th>
-						<th>
+						<th width="8%">작성자</th>
+						<th width="8%">
 							<select name="category" id="counsel_type" class="line">
 								<option value="" selected="selected">- 질문유형전체 -</option>
 								<option value="회원계정문의" <c:if test="${counsel_type eq '회원계정문의'}">selected</c:if>>회원계정문의</option>
@@ -151,14 +153,14 @@
 						</th>
 						<th width="40%">제목</th>
 						<th>등록일</th>
-						<th>
+						<th width="8%">
 							<select name="reply" id="counsel_answer" class="line">
 								<option value="" selected="selected">- 답변상태 -</option>
 								<option value="답변대기" <c:if test="${counsel_answer eq '답변대기'}">selected</c:if>>답변대기</option>
 								<option value="답변완료" <c:if test="${counsel_answer eq '답변완료'}">selected</c:if>>답변완료</option>
 							</select>  
 						</th>
-						<th width="7%">관리</th> 
+						<th width="12%">관리</th> 
 					</tr> 
 				</thead>
 				<tbody class="ltb otb" id="ajaxTable">
@@ -194,6 +196,7 @@
 				</tbody> 
 			</table>
 		</c:when>  
+		<%--  공지사항 --%>
 		<c:when test="${board_id eq 'notice'}">
 			<table class="list-table-style board_list_tables" cellspacing="0">
 				<colgroup>
@@ -201,7 +204,7 @@
 				<thead class="lth"> 
 					<tr>
 						<th>
-							<input type="checkbox" name="checkboxAll" value="" id="checkboxAll">
+							<input type="checkbox"  class="ckAll" onclick="ckAll(this);">
 						</th>
 						<th>번호</th> 
 						<th>작성자</th>
@@ -247,14 +250,16 @@
 				</tbody>
 			</table>  
 		</c:when>
+		<%--  이벤트 --%>
 		<c:when test="${board_id eq 'event'}">
 			<table class="list-table-style qna_list_table board_list_tables">
 				<colgroup>
 				</colgroup> 
 				<thead class="lth">
 					<tr>
-						<th><input type="checkbox" name="checkboxAll" value=""
-							id="checkboxAll"></th>
+						<th>
+							<input type="checkbox"  class="ckAll" onclick="ckAll(this);">
+						</th>
 						<th>번호</th>
 						<th>작성자</th>
 						<th width="40%">제목</th>
@@ -277,21 +282,17 @@
 								</span>   
 							</td>    
 							<c:set var="date" value="${vo.event_date}"/> 
-							<c:set var="end_date" value="${vo.event_period}"/> 
 								<%--  수정 등록일 날짜,시간 표시  --%> 
 								<%  
 									Date date = (Date) pageContext.getAttribute("date");
-									Date end_date = (Date) pageContext.getAttribute("end_date");
 									SimpleDateFormat sdate = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 									String date_txt = sdate.format(date);
-									String end_date_txt = sdate.format(end_date);
 									pageContext.setAttribute("date_txt", date_txt); 
-									pageContext.setAttribute("end_date_txt", end_date_txt); 
 									
 								%> 
 							<td align="center" class="date">
 								<p>${date_txt}</p>
-								<p>${end_date_txt}</p>
+								<p>${vo.event_period}</p>
 							</td> 
 							<td align="center">${vo.event_hit}</td>  
 							<td align="center" nowrap="">
@@ -306,14 +307,16 @@
 				</tbody>
 			</table>
 		</c:when>
+		<%--  리뷰 --%>
 		<c:when test="${board_id eq 'review'}">
 			<table class="list-table-style qna_list_table board_list_tables" cellspacing="0">
 				<colgroup>
 				</colgroup> 
 				<thead class="lth">
-					<tr>
-						<th><input type="checkbox" name="checkboxAll" value=""
-							id="checkboxAll"></th>
+					<tr> 
+						<th>
+							<input type="checkbox"  class="ckAll" onclick="ckAll(this);">
+						</th>
 						<th>번호</th>
 						<th>작성자</th>
 						<th width="40%">내용</th>
@@ -382,7 +385,7 @@
 			<input hidden="hiddne" class="url_val" value="/admin_board_list?pageNum=${util.pageNum}&board_id=${board_id}&keyword=${keyword}&search_date=${search_date}&search_end_date=${search_end_date}" >
 			<c:choose> 
 				<c:when test="${(util.startPageNum%util.pageBlockCount==1) && (util.startPageNum>util.pageBlockCount)}">
-					<a class="page-link" href="<c:url value='/admin_board_list?pageNum=${util.startPageNum-1 }&list_arr=${list_arr}&rowCount=${rowCount}&board_id=${board_id}&keyword=${keyword}&search_date=${search_date}&search_end_date=${search_end_date}'/>" aria-label="Previous">
+					<a class="page-link" href="<c:url value='/admin_board_list?pageNum=${util.startPageNum-1}&list_arr=${list_arr}&rowCount=${rowCount}&board_id=${board_id}&keyword=${keyword}&search_date=${search_date}&search_end_date=${search_end_date}'/>" aria-label="Previous">
 						<span aria-hidden="true">«</span>
 					</a>  
 				</c:when>    
@@ -455,15 +458,6 @@
 											</c:choose> 
 										게시글 보기</h2>
 									</div>
-									<ul class="page-buttons-left">
-										<li>
-											<span class="btn small white">
-												<button type="button" name="boardviewclose">게시글리스트
-													<span class="arrowright"></span>
-												</button> 
-											</span>
-										</li>
-									</ul>
 									<ul class="page-buttons-right">
 										<li>
 											<span class="btn small black">
@@ -522,21 +516,7 @@
 																		</td>
 																		<td class="cell_bar">|</td>
 																		<td>
-																			<c:choose>
-																				<c:when test="${board_id eq 'counsel'}">
-																					<span class="han ">답변 상태</span> 
-																				</c:when>
-																				<c:when test="${board_id eq 'notice'}">
-																					<span class="han ">조회</span> 
-																				</c:when>
-																				<c:when test="${board_id eq 'event'}">
-																					<span class="han ">조회</span> 
-																				</c:when> 
-																				<c:when test="${board_id eq 'review'}">
-																					<span class="han ">조회</span> 
-																				</c:when>
-																			</c:choose> 
-																		
+																			<span class="han board_another">조회:</span> 
 																			<span class="num board_another_info">0</span>
 																		</td>
 																		<td class="cell_bar">|</td>
@@ -584,6 +564,7 @@
 										</c:when>
 									</c:choose> 게시글 등록</h2>
 							</div>
+							<%--  
 							<ul class="page-buttons-left">
 								<li>
 									<span class="btn large white">
@@ -597,7 +578,8 @@
 										<button type="button">게시글보기</button>
 									</span>
 								</li>  
-							</ul>
+							</ul> 
+							--%>
 							<ul class="page-buttons-right">
 								<li>
 									<span class="btn large black">
@@ -626,75 +608,74 @@
 									<th class="its-th-align center">작성자</th>
 									<td class="its-td board_writer">관리자</td>
 								</tr>
-								
-								<!-- <tr> 
+								<tr class="notice_display" style="display:none;"> 
 									<th class="its-th-align center">공지글 여부</th>
-									<td class="its-td"><input type="checkbox" name="notice" id="boardnotice" value="1" onclick="noticecheck()">
+									<td class="its-td">
+										<input type="checkbox" name="notice_official" id="board_notice" value="1" >
 										<label for="boardnotice"> 공지글입니다.</label>
 											<div class="noticelay " style="width: 99%; padding: 3px 5px;">
 												<label> 
-													<input type="radio" name="onlynotice" id="onlynotice0" value="0" disabled="disabled"> 
+													<input type="radio" name="notice_official_detail" class="notice_official_detail" id="onlynotice0" value="0" disabled="disabled"> 
 													공지글영역과 리스트 영역에 해당 글이 보여집니다.
 												</label>
 												<br> 
 												<label> 
-													<input type="radio" name="onlynotice" id="onlynotice1" value="1" disabled="disabled"> 
+													<input type="radio" name="notice_official_detail" class="notice_official_detail" id="onlynotice1" value="1" disabled="disabled"> 
 													공지글 영역에서 특정기간동안(설정 시)만 해당 글이 보여집니다.
 												</label> 
 												<span> 
-													<input type="text" name="onlynotice_sdate" id="onlynotice_sdate" value="" class="line datepicker hasDatepicker" maxlength="10" size="10" disabled="disabled">
-													<img class="ui-datepicker-trigger" src="/app/javascript/jquery/icon_calendar.gif" alt="..." title="...">
+													<input type="text" name="notice_official_date" id="onlynotice_sdate" value="" class="period line" maxlength="10" size="10" disabled="disabled" autocomplete="off">
+													<img class="ui-datepicker-trigger" src="<c:url value='/resources/images/icon_calendar.gif'/>" alt="..." title="...">
 													~ 
-													<input type="text" name="onlynotice_edate" id="onlynotice_edate" value="" class="line datepicker hasDatepicker" maxlength="10" size="10" disabled="disabled">
-													<img class="ui-datepicker-trigger" src="/app/javascript/jquery/icon_calendar.gif" alt="..." title="...">
+													<input type="text" name="notice_official_date" id="onlynotice_edate" value="" class="period line" maxlength="10" size="10" disabled="disabled" autocomplete="off">
+													<img class="ui-datepicker-trigger" src="<c:url value='/resources/images/icon_calendar.gif'/>" title="...">
 												</span>
 											</div>
 									</td>
-								</tr> -->
-								<tr>
+								</tr>
+								<tr> 
 									<th class="its-th-align center">제목</th>
 									<td class="its-td">
 										<input type="text" name="${board_id}_title" class="board_title" id="subject" value="제목을 입력해주세요" class="required line" title="제목을 입력해 주세요" style="width: 95%" placeholder="제목을 입력해 주세요">
-										<input hidden="hidden" name="board_id" value="${board_id}" >
+										<input hidden="hidden" class="board_id" name="board_id" value="${board_id}" >
 										<input hidden="hidden" class="board_num" name="${board_id}_num" value="" >
 									</td>
 								</tr>
-								<c:if test="${board_id eq 'event'}">
-								<tr>
+								<tr class="event_display" style="display: none;">
 									<th class="its-th-align center">이벤트 썸네일</th>
 									<td class="its-td"> 
 										<p class=""><input type="file" class="thumb_file" name="event_file" onchange="e_readURL(this);" ><input readonly="readonly" name="thumb_name" class="thumb_name"></p>
 										<p class="event_thumb_box"><img class="event_thumb" src="" ><i class="fas fa-times del_thumb"></i></p>
-									</td>   
+									</td>    
 								</tr> 
-								</c:if> 
 								<tr>
 									<th class="its-th-align center">내용</th>
 									<td class="its-td">
 										<textarea id="summernote" class="board_content" name="${board_id}_content"></textarea>
 									</td>  
 								</tr> 
-								<c:if test="${board_id eq 'event'}">
-								<tr>
-									<th class="its-th-align center">이벤트 종료일</th>
+								<tr class="event_display" style="display: none;">
+									<th class="its-th-align center">이벤트 기간</th>
 									<td class="its-td">
-										<input type="text" id="event_period" name="event_period">
+										<input type="text" class="event_period period" id="period1" name="event_period" autocomplete="off">
+										<img class="ui-datepicker-trigger" src="<c:url value='/resources/images/icon_calendar.gif'/>" alt="..." title="...">
+										 ~
+										<input type="text" class="event_period period" id="period2" name="event_period" autocomplete="off">
+										<img class="ui-datepicker-trigger" src="<c:url value='/resources/images/icon_calendar.gif'/>" alt="..." title="..." >
 									</td>   
-								</tr> 
-								</c:if>
+								</tr>  
 								<tr>
 									<th class="its-th-align center" colspan="2"> 
-										<div class="after">
-											저장후 <input type="radio" name="backtype" id="backtype1"
-												value="list" checked="checked"><label
-												for="backtype1">목록으로 이동</label>
-										</div>
+										<div class="after board_push">
+											회원 알림등록 
+											<input type="checkbox" name="board_push" id="board_push1" value="ok">
+										</div> 
 									</th>
 								</tr> 
 							</tbody>
-						</table>
+						</table> 
 					</div>
-				</form>
+				</form> 
 			</div>
 		</div>
 	</div>
@@ -702,7 +683,7 @@
 <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.15/dist/summernote-lite.min.js"></script>
 <script>
 $(document).ready(function(){
-	$("#event_period").datepicker({
+	$(".period").datepicker({
 	    dayNamesMin:["일","월","화","수","목","금","토"], // 요일에 표시되는 형식 설정
 
 	    dateFormat:"yy-mm-dd", //날짜 형식 설정

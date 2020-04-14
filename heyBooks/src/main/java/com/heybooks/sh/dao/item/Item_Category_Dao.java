@@ -11,7 +11,10 @@ import com.heybooks.sh.vo.item.Item_Editor_Vo;
 public interface Item_Category_Dao {
 	
 	// 아이템 카테고리 목록 리스트
- 	public List<Item_Cate_Vo> cate_list(String cate_code);
+ 	public List<Item_Cate_Vo> cate_list(HashMap<String, Object> map);
+ 	
+ 	// 아이템 카테고리 정보
+ 	public Item_Cate_Vo cate_info(int num);
 	 
     // 작가 리스트 수
  	public int editor_get_count(HashMap<String, Object> map) ;

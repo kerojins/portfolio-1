@@ -63,6 +63,9 @@ public interface Board_Dao {
 	// 공지사항 상세정보
 	public Notice_Vo notice_detail(int num);
 	
+	// 공지사항 이전글 다음글
+	public List<HashMap<String, Object>> notice_page(HashMap<String, Object> map);
+	 
 	
 	// ====== 이벤트 =======
 	

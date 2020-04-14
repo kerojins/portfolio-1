@@ -90,6 +90,10 @@
 						</td>
 					</tr>
 					<tr>
+						<th class="its-th-align center">발행일</th>
+						<td class="its-td"><input type="text" class="datepickers" name="product_issue_date" value="${vo.product_issue_date}"></td>
+					</tr>
+					<tr> 
 						<th class="its-th-align center">소개</th>
 						<td class="its-td">
 							<textarea name="product_discription" rows="10" class="cal-len line" maxlength="255" style="width: 85%"  
@@ -335,8 +339,11 @@
 				<div class="category_select_content" style="">   
 					<div id="preview_box">
 						<c:forEach var="preview" items="${preview_list}">
-							<span class='preview_list' onmousedown='mouseDown(this)' onmouseOut='mouseOut(this)'> <img src='<c:url value="/resources/upload/${preview}" />'/><i class='fas fa-times' onclick = 'delete_img(this);' ></i></span>
-						</c:forEach>
+							<span class='preview_list' onmousedown='mouseDown(this)' onmouseOut='mouseOut(this)'> 
+								<img src='<c:url value="/resources/upload/${preview}" />'/>
+								<i class='fas fa-times' onclick = 'delete_img(this);' ></i>
+							</span>
+						</c:forEach> 
 					</div> 
 					<p class="select_btn_box">
 						<a class="select_btn">선택 완료</a>

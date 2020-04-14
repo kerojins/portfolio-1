@@ -1,41 +1,44 @@
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="java.util.Date"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-
-
-
-		<div class="sub_right_box my_box_wrap mypage_order_detail">
-			<div class="sub_right_content">
-				<h3 class="my_page_title">주문/배송 상세정보</h3>
+		<div class="my_box_wrap mypage_order_detail">
+				<h3 class="my_page_title" style="margin-bottom: 10px;">주문/배송 상세정보</h3>
 				<div class="bx bx_padding vsb">
+					<input hidden="hidden" class="aside_hide" value="ok">
 					<ul class="fl order_info2">
 						<li class="first">
 							<dl>
 								<dt>주문일자</dt>
 								<dd>
-									<strong>2019.07.28</strong>
+									<c:set var="date" value="${vo.order_date}"/> 
+									<%--  수정 등록일 날짜,시간 표시  --%> 
+									<%  
+										Date date = (Date) pageContext.getAttribute("date");
+										SimpleDateFormat sdate = new SimpleDateFormat("yyyy.MM.dd");
+										String date_txt = sdate.format(date);
+										pageContext.setAttribute("date_txt", date_txt); 
+										
+									%> 
+									<strong>${date_txt}</strong>
 								</dd>
 							</dl>
 						</li>
-						<li>
+						<li> 
 							<dl>
 								<dt>주문번호</dt>
 								<dd class="ordnum">
-									<strong class="pointcol">2019072883337091</strong> <a href="#">
-										내역삭제</a>
-									<!--N=a:odd.delete-->
+									<strong class="pointcol">${vo.order_num}</strong> 
+									<a href="#">내역삭제</a>
 									<a href="#">재구매</a>
-									<!--N=a:odd.reball-->
 								</dd>
 							</dl>
 						</li>
-
 					</ul>
 					<div class="btn_area fr mgr"></div>
 				</div>
-				<form id="order_form">
 					<div class="order_content">
-
 						<table class="order_table">
 							<tbody>
 								<tr>
@@ -46,45 +49,56 @@
 									<th width="14%">주문 상태</th>
 									<th width="13%">선택</th>
 								</tr>
-								<tr>
-									<td class="order_item_number">
-										<p>12164531</p> 
-									</td>
-									<td class="order_item_info">
-										<p class="order_item_img">
-											<a href="#"><img width="60"
-												src="/sh/resources/images/list_item1.jpg"></a>
-										</p>
-										<div class="order_item_title">
-											<p class="item_tag">
-												<span class="discount_tag">할인도서</span><span
-													class="parcel_tag">무료배송</span>
+								<c:forEach var="list" items="${order_item_list}" varStatus="status">
+									<tr>
+										<td class="order_item_number">
+											<p>${item_list[status.index].product_num}</p> 
+										</td>
+										<td class="order_item_info">
+											<p class="order_item_img">
+												<a href="#">
+													<img width="60" src="/sh/resources/upload/${item_list[status.index].product_picture}">
+												</a> 
 											</p>
-											<p class="order_item_title_txt">
-												<a href="#">대도시의 사랑법</a>
-											</p>
-											<p>
-												<span class="order_item_editor">민지형</span><span
-													class="order_item_publising">민음사</span>
-											</p>
-										</div>
-									</td>
-									<td class="order_item_price">
-										<p class="order_item_price_txt">53,320원<br>(3개)</p>
-									</td>
-									<td class="order_item_mileage">
-										<p>2,500원</p>
-									</td>
-									<td class="order_item_allPrice">
-										<p class="order_item_allPrice_txt">배송 완료</p>
-									</td>
-									<td class="order_item_choice"><a>구매확정</a>
-								<a>리뷰쓰기</a> <a>반품요청</a></td>
-								</tr>
-							</tbody>
+											<div class="order_item_title">  
+												<p class="item_tag">
+													<c:if test="${item_list[status.index].product_discount != '0'}"> 
+														<span class="discount_tag">할인도서</span>
+													</c:if>
+													<c:if test="${item_list[status.index].product_shipping_charge eq '0'}">
+														<span class="parcel_tag">무료배송</span>
+													</c:if> 
+												</p>  
+												<p class="order_item_title_txt">
+													<a href="#">${list.order_item_name}</a>
+												</p>
+												<p>
+													<span class="order_item_editor">민지형</span><span
+														class="order_item_publising">${item_list[status.index].product_publish}</span>
+												</p>
+											</div>
+										</td>
+										<td class="order_item_price">  
+											<input class="order_item_price" hidden="hidden" value="${item_list[status.index].product_price}">
+											<input class="order_item_cnt" hidden="hidden" value="${list.order_item_quantity}">
+											<p class="order_item_origin">${item_list[status.index].product_price}원</p>
+											<p class="order_item_price_txt">${list.order_item_price}원<br>(${list.order_item_quantity}개)</p>
+										</td> 
+										<td class="order_item_mileage">
+											<p>${item_list[status.index].product_shipping_charge}원</p>
+										</td>
+										<td class="order_item_allPrice">
+											<p class="order_item_allPrice_txt">${vo.order_status}</p>
+										</td>
+										<td class="order_item_choice">
+											<a href="<c:url value='/book_detail?product_num=${item_list[status.index].product_num}'/>">리뷰쓰기</a> 
+										</td>
+									</tr> 
+								</c:forEach>
+							</tbody> 
 						</table>
 					</div>
-
+ 
 					<div class="my_pay_info">
 						<h4>결제금액정보</h4>
 						<table cellspacing="0" border="1" class="tb_list2">
@@ -100,37 +114,37 @@
 												<dt>상품금액</dt>
 												<dd>
 													<ul>
-														<li><strong>상품합계</strong>
+														<li>
+															<strong>상품합계</strong>
 															<p>
-																<em class="thm">37,000</em>원
-															</p></li>
-														<li><strong>배송비합계</strong>
+																<em class="thm order_origin_total">스크립트계산</em>원
+															</p>
+														</li>
+														<li>
+															<strong>배송비합계</strong>
 															<p>
-																<em class="thm">0</em>원
-															</p></li>
+																<em class="thm shipping_price">${vo.order_shipping_charge}</em>원
+															</p>
+														</li>  
 													</ul>
 												</dd>
 												<dd class="total">
-													<em class="thm">37,000</em>원
+													<em class="thm item_total_price">script</em>원
 												</dd>
-											</dl>
-											<dl class="discount">
+											</dl> 
+											<dl class="discount"> 
 												<dt>할인금액</dt>
 												<dd>
 													<ul>
 														<li><strong>상품/주문할인</strong>
 															<p>
-																<em class="thm">4,000</em>원
-																<!--N=a:odd.benefit-->
+																<em class="thm">${vo.total_discount_price}</em>원
 															</p></li>
-														<li><strong>배송비할인</strong>
-															<p>
-																<em class="thm">0</em>원
-															</p></li>
-													</ul>
+													
+													</ul> 
 												</dd>
 												<dd class="total">
-													<em class="thm">4,000</em>원
+													<em class="thm">${vo.total_discount_price}</em>원
 												</dd>
 											</dl>
 											<dl class="end">
@@ -139,12 +153,13 @@
 													<ul>
 														<li><strong>포인트</strong>
 															<p>
-																<em class="thm">788</em>원
-															</p></li>
+																<em class="thm">${use_mileage}</em>원
+															</p>
+														</li> 
 													</ul>
 												</dd>
 												<dd class="total">
-													<em class="thm">788</em>원
+													<em class="thm">${use_mileage}</em>원
 												</dd>
 											</dl>
 										</div>
@@ -154,19 +169,25 @@
 										<dl>
 											<dt class="blind">결제정보</dt>
 											<dd>
-												<ul>
-													<li><strong>상품금액</strong>
+												<ul> 
+													<li>
+														<strong>상품금액</strong>
 														<p>
-															<em class="thm">37,000</em>원
-														</p></li>
-													<li><strong>할인금액</strong>
+															<em class="thm item_total_price">script</em>원
+														</p>
+													</li>
+													<li>
+														<strong>할인금액</strong>
 														<p>
-															(-) <em class="thm">4,000</em>원
-														</p></li>
-													<li><strong>포인트</strong>
+															(-) <em class="thm">${vo.total_discount_price}</em>원
+														</p>
+													</li>
+													<li>
+														<strong>포인트</strong>
 														<p>
-															(-) <em class="thm">788</em>원
-														</p></li>
+															(-) <em class="thm">${use_mileage}</em>원
+														</p>
+													</li>
 												</ul>
 											</dd>
 										</dl>
@@ -181,13 +202,22 @@
 													<col>
 													<col width="9%">
 												</colgroup>
-												<tbody>
+												<tbody>  
 													<tr>
 														<th scope="row">결제방법</th>
-														<td class="">신용카드<br> <span class="period">(<em>2019.07.28
-																	05:17</em>)
+														<td class="">${vo.order_status}<br> 
+																<c:set var="date" value="${vo.order_date}"/> 
+																	<%--  수정 등록일 날짜,시간 표시  --%> 
+																	<%  
+																		SimpleDateFormat sdate1 = new SimpleDateFormat("yyyy.MM.dd hh:mm");
+																		date_txt = sdate1.format(date);
+																		pageContext.setAttribute("date_txt", date_txt); 
+																		 
+																	%>  
+															<span class="period"> 
+																(<em>${date_txt}</em>)
 														</span>
-														</td>
+														</td> 
 													</tr>
 												</tbody>
 											</table>
@@ -200,7 +230,7 @@
 												<ul>
 													<li><strong>결제금액</strong>
 														<p>
-															<em class="thm">32,212</em>원
+															<em class="thm">${vo.total_price }</em>원
 														</p></li>
 												</ul>
 											</dd>
@@ -213,14 +243,16 @@
 
 					<div class="order_shipping my_order_shipping">
 						<h4>배송정보</h4>
-						<span class="change_shipping"><a href="#">배송정보 변경</a></span>
+						<span class="change_shipping"><a>배송정보 변경</a></span>
 						<table class="shipping_table shipping_member_name">
 							<tbody>
-								<tr class="shipping_table_row">
+								<tr class="shipping_table_row"> 
 									<th>주문자 정보</th>
 									<td colspan="2">
 										<p>
-											<span>홍길동</span><span>heyhey@naver.com</span><span>010-1234-5675</span>
+											<span>${member_vo.members_name}</span>
+											<span>${member_vo.members_email}</span>
+											<span>${member_vo.members_phone_number}</span>
 										</p>
 									</td>
 								</tr>
@@ -236,18 +268,18 @@
 												<tbody>
 													<tr class="shipping_recieve_name">
 														<th>받으시는 분</th>
-														<td colspan="3">홍길동</td>
+														<td colspan="3">${vo.order_name}</td>
 													</tr>
 													<tr class="shipping_recieve_number">
 														<th>휴대폰 번호</th>
-														<td>010-4245-2646</td>
+														<td>${vo.order_phone_number}</td>
 														<th>전화번호</th>
-														<td>02-5634-6325</td>
+														<td>${vo.order_add_number }</td>
 													</tr>
 													<tr>
 														<th>배송주소</th>
-														<td class="order_location" colspan="3">128-25 <br>
-															서울시 상도동 2길 42-11<br> 1층
+														<td class="order_location" colspan="3">${vo.order_post}<br>
+															${vo.order_address}<br> ${vo.order_detail_address } ${vo.order_extra_address }
 														</td>
 													</tr>
 												</tbody>
@@ -257,23 +289,27 @@
 									</td>
 								</tr>
 								<tr class="shipping_table_row">
-									<th>배송메시지</th>
-									<td></td>
+									<th>배송메시지</th> 
+									<td>${vo.order_message}</td>
 								</tr>
 							</tbody>
 						</table>
 					</div>
-
-					<div class="order_shipping change_order_shipping">
+					<form action="<c:url value='/order_update'/>" method="post">
+					<div class="order_shipping change_order_shipping"> 
 						<h4>배송정보</h4>
-						<span class="change_shipping_ok"><a href="#">변경 완료</a></span>
+						<span class="change_shipping_ok">
+							<input type="submit" value="변경 완료">
+						</span>
 						<table class="shipping_table shipping_member_name">
 							<tbody>
 								<tr class="shipping_table_row">
 									<th>주문자 정보</th>
 									<td colspan="2">
 										<p>
-											<span>홍길동</span><span>heyhey@naver.com</span><span>010-1234-5675</span>
+											<span>${member_vo.members_name}</span>
+											<span>${member_vo.members_email}</span>
+											<span>${member_vo.members_phone_number}</span>
 										</p>
 									</td>
 								</tr>
@@ -284,57 +320,63 @@
 								<tr class="shipping_table_row" style="border-top: none;">
 									<th>배송지 정보</th>
 									<td style="padding: 25px">
-
+										<%-- 테이블 코딩 --%>
 										<div class="shipping_info">
-											<table class="shipping_receive_table">
-												<tbody>
-													<tr class="shipping_recieve_name">
-														<th>받으시는 분</th>
-														<td colspan="3"><input type="text"
-															name="receive_name"><a class="recent_shipping">최근배송지</a></td>
+											<div class="order_location_choice">
+												  <input hidden="hidden" name="order_num" value="${vo.order_num}">
+												  <input hidden="hidden" class="members_num_val" value="${member_vo.members_num}">
+												  <a class="same_info">회원정보동일</a> 
+												  <a class="reset_info">새로입력</a> 
+											</div> 
+											<table class="shipping_receive_table"> 
+												<tbody> 
+													<tr class="shipping_recieve_name"> 
+														<th>받으시는 분</th> 
+														<td colspan="3"><input type="text" class="order_name" name="order_name" value="${vo.order_name}"></td>
 													</tr>
 													<tr class="shipping_recieve_number">
 														<th>휴대폰 번호</th>
-														<td><select name="receive_pNumber"><option>010</option>
-																<option>011</option>
-																<option>016</option></select> - <input type="text"
-															name="receive_pNumber"> - <input type="text"
-															name="receive_pNumber"></td>
+														<td>
+															<select class="order_phone_number0" name="order_phone_number">
+																<option <c:if test="${phone[0] eq '010'}">selected</c:if> value="010">010</option>
+																<option <c:if test="${phone[0] eq '011'}">selected</c:if>value="011">011</option> 
+																<option <c:if test="${phone[0] eq '016'}">selected</c:if>value="016">016</option>  
+															</select> - 
+															<input type="text" class="order_phone_number1" name="order_phone_number" value="${phone[1]}"> - 
+															<input type="text" class="order_phone_number2" name="order_phone_number" value="${phone[2]}">
+														</td>
 														<th>전화번호</th>
-														<td><select name="receive_hNumber"><option>010</option>
-																<option>011</option>
-																<option>016</option></select> - <input type="text"
-															name="receive_hNumber"> - <input type="text"
-															name="receive_hNumber"></td>
+														<td>
+															<input type="text" class="order_add_number0" name="order_add_number" value="${add_number[0]}"> - 
+															<input type="text" class="order_add_number1" name="order_add_number" value="${add_number[1]}"> - 
+															<input type="text" class="order_add_number2" name="order_add_number" value="${add_number[2]}">
+														</td>
 													</tr>
 													<tr>
 														<th>배송주소</th>
-														<td class="order_location" colspan="3"><input
-															type="text" id="sample6_postcode" placeholder="우편번호">
-															<input type="button" onclick="sample6_execDaumPostcode()"
-															value="우편번호 찾기"><br> <input type="text"
-															id="sample6_address" placeholder="주소"><br> <input
-															type="text" id="sample6_detailAddress" placeholder="상세주소">
-															<input type="text" id="sample6_extraAddress"
-															placeholder="참고항목"></td>
-													</tr>
-												</tbody>
+														<td class="order_location" colspan="3">
+															<input type="text" class="order_post" name="order_post" value="${vo.order_post}"id="sample6_postcode" placeholder="우편번호">
+															<input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기"><br> 
+															<input type="text" class="order_address" name="order_address" value="${vo.order_address}" id="sample6_address" placeholder="주소"><br> 
+															<input type="text" class="order_detail_address" name="order_detail_address" value="${vo.order_detail_address}" id="sample6_detailAddress" placeholder="상세주소">
+															<input type="text" class="order_extra_address" name="order_extra_address" value="${vo.order_extra_address}" id="sample6_extraAddress" placeholder="참고항목">
+														</td>
+													</tr>  
+												</tbody>  
 											</table>
-										</div>
+										</div> 
 									</td>
-								</tr>
+									
+								</tr> 
 								<tr class="shipping_table_row">
 									<th>배송메시지</th>
-									<td><textarea></textarea></td>
+									<td><textarea name="order_message">${order_message}</textarea></td>
 								</tr>
-							</tbody>
+						</tbody>
 						</table>
 					</div>
 				</form>
 			</div>
-		</div>
-
-
 
 
 <%-- 배송지 주소 API --%>

@@ -30,10 +30,12 @@
 			<span>Q</span>
 			<p>${vo.counsel_content}</p>
 		</div>
-		<div class="qna_detail_box answer_box"> 
-			<span>A</span>
-			<p>이거 내용이 이상해요 정말 정말</p>
-		</div>
+		<c:if test="${reply_vo != null }">
+			<div class="qna_detail_box answer_box"> 
+				<span>A</span>
+				<p>${reply_vo.counsel_reply_content}</p>
+			</div>
+		</c:if>
 		<div class="twin_btn qna_btn"> 
 			<a class="twin_home_btn" href="/sh/mypage_qna">목록보기</a>
 			<a href="<c:url value='counsel_update?counsel_num=${vo.counsel_num}'/>" class="twin_page_btn">수정하기</a>

@@ -172,8 +172,7 @@
 					<a href="<c:url value='/admin_board_list?board_id=review'/>"> + 더보기</a>
 				</li>
 			</ul>
-			<table class="list-table-style" style="table-layout: auto;"
-				cellspacing="0">
+			<table class="list-table-style" style="table-layout: auto;" cellspacing="0">
 				<colgroup>
 					<col width="50">
 					<col width="20%">
@@ -278,10 +277,10 @@
 										</li>
 										<li> 
 											<span class="btn small black">
-												<a class="board_close_btn">닫기</a>
+												<a href="#" class="board_close_btn">닫기</a>
 											</span>
 										</li> 
-									</ul> 
+									</ul>
 								</div>
 							</div>
 							<!-- 페이지 타이틀 바 : 끝 -->
@@ -318,21 +317,7 @@
 																		</td>
 																		<td class="cell_bar">|</td>
 																		<td>
-																			<c:choose>
-																				<c:when test="${board_id eq 'counsel'}">
-																					<span class="han ">답변 상태</span> 
-																				</c:when>
-																				<c:when test="${board_id eq 'notice'}">
-																					<span class="han ">조회</span> 
-																				</c:when>
-																				<c:when test="${board_id eq 'event'}">
-																					<span class="han ">조회</span> 
-																				</c:when> 
-																				<c:when test="${board_id eq 'review'}">
-																					<span class="han ">조회</span> 
-																				</c:when>
-																			</c:choose> 
-																		
+																			<span class="han board_another">조회:</span> 
 																			<span class="num board_another_info">0</span>
 																		</td>
 																		<td class="cell_bar">|</td>
@@ -380,6 +365,7 @@
 										</c:when>
 									</c:choose> 게시글 등록</h2>
 							</div>
+							<%--  
 							<ul class="page-buttons-left">
 								<li>
 									<span class="btn large white">
@@ -393,16 +379,17 @@
 										<button type="button">게시글보기</button>
 									</span>
 								</li>  
-							</ul>
+							</ul> 
+							--%>
 							<ul class="page-buttons-right">
 								<li>
 									<span class="btn large black">
 										<button id="board_add_btn" type="submit">저장하기</button>
 									</span> 
-									<span> 
+									<span>
 										<a class="board_close_btn">닫기</a> 
 									</span> 
-								</li>
+								</li> 
 							</ul>
 						</div>
 					</div>
@@ -422,75 +409,75 @@
 									<th class="its-th-align center">작성자</th>
 									<td class="its-td board_writer">관리자</td>
 								</tr>
-								
-								<!-- <tr> 
+								<tr class="notice_display" style="display:none;"> 
 									<th class="its-th-align center">공지글 여부</th>
-									<td class="its-td"><input type="checkbox" name="notice" id="boardnotice" value="1" onclick="noticecheck()">
+									<td class="its-td">
+										<input type="checkbox" name="notice_official" id="board_notice" value="1" >
 										<label for="boardnotice"> 공지글입니다.</label>
 											<div class="noticelay " style="width: 99%; padding: 3px 5px;">
 												<label> 
-													<input type="radio" name="onlynotice" id="onlynotice0" value="0" disabled="disabled"> 
+													<input type="radio" name="notice_official_detail" class="notice_official_detail" id="onlynotice0" value="0" disabled="disabled"> 
 													공지글영역과 리스트 영역에 해당 글이 보여집니다.
 												</label>
 												<br> 
 												<label> 
-													<input type="radio" name="onlynotice" id="onlynotice1" value="1" disabled="disabled"> 
+													<input type="radio" name="notice_official_detail" class="notice_official_detail" id="onlynotice1" value="1" disabled="disabled"> 
 													공지글 영역에서 특정기간동안(설정 시)만 해당 글이 보여집니다.
 												</label> 
 												<span> 
-													<input type="text" name="onlynotice_sdate" id="onlynotice_sdate" value="" class="line datepicker hasDatepicker" maxlength="10" size="10" disabled="disabled">
-													<img class="ui-datepicker-trigger" src="/app/javascript/jquery/icon_calendar.gif" alt="..." title="...">
+													<input type="text" name="notice_official_date" id="onlynotice_sdate" value="" class="period line" maxlength="10" size="10" disabled="disabled" autocomplete="off">
+													<img class="ui-datepicker-trigger" src="<c:url value='/resources/images/icon_calendar.gif'/>" alt="..." title="...">
 													~ 
-													<input type="text" name="onlynotice_edate" id="onlynotice_edate" value="" class="line datepicker hasDatepicker" maxlength="10" size="10" disabled="disabled">
-													<img class="ui-datepicker-trigger" src="/app/javascript/jquery/icon_calendar.gif" alt="..." title="...">
+													<input type="text" name="notice_official_date" id="onlynotice_edate" value="" class="period line" maxlength="10" size="10" disabled="disabled" autocomplete="off">
+													<img class="ui-datepicker-trigger" src="<c:url value='/resources/images/icon_calendar.gif'/>" alt="..." title="...">
 												</span>
 											</div>
 									</td>
-								</tr> -->
-								<tr>
+								</tr>
+								<tr> 
 									<th class="its-th-align center">제목</th>
 									<td class="its-td">
 										<input type="text" name="${board_id}_title" class="board_title" id="subject" value="제목을 입력해주세요" class="required line" title="제목을 입력해 주세요" style="width: 95%" placeholder="제목을 입력해 주세요">
-										<input hidden="hidden" name="board_id" value="${board_id}" >
+										<input hidden="hidden"  class="board_id" name="board_id" value="${board_id}" >
 										<input hidden="hidden" class="board_num" name="${board_id}_num" value="" >
+										<input hidden="hidden" name="admin_board" value="board_main">
 									</td>
 								</tr>
-								<c:if test="${board_id eq 'event'}">
-								<tr>
+								<tr class="event_display" style="display: none;">
 									<th class="its-th-align center">이벤트 썸네일</th>
 									<td class="its-td"> 
 										<p class=""><input type="file" class="thumb_file" name="event_file" onchange="e_readURL(this);" ><input readonly="readonly" name="thumb_name" class="thumb_name"></p>
 										<p class="event_thumb_box"><img class="event_thumb" src="" ><i class="fas fa-times del_thumb"></i></p>
 									</td>   
 								</tr> 
-								</c:if> 
 								<tr>
 									<th class="its-th-align center">내용</th>
 									<td class="its-td">
 										<textarea id="summernote" class="board_content" name="${board_id}_content"></textarea>
 									</td>  
 								</tr> 
-								<c:if test="${board_id eq 'event'}">
-								<tr>
-									<th class="its-th-align center">이벤트 종료일</th>
+								<tr class="event_display" style="display: none;">
+									<th class="its-th-align center">이벤트 기간</th>
 									<td class="its-td">
-										<input type="text" id="event_period" name="event_period">
+										<input type="text" class="event_period period" id="period1" name="event_period" autocomplete="off">
+										<img class="ui-datepicker-trigger" src="<c:url value='/resources/images/icon_calendar.gif'/>" alt="..." title="...">
+										 ~
+										<input type="text" class="event_period period" id="period2" name="event_period" autocomplete="off">
+										<img class="ui-datepicker-trigger" src="<c:url value='/resources/images/icon_calendar.gif'/>" alt="..." title="..." >
 									</td>   
 								</tr> 
-								</c:if>
 								<tr>
-									<th class="its-th-align center" colspan="2">
-										<div class="after">
-											저장후 <input type="radio" name="backtype" id="backtype1"
-												value="list" checked="checked"><label
-												for="backtype1">목록으로 이동</label>
-										</div>
+									<th class="its-th-align center" colspan="2"> 
+										<div class="after board_push">
+											회원 알림등록 
+											<input type="checkbox" name="board_push" id="board_push1" value="ok">
+										</div> 
 									</th>
 								</tr> 
 							</tbody>
-						</table>
+						</table> 
 					</div>
-				</form>
+				</form> 
 			</div>
 		</div>
 	</div>
@@ -498,7 +485,7 @@
 <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.15/dist/summernote-lite.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function(){
-	$("#event_period").datepicker({
+	$(".event_period").datepicker({
 	    dayNamesMin:["일","월","화","수","목","금","토"], // 요일에 표시되는 형식 설정
 
 	    dateFormat:"yy-mm-dd", //날짜 형식 설정

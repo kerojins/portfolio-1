@@ -5,7 +5,8 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 		<div class="sub_right_box my_box_wrap">
 			<div class="sub_right_content">
-				<h3 class="my_page_title" style="margin-bottom:20px">1:1 문의</h3>
+				<h3 class="my_page_title" style="margin-bottom:10px">1:1 문의</h3>
+				<a href="<c:url value='/mypage_qna_write'/>" class="qna_btn">문의하기</a>  
 				<table class="table my_qna_table">
 					<colgroup>
 					 <col style="width:10%">
@@ -25,7 +26,7 @@
 						<c:forEach var="vo" items="${list}" varStatus="status" >
 						<tr> 
 							<td scope="row">${(util.pageNum -1 ) * 10 + status.count}</td>
-							<td><a href="<c:url value='/counsel_detail?counsel_num=${vo.counsel_num}'/>">${vo.counsel_title }</a></td>
+							<td style="text-align: left;"><a href="<c:url value='/counsel_detail?counsel_num=${vo.counsel_num}'/>">${vo.counsel_title }</a></td>
 							
 							<c:set var="date" value="${vo.counsel_date}" />
 							<%-- 수정 등록일 날짜,시간 표시 --%>
@@ -36,7 +37,7 @@
 									pageContext.setAttribute("date_txt", date_txt);
 							%>
 							<td>${date_txt}</td> 
-							<td><span>${vo.counsel_answer }</span></td> 
+							<td><span style="font-weight: 600;">${vo.counsel_answer }</span></td> 
 						</tr> 
 						</c:forEach>  
 					</tbody>
@@ -82,6 +83,5 @@
 								</c:choose>
 							</li>    
 						</ul>
-					<a href="<c:url value='/mypage_qna_write'/>" class="qna_btn">문의하기</a>  
 				</div>
 			</div>

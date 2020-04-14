@@ -64,13 +64,13 @@
 								<td class="order_item_price">
 									<p class="order_item_price_txt">
 										<span class="item_total_text">${one_info.product_discount_price}</span>원
+										<input hidden="hidden" class="item_origin_price" value="${one_info.product_price}">
 										<input hidden="hidden" name="order_item_price" value="${one_info.product_discount_price}">
 									</p>
 									<input hidden="hidden" class="order_discount" value="${one_info.product_discount}">
 								</td>
-								<td class="order_item_shipping">  
+								<td class="order_item_shipping">    
 									<p>
-										<input hidden="hidden" class="total_mileage_val" name="total_mileage">
 										<span class="shipping_txt">${one_info.product_shipping_charge}</span>원
 									</p> 
 								</td>	
@@ -232,7 +232,7 @@
 								<input hidden="hidden" name="order_item_price" value="${vo.product_discount_price}">
 							</td>   
 							<td class="order_item_mileage">
-								<p><span class="mileage_txt">${vo.product_discount_price}</span>원</p>
+								<p><span class="mileage_txt">script</span>원</p>
 							</td>
 							<td class="order_item_allPrice"> 
 								<p class="order_item_allPrice_txt"><span class="allPrice_txt">43,300</span>원</p>
@@ -270,12 +270,17 @@
 				<table class="shipping_table">
 					<tbody>
 						<tr class="shipping_table_row" style="border-top: none;">
-							<th>배송지 정보</th>
+							<th>배송지 정보</th> 
 							<td style="padding: 25px">
 								<%-- 테이블 코딩 --%>
 								<div class="shipping_info">
 									<div class="order_location_choice">
-										  <a class="same_info">회원정보동일</a> <a class="reset_info">새로입력</a> <a class="recent_info">최근배송지</a> <a id="call_list">+더보기</a>
+										  <a class="same_info">회원정보동일</a> 
+										  <a class="reset_info">새로입력</a> 
+										<%--
+										  <a class="recent_info">최근배송지</a> 
+										  <a id="call_list">+더보기</a> 
+										  --%>
 									</div>
 									<table class="shipping_receive_table"> 
 										<tbody> 
@@ -315,17 +320,19 @@
 									</table>
 								</div> 
 							</td>
-							<td rowspan="2" id="extend_area">
+							<%--  <td rowspan="2" id="extend_area">
 								<div class="recent_list"> 
 									<h6>최근 배송지 목록</h6>
 									<ul>
 										<li>
-											<p class="recent_list_name"><input type="radio" name="resent_loc"><span>홍길동</span></p>
+											<p class="recent_list_name">
+												<input type="radio" name="resent_loc"><span>홍길동</span>
+											</p>
 											<p>서울특별시 세종로 22-13 (432-42)</p>
 										</li>
 									</ul>
 								</div>
-							</td>
+							</td>--%>
 						</tr>
 						<tr class="shipping_table_row">
 							<th>배송메시지</th>
@@ -343,8 +350,9 @@
 							<td colspan="">
 								<p>
 									<input type="text" class="use_mileage_val" name="use_mileage" value="0" placeholder="0"> 원 / 
+									<input type="text" class="get_mileage_val" name="get_mileage" value="0" hidden="hideen"> 
 									<c:choose>
-										<c:when test="${mileage_vo == null}">
+										<c:when test="${mileage_vo == null}"> 
 											<span class="mileage_money">0</span>원 
 										</c:when>
 										<c:otherwise>
@@ -387,9 +395,11 @@
 									<c:otherwise>
 										<span class="">${item_total_price_val}</span>원
 									</c:otherwise>
-								</c:choose>  
+								</c:choose>   
 							</td>  
-							<td class="order_total_discount"><span class="discount_text">0</span>원</td>
+							<td class="order_total_discount">
+								<span class="discount_text">0</span>원
+							</td>
 							<td class="order_total_parcel">
 								<c:choose> 
 									<c:when test="${list == null}">
@@ -424,15 +434,16 @@
 					</span>
 				</div> 
 				<input class="members_num_val" name="members_num" value="${member_vo.members_num }" hidden="hidden">
+				<input class="total_discount_price" name="total_discount_price" value="${total_discount_price}" hidden="hidden">
 				<input class="total_price_val" name="total_price" hidden="hidden">
 				<input class="total_count_val" name="total_count" hidden="hidden">
-				<input class="get_mileage_val" name="total_mileage" hidden="hidden">
 				<input class="order_shipping_charge_val" name="order_shipping_charge" hidden="hidden">
+				<input hidden="hidden" class="total_mileage_val" name="total_mileage" value="${mileage_val}">
 			</div>
-			
-			<div class="payment_box">
+			  
+			<div class="payment_box"> 
 				<h4>04 결제정보</h4>
-				<div class="pi_select">
+				<div class="pi_select"> 
 					<div>
 						<span class="mr15">
 							<input type="radio" checked="checked" name="payment_methods" id="sett_10" value="신용카드" class="mt3m mr3">

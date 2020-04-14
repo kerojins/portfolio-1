@@ -51,16 +51,30 @@
 			<nav aria-label="breadcrumb">
 				<ol class="breadcrumb">
 					<li class="breadcrumb-item"><a href="#">홈</a></li>
-					<li class="breadcrumb-item active" aria-current="page">마이페이지</li>
+					<li class="breadcrumb-item"><a href="<c:url value="/mypage"/>">마이페이지</a></li>
+					<li class="breadcrumb-item active" aria-current="page"></li>
 				</ol>
-			</nav>
+			</nav> 
 			<c:if test="${aside == null}">
-				<tiles:insertAttribute name="mypage_aside" />
+				<tiles:insertAttribute name="mypage_aside" /> 
 			</c:if>
 			<tiles:insertAttribute name="content" />
-
 		</div>
 	</div>
 	<tiles:insertAttribute name="footer" />
 </body>
+<script>
+	var title = $(".my_page_title").text();
+	var menu_list = $(".aside_menu_list li a");
+	menu_list.each(function(index, item){
+		if($(item).text() == title){
+			$(item).css({ 
+				"color" : "#0c6fbf",
+				"font-weight" : "600"
+			})
+		}    
+		$("li.active").text(title);
+	});
+</script>
 </html>
+

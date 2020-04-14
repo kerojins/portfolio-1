@@ -47,10 +47,14 @@
 					<tr> 
 						<th>휴대폰 번호</th>
 						<td colspan="3">
-							<input type="text" onkeyup="join13();" class="phone_input" name="members_add_number" maxlength="3">
+							<select id="add_number" name="members_phone_number" id="members_phone_number">
+								<option value="010" <c:if test="${phone[0] eq '010'}">selected</c:if>>010</option>
+								<option value="011" <c:if test="${phone[0] eq '011'}">selected</c:if>>011</option>
+								<option value="016" <c:if test="${phone[0] eq '016'}">selected</c:if>>016</option>
+							</select>   
 						  - <input type="text" value="${phone[1]}" class="phone_input" name="members_phone_number" onkeyup="join8();" maxlength="4"> - 
 						    <input type="text" class="phone_input" name="members_phone_number" value="${phone[2]}" onkeyup="join9();" maxlength="4"><span id="phone_span"class="join_msg" title=""></span></td>
-					</tr>  
+					</tr>   
 					<tr>    
 						<th>이메일</th>
 						<td colspan="3">
@@ -111,39 +115,15 @@
 					<tr>
 						<th>관심분야(최대5개)</th>
 						<td colspan="3">
-							<p class="item_select_option join_favorite">
-								<span>
-									<input type="checkbox" id="cate_1" name="members_favorite" value="소설" class="item_checking">
-									<label for="cate_1" class="input_label"></label><label for="cate_1">소설</label>
-								</span> 
-								<span>
-									<input type="checkbox" id="cate_2" name="members_favorite" value="시/에세이" class="item_checking">
-									<label for="cate_2" class="input_label"></label><label for="cate_2">시/에세이</label>
-								</span> 
-								<span>
-									<input type="checkbox" id="cate_3" name="members_favorite" value="경제/경영" class="item_checking">
-									<label for="cate_3" class="input_label"></label><label for="cate_3">경제/경영</label>
-								</span> 
-								<span>
-									<input type="checkbox" id="cate_4" name="members_favorite" value="자기계발" class="item_checking">
-									<label for="cate_4" class="input_label"></label><label for="cate_4">자기계발</label>
-								</span> 
-								<span>
-									<input type="checkbox" id="cate_5" name="members_favorite" value="인문" class="item_checking">
-									<label for="cate_5" class="input_label"></label><label for="cate_5">인문</label>
-								</span> 
-								<span>
-									<input type="checkbox" id="cate_6" name="members_favorite" value="정치/사회" class="item_checking">
-									<label for="cate_6" class="input_label"></label><label for="cate_6">정치/사회</label>
-								</span> 
-								<span>
-									<input type="checkbox" id="cate_7" name="members_favorite" value="예술/대중문화" class="item_checking">
-									<label for="cate_7" class="input_label"></label><label for="cate_7">예술/대중문화</label>
-								</span> 
-								<span>
-									<input type="checkbox" id="cate_8" name="members_favorite" value="어린이" class="item_checking">
-									<label for="cate_8" class="input_label"></label><label for="cate_8">어린이</label>
-								</span>
+							<input hidden="hidden" value="${vo.members_favorite}" id="members_favorite">
+							<p class="item_select_option join_favorite" style="display: block;">
+								<c:forEach var="list" items="${domestic_vo}" varStatus="status">
+									<span>
+										<input type="checkbox" id="cate_${status.count}" name="members_favorite" value="${list.cate_num}" class="item_checking">
+										<label for="cate_${status.count}" class="input_label"></label>
+										<label for="cate_${status.count}">${list.cate_name}</label>
+									</span> 
+								</c:forEach>
 							</p>
 						</td>
 					</tr> 
@@ -159,12 +139,7 @@
 <script
 	src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>
-	var phone = document.getElementById('members_phone_number'); // 휴대폰 번호 앞자리 select
-	var phone_val = "${phone[0]}";
-	for (var i = 1; i < phone.length; i++) {
-		if (phone[i].value == phone_val)
-			phone[i].setAttribute("selected", "selected");
-	}
+
 
 	var add_number = document.getElementById('add_number'); // 추가 번호 앞자리 select
 	var add_number_val = "${add_number[0]}";
@@ -178,17 +153,17 @@
 		if (members_job[i].value == members_job_val)
 			members_job[i].setAttribute("selected", "selected");
 	}
-	var favorite = "${vo.members_favorite}"; // 관심분야 체크
+	var favorite = document.getElementById('members_favorite').value; // 관심분야 체크 
 	var fa_array = favorite.split(",");
 	var fa_check = document.getElementsByName("members_favorite");
-	for (var i = 0; i < fa_array.length; i++) {
+	for (var i = 0; i < fa_array.length; i++) { 
 		for (var j = 0; j < fa_check.length; j++) {
 			if (fa_array[i] == fa_check[j].value) {
+				alert(fa_array[i]);
 				fa_check[j].setAttribute("checked", "checked");
 				var label = fa_check[j].nextElementSibling;
-				label.innerHTML='<i class="fas fa-check"></i>';
-				 
-			}
+				label.innerHTML='<i class="fas fa-check"></i>'; 
+			} 
 		}
 	}
 	 
